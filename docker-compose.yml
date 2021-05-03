@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  node:
+    container_name: node
+    build:
+      context: ./
+      target: '${DOCKER_TARGET}'
+    volumes:
+      - .:/app
+    ports:
+      - 3001:3001
+      - 5555:5555
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+
+  postgres:
+    container_name: postgres
+    image: postgres:13
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env-postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:
+    name: postgres
+  node:
+    name: node
