@@ -1,7 +1,7 @@
 import { to } from 'await-to-js';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 
 describe('UsersService', () => {
 	let service: UsersService;
@@ -118,6 +118,65 @@ describe('UsersService', () => {
 				expect(newUser.firstName).toBe(null);
 				expect(newUser.lastName).toBe(null);
 				expect(newUser.role).toBe('USER');
+			});
+		});
+
+		describe('when missing required data to create a new user', () => {
+			describe('and is missing all the required data', () => {
+				it('should throw an error', async () => {
+					const userCreateInput = {
+						email: null,
+						password: null,
+					};
+					const [error, newUser] = await to(
+						service.create(userCreateInput)
+					);
+
+					expect(error).not.toBeNull();
+				});
+			});
+
+			describe('and is missing the email field', () => {
+				it('should throw an error', async () => {
+					const userCreateInput = {
+						email: null,
+						password: '12345678',
+					};
+					const [error, newUser] = await to(
+						service.create(userCreateInput)
+					);
+
+					expect(error[0]).not.toBeNull();
+				});
+			});
+
+			describe('and is missing the password field', () => {
+				it('should throw an error', async () => {
+					const userCreateInput = {
+						email: 'david.w.christian@gmail.com',
+						password: null,
+					};
+					const [error, newUser] = await to(
+						service.create(userCreateInput)
+					);
+
+					expect(error).not.toBeNull();
+				});
+			});
+		});
+
+		describe('when tries to create a new user and a unique attirribute has already been used', () => {
+			it('should return an error', async () => {
+				const userCreateInput = {
+					email: 'david.w.christian@gmail.com',
+					password: '12345678',
+				};
+				const [error, newUser] = await to(
+					service.create(userCreateInput)
+				);
+
+				console.log(error);
+				expect(error).toBe(null);
 			});
 		});
 	});
