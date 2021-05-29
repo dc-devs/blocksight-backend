@@ -7,7 +7,7 @@
 	"license": "UNLICENSED",
 	"scripts": {
 		"prebuild": "rimraf dist",
-		"postinstall": "npx prisma generate",
+		"postinstall": "yarn prisma generate",
 		"build": "nest build",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
 		"start": "nest start",
@@ -20,14 +20,13 @@
 		"test:cov": "jest --coverage",
 		"test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
 		"test:e2e": "jest --config ./test/jest-e2e.json",
-		"docker:bash:node": "docker exec -it node bash",
-		"docker:bash:postgres": "docker exec -it postgres bash",
+		"docker:bash": "docker exec -it node bash",
 		"docker:dev": "export DOCKER_TARGET=development && docker compose up",
-		"prisma:studio": "npx prisma studio",
-		"prisma:generate": "npx prisma generate",
-		"prisma:migrate:dev": "npx prisma migrate dev --preview-feature",
-		"prisma:migrate:new:dev": "npx prisma migrate dev --name",
-		"prisma:seed": "npx prisma db seed --preview-feature"
+		"prisma:studio": "yarn prisma studio",
+		"prisma:generate": "yarn prisma generate",
+		"prisma:migrate:dev": "yarn prisma migrate dev --preview-feature",
+		"prisma:migrate:new:dev": "yarn prisma migrate dev --name",
+		"prisma:seed": "yarn prisma db seed --preview-feature"
 	},
 	"dependencies": {
 		"@nestjs/common": "^7.5.1",
