@@ -4,9 +4,10 @@ import { UsersModule } from './users/users.module';
 import { PrismaService } from './prisma/prisma.service';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TokenDataModule } from './token-data/token-data.module';
+import { CoinbaseModule } from './transfers/transfers.module';
 
 @Module({
-	imports: [UsersModule, TokenDataModule],
+	imports: [UsersModule, TokenDataModule, CoinbaseModule],
 	controllers: [],
 	providers: [AppService, PrismaService],
 })
