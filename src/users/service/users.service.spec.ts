@@ -175,7 +175,6 @@ describe('UsersService', () => {
 					service.create(userCreateInput)
 				);
 
-				console.log(error);
 				expect(error).toBe(null);
 			});
 		});

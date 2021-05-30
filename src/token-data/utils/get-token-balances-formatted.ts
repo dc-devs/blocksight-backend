@@ -1,6 +1,6 @@
 import * as numeral from 'numeral';
 import getFormattedTokenBalance from './get-formatted-token-balance';
-import TokenDisplayData from '../interfaces/token-display-data-interface';
+import TokenDisplayData from '../interfaces/token-balance-interface';
 import CovalentTokenBalance from '../interfaces/covalent-token-balance-interface';
 
 interface TokenBalances {
@@ -40,8 +40,14 @@ const getTokenBalancesFormatted = ({
 			logoUrl: tokenLogoUrl,
 			contractAddress: contract_address,
 			balance: tokenBalanceAmountFormatted,
-			price: tokenPriceFormatted,
-			totalValue: totalValueFormatted,
+			price: {
+				number: tokenPrice,
+				formatted: tokenPriceFormatted,
+			},
+			totalValue: {
+				number: quote,
+				formatted: totalValueFormatted,
+			},
 		};
 	});
 };
