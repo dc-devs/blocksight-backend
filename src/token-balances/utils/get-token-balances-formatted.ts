@@ -1,16 +1,16 @@
 import * as numeral from 'numeral';
-import getFormattedTokenBalance from './get-formatted-token-balance';
+import getFormattedTokenBalances from './get-formatted-token-balance';
 import TokenDisplayData from '../interfaces/token-balance-interface';
-import CovalentTokenBalance from '../interfaces/covalent-token-balance-interface';
+import CovalentTokenBalances from '../interfaces/covalent-token-balance-interface';
 
-interface TokenBalances {
-	tokenBalances: CovalentTokenBalance[];
+interface TokenBalancess {
+	TokenBalancess: CovalentTokenBalances[];
 }
 
-const getTokenBalancesFormatted = ({
-	tokenBalances,
-}: TokenBalances): TokenDisplayData[] => {
-	return tokenBalances.map((tokenBalance) => {
+const getTokenBalancessFormatted = ({
+	TokenBalancess,
+}: TokenBalancess): TokenDisplayData[] => {
+	return TokenBalancess.map((TokenBalances) => {
 		const {
 			quote,
 			balance,
@@ -20,12 +20,12 @@ const getTokenBalancesFormatted = ({
 			contract_address,
 			contract_decimals,
 			contract_ticker_symbol,
-		} = tokenBalance;
+		} = TokenBalances;
 		const tokenLogoUrl = logo_url;
 		const tokenName = contract_name;
 		const tokenSymbol = contract_ticker_symbol.toUpperCase();
 
-		const tokenBalanceAmountFormatted = getFormattedTokenBalance({
+		const TokenBalancesAmountFormatted = getFormattedTokenBalances({
 			balance,
 			contractDecimals: contract_decimals,
 		});
@@ -39,7 +39,7 @@ const getTokenBalancesFormatted = ({
 			symbol: tokenSymbol,
 			logoUrl: tokenLogoUrl,
 			contractAddress: contract_address,
-			balance: tokenBalanceAmountFormatted,
+			balance: TokenBalancesAmountFormatted,
 			price: {
 				number: tokenPrice,
 				formatted: tokenPriceFormatted,
@@ -52,4 +52,4 @@ const getTokenBalancesFormatted = ({
 	});
 };
 
-export default getTokenBalancesFormatted;
+export default getTokenBalancessFormatted;

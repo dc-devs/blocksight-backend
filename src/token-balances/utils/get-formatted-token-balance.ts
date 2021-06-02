@@ -16,15 +16,15 @@ interface Props {
 	contractDecimals: number;
 }
 
-const getFormattedTokenBalance = ({ balance, contractDecimals }: Props) => {
+const getFormattedTokenBalances = ({ balance, contractDecimals }: Props) => {
 	BigNumber.config({ FORMAT: format });
 
 	const balanceBN = new BigNumber(balance);
-	const tokenBalanceAmount = balanceBN
+	const TokenBalancesAmount = balanceBN
 		.shiftedBy(-contractDecimals)
 		.toFormat(8);
 
-	return tokenBalanceAmount.toString();
+	return TokenBalancesAmount.toString();
 };
 
-export default getFormattedTokenBalance;
+export default getFormattedTokenBalances;

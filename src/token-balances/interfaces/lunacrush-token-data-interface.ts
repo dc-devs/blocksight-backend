@@ -1,4 +1,4 @@
-interface LunaTokenData {
+interface LunaTokenBalances {
 	id: number;
 	name: string;
 	symbol: string;
@@ -79,4 +79,4 @@ interface LunaTokenData {
 	[key: string]: number | string;
 }
 
-export default LunaTokenData;
+export default LunaTokenBalances;

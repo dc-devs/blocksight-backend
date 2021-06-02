@@ -1,4 +1,4 @@
-interface CovalentTokenBalance {
+interface CovalentTokenBalances {
 	contract_decimals: number;
 	contract_address: string;
 	logo_url: string;
@@ -13,4 +13,4 @@ interface CovalentTokenBalance {
 	[key: string]: number | null | string | string[];
 }
 
-export default CovalentTokenBalance;
+export default CovalentTokenBalances;

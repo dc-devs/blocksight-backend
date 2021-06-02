@@ -8,7 +8,7 @@ interface TotalValue {
 	formatted: string;
 }
 
-interface TokenBalance {
+interface TokenBalances {
 	name: string;
 	price: Price;
 	symbol: string;
@@ -18,4 +18,4 @@ interface TokenBalance {
 	contractAddress: string;
 }
 
-export default TokenBalance;
+export default TokenBalances;

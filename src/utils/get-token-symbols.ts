@@ -1,9 +1,9 @@
-import CovalentTokenBalance from '../token-data/interfaces/covalent-token-balance-interface';
+import CovalentTokenBalances from '../token-balances/interfaces/covalent-token-balance-interface';
 
-const getTokenSymbols = (tokenBalances: CovalentTokenBalance[]) => {
+const getTokenSymbols = (TokenBalancess: CovalentTokenBalances[]) => {
 	let symbols = '';
 
-	tokenBalances.forEach((token, index) => {
+	TokenBalancess.forEach((token, index) => {
 		if (index === 0) {
 			symbols += `${token.contract_ticker_symbol}`;
 		} else {
