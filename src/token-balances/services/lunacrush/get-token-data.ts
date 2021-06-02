@@ -1,6 +1,6 @@
 import axios from 'axios';
-import LunacrushTokenBalances from '../../interfaces/lunacrush-token-balances-interface';
-import LunacrushTokenBalancess from '../../interfaces/lunacrush-token-balancess-interface';
+import LunacrushTokenBalances from '../../interfaces/lunacrush-token-data-interface';
+import LunacrushTokenBalancess from '../../interfaces/lunacrush-token-datas-interface';
 
 const convertArrayToObject = (dataArray: []) => {
 	const TokenBalances = {} as LunacrushTokenBalancess;

@@ -1,7 +1,7 @@
-import LunaTokenBalances from './lunacrush-token-balances-interface';
+import LunaTokenData from './lunacrush-token-data-interface';
 
-interface TokenBalances {
-	[key: string]: LunaTokenBalances;
+interface TokenDatas {
+	[key: string]: LunaTokenData;
 }
 
-export default TokenBalances;
+export default TokenDatas;

@@ -31,8 +31,8 @@ const getTokenBalancessFormatted = ({
 		});
 
 		const tokenPrice = quote_rate || 0;
-		const tokenPriceFormatted = numeral(tokenPrice).format('$0,0.00000');
-		const totalValueFormatted = numeral(quote).format('$0,0.00000');
+		const tokenPriceFormatted = numeral(tokenPrice).format('$0,000.000');
+		const totalValueFormatted = numeral(quote).format('$0,000.00');
 
 		return {
 			name: tokenName,

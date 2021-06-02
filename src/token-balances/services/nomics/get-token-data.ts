@@ -1,6 +1,6 @@
 import axios from 'axios';
-import NomicsTokenBalances from '../../interfaces/nomics-token-balances-interface';
-import NomicsTokenBalancess from '../../interfaces/nomics-token-balancess-interface';
+import NomicsTokenBalances from '../../interfaces/nomics-token-data-interface';
+import NomicsTokenBalancess from '../../interfaces/nomics-token-datas-interface';
 
 const convertArrayToObject = (dataArray: []) => {
 	const TokenBalances = {} as NomicsTokenBalancess;

@@ -1,7 +1,7 @@
-import NomicsTokenBalances from './nomics-token-balances-interface';
+import NomicsTokenData from './nomics-token-data-interface';
 
-interface NomicsTokenBalancess {
-	[key: string]: NomicsTokenBalances;
+interface NomicsTokenDatas {
+	[key: string]: NomicsTokenData;
 }
 
-export default NomicsTokenBalancess;
+export default NomicsTokenDatas;

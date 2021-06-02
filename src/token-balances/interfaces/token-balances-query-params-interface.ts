@@ -1,6 +1,6 @@
-interface TokenBalancessQueryParams {
+interface TokenBalancesQueryParams {
 	address: string;
 	currency: string;
 }
 
-export default TokenBalancessQueryParams;
+export default TokenBalancesQueryParams;

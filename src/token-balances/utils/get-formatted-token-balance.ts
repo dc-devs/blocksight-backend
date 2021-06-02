@@ -22,7 +22,7 @@ const getFormattedTokenBalances = ({ balance, contractDecimals }: Props) => {
 	const balanceBN = new BigNumber(balance);
 	const TokenBalancesAmount = balanceBN
 		.shiftedBy(-contractDecimals)
-		.toFormat(8);
+		.toFormat(4);
 
 	return TokenBalancesAmount.toString();
 };

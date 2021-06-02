@@ -7,7 +7,7 @@ interface Interval {
 	[key: string]: string;
 }
 
-interface NomicsTokenBalances {
+interface NomicsTokenData {
 	id: string;
 	currency: string;
 	symbol: string;
@@ -37,4 +37,4 @@ interface NomicsTokenBalances {
 	[key: string]: string | Interval;
 }
 
-export default NomicsTokenBalances;
+export default NomicsTokenData;
