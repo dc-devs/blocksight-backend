@@ -3,12 +3,19 @@ import TokenBalancessQueryParams from '../../interfaces/token-balances-query-par
 import CovalentTokenBalances from '../../interfaces/covalent-token-balance-interface';
 
 const getTokenBalancess = async ({
+	filter,
 	address,
 	currency,
 }: TokenBalancessQueryParams): Promise<CovalentTokenBalances[]> => {
 	const chainId = process.env.ETHEREUM_CHAIN_ID;
 	const convalentApiKey = process.env.COVALENT_API_KEY;
-	const url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/balances_v2/?key=${convalentApiKey}&nft=true&no-nft-fetch=false&quote-currency=${currency}`;
+	let url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/balances_v2/?key=${convalentApiKey}&nft=true&no-nft-fetch=false&quote-currency=${currency}`;
+
+	if (filter) {
+		const filterUppercase = filter.toLocaleUpperCase();
+		url += `&match={"contract_ticker_symbol":"${filterUppercase}"}`;
+	}
+
 	const response: any = await axios.get(url);
 	const { data } = response.data;
 	const { items } = data;

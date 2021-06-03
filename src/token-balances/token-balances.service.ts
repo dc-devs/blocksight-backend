@@ -7,10 +7,15 @@ import formatBnToFiat from '../utils/format-bn-to-fiat';
 
 @Injectable()
 export class TokenBalancesService {
-	async getTokenBalancess({ address, currency }: TokenBalancessQueryParams) {
+	async getTokenBalancess({
+		filter,
+		address,
+		currency,
+	}: TokenBalancessQueryParams) {
 		const TokenBalancess = await getTokenBalancess({
 			address,
 			currency,
+			filter,
 		});
 		const TokenBalancessFormatted = getTokenBalancessFormatted({
 			TokenBalancess,
