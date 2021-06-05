@@ -7,15 +7,13 @@ export class TokenBalancesController {
 	constructor(private readonly tokenBalancesService: TokenBalancesService) {}
 
 	@Get('token-balances')
-	async getTokenBalancess(@Query() query: TokenBalancessQueryParams) {
+	async getTokenBalances(@Query() query: TokenBalancessQueryParams) {
 		const { address, currency, filter } = query;
-		const TokenBalances = await this.tokenBalancesService.getTokenBalancess(
-			{
-				address,
-				currency,
-				filter,
-			}
-		);
+		const TokenBalances = await this.tokenBalancesService.getTokenBalances({
+			address,
+			currency,
+			filter,
+		});
 
 		return TokenBalances;
 	}

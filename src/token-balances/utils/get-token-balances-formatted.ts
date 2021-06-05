@@ -7,7 +7,7 @@ interface TokenBalancess {
 	TokenBalancess: CovalentTokenBalances[];
 }
 
-const getTokenBalancessFormatted = ({
+const getTokenBalancesFormatted = ({
 	TokenBalancess,
 }: TokenBalancess): TokenDisplayData[] => {
 	return TokenBalancess.map((TokenBalances) => {
@@ -52,4 +52,4 @@ const getTokenBalancessFormatted = ({
 	});
 };
 
-export default getTokenBalancessFormatted;
+export default getTokenBalancesFormatted;

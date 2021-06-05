@@ -2,7 +2,7 @@ import axios from 'axios';
 import TokenBalancessQueryParams from '../../interfaces/token-balances-query-params-interface';
 import CovalentTokenBalances from '../../interfaces/covalent-token-balance-interface';
 
-const getTokenBalancess = async ({
+const getTokenBalances = async ({
 	filter,
 	address,
 	currency,
@@ -23,4 +23,4 @@ const getTokenBalancess = async ({
 	return items;
 };
 
-export default getTokenBalancess;
+export default getTokenBalances;

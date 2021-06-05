@@ -5,9 +5,10 @@ import { PrismaService } from './prisma/prisma.service';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TokenBalancesModule } from './token-balances/token-balances.module';
 import { TransfersModule } from './transfers/transfers.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
-	imports: [UsersModule, TokenBalancesModule, TransfersModule],
+	imports: [UsersModule, TokenBalancesModule, TransfersModule, TransactionsModule],
 	controllers: [],
 	providers: [AppService, PrismaService],
 })

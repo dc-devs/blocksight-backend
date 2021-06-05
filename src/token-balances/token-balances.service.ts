@@ -1,23 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import getTokenBalancess from 'src/token-balances/services/covelant/get-token-balances';
+import getTokenBalances from 'src/token-balances/services/covelant/get-token-balances';
 import TokenBalancessQueryParams from './interfaces/token-balances-query-params-interface';
-import getTokenBalancessFormatted from './utils/get-token-balances-formatted';
+import getTokenBalancesFormatted from './utils/get-token-balances-formatted';
 import getTotalAssetValue from './utils/get-total-asset-value';
 import formatBnToFiat from '../utils/format-bn-to-fiat';
 
 @Injectable()
 export class TokenBalancesService {
-	async getTokenBalancess({
+	async getTokenBalances({
 		filter,
 		address,
 		currency,
 	}: TokenBalancessQueryParams) {
-		const TokenBalancess = await getTokenBalancess({
+		const TokenBalancess = await getTokenBalances({
 			address,
 			currency,
 			filter,
 		});
-		const TokenBalancessFormatted = getTokenBalancessFormatted({
+		const TokenBalancessFormatted = getTokenBalancesFormatted({
 			TokenBalancess,
 		});
 
