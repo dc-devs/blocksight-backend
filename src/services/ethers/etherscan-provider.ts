@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import infuraNetworks from '../../../constants/infura-networks';
+import infuraNetworks from '../../constants/infura-networks';
 
 const chainId = process.env.ETHEREUM_CHAIN_ID as string;
 const network = infuraNetworks[chainId];
