@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import CovalentTokenBalances from '../interfaces/covalent-token-balance-interface';
+import CovalentTokenBalances from '../../interfaces/covalent-token-balance-interface';
 
 interface Props {
 	TokenBalancess: CovalentTokenBalances[];

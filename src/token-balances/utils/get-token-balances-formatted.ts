@@ -1,7 +1,7 @@
 import * as numeral from 'numeral';
 import getFormattedTokenBalances from './get-formatted-token-balance';
 import TokenDisplayData from '../interfaces/token-balance-interface';
-import CovalentTokenBalances from '../interfaces/covalent-token-balance-interface';
+import CovalentTokenBalances from '../../interfaces/covalent-token-balance-interface';
 
 interface TokenBalancess {
 	TokenBalancess: CovalentTokenBalances[];

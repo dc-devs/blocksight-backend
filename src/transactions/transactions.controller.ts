@@ -8,9 +8,11 @@ export class TransactionsController {
 
 	@Get('transactions')
 	async getTransactions(@Query() query: TransactionsQueryParams) {
-		const { address } = query;
+		const { address, filter, currency } = query;
 		const TokenBalances = await this.transactionsService.getTransactions({
+			filter,
 			address,
+			currency,
 		});
 
 		return TokenBalances;
