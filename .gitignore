@@ -35,3 +35,5 @@ lerna-debug.log*
 
 .env
 .env-postgres
+
+blocksight-chart/values-env.yaml

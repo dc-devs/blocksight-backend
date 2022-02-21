@@ -1,0 +1,6 @@
+apiVersion: v2
+name: blocksight-chart
+description: Helm chart for BlockSight
+type: application
+version: 1.0.0
+appVersion: "1.0.0"

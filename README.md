@@ -1,73 +1,134 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+<!-- README copied from https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/README.md -->
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/DWC01/dapp-sandbox-contracts">
+    <img src="src/images/logo.png" alt="Logo" width="419" height="128">
+  </a>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+  <p align="center">
+	Crypto asset tracking made easy.
+  </p>
+  <br />
+  <br />
+  <a href="https://blocksight.io/" target="_blank">View Demo</a>
+  ·
+  <a href="https://github.com/DWC01/blocksight-backend/issues" target="_blank">Report Bug</a>
+  ·
+  <a href="https://github.com/DWC01/blocksight-backend/issues" target="_blank">Request Feature</a>
+</div>
 
-## Description
+<!-- TABLE OF CONTENTS -->
+<br/>
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#useful-links">Useful Links</a></li>
+  </ol>
+</details>
+<br/>
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+<!-- ABOUT THE PROJECT -->
 
-## Installation
+## About The Project
 
-```bash
-$ npm install
-```
+This project holds the backend code for BlockSight. The frontend code can be found in the [BlockSight Frontend](https://github.com/DWC01/blocksight-frontend) project.
 
-## Running the app
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-```bash
-# development
-$ npm run start
+### Built With
 
-# watch mode
-$ npm run start:dev
+-   [Docker](https://www.docker.com/)
+-   [Kubernetes](https://kubernetes.io/)
+-   [Helm](https://helm.sh/)
+-   [NestJs](https://nestjs.com/)
+-   [TypeScript](https://www.typescriptlang.org/)
+-   [Yarn](https://yarnpkg.com/)
+-   [Prettier](https://prettier.io/)
+-   [ESLint](https://eslint.org/)
 
-# production mode
-$ npm run start:prod
-```
+### Deployed On
 
-## Test
+-   [AWS EKS](https://aws.amazon.com/eks/)
 
-```bash
-# unit tests
-$ npm run test
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-# e2e tests
-$ npm run test:e2e
+<!-- GETTING STARTED -->
 
-# test coverage
-$ npm run test:cov
-```
+## Getting Started
 
-## Support
+### Prerequisites
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+-   Node (LTS Version) [Install Instructions](https://github.com/nvm-sh/nvm)
 
-## Stay in touch
+-   Yarn [Install Instructions](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
 
--   Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
--   Website - [https://nestjs.com](https://nestjs.com/)
--   Twitter - [@nestframework](https://twitter.com/nestframework)
+-   Nest CLI [Install Instructions](https://docs.nestjs.com/cli/overview)
 
-## License
+-   Docker [Intall Instructions](https://docs.docker.com/get-docker/)
 
-Nest is [MIT licensed](LICENSE).
+-   Kubernetes [Intall Instructions](https://kubernetes.io/docs/setup/)
+
+-   Helm [Intall Instructions](https://helm.sh/docs/intro/install/)
+
+-   MiniKube [Intall Instructions](https://minikube.sigs.k8s.io/docs/start/)
+
+-   Telepresence [Install Instructions](https://www.telepresence.io/docs/latest/install/)
+
+### Installation
+
+1. Clone the repo
+    ```sh
+    git clone git@github.com:DWC01/blocksight-backend.git
+    ```
+2. Install NPM packages
+    ```sh
+    yarn
+    ```
+3. Deploy Kubernetes locally
+
+    ```sh
+    yarn deploy:dev
+    ```
+
+4. Expose 'blocksight-node-service' with MiniKube Tunnel
+
+    ```sh
+    minikube tunnel
+    ```
+
+5. Intercept local node server with Telepresence
+    ```sh
+    telepresence intercept blocksight-node-deployment --port=3001:3001
+    ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- USAGE EXAMPLES -->
+
+## Development
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- USEFUL LINKS -->
+
+## Useful Links
+
+-   [Kubernetes Cheatsheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+
+<p align="right">(<a href="#top">back to top</a>)</p>

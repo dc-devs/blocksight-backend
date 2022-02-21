@@ -6,10 +6,16 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TokenBalancesModule } from './token-balances/token-balances.module';
 import { TransfersModule } from './transfers/transfers.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { PingController } from './ping/ping.controller';
 
 @Module({
-	imports: [UsersModule, TokenBalancesModule, TransfersModule, TransactionsModule],
-	controllers: [],
+	imports: [
+		UsersModule,
+		TokenBalancesModule,
+		TransfersModule,
+		TransactionsModule,
+	],
+	controllers: [PingController],
 	providers: [AppService, PrismaService],
 })
 export class AppModule implements NestModule {

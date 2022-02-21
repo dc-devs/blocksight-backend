@@ -1,6 +1,6 @@
 {
 	"name": "nest-starter-template",
-	"version": "0.0.1",
+	"version": "1.0.01",
 	"description": "",
 	"author": "",
 	"private": true,
@@ -23,11 +23,18 @@
 		"test:e2e": "jest --config ./test/jest-e2e.json",
 		"docker:bash": "docker exec -it node bash",
 		"docker:dev": "export DOCKER_TARGET=development && docker compose up",
+		"docker:prod": "export DOCKER_TARGET=production && docker compose up",
 		"prisma:studio": "yarn prisma studio",
 		"prisma:generate": "yarn prisma generate",
 		"prisma:migrate:dev": "yarn prisma migrate dev --preview-feature",
 		"prisma:migrate:new:dev": "yarn prisma migrate dev --name",
-		"prisma:seed": "yarn prisma db seed --preview-feature"
+		"prisma:seed": "yarn prisma db seed --preview-feature",
+		"mk:start": "minikube start",
+		"mk:tunnel": "minikube tunnel",
+		"deploy:dev": "kubectl apply -f blocksight-deployment.yaml && kubectl apply -f blocksight-configmap.yaml",
+		"deploy:delete": "kubectl delete -f blocksight-deployment.yaml && kubectl delete -f blocksight-configmap.yaml",
+		"install:psql:dev": "helm install postgresql-development bitnami/postgresql --set global.postgresql.auth.username=node_api --set global.postgresql.auth.password=node_api_password --set global.postgresql.auth.database=node_api",
+		"install:blocksight:dev": "helm package . && helm install blocksight-chart-1.0.0.tgz"
 	},
 	"dependencies": {
 		"@nestjs/common": "^7.5.1",

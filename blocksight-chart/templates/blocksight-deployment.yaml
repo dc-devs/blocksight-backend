@@ -1,0 +1,133 @@
+apiVersion: {{ .Values.deployment.apiVersion }}
+kind: Deployment
+# part 1: metadata (contains labels)
+metadata:
+  name: {{ .Values.deployment.name }}
+  labels:
+    app: {{ .Values.labels.app }}
+    name: {{ .Values.labels.name }}
+    version: {{ .Values.labels.version }}
+    component: {{ .Values.labels.component }}
+# part 2: specification (contains selectors)
+spec:
+  replicas: {{ .Values.deployment.spec.replicas }}
+  selector:
+    # make connection with matchLabels
+    # so deployment knows which pods belong to it
+    matchLabels:
+      app: {{ .Values.labels.app }}
+  strategy:
+    type: {{ .Values.deployment.spec.strategy.type }}
+  # pod configuration
+  template:
+     # part 1: metadata (contains labels)
+    metadata:
+      labels:
+        app: {{ .Values.labels.app }}
+        name: {{ .Values.labels.name }}
+        version: {{ .Values.labels.version }}
+        component: {{ .Values.labels.component }}
+    # part 2: specification (contains selectors)
+    # Pod Blueprint
+    spec:
+      restartPolicy: {{ .Values.deployment.spec.restartPolicy }}
+      containers:
+      - name: {{ .Values.labels.name }}
+        image: {{ .Values.deployment.spec.containers.image }}
+        imagePullPolicy: {{ .Values.deployment.spec.containers.imagePullPolicy }}
+        ports:
+        - containerPort: {{ .Values.deployment.spec.containers.ports.containerPortApp }}
+        # - containerPort: {{ .Values.deployment.spec.containers.ports.containerPortPrisma }}
+        env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: DATABASE_URL
+          - name: COINBASE_PRO_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: COINBASE_PRO_API_KEY
+          - name: COINBASE_PRO_API_PASSPHRASE
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: COINBASE_PRO_API_PASSPHRASE
+          - name: COINBASE_PRO_API_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: COINBASE_PRO_API_SECRET
+          - name: COIN_MARKET_CAP_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: COIN_MARKET_CAP_API_KEY
+          - name: COVALENT_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: COVALENT_API_KEY
+          - name: ETHEREUM_CHAIN_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: ETHEREUM_CHAIN_ID
+          - name: ETHERSCAN_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: ETHERSCAN_API_KEY
+          - name: INFURA_PROJECT_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: INFURA_PROJECT_ID
+          - name: INFURA_PROJECT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: INFURA_PROJECT_SECRET
+          - name: INFURA_RPC_URL
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: INFURA_RPC_URL
+          - name: LUNACRUSH_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: LUNACRUSH_API_KEY
+          - name: NOMICS_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secret.name }}
+                key: NOMICS_API_KEY
+---
+apiVersion: {{ .Values.service.apiVersion }}
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  labels:
+    app: {{ .Values.labels.app }}
+    name: {{ .Values.labels.name }}
+    version: {{ .Values.labels.version }}
+    component: {{ .Values.labels.component }}
+spec:
+  selector:
+    app: {{ .Values.labels.app }}
+  type: {{ .Values.service.spec.type }}
+  ports:
+    - protocol: {{ .Values.service.spec.ports.protocol }}
+      name: {{ .Values.service.spec.ports.name }}
+      port: {{ .Values.service.spec.ports.port }} # Service Port
+      targetPort: {{ .Values.service.spec.ports.targetPort }} # Container Port -> containerPort
+      # between 30000 - 32767
+      nodePort: {{ .Values.service.spec.ports.nodePort }} # External Port
+    # - protocol: TCP
+    #   name: tcp-5555
+    #   port: 5555 # Service Port
+    #   targetPort: 5555 # Container Port -> containerPort
+    #   # between 30000 - 32767
+    #   nodePort: 30002
