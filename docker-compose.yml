@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  database-development:
+    container_name: 'database-development'
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=node_api
+      - POSTGRES_PASSWORD=node_api_password
+      - POSTGRES_DATABASE=node_api
+    ports:
+      - '5432:5432'
+    volumes: 
+      - database-development:/var/lib/postgresql/data
+  database-test:
+    container_name: 'database-test'
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=node_api
+      - POSTGRES_PASSWORD=node_api_password
+      - POSTGRES_DB=node_api
+    ports:
+      - '5433:5432'
+    volumes: 
+      - database-test:/var/lib/postgresql/data
+volumes:
+  database-test:
+    driver: local
+  database-development:
+    driver: local

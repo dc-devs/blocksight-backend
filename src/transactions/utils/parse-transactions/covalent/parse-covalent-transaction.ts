@@ -1,7 +1,7 @@
-import CovalentTransaction from 'src/interfaces/covalent-transaction-interface';
-import Transaction from 'src/interfaces/transaction-interface';
-import contractAddressExchangeMap from 'src/mock-db/contract-address-exchange-map';
-import contractAddressParseEventlogsMap from 'src/mock-db/contract-address-parse-logs-map';
+import CovalentTransaction from '../../../../interfaces/covalent-transaction-interface';
+import Transaction from '../../../../interfaces/transaction-interface';
+import contractAddressExchangeMap from '../../../../mock-db/contract-address-exchange-map';
+import contractAddressParseEventlogsMap from '../../../../mock-db/contract-address-parse-logs-map';
 
 const parseUniswapTransaction = (
 	transaction: CovalentTransaction

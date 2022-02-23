@@ -8,38 +8,56 @@ import {
 	Delete,
 	Controller,
 	ParseIntPipe,
+	NotFoundException,
 } from '@nestjs/common';
 import { User, Prisma } from '@prisma/client';
 import { UsersService } from '../service/users.service';
-import { UpdateUserDto } from '../dto/update-user.dto';
+import { CreateUserInput } from '../dto/create-user.input';
+import { UpdateUserInput } from '../dto/update-user.input';
 
 @Controller('users')
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Post()
-	create(@Body() data: Prisma.UserCreateInput) {
-		return this.usersService.create(data);
+	create(@Body() user: CreateUserInput): Promise<User> {
+		return this.usersService.create(user);
 	}
 
 	@Get(':id')
-	findOne(@Param('id', ParseIntPipe) id: number): Promise<User | null> {
-		return this.usersService.findOne(id);
+	findOne(
+		@Param('id', ParseIntPipe) id: number
+	): string | Promise<User | null> {
+		console.log(`findOne: ${id}`);
+		return `findOne: ${id}`;
+
+		// const user = this.usersService.findOne(id);
+
+		// if(!user) {
+		// 	throw new NotFoundException(`User #${id} not found.`);
+		// }
+
+		// return
 	}
 
 	@Get()
 	findAll(@Query() query) {
-		return this.usersService.findAll(query);
+		console.log(`findAll: ${query}`);
+		const users = this.usersService.findAll(query);
+		return users;
 	}
 
 	@Put(':id')
-	update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-		return 'update user';
+	update(@Param('id') id: string, @Body() updateUserDto: UpdateUserInput) {
+		console.log(`update: ${id}:${updateUserDto}`);
+		return `update: ${id}:${updateUserDto}`;
 		// return this.usersService.update(+id, updateUserDto);
 	}
 
 	@Delete(':id')
 	remove(@Param('id') id: string) {
-		return this.usersService.remove(+id);
+		console.log(`delete: ${id}`);
+		return `delete: ${id}`;
+		// return this.usersService.remove(+id);
 	}
 }

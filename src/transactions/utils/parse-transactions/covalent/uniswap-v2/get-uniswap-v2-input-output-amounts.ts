@@ -1,5 +1,5 @@
 import { BigNumber } from 'bignumber.js';
-import CovalentLogEvent from 'src/interfaces/covalent-log-event-interface';
+import CovalentLogEvent from '../../../../../interfaces/covalent-log-event-interface';
 import getDecodedLogEvent from '../utils/get-decoded-log-event';
 
 const getUniswapV2InputOutputAmounts = (

@@ -1,5 +1,5 @@
-import CovalentLogEvent from 'src/interfaces/covalent-log-event-interface';
-import CovalentLogEventDecoded from 'src/interfaces/covalent-log-event-decoded-interface';
+import CovalentLogEvent from '../../../../../interfaces/covalent-log-event-interface';
+import CovalentLogEventDecoded from '../../../../../interfaces/covalent-log-event-decoded-interface';
 
 const getDecodedLogEvent = (
 	logEvents: CovalentLogEvent[],

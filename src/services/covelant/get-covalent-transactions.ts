@@ -1,6 +1,6 @@
 import axios from 'axios';
-import TransactionsQueryParams from 'src/transactions/interfaces/transactions-query-params-interface';
-import CovalentTransaction from 'src/interfaces/covalent-transaction-interface';
+import TransactionsQueryParams from '../../transactions/interfaces/transactions-query-params-interface';
+import CovalentTransaction from '../../interfaces/covalent-transaction-interface';
 
 const getCovalentTransactions = async ({
 	filter,

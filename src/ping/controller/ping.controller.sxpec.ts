@@ -12,7 +12,15 @@ describe('PingController', () => {
 		controller = module.get<PingController>(PingController);
 	});
 
-	it('should be defined', () => {
-		expect(controller).toBeDefined();
+	describe('ping', () => {
+		it('should be defined', () => {
+			expect(controller.ping).toBeDefined();
+		});
+
+		describe('when called', () => {
+			it("should return 'pong'", () => {
+				expect(controller.ping()).toContainEqual({ message: 'pong' });
+			});
+		});
 	});
 });

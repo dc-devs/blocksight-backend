@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import TransactionsQueryParams from 'src/transactions/interfaces/transactions-query-params-interface';
-import getCovelantTransactions from 'src/services/covelant/get-covalent-transactions';
-import parseCovalentTransaction from 'src/transactions/utils/parse-transactions/covalent/parse-covalent-transaction';
+import TransactionsQueryParams from '../transactions/interfaces/transactions-query-params-interface';
+import getCovelantTransactions from '../services/covelant/get-covalent-transactions';
+import parseCovalentTransaction from '../transactions/utils/parse-transactions/covalent/parse-covalent-transaction';
 
 @Injectable()
 export class TransactionsService {

@@ -8,7 +8,7 @@ export class UsersService {
 
 	async create(data: Prisma.UserCreateInput): Promise<User> {
 		const { email, password } = data;
-		const emailLowerCase = email && email.toLowerCase();
+		const emailLowerCase = email.toLowerCase();
 
 		return this.prisma.user.create({
 			data: {
@@ -18,11 +18,11 @@ export class UsersService {
 		});
 	}
 
-	async findOne(id: number): Promise<User | null> {
+	async findOne(
+		userWhereUniqueInput: Prisma.UserWhereUniqueInput
+	): Promise<User | null> {
 		return await this.prisma.user.findUnique({
-			where: {
-				id,
-			},
+			where: userWhereUniqueInput,
 		});
 	}
 
@@ -30,6 +30,7 @@ export class UsersService {
 		let results;
 
 		if (query) {
+			// TODO: Handle with Pipes?
 			query.id = query.id && Number(query.id);
 
 			results = await this.prisma.user.findMany({

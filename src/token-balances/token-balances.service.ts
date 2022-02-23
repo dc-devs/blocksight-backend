@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import getTokenBalances from 'src/services/covelant/get-token-balances';
+import getTokenBalances from '../services/covelant/get-token-balances';
 import TokenBalancessQueryParams from './interfaces/token-balances-query-params-interface';
 import getTokenBalancesFormatted from './utils/get-token-balances-formatted';
 import getTotalAssetValue from './utils/get-total-asset-value';
