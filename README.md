@@ -93,14 +93,52 @@ This project holds the backend code for BlockSight. The frontend code can be fou
 ### Installation
 
 1. Clone the repo
+
     ```sh
     git clone git@github.com:DWC01/blocksight-backend.git
     ```
+
 2. Install NPM packages
     ```sh
     yarn
     ```
+
+### Quick Start
+
+1. Start MiniKube (VM for spinning up local nodes)
+
+    ```sh
+     yarn mk:start
+    ```
+
+2. Startup the Database
+
+    ```sh
+    yarn install:psql:dev
+    ```
+
+    Export Password:
+
+    ```sh
+    export POSTGRES_PASSWORD=$(kubectl get secret --namespace default postgresql-development -o jsonpath="{.data.postgresql-password}" | base64 --decode)
+    ```
+
+    Forward Port to host:
+
+    ```sh
+    kubectl port-forward --namespace default svc/postgresql-development 5432:5432 &
+    PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U postgres -d postgres -p 5432
+    ```
+
+3. yarn start:dev
+
+### Slow Start (local K8s development)
+
 3. Deploy Kubernetes locally
+
+    ```sh
+    cd blocksight-chart
+    ```
 
     ```sh
     yarn deploy:dev

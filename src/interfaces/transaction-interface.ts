@@ -1,4 +1,4 @@
-import CovalentLogEvent from 'src/interfaces/covalent-log-event-interface';
+import CovalentLogEvent from '../interfaces/covalent-log-event-interface';
 
 interface Transaction {
 	blockSignedAt: string;

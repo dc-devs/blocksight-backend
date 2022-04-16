@@ -1,36 +1,28 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, UserRole } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const main = async () => {
-	await prisma.user.upsert({
-		where: { email: 'alice@prisma.io' },
-		update: {},
-		create: {
-			email: `alice@prisma.io`,
-			firstName: 'Alice',
-			lastName: 'McTesterson',
-		},
-	});
-
-	await prisma.user.upsert({
-		where: { email: 'bob@prisma.io' },
-		update: {},
-		create: {
-			email: `bob@prisma.io`,
-			firstName: 'Bob',
-			lastName: 'McTesterson',
-		},
-	});
-
-	await prisma.user.upsert({
-		where: { email: 'david@prisma.io' },
-		update: {},
-		create: {
-			email: `david@prisma.io`,
-			firstName: 'David',
-			lastName: 'Christian',
-			// role: USER,
-		},
+	await prisma.user.createMany({
+		data: [
+			{
+				email: `alice@prisma.io`,
+				password: '12345678',
+			},
+			{
+				email: `bob@prisma.io`,
+				password: '12345678',
+			},
+			{
+				email: `david@prisma.io`,
+				password: '12345678',
+				role: UserRole.ADMIN,
+			},
+			{
+				email: `davidc@prisma.io`,
+				password: '12345678',
+				role: UserRole.SUPER_ADMIN,
+			},
+		],
 	});
 };
 
