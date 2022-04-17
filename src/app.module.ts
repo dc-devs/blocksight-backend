@@ -9,13 +9,23 @@ import { TransfersModule } from './transfers/transfers.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { PingController } from './ping/controller/ping.controller';
 
+const environment = process.env.NODE_ENV || 'development';
+
+console.log('');
+console.log('[BlockSight] Environment:', environment);
+console.log('[Blocksight] Loading: ', ['.env', `.${environment}.env`]);
+console.log('');
+
 @Module({
 	imports: [
 		UsersModule,
 		TokenBalancesModule,
 		TransfersModule,
 		TransactionsModule,
-		ConfigModule.forRoot({ isGlobal: true }),
+		ConfigModule.forRoot({
+			isGlobal: true,
+			envFilePath: ['.env', `.${environment}.env`],
+		}),
 	],
 	controllers: [PingController],
 	providers: [AppService, PrismaService],
