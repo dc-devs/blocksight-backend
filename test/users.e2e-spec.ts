@@ -1,6 +1,7 @@
 import * as request from 'supertest';
-import { Prisma } from '@prisma/client';
-import initializeTestApp from './config/initializeTestApp';
+import initializeTestApp from './init/initializeTestApp';
+import { CreateUserInput } from '../src/users/dto/create-user.input';
+
 import { INestApplication, HttpStatus } from '@nestjs/common';
 
 describe('Users', () => {
@@ -16,19 +17,27 @@ describe('Users', () => {
 
 	describe('Create', () => {
 		describe('when passed an email and a password', () => {
+			const user = {
+				email: 'test-1@gmail.com',
+				password: '12345678',
+			};
+
 			it('should create a new user', () => {
-				const user = {
+				const expectedUser = expect.objectContaining({
 					email: 'test-1@gmail.com',
 					password: '12345678',
-				};
+					role: 'USER',
+					createdAt: expect.any(String),
+					updatedAt: expect.any(String),
+				});
 
 				return request(app.getHttpServer())
 					.post('/users')
-					.send(user as Prisma.UserCreateInput)
-					.expect(HttpStatus.CREATED);
-				// .then(({ body }) => {
-				// 	const expectedUser = jasmine.objectContaining({});
-				// });
+					.send(user as CreateUserInput)
+					.expect(HttpStatus.CREATED)
+					.then(({ body }) => {
+						expect(body).toEqual(expectedUser);
+					});
 			});
 		});
 	});

@@ -34,8 +34,8 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 .env
-.test.env
-.development.env
-.production.env
+.env.test
+.env.development
+.env.production
 
 blocksight-chart/values-env.yaml

@@ -24,7 +24,7 @@ console.log('');
 		TransactionsModule,
 		ConfigModule.forRoot({
 			isGlobal: true,
-			envFilePath: ['.env', `.${environment}.env`],
+			envFilePath: ['.env', `.env.${environment}`],
 		}),
 	],
 	controllers: [PingController],
