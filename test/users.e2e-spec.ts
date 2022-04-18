@@ -17,13 +17,17 @@ describe('Users', () => {
 
 	describe('Create', () => {
 		describe('when passed an email and a password', () => {
-			const user = {
-				email: 'test-1@gmail.com',
-				password: '12345678',
-			};
+			let newUser;
 
-			it('should create a new user', () => {
-				const expectedUser = expect.objectContaining({
+			beforeEach(() => {
+				newUser = {
+					email: 'test-1@gmail.com',
+					password: '12345678',
+				};
+			});
+
+			it('should create a new user', async () => {
+				const expectedUserResponse = expect.objectContaining({
 					email: 'test-1@gmail.com',
 					password: '12345678',
 					role: 'USER',
@@ -31,13 +35,12 @@ describe('Users', () => {
 					updatedAt: expect.any(String),
 				});
 
-				return request(app.getHttpServer())
+				const reponse = await request(app.getHttpServer())
 					.post('/users')
-					.send(user as CreateUserInput)
-					.expect(HttpStatus.CREATED)
-					.then(({ body }) => {
-						expect(body).toEqual(expectedUser);
-					});
+					.send(newUser as CreateUserInput);
+
+				expect(reponse.statusCode).toEqual(HttpStatus.CREATED);
+				expect(reponse.body).toEqual(expectedUserResponse);
 			});
 		});
 	});
