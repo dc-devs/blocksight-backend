@@ -1,8 +1,14 @@
+import { User, Prisma } from '@prisma/client';
 import * as request from 'supertest';
 import initializeTestApp from './init/initializeTestApp';
 import { CreateUserInput } from '../src/users/dto/create-user.input';
-
 import { INestApplication, HttpStatus } from '@nestjs/common';
+
+const enum Validation {
+	EMAIL_IS_EMAIL = 'email must be an email',
+	PASSWORD_IS_STRING = 'password must be a string',
+	PASSWORD_MIN_LENGTH = 'password must be longer than or equal to 8 characters',
+}
 
 describe('Users', () => {
 	let app: INestApplication;
@@ -15,7 +21,37 @@ describe('Users', () => {
 		await app.close();
 	});
 
-	describe('Create', () => {
+	// TODO: Update the 'expectedUserObject' to be more dynamic in nature,
+	// perhaps a custom matcher as well
+	// place in helpers folder
+	describe('Get all [Get /]', () => {
+		describe('when route requested with no query parameters', () => {
+			it('should return all users', async () => {
+				const expectedUserObject = expect.objectContaining({
+					id: expect.any(Number),
+					email: expect.any(String),
+					password: expect.any(String),
+					role: expect.any(String),
+					createdAt: expect.any(String),
+					updatedAt: expect.any(String),
+				});
+				const response = await request(app.getHttpServer()).get(
+					'/users'
+				);
+
+				expect(response.statusCode).toEqual(HttpStatus.OK);
+				expect(response.body).toHaveLength(4);
+				expect(response.body).toEqual(
+					expect.arrayContaining([expectedUserObject])
+				);
+			});
+		});
+	});
+
+	it.todo('Get one [Get /:id]');
+
+	// TODO: Add validation cases where data doesnt exist, and extra data is sent
+	describe('Create [Post /]', () => {
 		describe('when passed an email and a password', () => {
 			let newUser;
 
@@ -35,18 +71,80 @@ describe('Users', () => {
 					updatedAt: expect.any(String),
 				});
 
-				const reponse = await request(app.getHttpServer())
+				const response = await request(app.getHttpServer())
 					.post('/users')
 					.send(newUser as CreateUserInput);
 
-				expect(reponse.statusCode).toEqual(HttpStatus.CREATED);
-				expect(reponse.body).toEqual(expectedUserResponse);
+				expect(response.statusCode).toEqual(HttpStatus.CREATED);
+				expect(response.body).toEqual(expectedUserResponse);
+			});
+		});
+
+		describe('when passed no data', () => {
+			let newUser;
+
+			beforeEach(() => {
+				newUser = {};
+			});
+
+			it('should return an error', async () => {
+				const response = await request(app.getHttpServer())
+					.post('/users')
+					.send(newUser as CreateUserInput);
+
+				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+				expect(response.body.message).toEqual([
+					Validation.EMAIL_IS_EMAIL,
+					Validation.PASSWORD_MIN_LENGTH,
+					Validation.PASSWORD_IS_STRING,
+				]);
+			});
+		});
+
+		describe('when passed only email', () => {
+			let newUser;
+
+			beforeEach(() => {
+				newUser = {
+					email: 'david-test-2@gmail.com',
+				};
+			});
+
+			it('should return an error', async () => {
+				const response = await request(app.getHttpServer())
+					.post('/users')
+					.send(newUser as CreateUserInput);
+
+				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+				expect(response.body.message).toEqual([
+					Validation.PASSWORD_MIN_LENGTH,
+					Validation.PASSWORD_IS_STRING,
+				]);
+			});
+		});
+
+		describe('when passed only password', () => {
+			let newUser;
+
+			beforeEach(() => {
+				newUser = {
+					password: '12345678',
+				};
+			});
+
+			it('should return an error', async () => {
+				const response = await request(app.getHttpServer())
+					.post('/users')
+					.send(newUser as CreateUserInput);
+
+				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+				expect(response.body.message).toEqual([
+					Validation.EMAIL_IS_EMAIL,
+				]);
 			});
 		});
 	});
 
-	it.todo('Get all [Get /]');
-	it.todo('Get one [Get /:id]');
 	it.todo('Update one [Patch /:id]');
 	it.todo('Delete one [Delete /:id]');
 

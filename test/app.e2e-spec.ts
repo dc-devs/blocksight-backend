@@ -16,13 +16,11 @@ describe('App (e2e)', () => {
 	});
 
 	describe('/ping', () => {
-		it("should return 'pong'", () => {
-			return request(app.getHttpServer())
-				.get('/ping')
-				.expect(HttpStatus.OK)
-				.then(({ body }) => {
-					expect(body).toEqual({ message: 'pong' });
-				});
+		it("should return 'pong'", async () => {
+			const response = await request(app.getHttpServer()).get('/ping');
+
+			expect(response.statusCode).toEqual(HttpStatus.OK);
+			expect(response.body).toEqual({ message: 'pong' });
 		});
 	});
 });

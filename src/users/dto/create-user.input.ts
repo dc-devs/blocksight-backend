@@ -1,10 +1,11 @@
 // https://docs.nestjs.com/controllers#request-payloads
-import { IsString } from 'class-validator';
+import { IsString, IsEmail, MinLength } from 'class-validator';
 
 export class CreateUserInput {
-	@IsString()
+	@IsEmail()
 	email: string;
 
 	@IsString()
+	@MinLength(8)
 	password: string;
 }
