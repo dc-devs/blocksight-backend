@@ -748,6 +748,11 @@
     "@ethersproject/properties" "^5.5.0"
     "@ethersproject/strings" "^5.5.0"
 
+"@faker-js/faker@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-6.2.0.tgz#6d836ee8a580589b60c9088a3bdb0b669a468825"
+  integrity sha512-3kIcQ+aTr3I+LqDbJwbINFk5oA+a63LH57GPJt9PM8AWqN7nCwnubuSiWosHYQlyf2NicrvpzXQxllyLeEdpyQ==
+
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.3"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.9.3.tgz#f2564c744b387775b436418491f15fce6601f63e"

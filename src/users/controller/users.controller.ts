@@ -14,21 +14,15 @@ import { User, Prisma } from '@prisma/client';
 import { UsersService } from '../service/users.service';
 import { CreateUserInput } from '../dto/create-user.input';
 import { UpdateUserInput } from '../dto/update-user.input';
+import { GetUsersInput } from '../dto/get-users.input';
 
 @Controller('users')
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Get()
-	findAll(@Query() query) {
-		console.log(`findAll: ${query}`);
-		const users = this.usersService.findAll(query);
-		return users;
-	}
-
-	@Post()
-	create(@Body() user: CreateUserInput): Promise<User> {
-		return this.usersService.create(user);
+	findAll(@Query() query: GetUsersInput) {
+		return this.usersService.findAll(query);
 	}
 
 	@Get(':id')
@@ -45,6 +39,11 @@ export class UsersController {
 		// }
 
 		// return
+	}
+
+	@Post()
+	create(@Body() user: CreateUserInput): Promise<User> {
+		return this.usersService.create(user);
 	}
 
 	@Put(':id')

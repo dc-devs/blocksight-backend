@@ -24,13 +24,14 @@
 		"test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
 		"docker:bash": "docker exec -it node bash",
 		"prisma:studio": "yarn prisma studio",
-		"prisma:seed": "yarn prisma db seed",
+		"prisma:seed": "export NODE_ENV=development && yarn prisma db seed",
 		"mk:start": "minikube start",
 		"mk:tunnel": "minikube tunnel",
 		"deploy:dev": "helm package . && helm install blocksight-development blocksight-chart-1.0.0.tgz",
 		"deploy:delete": "helm uninstall blocksight-development",
 		"install:psql:dev": "helm install postgresql-development bitnami/postgresql --set global.postgresql.auth.username=node_api --set global.postgresql.auth.password=node_api_password --set global.postgresql.auth.database=node_api",
-		"install:blocksight:dev": "helm package . && helm install blocksight-chart-1.0.0.tgz"
+		"install:blocksight:dev": "helm package . && helm install blocksight-chart-1.0.0.tgz",
+		"db:reset:dev": "dotenv -e .development.test prisma migrate reset --force"
 	},
 	"dependencies": {
 		"@nestjs/common": "^8.3.1",
@@ -56,6 +57,7 @@
 		"rxjs-compat": "^6.6.7"
 	},
 	"devDependencies": {
+		"@faker-js/faker": "^6.2.0",
 		"@nestjs/cli": "^8.2.1",
 		"@nestjs/schematics": "^8.0.7",
 		"@nestjs/testing": "^8.3.1",

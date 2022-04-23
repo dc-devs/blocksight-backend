@@ -34,28 +34,69 @@ describe('Users', () => {
 				);
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(response.body).toHaveLength(4);
-				
-				response.body.forEach(user => {
+				expect(response.body).toHaveLength(55);
+
+				response.body.forEach((user) => {
 					expect(user).toEqual(expectedUserObject);
 					expect(user).not.toHaveProperty(UserProperties.PASSWORD);
 				});
 			});
 		});
-		
+
 		describe('when route requested with query parameters', () => {
-			describe('when route requested with query parameters', () => {
-				it('should return all users', async () => {
+			describe('and the where param contains aims to fetch users with role equal to', () => {
+				it('should return all users with that email', async () => {
+					const role = 'USER';
 					const response = await request(app.getHttpServer()).get(
-						'/users'
+						`/users?where={"role":{"equals":"${role}"}}`
 					);
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
-					expect(response.body).toHaveLength(4);
-					
-					response.body.forEach(user => {
+					expect(response.body).toHaveLength(53);
+
+					response.body.forEach((user) => {
 						expect(user).toEqual(expectedUserObject);
-						expect(user).not.toHaveProperty(UserProperties.PASSWORD);
+						expect(user.role).toEqual(role);
+					});
+				});
+			});
+			describe('and the skip and take params are used to implement pagination', () => {
+				describe('and the skip param is 0, and the take param is 10', () => {
+					it('should return the first 10 users', async () => {
+						const skip = 0;
+						const take = 10;
+						const response = await request(app.getHttpServer()).get(
+							`/users?skip=${skip}&take=${take}`
+						);
+
+						expect(response.statusCode).toEqual(HttpStatus.OK);
+						expect(response.body).toHaveLength(10);
+
+						response.body.forEach((user) => {
+							expect(user).toEqual(expectedUserObject);
+						});
+						
+						const lastUser = response.body[response.body.length - 1];
+						expect(lastUser.id).toEqual(skip + take);
+					});
+				});
+				describe('and the skip param is 10, and the take param is 10', () => {
+					it('should return the first 10 users', async () => {
+						const skip = 10;
+						const take = 10;
+						const response = await request(app.getHttpServer()).get(
+							`/users?skip=${skip}&take=${take}`
+						);
+
+						expect(response.statusCode).toEqual(HttpStatus.OK);
+						expect(response.body).toHaveLength(10);
+
+						response.body.forEach((user) => {
+							expect(user).toEqual(expectedUserObject);
+						});
+						
+						const lastUser = response.body[response.body.length - 1];
+						expect(lastUser.id).toEqual(skip + take);
 					});
 				});
 			});

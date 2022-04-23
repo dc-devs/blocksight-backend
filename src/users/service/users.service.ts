@@ -12,16 +12,16 @@ export class UsersService {
 		skip?: number;
 		take?: number;
 		cursor?: Prisma.UserWhereUniqueInput;
-		where?: Prisma.UserWhereInput;
+		where?: string;
 		orderBy?: Prisma.UserOrderByWithRelationInput;
 	}): Promise<Partial<User>[]> {
-		const { skip, take, cursor, where, orderBy } = params;
+		const { skip, take, where, orderBy } = params;
+		const whereClause =  where && JSON.parse(where);
 
 		return this.prisma.user.findMany({
 			skip,
 			take,
-			cursor,
-			where,
+			where: whereClause,
 			orderBy,
 			select: {
 				id: true,

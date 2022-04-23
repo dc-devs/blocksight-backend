@@ -1,5 +1,22 @@
+import { faker } from '@faker-js/faker';
 import { PrismaClient, UserRole } from '@prisma/client';
 const prisma = new PrismaClient();
+
+let users = [];
+let count = 1;
+let userCount = 50;
+
+while (count <= userCount) {
+	const user = {
+		email: faker.internet.email(),
+		password: faker.internet.password(),
+	};
+
+	users.push(user);
+	count += 1;
+}
+
+console.log(users);
 
 const main = async () => {
 	await prisma.user.createMany({
@@ -13,6 +30,10 @@ const main = async () => {
 				password: '12345678',
 			},
 			{
+				email: `steve@prisma.io`,
+				password: '12345678',
+			},
+			{
 				email: `david@prisma.io`,
 				password: '12345678',
 				role: UserRole.ADMIN,
@@ -22,6 +43,7 @@ const main = async () => {
 				password: '12345678',
 				role: UserRole.SUPER_ADMIN,
 			},
+			...users,
 		],
 	});
 };
