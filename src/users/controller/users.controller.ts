@@ -19,6 +19,13 @@ import { UpdateUserInput } from '../dto/update-user.input';
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
+	@Get()
+	findAll(@Query() query) {
+		console.log(`findAll: ${query}`);
+		const users = this.usersService.findAll(query);
+		return users;
+	}
+
 	@Post()
 	create(@Body() user: CreateUserInput): Promise<User> {
 		return this.usersService.create(user);
@@ -38,13 +45,6 @@ export class UsersController {
 		// }
 
 		// return
-	}
-
-	@Get()
-	findAll(@Query() query) {
-		console.log(`findAll: ${query}`);
-		const users = this.usersService.findAll(query);
-		return users;
 	}
 
 	@Put(':id')

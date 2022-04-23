@@ -3,11 +3,16 @@ import * as request from 'supertest';
 import initializeTestApp from './init/initializeTestApp';
 import { CreateUserInput } from '../src/users/dto/create-user.input';
 import { INestApplication, HttpStatus } from '@nestjs/common';
+import expectedUserObject from './helpers/expectedModelObjects/expectedUserObject';
 
 const enum Validation {
 	EMAIL_IS_EMAIL = 'email must be an email',
 	PASSWORD_IS_STRING = 'password must be a string',
 	PASSWORD_MIN_LENGTH = 'password must be longer than or equal to 8 characters',
+}
+
+const enum UserProperties {
+	PASSWORD = 'password',
 }
 
 describe('Users', () => {
@@ -21,29 +26,38 @@ describe('Users', () => {
 		await app.close();
 	});
 
-	// TODO: Update the 'expectedUserObject' to be more dynamic in nature,
-	// perhaps a custom matcher as well
-	// place in helpers folder
 	describe('Get all [Get /]', () => {
 		describe('when route requested with no query parameters', () => {
 			it('should return all users', async () => {
-				const expectedUserObject = expect.objectContaining({
-					id: expect.any(Number),
-					email: expect.any(String),
-					password: expect.any(String),
-					role: expect.any(String),
-					createdAt: expect.any(String),
-					updatedAt: expect.any(String),
-				});
 				const response = await request(app.getHttpServer()).get(
 					'/users'
 				);
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(response.body).toHaveLength(4);
-				expect(response.body).toEqual(
-					expect.arrayContaining([expectedUserObject])
-				);
+				
+				response.body.forEach(user => {
+					expect(user).toEqual(expectedUserObject);
+					expect(user).not.toHaveProperty(UserProperties.PASSWORD);
+				});
+			});
+		});
+		
+		describe('when route requested with query parameters', () => {
+			describe('when route requested with query parameters', () => {
+				it('should return all users', async () => {
+					const response = await request(app.getHttpServer()).get(
+						'/users'
+					);
+
+					expect(response.statusCode).toEqual(HttpStatus.OK);
+					expect(response.body).toHaveLength(4);
+					
+					response.body.forEach(user => {
+						expect(user).toEqual(expectedUserObject);
+						expect(user).not.toHaveProperty(UserProperties.PASSWORD);
+					});
+				});
 			});
 		});
 	});
