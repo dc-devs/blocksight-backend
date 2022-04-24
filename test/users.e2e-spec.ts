@@ -328,5 +328,16 @@ describe('Users', () => {
 		});
 	});
 
-	describe('Delete one [Delete /:id]', () => {});
+	describe('Delete one [Delete /:id]', () => {
+		describe('when passed a valid user id', () => {
+			it('should delete that user', async () => {
+				const id = 50;
+				const response = await request(app.getHttpServer()).delete(
+					`/users/${id}`
+				);
+
+				expect(response.body).toEqual(expectedUserObject);
+			});
+		});
+	});
 });

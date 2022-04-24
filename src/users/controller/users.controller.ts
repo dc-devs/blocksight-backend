@@ -52,8 +52,8 @@ export class UsersController {
 		let user;
 
 		try {
-	 		user = await this.usersService.update(id, updateUserInput);
-		} catch(e) {
+			user = await this.usersService.update(id, updateUserInput);
+		} catch (e) {
 			throw new BadRequestException(`Error updating user #${id}.`);
 		}
 
@@ -61,9 +61,7 @@ export class UsersController {
 	}
 
 	@Delete(':id')
-	remove(@Param('id') id: string) {
-		console.log(`delete: ${id}`);
-		return `delete: ${id}`;
-		// return this.usersService.remove(+id);
+	delete(@Param('id', ParseIntPipe) id: number): Promise<Partial<User>> {
+		return this.usersService.delete(id);
 	}
 }

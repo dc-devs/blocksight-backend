@@ -56,7 +56,7 @@ export class UsersService {
 			select,
 		});
 	}
-	
+
 	async update(
 		id: number,
 		updateUserInput: UpdateUserInput
@@ -70,7 +70,12 @@ export class UsersService {
 		});
 	}
 
-	async remove(id: number) {
-		return `This action removes a #${id} user`;
+	async delete(id: number): Promise<Partial<User>> {
+		return await this.prisma.user.delete({
+			where: {
+				id,
+			},
+			select
+		});
 	}
 }
