@@ -1,6 +1,6 @@
 import {
 	Get,
-	Put,
+	Patch,
 	Post,
 	Body,
 	Param,
@@ -21,36 +21,34 @@ export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Get()
-	findAll(@Query() query: GetUsersInput) {
+	findAll(@Query() query: GetUsersInput): Promise<Partial<User>[]> {
 		return this.usersService.findAll(query);
 	}
 
 	@Get(':id')
-	findOne(
+	async findOne(
 		@Param('id', ParseIntPipe) id: number
-	): string | Promise<User | null> {
-		console.log(`findOne: ${id}`);
-		return `findOne: ${id}`;
+	): Promise<Partial<User>> {
+		const user = await this.usersService.findOne(id);
 
-		// const user = this.usersService.findOne(id);
+		if (!user) {
+			throw new NotFoundException(`User #${id} not found.`);
+		}
 
-		// if(!user) {
-		// 	throw new NotFoundException(`User #${id} not found.`);
-		// }
-
-		// return
+		return user;
 	}
 
 	@Post()
-	create(@Body() user: CreateUserInput): Promise<User> {
+	create(@Body() user: CreateUserInput): Promise<Partial<User>> {
 		return this.usersService.create(user);
 	}
 
-	@Put(':id')
-	update(@Param('id') id: string, @Body() updateUserDto: UpdateUserInput) {
-		console.log(`update: ${id}:${updateUserDto}`);
-		return `update: ${id}:${updateUserDto}`;
-		// return this.usersService.update(+id, updateUserDto);
+	@Patch(':id')
+	update(
+		@Param('id', ParseIntPipe) id: number,
+		@Body() updateUserInput: Prisma.UserUpdateInput
+	) {
+		return this.usersService.update(id, updateUserInput);
 	}
 
 	@Delete(':id')

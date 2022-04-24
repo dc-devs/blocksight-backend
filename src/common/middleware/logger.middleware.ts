@@ -6,15 +6,18 @@ export class LoggerMiddleware implements NestMiddleware {
 	use(req: Request, res: Response, next: NextFunction) {
 		const { originalUrl } = req;
 		const { statusCode } = res;
+		const environment = process.env.NODE_ENV;
 
-		console.log(
-			`\n`,
-			{
-				statusCode,
-				originalUrl,
-			},
-			`\n`
-		);
+		if (environment != 'test') {
+			console.log(
+				`\n`,
+				{
+					statusCode,
+					originalUrl,
+				},
+				`\n`
+			);
+		}
 
 		next();
 	}

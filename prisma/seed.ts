@@ -16,8 +16,6 @@ while (count <= userCount) {
 	count += 1;
 }
 
-console.log(users);
-
 const main = async () => {
 	await prisma.user.createMany({
 		data: [

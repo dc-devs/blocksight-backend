@@ -1,8 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { User, Prisma } from '@prisma/client';
-import { PartialType } from '@nestjs/mapped-types';
+import { UpdateUserInput } from '../dto/update-user.input';
 import { CreateUserInput } from '../dto/create-user.input';
 import { PrismaService } from '../../prisma/prisma.service';
+
+const select = {
+	id: true,
+	email: true,
+	role: true,
+	createdAt: true,
+	updatedAt: true,
+};
 
 @Injectable()
 export class UsersService {
@@ -16,32 +24,27 @@ export class UsersService {
 		orderBy?: Prisma.UserOrderByWithRelationInput;
 	}): Promise<Partial<User>[]> {
 		const { skip, take, where, orderBy } = params;
-		const whereClause =  where && JSON.parse(where);
+		const whereClause = where && JSON.parse(where);
 
 		return this.prisma.user.findMany({
 			skip,
 			take,
 			where: whereClause,
 			orderBy,
-			select: {
-				id: true,
-				email: true,
-				role: true,
-				createdAt: true,
-				updatedAt: true,
-			},
+			select,
 		});
 	}
 
-	async findOne(
-		userWhereUniqueInput: Prisma.UserWhereUniqueInput
-	): Promise<User | null> {
+	async findOne(id: number): Promise<Partial<User> | null> {
 		return await this.prisma.user.findUnique({
-			where: userWhereUniqueInput,
+			where: {
+				id,
+			},
+			select,
 		});
 	}
 
-	async create(data: CreateUserInput): Promise<User> {
+	async create(data: CreateUserInput): Promise<Partial<User>> {
 		const { email, password } = data;
 		const emailLowerCase = email.toLowerCase();
 
@@ -50,33 +53,21 @@ export class UsersService {
 				email: emailLowerCase,
 				password,
 			},
+			select,
 		});
 	}
 
-	// async findAll(query?: any): Promise<User[]> {
-	// 	let results;
-
-	// 	if (query) {
-	// 		// TODO: Handle with Pipes?
-	// 		query.id = query.id && Number(query.id);
-
-	// 		results = await this.prisma.user.findMany({
-	// 			where: query,
-	// 		});
-	// 	} else {
-	// 		results = await this.prisma.user.findMany({
-	// 			where: query,
-	// 		});
-	// 	}
-
-	// 	return results;
-	// }
-
-	// update(id: number, updateUserDto: UpdateUserDto) {
-	// 	return `This action updates a #${id} user`;
-	// }
-	async update(id: number) {
-		return `This action updates a #${id} user`;
+	async update(
+		id: number,
+		updateUserInput: Prisma.UserUpdateInput
+	): Promise<Partial<User>> {
+		return await this.prisma.user.update({
+			where: {
+				id,
+			},
+			data: updateUserInput,
+			select,
+		});
 	}
 
 	async remove(id: number) {

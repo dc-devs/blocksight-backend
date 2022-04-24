@@ -1,6 +1,18 @@
 // https://docs.nestjs.com/controllers#request-payloads
+import { IsString, IsEmail, IsOptional } from 'class-validator';
 
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateUserInput } from './create-user.input';
+export class UpdateUserInput {
+	@IsEmail()
+	@IsOptional()
+	email: string;
 
-export class UpdateUserInput extends PartialType(CreateUserInput) {}
+	@IsString()
+	@IsOptional()
+	password: string;
+
+	@IsString()
+	@IsOptional()
+	role: string;
+}
+
+export default UpdateUserInput;

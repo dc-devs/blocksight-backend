@@ -2,17 +2,19 @@ import { User, Prisma } from '@prisma/client';
 import * as request from 'supertest';
 import initializeTestApp from './init/initializeTestApp';
 import { CreateUserInput } from '../src/users/dto/create-user.input';
+import { UpdateUserInput } from '../src/users/dto/update-user.input';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import expectedUserObject from './helpers/expectedModelObjects/expectedUserObject';
+import errorMessagePropShouldNotExist from './helpers/errorMessagePropShouldNotExist';
+
+const enum UserProperties {
+	PASSWORD = 'password',
+}
 
 const enum Validation {
 	EMAIL_IS_EMAIL = 'email must be an email',
 	PASSWORD_IS_STRING = 'password must be a string',
 	PASSWORD_MIN_LENGTH = 'password must be longer than or equal to 8 characters',
-}
-
-const enum UserProperties {
-	PASSWORD = 'password',
 }
 
 describe('Users', () => {
@@ -43,6 +45,20 @@ describe('Users', () => {
 			});
 		});
 
+		describe('when route requested with an unexpected query parameter', () => {
+			it('should return with an unexpected parameter error', async () => {
+				const extraParam = 'extraParam';
+				const response = await request(app.getHttpServer()).get(
+					`/users?skip=10&take=10&${extraParam}=test`
+				);
+
+				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+				expect(response.body.message).toEqual([
+					errorMessagePropShouldNotExist(extraParam),
+				]);
+			});
+		});
+
 		describe('when route requested with query parameters', () => {
 			describe('and the where param contains aims to fetch users with role equal to', () => {
 				it('should return all users with that email', async () => {
@@ -56,6 +72,9 @@ describe('Users', () => {
 
 					response.body.forEach((user) => {
 						expect(user).toEqual(expectedUserObject);
+						expect(user).not.toHaveProperty(
+							UserProperties.PASSWORD
+						);
 						expect(user.role).toEqual(role);
 					});
 				});
@@ -74,9 +93,13 @@ describe('Users', () => {
 
 						response.body.forEach((user) => {
 							expect(user).toEqual(expectedUserObject);
+							expect(user).not.toHaveProperty(
+								UserProperties.PASSWORD
+							);
 						});
-						
-						const lastUser = response.body[response.body.length - 1];
+
+						const lastUser =
+							response.body[response.body.length - 1];
 						expect(lastUser.id).toEqual(skip + take);
 					});
 				});
@@ -93,9 +116,13 @@ describe('Users', () => {
 
 						response.body.forEach((user) => {
 							expect(user).toEqual(expectedUserObject);
+							expect(user).not.toHaveProperty(
+								UserProperties.PASSWORD
+							);
 						});
-						
-						const lastUser = response.body[response.body.length - 1];
+
+						const lastUser =
+							response.body[response.body.length - 1];
 						expect(lastUser.id).toEqual(skip + take);
 					});
 				});
@@ -103,9 +130,31 @@ describe('Users', () => {
 		});
 	});
 
-	it.todo('Get one [Get /:id]');
+	describe('Get one [Get /:id]', () => {
+		describe('when route requested with an id for user that does not exist', () => {
+			it('should return error not found', async () => {
+				const response = await request(app.getHttpServer()).get(
+					'/users/100'
+				);
 
-	// TODO: Add validation cases where data doesnt exist, and extra data is sent
+				expect(response.statusCode).toEqual(HttpStatus.NOT_FOUND);
+			});
+		});
+		describe('when route requested with an id for user that does exist', () => {
+			it('should return user', async () => {
+				const response = await request(app.getHttpServer()).get(
+					'/users/1'
+				);
+
+				expect(response.statusCode).toEqual(HttpStatus.OK);
+				expect(response.body).toEqual(expectedUserObject);
+				expect(response.body).not.toHaveProperty(
+					UserProperties.PASSWORD
+				);
+			});
+		});
+	});
+
 	describe('Create [Post /]', () => {
 		describe('when passed an email and a password', () => {
 			let newUser;
@@ -120,7 +169,6 @@ describe('Users', () => {
 			it('should create a new user', async () => {
 				const expectedUserResponse = expect.objectContaining({
 					email: 'test-1@gmail.com',
-					password: '12345678',
 					role: 'USER',
 					createdAt: expect.any(String),
 					updatedAt: expect.any(String),
@@ -200,182 +248,57 @@ describe('Users', () => {
 		});
 	});
 
-	it.todo('Update one [Patch /:id]');
-	it.todo('Delete one [Delete /:id]');
+	describe('Update one [Patch /:id]', () => {
+		describe('when passed a valid user id and udpate data', () => {
+			let updateUserInput;
 
-	// it('should be defined', () => {
-	// 	expect(service).toBeDefined();
-	// });
+			beforeEach(() => {
+				updateUserInput = {
+					email: 'test@gmail.com',
+					role: 'ADMIN',
+				};
+			});
 
-	// describe('findAll', () => {
-	// 	it('should be function', () => {
-	// 		expect(typeof service.findAll).toBe('function');
-	// 	});
+			it('should update user', async () => {
+				const id = 20;
+				const expectedUserResponse = expect.objectContaining({
+					id,
+					...updateUserInput,
+					createdAt: expect.any(String),
+					updatedAt: expect.any(String),
+				});
+				const response = await request(app.getHttpServer())
+					.patch(`/users/${id}`)
+					.send(updateUserInput as UpdateUserInput);
 
-	// 	describe('when passed no query params', () => {
-	// 		it('should return all of the users', async () => {
-	// 			const [error, results] = await to(service.findAll());
+				expect(response.statusCode).toEqual(HttpStatus.OK);
+				expect(response.body).toEqual(expectedUserResponse);
+			});
+		});
+		// describe('when a user tries to update invalid fields', () => {
+		// 	let updateUserInput;
 
-	// 			expect(error).toBe(null);
-	// 			expect(results.length).toBe(3);
-	// 		});
-	// 	});
+		// 	beforeEach(() => {
+		// 		updateUserInput = {
+		// 			email: 'test@gmail.com',
+		// 			role: 'ADMIN',
+		// 			password: '123456789',
+		// 			createdAt: '2022-04-23T23:05:10.681Z',
+		// 			updatedAt: '2022-04-23T23:05:10.682Z',
+		// 		};
+		// 	});
 
-	// 	describe('when passed a query', () => {
-	// 		describe('and the query param is for a unique attirbute', () => {
-	// 			describe("and the query param contains 'id'", () => {
-	// 				it('should return the expected user', async () => {
-	// 					const [error, results] = await to(
-	// 						service.findAll({ id: 1 })
-	// 					);
+		// 	it('should update user', async () => {
+		// 		const id = 20;
+		// 		const response = await request(app.getHttpServer())
+		// 			.patch(`/users/${id}`)
+		// 			.send(updateUserInput as UpdateUserInput);
 
-	// 					const result = results[0];
+		// 		expect(response.statusCode).toEqual(HttpStatus.OK);
+		// 		expect(response.body).toEqual({ id, ...updateUserInput });
+		// 	});
+		// });
+	});
 
-	// 					expect(error).toBe(null);
-	// 					expect(results.length).toBe(1);
-	// 					expect(result.id).toBe(1);
-	// 				});
-	// 			});
-
-	// 			describe("and the query param contains 'email'", () => {
-	// 				it('should return the expected user', async () => {
-	// 					const [error, results] = await to(
-	// 						service.findAll({ email: 'alice@prisma.io' })
-	// 					);
-
-	// 					const result = results[0];
-
-	// 					expect(error).toBe(null);
-	// 					expect(results.length).toBe(1);
-	// 					expect(result.email).toBe('alice@prisma.io');
-	// 				});
-	// 			});
-	// 		});
-
-	// 		describe('and the query param is not for a unique attirbute', () => {
-	// 			describe("and the query param contains 'role'", () => {
-	// 				it('should return the expected set of users', async () => {
-	// 					const [error, results] = await to(
-	// 						service.findAll({ role: 'USER' })
-	// 					);
-
-	// 					const result = results[0];
-
-	// 					expect(error).toBe(null);
-	// 					expect(results.length).toBe(3);
-	// 					expect(result.email).toBe('alice@prisma.io');
-	// 				});
-	// 			});
-	// 		});
-	// 	});
-	// });
-
-	// fdescribe('findOne', () => {
-	// 	it('should be function', () => {
-	// 		expect(typeof service.findOne).toBe('function');
-	// 	});
-
-	// 	describe("when passed an 'id'", () => {
-	// 		it('should return the expected user', async () => {
-	// 			const id = 1;
-	// 			const [error, result] = await to(service.findOne({ id }));
-
-	// 			expect(error).toBe(null);
-	// 			expect(result.id).toBe(1);
-	// 		});
-	// 	});
-
-	// 	describe("when passed an 'email'", () => {
-	// 		it('should return the expected user', async () => {
-	// 			const email = 'bob@prisma.io';
-	// 			const [error, result] = await to(service.findOne({ email }));
-	// 			console.log('[JEST]', result);
-	// 			expect(error).toBe(null);
-	// 			expect(result.email).toBe(email);
-	// 		});
-	// 	});
-	// });
-
-	// describe('create', () => {
-	// 	it('should be function', () => {
-	// 		expect(typeof service.create).toBe('function');
-	// 	});
-
-	// 	describe('when passed all required data to create a new user', () => {
-	// 		it('should create and return a new user', async () => {
-	// 			const userCreateInput = {
-	// 				email: 'david.w.christian@gmail.com',
-	// 				password: '12345678',
-	// 			};
-	// 			const [error, newUser] = await to(
-	// 				service.create(userCreateInput)
-	// 			);
-	// 			expect(error).toBe(null);
-
-	// 			expect(newUser.email).toBe('david.w.christian@gmail.com');
-	// 			expect(newUser.password).toBe('12345678');
-	// 			expect(newUser.firstName).toBe(null);
-	// 			expect(newUser.lastName).toBe(null);
-	// 			expect(newUser.role).toBe('USER');
-	// 		});
-	// 	});
-
-	// 	describe('when missing required data to create a new user', () => {
-	// 		describe('and is missing all the required data', () => {
-	// 			it('should throw an error', async () => {
-	// 				const userCreateInput = {
-	// 					email: null,
-	// 					password: null,
-	// 				};
-	// 				const [error, newUser] = await to(
-	// 					service.create(userCreateInput)
-	// 				);
-
-	// 				expect(error).not.toBeNull();
-	// 			});
-	// 		});
-
-	// 		describe('and is missing the email field', () => {
-	// 			it('should throw an error', async () => {
-	// 				const userCreateInput = {
-	// 					email: null,
-	// 					password: '12345678',
-	// 				};
-	// 				const [error, newUser] = await to(
-	// 					service.create(userCreateInput)
-	// 				);
-
-	// 				expect(error[0]).not.toBeNull();
-	// 			});
-	// 		});
-
-	// 		describe('and is missing the password field', () => {
-	// 			it('should throw an error', async () => {
-	// 				const userCreateInput = {
-	// 					email: 'david.w.christian@gmail.com',
-	// 					password: null,
-	// 				};
-	// 				const [error, newUser] = await to(
-	// 					service.create(userCreateInput)
-	// 				);
-
-	// 				expect(error).not.toBeNull();
-	// 			});
-	// 		});
-	// 	});
-
-	// 	describe('when tries to create a new user and a unique attirribute has already been used', () => {
-	// 		it('should return an error', async () => {
-	// 			const userCreateInput = {
-	// 				email: 'david.w.christian@gmail.com',
-	// 				password: '12345678',
-	// 			};
-	// 			const [error, newUser] = await to(
-	// 				service.create(userCreateInput)
-	// 			);
-
-	// 			expect(error).toBe(null);
-	// 		});
-	// 	});
-	// });
+	describe('Delete one [Delete /:id]', () => {});
 });
