@@ -56,16 +56,16 @@ export class UsersService {
 			select,
 		});
 	}
-
+	
 	async update(
 		id: number,
-		updateUserInput: Prisma.UserUpdateInput
+		updateUserInput: UpdateUserInput
 	): Promise<Partial<User>> {
 		return await this.prisma.user.update({
 			where: {
 				id,
 			},
-			data: updateUserInput,
+			data: updateUserInput as Prisma.UserUpdateInput,
 			select,
 		});
 	}

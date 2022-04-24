@@ -9,6 +9,7 @@ import {
 	Controller,
 	ParseIntPipe,
 	NotFoundException,
+	BadRequestException,
 } from '@nestjs/common';
 import { User, Prisma } from '@prisma/client';
 import { UsersService } from '../service/users.service';
@@ -44,11 +45,19 @@ export class UsersController {
 	}
 
 	@Patch(':id')
-	update(
+	async update(
 		@Param('id', ParseIntPipe) id: number,
-		@Body() updateUserInput: Prisma.UserUpdateInput
+		@Body() updateUserInput: UpdateUserInput
 	) {
-		return this.usersService.update(id, updateUserInput);
+		let user;
+
+		try {
+	 		user = await this.usersService.update(id, updateUserInput);
+		} catch(e) {
+			throw new BadRequestException(`Error updating user #${id}.`);
+		}
+
+		return user;
 	}
 
 	@Delete(':id')

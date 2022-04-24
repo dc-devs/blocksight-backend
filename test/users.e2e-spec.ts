@@ -5,16 +5,20 @@ import { CreateUserInput } from '../src/users/dto/create-user.input';
 import { UpdateUserInput } from '../src/users/dto/update-user.input';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import expectedUserObject from './helpers/expectedModelObjects/expectedUserObject';
-import errorMessagePropShouldNotExist from './helpers/errorMessagePropShouldNotExist';
 
 const enum UserProperties {
 	PASSWORD = 'password',
 }
 
 const enum Validation {
+	ROLE_SHOULD_NOT_EXIST = 'property role should not exist',
 	EMAIL_IS_EMAIL = 'email must be an email',
 	PASSWORD_IS_STRING = 'password must be a string',
 	PASSWORD_MIN_LENGTH = 'password must be longer than or equal to 8 characters',
+	PASSWORD_SHOULD_NOT_EXIST = 'property password should not exist',
+	CREATED_AT_SHOULD_NOT_EXIST = 'property createdAt should not exist',
+	UPDATED_AT_SHOULD_NOT_EXIST = 'property updatedAt should not exist',
+	EXTRA_PARAM_SHOULD_NOT_EXIST = 'property extraParam should not exist',
 }
 
 describe('Users', () => {
@@ -54,7 +58,7 @@ describe('Users', () => {
 
 				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
 				expect(response.body.message).toEqual([
-					errorMessagePropShouldNotExist(extraParam),
+					Validation.EXTRA_PARAM_SHOULD_NOT_EXIST,
 				]);
 			});
 		});
@@ -249,13 +253,60 @@ describe('Users', () => {
 	});
 
 	describe('Update one [Patch /:id]', () => {
-		describe('when passed a valid user id and udpate data', () => {
+		describe('when passed a valid user id and invalid udpate data', () => {
 			let updateUserInput;
 
 			beforeEach(() => {
 				updateUserInput = {
 					email: 'test@gmail.com',
 					role: 'ADMIN',
+					password: '12345678',
+					createdAt: '2022-04-23T23:05:10.681Z',
+					updatedAt: '2022-04-23T23:05:10.682Z',
+				};
+			});
+
+			it('should return a error', async () => {
+				const id = 20;
+				const response = await request(app.getHttpServer())
+					.patch(`/users/${id}`)
+					.send(updateUserInput as UpdateUserInput);
+
+				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+				expect(response.body.message).toEqual([
+					Validation.ROLE_SHOULD_NOT_EXIST,
+					Validation.PASSWORD_SHOULD_NOT_EXIST,
+					Validation.CREATED_AT_SHOULD_NOT_EXIST,
+					Validation.UPDATED_AT_SHOULD_NOT_EXIST,
+				]);
+			});
+		});
+
+		describe('when passed an invalid user id and udpate data', () => {
+			let updateUserInput;
+
+			beforeEach(() => {
+				updateUserInput = {
+					email: 'test@gmail.com',
+				};
+			});
+
+			it('should throw an error', async () => {
+				const id = 100;
+				const response = await request(app.getHttpServer())
+					.patch(`/users/${id}`)
+					.send(updateUserInput as UpdateUserInput);
+
+				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+			});
+		});
+
+		describe('when passed a valid user id and udpate data', () => {
+			let updateUserInput;
+
+			beforeEach(() => {
+				updateUserInput = {
+					email: 'test@gmail.com',
 				};
 			});
 
@@ -275,29 +326,6 @@ describe('Users', () => {
 				expect(response.body).toEqual(expectedUserResponse);
 			});
 		});
-		// describe('when a user tries to update invalid fields', () => {
-		// 	let updateUserInput;
-
-		// 	beforeEach(() => {
-		// 		updateUserInput = {
-		// 			email: 'test@gmail.com',
-		// 			role: 'ADMIN',
-		// 			password: '123456789',
-		// 			createdAt: '2022-04-23T23:05:10.681Z',
-		// 			updatedAt: '2022-04-23T23:05:10.682Z',
-		// 		};
-		// 	});
-
-		// 	it('should update user', async () => {
-		// 		const id = 20;
-		// 		const response = await request(app.getHttpServer())
-		// 			.patch(`/users/${id}`)
-		// 			.send(updateUserInput as UpdateUserInput);
-
-		// 		expect(response.statusCode).toEqual(HttpStatus.OK);
-		// 		expect(response.body).toEqual({ id, ...updateUserInput });
-		// 	});
-		// });
 	});
 
 	describe('Delete one [Delete /:id]', () => {});
