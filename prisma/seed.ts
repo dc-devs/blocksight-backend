@@ -44,6 +44,34 @@ const main = async () => {
 			...users,
 		],
 	});
+	
+	await prisma.guser.createMany({
+		data: [
+			{
+				email: `alice@prisma.io`,
+				password: '12345678',
+			},
+			{
+				email: `bob@prisma.io`,
+				password: '12345678',
+			},
+			{
+				email: `steve@prisma.io`,
+				password: '12345678',
+			},
+			{
+				email: `david@prisma.io`,
+				password: '12345678',
+				role: UserRole.ADMIN,
+			},
+			{
+				email: `davidc@prisma.io`,
+				password: '12345678',
+				role: UserRole.SUPER_ADMIN,
+			},
+			...users,
+		],
+	});
 };
 
 main()

@@ -3,7 +3,9 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
 const bootstrap = async () => {
-	const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create(AppModule, {
+		logger: ['verbose'],
+	});
 	const port = process.env.PORT || 3001;
 
 	app.enableCors();

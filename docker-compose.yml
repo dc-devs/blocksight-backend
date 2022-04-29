@@ -24,12 +24,10 @@ services:
       - '5433:5432'
     volumes: 
       - /tmp:/tmp
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U node_api"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 
 volumes:
   database-development:
     driver: local
+  database-test:
+    driver: local
+

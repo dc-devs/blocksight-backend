@@ -1,0 +1,34 @@
+scalar DateTime
+
+type Guser {
+	id: Int!
+	email: String!
+	password: String!
+	role: String!
+	createdAt: DateTime!
+	updatedAt: DateTime!
+}
+
+input CreateGuserInput {
+	id: Int!
+	email: String!
+	password: String!
+	role: String!
+	createdAt: DateTime!
+	updatedAt: DateTime!
+}
+
+input UpdateGuserInput {
+	id: Int!
+}
+
+type Query {
+	gusers: [Guser]!
+	guser(id: Int!): Guser
+}
+
+type Mutation {
+	createGuser(createGuserInput: CreateGuserInput!): Guser!
+	updateGuser(updateGuserInput: UpdateGuserInput!): Guser!
+	removeGuser(id: Int!): Guser
+}
