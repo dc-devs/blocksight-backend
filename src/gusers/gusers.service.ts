@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreateGuserInput } from './dto/create-guser.input';
 import { UpdateGuserInput } from './dto/update-guser.input';
-import { Guser, Prisma } from '@prisma/client';
+import { Guser } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { GetUsersArgs } from './dto/get-gusers.args';
 
 const select = {
 	id: true,
@@ -16,24 +17,14 @@ const select = {
 export class GusersService {
 	constructor(private prisma: PrismaService) {}
 
-	create(createGuserInput: CreateGuserInput) {
-		return 'This action adds a new guser';
-	}
+	async findAll(args: GetUsersArgs): Promise<Partial<Guser>[]> {
+		const { skip, cursor, take, orderBy, where } = args;
 
-	async findAll(params: {
-		skip?: number;
-		take?: number;
-		cursor?: Prisma.GuserWhereUniqueInput;
-		where?: string;
-		orderBy?: Prisma.GuserOrderByWithRelationInput;
-	}): Promise<Partial<Guser>[]> {
-		const { skip, take, where, orderBy } = params;
-		const whereClause = where && JSON.parse(where);
-
-		return this.prisma.user.findMany({
+		return this.prisma.guser.findMany({
 			skip,
 			take,
-			where: whereClause,
+			cursor,
+			where,
 			orderBy,
 			select,
 		});
@@ -41,6 +32,10 @@ export class GusersService {
 
 	findOne(id: number) {
 		return `This action returns a #${id} guser`;
+	}
+
+	create(createGuserInput: CreateGuserInput) {
+		return 'This action adds a new guser';
 	}
 
 	update(id: number, updateGuserInput: UpdateGuserInput) {

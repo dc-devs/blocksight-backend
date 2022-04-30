@@ -7,24 +7,49 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export enum SortOrder {
+    asc = "asc",
+    desc = "desc"
+}
+
+export class UserOrderByInput {
+    id?: Nullable<SortOrder>;
+    email?: Nullable<SortOrder>;
+    role?: Nullable<SortOrder>;
+    createdAt?: Nullable<SortOrder>;
+    updatedAt?: Nullable<SortOrder>;
+}
+
+export class UserWhereInput {
+    AND?: Nullable<Nullable<UserWhereInput>[]>;
+    OR?: Nullable<Nullable<UserWhereInput>[]>;
+    NOT?: Nullable<Nullable<UserWhereInput>[]>;
+    id?: Nullable<number>;
+    email?: Nullable<string>;
+    role?: Nullable<string>;
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+}
+
+export class UserWhereUniqueInput {
+    id?: Nullable<number>;
+    email?: Nullable<string>;
+}
+
 export class CreateGuserInput {
-    id: number;
     email: string;
     password: string;
-    role: string;
-    createdAt: DateTime;
-    updatedAt: DateTime;
 }
 
 export class UpdateGuserInput {
     id: number;
+    data: string;
 }
 
 export class Guser {
     __typename?: 'Guser';
     id: number;
     email: string;
-    password: string;
     role: string;
     createdAt: DateTime;
     updatedAt: DateTime;
@@ -33,7 +58,7 @@ export class Guser {
 export abstract class IQuery {
     __typename?: 'IQuery';
 
-    abstract gusers(): Nullable<Guser>[] | Promise<Nullable<Guser>[]>;
+    abstract gusers(skip?: Nullable<number>, take?: Nullable<number>, cursor?: Nullable<UserWhereUniqueInput>, orderBy?: Nullable<UserOrderByInput>, where?: Nullable<UserWhereInput>): Nullable<Guser>[] | Promise<Nullable<Guser>[]>;
 
     abstract guser(id: number): Nullable<Guser> | Promise<Nullable<Guser>>;
 }
@@ -48,5 +73,6 @@ export abstract class IMutation {
     abstract removeGuser(id: number): Nullable<Guser> | Promise<Nullable<Guser>>;
 }
 
+export type JSON = any;
 export type DateTime = any;
 type Nullable<T> = T | null;

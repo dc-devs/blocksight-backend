@@ -1,30 +1,62 @@
+scalar JSON
 scalar DateTime
+
+enum SortOrder {
+	asc
+	desc
+}
 
 type Guser {
 	id: Int!
 	email: String!
-	password: String!
 	role: String!
 	createdAt: DateTime!
 	updatedAt: DateTime!
 }
 
+input UserOrderByInput {
+	id: SortOrder
+	email: SortOrder
+	role: SortOrder
+	createdAt: SortOrder
+	updatedAt: SortOrder
+}
+
+input UserWhereInput {
+	AND: [UserWhereInput]
+	OR: [UserWhereInput]
+	NOT: [UserWhereInput]
+	id: Int
+	email: String
+	role: String
+	createdAt: DateTime
+	updatedAt: DateTime
+}
+
+input UserWhereUniqueInput {
+	id: Int
+	email: String
+}
+
+type Query {
+	gusers(
+		skip: Int
+		take: Int
+		cursor: UserWhereUniqueInput
+		orderBy: UserOrderByInput
+		where: UserWhereInput
+	): [Guser]!
+	guser(id: Int!): Guser
+}
+
 input CreateGuserInput {
-	id: Int!
 	email: String!
 	password: String!
-	role: String!
-	createdAt: DateTime!
-	updatedAt: DateTime!
 }
 
 input UpdateGuserInput {
 	id: Int!
-}
-
-type Query {
-	gusers: [Guser]!
-	guser(id: Int!): Guser
+	data: String!
 }
 
 type Mutation {

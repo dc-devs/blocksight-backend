@@ -1,7 +1,10 @@
 import { AppService } from './app.service';
+import GraphQLJSON from 'graphql-type-json';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
+import { GraphQLDateTime } from 'graphql-iso-date';
 import { UsersModule } from './users/users.module';
+import { GusersModule } from './gusers/gusers.module';
 import { PrismaService } from './prisma/prisma.service';
 import { TransfersModule } from './transfers/transfers.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -10,9 +13,7 @@ import { TransactionsModule } from './transactions/transactions.module';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TokenBalancesModule } from './token-balances/token-balances.module';
-import { GusersModule } from './gusers/gusers.module';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
-import { GraphQLDateTime } from 'graphql-iso-date';
 
 const environment = process.env.NODE_ENV || 'development';
 
@@ -38,7 +39,7 @@ const plugins =
 			driver: ApolloDriver,
 			playground: false,
 			typePaths: ['./**/*.graphql'],
-			resolvers: { DateTime: GraphQLDateTime },
+			resolvers: { DateTime: GraphQLDateTime, JSON: GraphQLJSON },
 			plugins,
 		}),
 		ConfigModule.forRoot({
