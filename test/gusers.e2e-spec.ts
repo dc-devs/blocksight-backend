@@ -36,15 +36,28 @@ describe('Users', () => {
 	describe('Get all', () => {
 		describe('when route requested with no query parameters', () => {
 			it('should return all users', async () => {
-				const { schema } = app.get(GraphQLSchemaHost);
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
-					.send();
+					.send({
+						operationName: 'Query',
+						query: `
+						query Query {
+							gusers {
+								id
+								email
+								role
+								createdAt
+								updatedAt
+							}
+						}`,
+						variables: {},
+					});
+				
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(response.body).toHaveLength(55);
+				expect(response.body.data.gusers).toHaveLength(55);
 
-				response.body.forEach((user) => {
+				response.body.data.gusers.forEach((user) => {
 					expect(user).toEqual(expectedUserObject);
 					expect(user).not.toHaveProperty(UserProperties.PASSWORD);
 				});
