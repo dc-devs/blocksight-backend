@@ -11,7 +11,7 @@ const enum UserProperties {
 	PASSWORD = 'password',
 }
 
-const enum Validation {
+const enum ValidationErrors {
 	ROLE_SHOULD_NOT_EXIST = 'property role should not exist',
 	EMAIL_IS_EMAIL = 'email must be an email',
 	PASSWORD_IS_STRING = 'password must be a string',
@@ -19,7 +19,7 @@ const enum Validation {
 	PASSWORD_SHOULD_NOT_EXIST = 'property password should not exist',
 	CREATED_AT_SHOULD_NOT_EXIST = 'property createdAt should not exist',
 	UPDATED_AT_SHOULD_NOT_EXIST = 'property updatedAt should not exist',
-	EXTRA_PARAM_SHOULD_NOT_EXIST = 'property extraParam should not exist',
+	EXTRA_PARAM_SHOULD_NOT_EXIST = 'Cannot query field "extraParam" on type "Guser".',
 }
 
 describe('Users', () => {
@@ -34,13 +34,11 @@ describe('Users', () => {
 	});
 
 	describe('Get all', () => {
-		describe('when route requested with no query parameters', () => {
+		describe('when sending a query to get all users', () => {
 			it('should return all users', async () => {
-				const response = await request(app.getHttpServer())
-					.post('/graphql')
-					.send({
-						operationName: 'Query',
-						query: `
+				const query = {
+					operationName: 'Query',
+					query: `
 						query Query {
 							gusers {
 								id
@@ -50,46 +48,87 @@ describe('Users', () => {
 								updatedAt
 							}
 						}`,
-						variables: {},
-					});
-				
+					variables: {},
+				};
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(query);
+
+				const users = response.body.data.gusers;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(response.body.data.gusers).toHaveLength(55);
+				expect(users).toHaveLength(55);
 
-				response.body.data.gusers.forEach((user) => {
+				users.forEach((user) => {
 					expect(user).toEqual(expectedUserObject);
 					expect(user).not.toHaveProperty(UserProperties.PASSWORD);
 				});
 			});
 		});
 
-		// describe('when route requested with an unexpected query parameter', () => {
-		// 	it('should return with an unexpected parameter error', async () => {
-		// 		const extraParam = 'extraParam';
-		// 		const response = await request(app.getHttpServer()).get(
-		// 			`/users?skip=10&take=10&${extraParam}=test`
-		// 		);
+		describe('when sending a query with an unexpected user field', () => {
+			it('should return with an unexpected field error', async () => {
+				const extraParam = 'extraParam';
+				const query = {
+					operationName: 'Query',
+					query: `
+						query Query {
+							gusers {
+								id
+								email
+								role
+								${extraParam}
+								createdAt
+								updatedAt
+							}
+						}`,
+					variables: {},
+				};
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(query);
 
-		// 		expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-		// 		expect(response.body.message).toEqual([
-		// 			Validation.EXTRA_PARAM_SHOULD_NOT_EXIST,
-		// 		]);
-		// 	});
-		// });
+				const errors = response.body.errors;
+				const errorMessage = errors[0].message;
 
-		// describe('when route requested with query parameters', () => {
-		// 	describe('and the where param contains aims to fetch users with role equal to', () => {
-		// 		it('should return all users with that email', async () => {
-		// 			const role = 'USER';
-		// 			const response = await request(app.getHttpServer()).get(
-		// 				`/users?where={"role":{"equals":"${role}"}}`
-		// 			);
+				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+				expect(errors.length).toEqual(1);
+				expect(errorMessage).toEqual(
+					ValidationErrors.EXTRA_PARAM_SHOULD_NOT_EXIST
+				);
+			});
+		});
+
+		// describe('when sending a query with arguments', () => {
+		// 	describe("and the where argument aims to fetch users with 'role: SUPER_ADMIN' ", () => {
+		// 		it('should return all users with that role', async () => {
+		// 			const role = 'SUPER_ADMIN';
+		// 			const query = {
+		// 				operationName: 'Query',
+		// 				query: `
+		// 				query Query {
+		// 					gusers(where: {
+		// 						role: ${role}
+		// 					}) {
+		// 						id
+		// 						email
+		// 						role
+		// 						createdAt
+		// 						updatedAt
+		// 					}
+		// 				}`,
+		// 				variables: {},
+		// 			};
+		// 			const response = await request(app.getHttpServer())
+		// 				.post('/graphql')
+		// 				.send(query);
+
+		// 			const users = response.body.data.gusers;
 
 		// 			expect(response.statusCode).toEqual(HttpStatus.OK);
-		// 			expect(response.body).toHaveLength(53);
+		// 			expect(users).toHaveLength(1);
 
-		// 			response.body.forEach((user) => {
+		// 			users.forEach((user) => {
 		// 				expect(user).toEqual(expectedUserObject);
 		// 				expect(user).not.toHaveProperty(
 		// 					UserProperties.PASSWORD
@@ -98,54 +137,54 @@ describe('Users', () => {
 		// 			});
 		// 		});
 		// 	});
-		// 	describe('and the skip and take params are used to implement pagination', () => {
-		// 		describe('and the skip param is 0, and the take param is 10', () => {
-		// 			it('should return the first 10 users', async () => {
-		// 				const skip = 0;
-		// 				const take = 10;
-		// 				const response = await request(app.getHttpServer()).get(
-		// 					`/users?skip=${skip}&take=${take}`
-		// 				);
+		// 	// describe('and the skip and take params are used to implement pagination', () => {
+		// 	// 	describe('and the skip param is 0, and the take param is 10', () => {
+		// 	// 		it('should return the first 10 users', async () => {
+		// 	// 			const skip = 0;
+		// 	// 			const take = 10;
+		// 	// 			const response = await request(app.getHttpServer()).get(
+		// 	// 				`/users?skip=${skip}&take=${take}`
+		// 	// 			);
 
-		// 				expect(response.statusCode).toEqual(HttpStatus.OK);
-		// 				expect(response.body).toHaveLength(10);
+		// 	// 			expect(response.statusCode).toEqual(HttpStatus.OK);
+		// 	// 			expect(response.body).toHaveLength(10);
 
-		// 				response.body.forEach((user) => {
-		// 					expect(user).toEqual(expectedUserObject);
-		// 					expect(user).not.toHaveProperty(
-		// 						UserProperties.PASSWORD
-		// 					);
-		// 				});
+		// 	// 			response.body.forEach((user) => {
+		// 	// 				expect(user).toEqual(expectedUserObject);
+		// 	// 				expect(user).not.toHaveProperty(
+		// 	// 					UserProperties.PASSWORD
+		// 	// 				);
+		// 	// 			});
 
-		// 				const lastUser =
-		// 					response.body[response.body.length - 1];
-		// 				expect(lastUser.id).toEqual(skip + take);
-		// 			});
-		// 		});
-		// 		describe('and the skip param is 10, and the take param is 10', () => {
-		// 			it('should return the first 10 users', async () => {
-		// 				const skip = 10;
-		// 				const take = 10;
-		// 				const response = await request(app.getHttpServer()).get(
-		// 					`/users?skip=${skip}&take=${take}`
-		// 				);
+		// 	// 			const lastUser =
+		// 	// 				response.body[response.body.length - 1];
+		// 	// 			expect(lastUser.id).toEqual(skip + take);
+		// 	// 		});
+		// 	// 	});
+		// 	// 	describe('and the skip param is 10, and the take param is 10', () => {
+		// 	// 		it('should return the first 10 users', async () => {
+		// 	// 			const skip = 10;
+		// 	// 			const take = 10;
+		// 	// 			const response = await request(app.getHttpServer()).get(
+		// 	// 				`/users?skip=${skip}&take=${take}`
+		// 	// 			);
 
-		// 				expect(response.statusCode).toEqual(HttpStatus.OK);
-		// 				expect(response.body).toHaveLength(10);
+		// 	// 			expect(response.statusCode).toEqual(HttpStatus.OK);
+		// 	// 			expect(response.body).toHaveLength(10);
 
-		// 				response.body.forEach((user) => {
-		// 					expect(user).toEqual(expectedUserObject);
-		// 					expect(user).not.toHaveProperty(
-		// 						UserProperties.PASSWORD
-		// 					);
-		// 				});
+		// 	// 			response.body.forEach((user) => {
+		// 	// 				expect(user).toEqual(expectedUserObject);
+		// 	// 				expect(user).not.toHaveProperty(
+		// 	// 					UserProperties.PASSWORD
+		// 	// 				);
+		// 	// 			});
 
-		// 				const lastUser =
-		// 					response.body[response.body.length - 1];
-		// 				expect(lastUser.id).toEqual(skip + take);
-		// 			});
-		// 		});
-		// 	});
+		// 	// 			const lastUser =
+		// 	// 				response.body[response.body.length - 1];
+		// 	// 			expect(lastUser.id).toEqual(skip + take);
+		// 	// 		});
+		// 	// 	});
+		// 	// });
 		// });
 	});
 
