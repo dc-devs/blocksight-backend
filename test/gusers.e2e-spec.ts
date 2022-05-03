@@ -99,93 +99,129 @@ describe('Users', () => {
 			});
 		});
 
-		// describe('when sending a query with arguments', () => {
-		// 	describe("and the where argument aims to fetch users with 'role: SUPER_ADMIN' ", () => {
-		// 		it('should return all users with that role', async () => {
-		// 			const role = 'SUPER_ADMIN';
-		// 			const query = {
-		// 				operationName: 'Query',
-		// 				query: `
-		// 				query Query {
-		// 					gusers(where: {
-		// 						role: ${role}
-		// 					}) {
-		// 						id
-		// 						email
-		// 						role
-		// 						createdAt
-		// 						updatedAt
-		// 					}
-		// 				}`,
-		// 				variables: {},
-		// 			};
-		// 			const response = await request(app.getHttpServer())
-		// 				.post('/graphql')
-		// 				.send(query);
+		describe('when sending a query with arguments', () => {
+			describe("and the where argument aims to fetch users with 'role: SUPER_ADMIN' ", () => {
+				it('should return all users with that role', async () => {
+					const role = 'SUPER_ADMIN';
+					const query = {
+						operationName: 'Query',
+						query: `
+						query Query {
+							gusers(where: {
+								role: "${role}"
+							}) {
+								id
+								email
+								role
+								createdAt
+								updatedAt
+							}
+						}`,
+						variables: {},
+					};
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(query);
 
-		// 			const users = response.body.data.gusers;
+					const users = response.body.data.gusers;
 
-		// 			expect(response.statusCode).toEqual(HttpStatus.OK);
-		// 			expect(users).toHaveLength(1);
+					expect(response.statusCode).toEqual(HttpStatus.OK);
+					expect(users).toHaveLength(1);
 
-		// 			users.forEach((user) => {
-		// 				expect(user).toEqual(expectedUserObject);
-		// 				expect(user).not.toHaveProperty(
-		// 					UserProperties.PASSWORD
-		// 				);
-		// 				expect(user.role).toEqual(role);
-		// 			});
-		// 		});
-		// 	});
-		// 	// describe('and the skip and take params are used to implement pagination', () => {
-		// 	// 	describe('and the skip param is 0, and the take param is 10', () => {
-		// 	// 		it('should return the first 10 users', async () => {
-		// 	// 			const skip = 0;
-		// 	// 			const take = 10;
-		// 	// 			const response = await request(app.getHttpServer()).get(
-		// 	// 				`/users?skip=${skip}&take=${take}`
-		// 	// 			);
+					users.forEach((user) => {
+						expect(user).toEqual(expectedUserObject);
+						expect(user).not.toHaveProperty(
+							UserProperties.PASSWORD
+						);
+						expect(user.role).toEqual(role);
+					});
+				});
+			});
+			describe('and the skip and take arguments are used to implement pagination', () => {
+				describe('and the skip param is 0, and the take param is 10', () => {
+					it('should return the first 10 users', async () => {
+						const skip = 0;
+						const take = 10;
+						const query = {
+							operationName: 'Query',
+							query: `
+							query Query {
+								gusers(
+									skip: ${skip}
+									take: ${take}
+								) {
+									id
+									email
+									role
+									createdAt
+									updatedAt
+								}
+							}`,
+							variables: {},
+						};
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(query);
 
-		// 	// 			expect(response.statusCode).toEqual(HttpStatus.OK);
-		// 	// 			expect(response.body).toHaveLength(10);
+						const users = response.body.data.gusers;
 
-		// 	// 			response.body.forEach((user) => {
-		// 	// 				expect(user).toEqual(expectedUserObject);
-		// 	// 				expect(user).not.toHaveProperty(
-		// 	// 					UserProperties.PASSWORD
-		// 	// 				);
-		// 	// 			});
+						expect(response.statusCode).toEqual(HttpStatus.OK);
+						expect(users).toHaveLength(10);
 
-		// 	// 			const lastUser =
-		// 	// 				response.body[response.body.length - 1];
-		// 	// 			expect(lastUser.id).toEqual(skip + take);
-		// 	// 		});
-		// 	// 	});
-		// 	// 	describe('and the skip param is 10, and the take param is 10', () => {
-		// 	// 		it('should return the first 10 users', async () => {
-		// 	// 			const skip = 10;
-		// 	// 			const take = 10;
-		// 	// 			const response = await request(app.getHttpServer()).get(
-		// 	// 				`/users?skip=${skip}&take=${take}`
-		// 	// 			);
+						users.forEach((user) => {
+							expect(user).toEqual(expectedUserObject);
+							expect(user).not.toHaveProperty(
+								UserProperties.PASSWORD
+							);
+						});
 
-		// 	// 			expect(response.statusCode).toEqual(HttpStatus.OK);
-		// 	// 			expect(response.body).toHaveLength(10);
+						const lastUser = users[users.length - 1];
+						expect(lastUser.id).toEqual(skip + take);
+					});
+				});
+				describe('and the skip param is 10, and the take param is 10', () => {
+					it('should return the first 10 users', async () => {
+						const skip = 10;
+						const take = 10;
+						const query = {
+							operationName: 'Query',
+							query: `
+							query Query {
+								gusers(
+									skip: ${skip}
+									take: ${take}
+								) {
+									id
+									email
+									role
+									createdAt
+									updatedAt
+								}
+							}`,
+							variables: {},
+						};
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(query);
 
-		// 	// 			response.body.forEach((user) => {
-		// 	// 				expect(user).toEqual(expectedUserObject);
-		// 	// 				expect(user).not.toHaveProperty(
-		// 	// 					UserProperties.PASSWORD
-		// 	// 				);
-		// 	// 			});
+						const users = response.body.data.gusers;
 
-		// 	// 			const lastUser =
-		// 	// 				response.body[response.body.length - 1];
-		// 	// 			expect(lastUser.id).toEqual(skip + take);
-		// 	// 		});
-		// 	// 	});
-		// 	// });
-		// });
+						expect(response.statusCode).toEqual(HttpStatus.OK);
+						expect(users).toHaveLength(10);
+
+						users.forEach((user) => {
+							expect(user).toEqual(expectedUserObject);
+							expect(user).not.toHaveProperty(
+								UserProperties.PASSWORD
+							);
+						});
+
+						const lastUser = users[users.length - 1];
+						expect(lastUser.id).toEqual(skip + take);
+					});
+				});
+			});
+		});
 	});
 
 	// describe('Get one [Get /:id]', () => {
