@@ -138,47 +138,6 @@ describe('Users', () => {
 				});
 			});
 			describe('and the skip and take arguments are used to implement pagination', () => {
-				describe('and the skip param is 0, and the take param is 10', () => {
-					it('should return the first 10 users', async () => {
-						const skip = 0;
-						const take = 10;
-						const query = {
-							operationName: 'Query',
-							query: `
-							query Query {
-								gusers(
-									skip: ${skip}
-									take: ${take}
-								) {
-									id
-									email
-									role
-									createdAt
-									updatedAt
-								}
-							}`,
-							variables: {},
-						};
-						const response = await request(app.getHttpServer())
-							.post('/graphql')
-							.send(query);
-
-						const users = response.body.data.gusers;
-
-						expect(response.statusCode).toEqual(HttpStatus.OK);
-						expect(users).toHaveLength(10);
-
-						users.forEach((user) => {
-							expect(user).toEqual(expectedUserObject);
-							expect(user).not.toHaveProperty(
-								UserProperties.PASSWORD
-							);
-						});
-
-						const lastUser = users[users.length - 1];
-						expect(lastUser.id).toEqual(skip + take);
-					});
-				});
 				describe('and the skip param is 10, and the take param is 10', () => {
 					it('should return the first 10 users', async () => {
 						const skip = 10;
