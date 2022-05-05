@@ -176,7 +176,54 @@ describe('Users', () => {
 						});
 
 						const lastUser = users[users.length - 1];
-						expect(lastUser.id).toEqual(skip + take);
+						const lastUserId = skip + take;
+						expect(lastUser.id).toEqual(lastUserId);
+					});
+				});
+			});
+			describe('and the cursor and take arguments are used to implement pagination', () => {
+				describe('and the cursor param is 11, and the take param is 10', () => {
+					it('should return the first 10 users', async () => {
+						const cursor = { id: 11 };
+						const take = 10;
+						const query = {
+							operationName: 'Query',
+							query: `
+							query Query {
+								gusers(
+									cursor: { id: 11 }
+									take: ${take}
+								) {
+									id
+									email
+									role
+									createdAt
+									updatedAt
+								}
+							}`,
+							variables: {},
+						};
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(query);
+
+						console.log(query);
+						console.log(response.body);
+						const users = response.body.data.gusers;
+
+						expect(response.statusCode).toEqual(HttpStatus.OK);
+						expect(users).toHaveLength(10);
+
+						users.forEach((user) => {
+							expect(user).toEqual(expectedUserObject);
+							expect(user).not.toHaveProperty(
+								UserProperties.PASSWORD
+							);
+						});
+
+						const lastUser = users[users.length - 1];
+						const lastUserId = cursor.id + take - 1;
+						expect(lastUser.id).toEqual(lastUserId);
 					});
 				});
 			});
