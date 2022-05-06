@@ -1,8 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { GusersService } from './gusers.service';
-import { CreateGuserInput } from './dto/create-guser.input';
+import { CreateUserInput } from './dto/create-guser.input';
 import { UpdateGuserInput } from './dto/update-guser.input';
-import { GetUsersArgs } from './dto/get-gusers.args';
+import { GetUsersInput } from './dto/get-gusers.input';
 import { Guser } from '@prisma/client';
 
 @Resolver('Guser')
@@ -10,7 +10,7 @@ export class GusersResolver {
 	constructor(private readonly gusersService: GusersService) {}
 
 	@Query('gusers')
-	findAll(@Args() args: GetUsersArgs): Promise<Partial<Guser>[]> {
+	findAll(@Args() args: GetUsersInput): Promise<Partial<Guser>[]> {
 		return this.gusersService.findAll(args);
 	}
 
@@ -23,7 +23,7 @@ export class GusersResolver {
 	}
 
 	@Mutation('createGuser')
-	create(@Args('createGuserInput') createGuserInput: CreateGuserInput) {
+	create(@Args('createGuserInput') createGuserInput: CreateUserInput) {
 		return this.gusersService.create(createGuserInput);
 	}
 

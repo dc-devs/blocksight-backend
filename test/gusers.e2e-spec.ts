@@ -207,8 +207,6 @@ describe('Users', () => {
 							.post('/graphql')
 							.send(query);
 
-						console.log(query);
-						console.log(response.body);
 						const users = response.body.data.gusers;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
@@ -230,33 +228,64 @@ describe('Users', () => {
 		});
 	});
 
-	// describe('Get one [Get /:id]', () => {
-	// 	describe('when route requested with an id for user that does not exist', () => {
-	// 		it('should return error not found', async () => {
-	// 			const response = await request(app.getHttpServer()).get(
-	// 				'/users/100'
-	// 			);
+	describe('Get One', () => {
+		describe('when sending a query with an id for user that does not exist', () => {
+			it('should return null', async () => {
+				const id = 100;
+				const query = {
+					operationName: 'Query',
+					query: `
+						query Query($id: Int!) {
+							guser(id: $id) {
+								id
+								email
+								role
+								createdAt
+								updatedAt
+							}
+						}`,
+					variables: { id },
+				};
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(query);
 
-	// 			expect(response.statusCode).toEqual(HttpStatus.NOT_FOUND);
-	// 		});
-	// 	});
-	// 	describe('when route requested with an id for user that does exist', () => {
-	// 		it('should return user', async () => {
-	// 			const response = await request(app.getHttpServer()).get(
-	// 				'/users/1'
-	// 			);
+				const guser = response.body.data.guser;
 
-	// 			expect(response.statusCode).toEqual(HttpStatus.OK);
-	// 			expect(response.body).toEqual(expectedUserObject);
-	// 			expect(response.body).not.toHaveProperty(
-	// 				UserProperties.PASSWORD
-	// 			);
-	// 		});
-	// 	});
-	// });
+				expect(guser).toBeNull();
+			});
+		});
+		describe('when route requested with an id for user that does exist', () => {
+			it('should return user', async () => {
+				const id = 1;
+				const query = {
+					operationName: 'Query',
+					query: `
+						query Query($id: Int!) {
+							guser(id: $id) {
+								id
+								email
+								role
+								createdAt
+								updatedAt
+							}
+						}`,
+					variables: { id },
+				};
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(query);
 
-	// describe('Create [Post /]', () => {
-	// 	describe('when passed an email and a password', () => {
+				const user = response.body.data.guser;
+
+				expect(user).toEqual(expectedUserObject);
+				expect(user).not.toHaveProperty(UserProperties.PASSWORD);
+			});
+		});
+	});
+
+	// describe('Create', () => {
+	// 	describe('when sending an email and a password', () => {
 	// 		let newUser;
 
 	// 		beforeEach(() => {
@@ -283,69 +312,69 @@ describe('Users', () => {
 	// 		});
 	// 	});
 
-	// 	describe('when passed no data', () => {
-	// 		let newUser;
+	// 	// describe('when passed no data', () => {
+	// 	// 	let newUser;
 
-	// 		beforeEach(() => {
-	// 			newUser = {};
-	// 		});
+	// 	// 	beforeEach(() => {
+	// 	// 		newUser = {};
+	// 	// 	});
 
-	// 		it('should return an error', async () => {
-	// 			const response = await request(app.getHttpServer())
-	// 				.post('/users')
-	// 				.send(newUser as CreateUserInput);
+	// 	// 	it('should return an error', async () => {
+	// 	// 		const response = await request(app.getHttpServer())
+	// 	// 			.post('/users')
+	// 	// 			.send(newUser as CreateUserInput);
 
-	// 			expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-	// 			expect(response.body.message).toEqual([
-	// 				Validation.EMAIL_IS_EMAIL,
-	// 				Validation.PASSWORD_MIN_LENGTH,
-	// 				Validation.PASSWORD_IS_STRING,
-	// 			]);
-	// 		});
-	// 	});
+	// 	// 		expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+	// 	// 		expect(response.body.message).toEqual([
+	// 	// 			Validation.EMAIL_IS_EMAIL,
+	// 	// 			Validation.PASSWORD_MIN_LENGTH,
+	// 	// 			Validation.PASSWORD_IS_STRING,
+	// 	// 		]);
+	// 	// 	});
+	// 	// });
 
-	// 	describe('when passed only email', () => {
-	// 		let newUser;
+	// 	// describe('when passed only email', () => {
+	// 	// 	let newUser;
 
-	// 		beforeEach(() => {
-	// 			newUser = {
-	// 				email: 'david-test-2@gmail.com',
-	// 			};
-	// 		});
+	// 	// 	beforeEach(() => {
+	// 	// 		newUser = {
+	// 	// 			email: 'david-test-2@gmail.com',
+	// 	// 		};
+	// 	// 	});
 
-	// 		it('should return an error', async () => {
-	// 			const response = await request(app.getHttpServer())
-	// 				.post('/users')
-	// 				.send(newUser as CreateUserInput);
+	// 	// 	it('should return an error', async () => {
+	// 	// 		const response = await request(app.getHttpServer())
+	// 	// 			.post('/users')
+	// 	// 			.send(newUser as CreateUserInput);
 
-	// 			expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-	// 			expect(response.body.message).toEqual([
-	// 				Validation.PASSWORD_MIN_LENGTH,
-	// 				Validation.PASSWORD_IS_STRING,
-	// 			]);
-	// 		});
-	// 	});
+	// 	// 		expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+	// 	// 		expect(response.body.message).toEqual([
+	// 	// 			Validation.PASSWORD_MIN_LENGTH,
+	// 	// 			Validation.PASSWORD_IS_STRING,
+	// 	// 		]);
+	// 	// 	});
+	// 	// });
 
-	// 	describe('when passed only password', () => {
-	// 		let newUser;
+	// 	// describe('when passed only password', () => {
+	// 	// 	let newUser;
 
-	// 		beforeEach(() => {
-	// 			newUser = {
-	// 				password: '12345678',
-	// 			};
-	// 		});
+	// 	// 	beforeEach(() => {
+	// 	// 		newUser = {
+	// 	// 			password: '12345678',
+	// 	// 		};
+	// 	// 	});
 
-	// 		it('should return an error', async () => {
-	// 			const response = await request(app.getHttpServer())
-	// 				.post('/users')
-	// 				.send(newUser as CreateUserInput);
+	// 	// 	it('should return an error', async () => {
+	// 	// 		const response = await request(app.getHttpServer())
+	// 	// 			.post('/users')
+	// 	// 			.send(newUser as CreateUserInput);
 
-	// 			expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-	// 			expect(response.body.message).toEqual([
-	// 				Validation.EMAIL_IS_EMAIL,
-	// 			]);
-	// 		});
-	// 	});
+	// 	// 		expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+	// 	// 		expect(response.body.message).toEqual([
+	// 	// 			Validation.EMAIL_IS_EMAIL,
+	// 	// 		]);
+	// 	// 	});
+	// 	// });
 	// });
 
 	// describe('Update one [Patch /:id]', () => {

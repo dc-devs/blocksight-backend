@@ -6,7 +6,7 @@ import { IsNumber, IsOptional } from 'class-validator';
 // TODO: BREAKOUT Pagination Args into own class
 // https://docs.nestjs.com/graphql/resolvers#class-inheritance
 @ArgsType()
-export class GetUsersArgs {
+export class GetUsersInput {
 	@IsNumber()
 	@IsOptional()
 	@Field()
@@ -29,5 +29,3 @@ export class GetUsersArgs {
 	@Field()
 	orderBy?: Prisma.UserOrderByWithRelationInput;
 }
-
-export default GetUsersArgs;
