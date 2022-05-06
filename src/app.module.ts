@@ -6,6 +6,7 @@ import { GraphQLDateTime } from 'graphql-iso-date';
 import { UsersModule } from './users/users.module';
 import { GusersModule } from './gusers/gusers.module';
 import { PrismaService } from './prisma/prisma.service';
+import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { TransfersModule } from './transfers/transfers.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { PingController } from './ping/controller/ping.controller';
@@ -16,8 +17,9 @@ import { TokenBalancesModule } from './token-balances/token-balances.module';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 const environment = process.env.NODE_ENV || 'development';
+const isDevelopment = environment === 'development';
 
-if (environment === 'development') {
+if (isDevelopment) {
 	console.log('');
 	console.log('[BlockSight] Environment:', environment);
 	console.log('[Blocksight] Loading: ', ['.env', `.${environment}.env`]);
@@ -41,6 +43,15 @@ const plugins =
 			typePaths: ['./**/*.graphql'],
 			resolvers: { DateTime: GraphQLDateTime, JSON: GraphQLJSON },
 			plugins,
+			debug: false,
+			formatError: (error: GraphQLError) => {
+				const graphQLFormattedError: GraphQLFormattedError = {
+					message: error.message,
+					extensions: error.extensions
+				};
+
+				return graphQLFormattedError;
+			},
 		}),
 		ConfigModule.forRoot({
 			isGlobal: true,

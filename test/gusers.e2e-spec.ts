@@ -106,18 +106,20 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Query',
 						query: `
-						query Query {
-							gusers(where: {
-								role: "${role}"
-							}) {
-								id
-								email
-								role
-								createdAt
-								updatedAt
-							}
-						}`,
-						variables: {},
+							query Query($where: UserWhereInput) {
+								gusers(where: $where) {
+									id
+									email
+									role
+									createdAt
+									updatedAt
+								}
+							}`,
+						variables: {
+							where: {
+								role,
+							},
+						},
 					};
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
@@ -145,19 +147,19 @@ describe('Users', () => {
 						const query = {
 							operationName: 'Query',
 							query: `
-							query Query {
-								gusers(
-									skip: ${skip}
-									take: ${take}
-								) {
-									id
-									email
-									role
-									createdAt
-									updatedAt
-								}
-							}`,
-							variables: {},
+								query Query($skip: Int, $take: Int) {
+  									gusers(skip: $skip, take: $take) {
+										id
+										email
+										role
+										createdAt
+										updatedAt
+									}
+								}`,
+							variables: {
+								skip,
+								take,
+							},
 						};
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
@@ -189,19 +191,19 @@ describe('Users', () => {
 						const query = {
 							operationName: 'Query',
 							query: `
-							query Query {
-								gusers(
-									cursor: { id: 11 }
-									take: ${take}
-								) {
-									id
-									email
-									role
-									createdAt
-									updatedAt
-								}
-							}`,
-							variables: {},
+								query Query($cursor: UserWhereUniqueInput, $take: Int) {
+									gusers(cursor: $cursor, take: $take) {
+										id
+										email
+										role
+										createdAt
+										updatedAt
+									}
+								}`,
+							variables: {
+								cursor,
+								take,
+							},
 						};
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
@@ -252,6 +254,7 @@ describe('Users', () => {
 
 				const guser = response.body.data.guser;
 
+				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(guser).toBeNull();
 			});
 		});
@@ -278,104 +281,122 @@ describe('Users', () => {
 
 				const user = response.body.data.guser;
 
+				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(user).toEqual(expectedUserObject);
 				expect(user).not.toHaveProperty(UserProperties.PASSWORD);
 			});
 		});
 	});
 
-	// describe('Create', () => {
-	// 	describe('when sending an email and a password', () => {
-	// 		let newUser;
+	describe('Create', () => {
+		describe('when sending an email and a password', () => {
+			let newUser;
 
-	// 		beforeEach(() => {
-	// 			newUser = {
-	// 				email: 'test-1@gmail.com',
-	// 				password: '12345678',
-	// 			};
-	// 		});
+			beforeEach(() => {
+				newUser = {
+					email: 'test-1@gmail.com',
+					password: '12345678',
+				};
+			});
 
-	// 		it('should create a new user', async () => {
-	// 			const expectedUserResponse = expect.objectContaining({
-	// 				email: 'test-1@gmail.com',
-	// 				role: 'USER',
-	// 				createdAt: expect.any(String),
-	// 				updatedAt: expect.any(String),
-	// 			});
+			it('should create a new user', async () => {
+				const expectedUserResponse = expect.objectContaining({
+					email: 'test-1@gmail.com',
+					role: 'USER',
+					createdAt: expect.any(String),
+					updatedAt: expect.any(String),
+				});
+				const query = {
+					operationName: 'Mutation',
+					query: `
+						mutation Mutation($createGuserInput: CreateGuserInput!) {
+							createGuser(createGuserInput: $createGuserInput) {
+								id
+								email
+								role
+								createdAt
+								updatedAt
+							}
+						}`,
+					variables: {
+						createGuserInput: newUser,
+					},
+				};
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(query);
 
-	// 			const response = await request(app.getHttpServer())
-	// 				.post('/users')
-	// 				.send(newUser as CreateUserInput);
+				const user = response.body.data.createGuser;
 
-	// 			expect(response.statusCode).toEqual(HttpStatus.CREATED);
-	// 			expect(response.body).toEqual(expectedUserResponse);
-	// 		});
-	// 	});
+				expect(response.statusCode).toEqual(HttpStatus.OK);
+				expect(user).toEqual(expectedUserObject);
+			});
+		});
 
-	// 	// describe('when passed no data', () => {
-	// 	// 	let newUser;
+		// describe('when passed no data', () => {
+		// 	let newUser;
 
-	// 	// 	beforeEach(() => {
-	// 	// 		newUser = {};
-	// 	// 	});
+		// 	beforeEach(() => {
+		// 		newUser = {};
+		// 	});
 
-	// 	// 	it('should return an error', async () => {
-	// 	// 		const response = await request(app.getHttpServer())
-	// 	// 			.post('/users')
-	// 	// 			.send(newUser as CreateUserInput);
+		// 	it('should return an error', async () => {
+		// 		const response = await request(app.getHttpServer())
+		// 			.post('/users')
+		// 			.send(newUser as CreateUserInput);
 
-	// 	// 		expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-	// 	// 		expect(response.body.message).toEqual([
-	// 	// 			Validation.EMAIL_IS_EMAIL,
-	// 	// 			Validation.PASSWORD_MIN_LENGTH,
-	// 	// 			Validation.PASSWORD_IS_STRING,
-	// 	// 		]);
-	// 	// 	});
-	// 	// });
+		// 		expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+		// 		expect(response.body.message).toEqual([
+		// 			Validation.EMAIL_IS_EMAIL,
+		// 			Validation.PASSWORD_MIN_LENGTH,
+		// 			Validation.PASSWORD_IS_STRING,
+		// 		]);
+		// 	});
+		// });
 
-	// 	// describe('when passed only email', () => {
-	// 	// 	let newUser;
+		// describe('when passed only email', () => {
+		// 	let newUser;
 
-	// 	// 	beforeEach(() => {
-	// 	// 		newUser = {
-	// 	// 			email: 'david-test-2@gmail.com',
-	// 	// 		};
-	// 	// 	});
+		// 	beforeEach(() => {
+		// 		newUser = {
+		// 			email: 'david-test-2@gmail.com',
+		// 		};
+		// 	});
 
-	// 	// 	it('should return an error', async () => {
-	// 	// 		const response = await request(app.getHttpServer())
-	// 	// 			.post('/users')
-	// 	// 			.send(newUser as CreateUserInput);
+		// 	it('should return an error', async () => {
+		// 		const response = await request(app.getHttpServer())
+		// 			.post('/users')
+		// 			.send(newUser as CreateUserInput);
 
-	// 	// 		expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-	// 	// 		expect(response.body.message).toEqual([
-	// 	// 			Validation.PASSWORD_MIN_LENGTH,
-	// 	// 			Validation.PASSWORD_IS_STRING,
-	// 	// 		]);
-	// 	// 	});
-	// 	// });
+		// 		expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+		// 		expect(response.body.message).toEqual([
+		// 			Validation.PASSWORD_MIN_LENGTH,
+		// 			Validation.PASSWORD_IS_STRING,
+		// 		]);
+		// 	});
+		// });
 
-	// 	// describe('when passed only password', () => {
-	// 	// 	let newUser;
+		// describe('when passed only password', () => {
+		// 	let newUser;
 
-	// 	// 	beforeEach(() => {
-	// 	// 		newUser = {
-	// 	// 			password: '12345678',
-	// 	// 		};
-	// 	// 	});
+		// 	beforeEach(() => {
+		// 		newUser = {
+		// 			password: '12345678',
+		// 		};
+		// 	});
 
-	// 	// 	it('should return an error', async () => {
-	// 	// 		const response = await request(app.getHttpServer())
-	// 	// 			.post('/users')
-	// 	// 			.send(newUser as CreateUserInput);
+		// 	it('should return an error', async () => {
+		// 		const response = await request(app.getHttpServer())
+		// 			.post('/users')
+		// 			.send(newUser as CreateUserInput);
 
-	// 	// 		expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-	// 	// 		expect(response.body.message).toEqual([
-	// 	// 			Validation.EMAIL_IS_EMAIL,
-	// 	// 		]);
-	// 	// 	});
-	// 	// });
-	// });
+		// 		expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+		// 		expect(response.body.message).toEqual([
+		// 			Validation.EMAIL_IS_EMAIL,
+		// 		]);
+		// 	});
+		// });
+	});
 
 	// describe('Update one [Patch /:id]', () => {
 	// 	describe('when passed a valid user id and invalid udpate data', () => {
