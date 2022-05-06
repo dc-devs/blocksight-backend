@@ -1,10 +1,10 @@
-import { GraphQLSchemaHost } from '@nestjs/graphql';
-import { User, Prisma } from '@prisma/client';
 import * as request from 'supertest';
+import { User, Prisma } from '@prisma/client';
+import { GraphQLSchemaHost } from '@nestjs/graphql';
 import initializeTestApp from './init/initializeTestApp';
+import { INestApplication, HttpStatus } from '@nestjs/common';
 import { CreateUserInput } from '../src/users/dto/create-user.input';
 import { UpdateUserInput } from '../src/users/dto/update-user.input';
-import { INestApplication, HttpStatus } from '@nestjs/common';
 import expectedUserObject from './helpers/expectedModelObjects/expectedUserObject';
 
 const enum UserProperties {
@@ -34,38 +34,6 @@ describe('Users', () => {
 	});
 
 	describe('Get all', () => {
-		describe('when sending a query to get all users', () => {
-			it('should return all users', async () => {
-				const query = {
-					operationName: 'Query',
-					query: `
-						query Query {
-							gusers {
-								id
-								email
-								role
-								createdAt
-								updatedAt
-							}
-						}`,
-					variables: {},
-				};
-				const response = await request(app.getHttpServer())
-					.post('/graphql')
-					.send(query);
-
-				const users = response.body.data.gusers;
-
-				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(users).toHaveLength(55);
-
-				users.forEach((user) => {
-					expect(user).toEqual(expectedUserObject);
-					expect(user).not.toHaveProperty(UserProperties.PASSWORD);
-				});
-			});
-		});
-
 		describe('when sending a query with an unexpected user field', () => {
 			it('should return with an unexpected field error', async () => {
 				const extraParam = 'extraParam';
@@ -96,6 +64,38 @@ describe('Users', () => {
 				expect(errorMessage).toEqual(
 					ValidationErrors.EXTRA_PARAM_SHOULD_NOT_EXIST
 				);
+			});
+		});
+
+		describe('when sending a query to get all users', () => {
+			it('should return all users', async () => {
+				const query = {
+					operationName: 'Query',
+					query: `
+						query Query {
+							gusers {
+								id
+								email
+								role
+								createdAt
+								updatedAt
+							}
+						}`,
+					variables: {},
+				};
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(query);
+
+				const users = response.body.data.gusers;
+
+				expect(response.statusCode).toEqual(HttpStatus.OK);
+				expect(users).toHaveLength(55);
+
+				users.forEach((user) => {
+					expect(user).toEqual(expectedUserObject);
+					expect(user).not.toHaveProperty(UserProperties.PASSWORD);
+				});
 			});
 		});
 
