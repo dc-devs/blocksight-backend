@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { GusersService } from './gusers.service';
 import { CreateUserInput } from './dto/create-guser.input';
-import { UpdateGuserInput } from './dto/update-guser.input';
+import { UpdateUserInput } from './dto/update-guser.input';
 import { GetUsersInput } from './dto/get-gusers.input';
 import { Guser } from '@prisma/client';
 
@@ -28,12 +28,15 @@ export class GusersResolver {
 	}
 
 	@Mutation('updateGuser')
-	update(@Args('updateGuserInput') updateGuserInput: UpdateGuserInput) {
-		return this.gusersService.update(updateGuserInput.id, updateGuserInput);
+	update(
+		@Args('id', { type: () => Int }) id: number,
+		@Args('updateGuserInput') updateGuserInput: UpdateUserInput
+	) {
+		return this.gusersService.update(id, updateGuserInput);
 	}
 
-	@Mutation('removeGuser')
-	remove(@Args('id') id: number) {
-		return this.gusersService.remove(id);
+	@Mutation('deleteGuser')
+	remove(@Args('id', { type: () => Int }) id: number) {
+		return this.gusersService.delete(id);
 	}
 }

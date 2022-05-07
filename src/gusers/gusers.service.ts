@@ -2,7 +2,7 @@ import { Guser } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import { GetUsersInput } from './dto/get-gusers.input';
 import { PrismaService } from '../prisma/prisma.service';
-import { UpdateGuserInput } from './dto/update-guser.input';
+import { UpdateUserInput } from './dto/update-guser.input';
 import { CreateUserInput } from './dto/create-guser.input';
 
 const select = {
@@ -52,11 +52,25 @@ export class GusersService {
 		});
 	}
 
-	update(id: number, updateGuserInput: UpdateGuserInput) {
-		return `This action updates a #${id} guser`;
+	update(
+		id: number,
+		data: UpdateUserInput
+	): Promise<Partial<Guser>> {
+		return this.prisma.user.update({
+			where: {
+				id,
+			},
+			data,
+			select,
+		});
 	}
 
-	remove(id: number) {
-		return `This action removes a #${id} guser`;
+	delete(id: number): Promise<Partial<Guser>> {
+		return this.prisma.user.delete({
+			where: {
+				id,
+			},
+			select,
+		});
 	}
 }

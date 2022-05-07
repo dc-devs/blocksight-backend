@@ -55,12 +55,11 @@ input CreateGuserInput {
 }
 
 input UpdateGuserInput {
-	id: Int!
-	data: String!
+	email: String
 }
 
 type Mutation {
 	createGuser(createGuserInput: CreateGuserInput!): Guser!
-	updateGuser(updateGuserInput: UpdateGuserInput!): Guser!
-	removeGuser(id: Int!): Guser
+	updateGuser(id: Int!, updateGuserInput: UpdateGuserInput!): Guser!
+	deleteGuser(id: Int!): Guser
 }

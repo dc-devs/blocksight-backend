@@ -20,6 +20,11 @@ const main = async () => {
 	await prisma.user.createMany({
 		data: [
 			{
+				email: `davidc@prisma.io`,
+				password: '12345678',
+				role: UserRole.SUPER_ADMIN,
+			},
+			{
 				email: `alice@prisma.io`,
 				password: '12345678',
 			},
@@ -35,11 +40,6 @@ const main = async () => {
 				email: `david@prisma.io`,
 				password: '12345678',
 				role: UserRole.ADMIN,
-			},
-			{
-				email: `davidc@prisma.io`,
-				password: '12345678',
-				role: UserRole.SUPER_ADMIN,
 			},
 			...users,
 		],
@@ -48,6 +48,11 @@ const main = async () => {
 	await prisma.guser.createMany({
 		data: [
 			{
+				email: `davidc@prisma.io`,
+				password: '12345678',
+				role: UserRole.SUPER_ADMIN,
+			},
+			{
 				email: `alice@prisma.io`,
 				password: '12345678',
 			},
@@ -63,11 +68,6 @@ const main = async () => {
 				email: `david@prisma.io`,
 				password: '12345678',
 				role: UserRole.ADMIN,
-			},
-			{
-				email: `davidc@prisma.io`,
-				password: '12345678',
-				role: UserRole.SUPER_ADMIN,
 			},
 			...users,
 		],
