@@ -21,7 +21,7 @@ const GraphqlModule = GraphQLModule.forRoot<ApolloDriverConfig>({
 	debug: false,
 	formatError: (error: GraphQLError) => {
 		const graphQLFormattedError: GraphQLFormattedError = {
-			message: error.message,
+			message: !error.message.includes('prisma') ? error.message : 'Prisma Error',
 			extensions: error.extensions,
 		};
 

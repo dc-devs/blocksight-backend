@@ -18,93 +18,107 @@ describe('Users', () => {
 	});
 
 	describe('Update', () => {
-		// describe('when sending a valid user id and invalid udpate data', () => {
-		// 	let updateUserInput;
+		describe('when sending a valid user id and invalid udpate data', () => {
+			let updateUserInput;
 
-		// 	beforeEach(() => {
-		// 		updateUserInput = {
-		// 			email: 'test@gmail.com',
-		// 			role: 'ADMIN',
-		// 			password: '12345678',
-		// 			createdAt: '2022-04-23T23:05:10.681Z',
-		// 			updatedAt: '2022-04-23T23:05:10.682Z',
-		// 		};
-		// 	});
+			beforeEach(() => {
+				updateUserInput = {
+					email: 'test-test-1@gmail.com',
+					role: 'ADMIN',
+					password: '12345678',
+				};
+			});
 
-		// 	it('should return a error', async () => {
-		// 		const id = 1;
-		// 		const query = {
-		// 			operationName: 'Mutation',
-		// 			query: `
-		// 				mutation Mutation($updateGuserInput: UpdateGuserInput!) {
-		// 					updateGuser(updateGuserInput: $updateGuserInput) {
-		// 						id
-		// 						email
-		// 						role
-		// 						createdAt
-		// 						updatedAt
-		// 					}
-		// 				}`,
-		// 			variables: {
-		// 				updateGuserInput: {
-		// 					id,
-		// 					data: updateUserInput,
-		// 				},
-		// 			},
-		// 		};
-		// 		const response = await request(app.getHttpServer())
-		// 			.post('/graphql')
-		// 			.send(query);
+			it('should return a error', async () => {
+				const id = 1;
+				const query = {
+					operationName: 'Mutation',
+					query: `
+						mutation Mutation($id: Int!, $data: UpdateGuserInput!) {
+  							updateGuser(id: $id, updateGuserInput: $data) {
+								id
+								email
+								role
+								createdAt
+								updatedAt
+							}
+						}`,
+					variables: {
+						id,
+						data: updateUserInput,
+					},
+				};
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(query);
 
-		// 		// expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-		// 		// expect(response.body.message).toEqual([
-		// 		// 	Validation.ROLE_SHOULD_NOT_EXIST,
-		// 		// 	Validation.PASSWORD_SHOULD_NOT_EXIST,
-		// 		// 	Validation.CREATED_AT_SHOULD_NOT_EXIST,
-		// 		// 	Validation.UPDATED_AT_SHOULD_NOT_EXIST,
-		// 		// ]);
-		// 		// const errors = response.body.errors;
-		// 		console.log(response.body);
-		// 		// const emailError = errors[0];
-		// 		// const passwordError = errors[1];
+				const errors = response.body.errors;
+				const roleError = errors[0];
+				const passwordError = errors[1];
 
-		// 		// expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+				expect(errors.length).toEqual(2);
 
-		// 		// expect(errors.length).toEqual(2);
+				errors.forEach((error) => {
+					expect(error.extensions.code).toEqual(
+						ExtensionCodes.BAD_USER_INPUT
+					);
+				});
 
-		// 		// errors.forEach((error) => {
-		// 		// 	expect(error.extensions.code).toEqual(
-		// 		// 		ExtensionCodes.BAD_USER_INPUT
-		// 		// 	);
-		// 		// });
+				expect(roleError.message).toContain(
+					ErrorMessages.ROLE_FIELD_NOT_DEFINED
+				);
 
-		// 		// expect(emailError.message).toContain(
-		// 		// 	ErrorMessages.EMAIL_MUST_BE_STRING
-		// 		// );
-		// 		// expect(passwordError.message).toContain(
-		// 		// 	ErrorMessages.PASSWORD_MUST_BE_STRING
-		// 		// );
-		// 	});
-		// });
+				expect(passwordError.message).toContain(
+					ErrorMessages.PASSWORD_FIELD_NOT_DEFINED
+				);
+			});
+		});
 
-		// describe('when sending an invalid user id and udpate data', () => {
-		// 	let updateUserInput;
+		describe('when sending an invalid user id and valid udpate data', () => {
+			let updateUserInput;
 
-		// 	beforeEach(() => {
-		// 		updateUserInput = {
-		// 			email: 'test@gmail.com',
-		// 		};
-		// 	});
+			beforeEach(() => {
+				updateUserInput = {
+					email: 'test-test-1@gmail.com',
+				};
+			});
 
-		// 	it('should throw an error', async () => {
-		// 		const id = 100;
-		// 		const response = await request(app.getHttpServer())
-		// 			.patch(`/users/${id}`)
-		// 			.send(updateUserInput as UpdateUserInput);
+			it('should return a error', async () => {
+				const id = 100;
+				const query = {
+					operationName: 'Mutation',
+					query: `
+						mutation Mutation($id: Int!, $data: UpdateGuserInput!) {
+  							updateGuser(id: $id, updateGuserInput: $data) {
+								id
+								email
+								role
+								createdAt
+								updatedAt
+							}
+						}`,
+					variables: {
+						id,
+						data: updateUserInput,
+					},
+				};
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(query);
 
-		// 		expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-		// 	});
-		// });
+				const errors = response.body.errors;
+				const prismaError = errors[0];
+
+				expect(errors.length).toEqual(1);
+
+				expect(prismaError.message).toContain(
+					ErrorMessages.PRISMA_ERROR
+				);
+				expect(prismaError.extensions.exception.meta.cause).toContain(
+					ErrorMessages.RECORD_NOT_FOUND
+				);
+			});
+		});
 
 		describe('when sending a valid user id and udpate data', () => {
 			let updateUserInput;
@@ -144,8 +158,6 @@ describe('Users', () => {
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
 					.send(query);
-
-				console.log(JSON.stringify(response.body));
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(response.body.data.updateGuser).toEqual(
