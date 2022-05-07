@@ -137,15 +137,15 @@ describe('Users', () => {
 						const query = {
 							operationName: 'Mutation',
 							query: `
-						mutation Mutation($createUserInput: CreateUserInput!) {
-							createUser(createUserInput: $createUserInput) {
-								id
-								email
-								role
-								createdAt
-								updatedAt
-							}
-						}`,
+								mutation Mutation($createUserInput: CreateUserInput!) {
+									createUser(createUserInput: $createUserInput) {
+										id
+										email
+										role
+										createdAt
+										updatedAt
+									}
+								}`,
 							variables: {
 								createUserInput,
 							},
@@ -206,17 +206,18 @@ describe('Users', () => {
 
 						const errors = response.body.errors;
 						const emailError = errors[0];
+						const {extensions} = emailError;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 
 						expect(errors.length).toEqual(1);
 
-						expect(emailError.extensions.code).toEqual(
+						expect(extensions.code).toEqual(
 							ExtensionCodes.BAD_USER_INPUT
 						);
 
 						expect(
-							emailError.extensions.response.message
+							extensions.response.message
 						).toContain(ErrorMessage.EMAIL_IS_EMAIL);
 					});
 				});
@@ -289,15 +290,15 @@ describe('Users', () => {
 						const query = {
 							operationName: 'Mutation',
 							query: `
-							mutation Mutation($createUserInput: CreateUserInput!) {
-								createUser(createUserInput: $createUserInput) {
-									id
-									email
-									role
-									createdAt
-									updatedAt
-								}
-							}`,
+								mutation Mutation($createUserInput: CreateUserInput!) {
+									createUser(createUserInput: $createUserInput) {
+										id
+										email
+										role
+										createdAt
+										updatedAt
+									}
+								}`,
 							variables: {
 								createUserInput,
 							},
@@ -324,6 +325,7 @@ describe('Users', () => {
 						);
 					});
 				});
+				
 				describe('when sending a password that is not long enough', () => {
 					let createUserInput;
 
@@ -356,18 +358,19 @@ describe('Users', () => {
 							.send(query);
 
 						const errors = response.body.errors;
-						const emailError = errors[0];
+						const passwordError = errors[0];
+						const {extensions} = passwordError;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 
 						expect(errors.length).toEqual(1);
 
-						expect(emailError.extensions.code).toEqual(
+						expect(extensions.code).toEqual(
 							ExtensionCodes.BAD_USER_INPUT
 						);
 
 						expect(
-							emailError.extensions.response.message
+							extensions.response.message
 						).toContain(ErrorMessage.PASSWORD_MIN_LENGTH);
 					});
 				});
