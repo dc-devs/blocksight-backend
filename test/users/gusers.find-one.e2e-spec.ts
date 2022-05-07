@@ -1,6 +1,6 @@
 import * as request from 'supertest';
 import UserProperty from './enums/user-property.enum';
-import initializeTestApp from '../init/initializeTestApp';
+import initializeTestApp from '../helpers/init/initializeTestApp';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import expectedUserObject from './expected-objects/expected-user-object';
 

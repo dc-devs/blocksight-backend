@@ -1,5 +1,5 @@
 import * as request from 'supertest';
-import initializeTestApp from '../init/initializeTestApp';
+import initializeTestApp from '../helpers/init/initializeTestApp';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 
 // TODO: Connect to a TEST DB..

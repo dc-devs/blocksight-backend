@@ -3,7 +3,7 @@ import ErrorMessage from './enums/error-message.enum';
 import GraphQLErrorMessage from '../../src/graphql/error-message.enum';
 import UserProperty from './enums/user-property.enum';
 import ErrorCode from '../../src/prisma/error-code.enum';
-import initializeTestApp from '../init/initializeTestApp';
+import initializeTestApp from '../helpers/init/initializeTestApp';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import ExtensionCodes from '../../src/graphql/extension-codes.enum';
 import { UserRole } from '@prisma/client';
