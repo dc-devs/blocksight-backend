@@ -31,7 +31,7 @@ export class GusersService {
 	}
 
 	findOne(id: number): Promise<Partial<Guser> | null> {
-		return this.prisma.user.findUnique({
+		return this.prisma.guser.findUnique({
 			where: {
 				id,
 			},
@@ -43,7 +43,7 @@ export class GusersService {
 		const { email, password } = args;
 		const emailLowerCase = email.toLowerCase();
 
-		return this.prisma.user.create({
+		return this.prisma.guser.create({
 			data: {
 				email: emailLowerCase,
 				password,
@@ -56,7 +56,7 @@ export class GusersService {
 		id: number,
 		data: UpdateUserInput
 	): Promise<Partial<Guser>> {
-		return this.prisma.user.update({
+		return this.prisma.guser.update({
 			where: {
 				id,
 			},
@@ -66,7 +66,7 @@ export class GusersService {
 	}
 
 	delete(id: number): Promise<Partial<Guser>> {
-		return this.prisma.user.delete({
+		return this.prisma.guser.delete({
 			where: {
 				id,
 			},

@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "UserRole" AS ENUM ('USER', 'ADMIN', 'SUPER_ADMIN');
+
 -- CreateTable
 CREATE TABLE "Guser" (
     "id" SERIAL NOT NULL,

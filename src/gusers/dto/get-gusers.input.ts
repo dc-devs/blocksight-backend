@@ -19,7 +19,7 @@ export class GetUsersInput {
 
 	@IsOptional()
 	@Field()
-	cursor?: Prisma.UserWhereUniqueInput;
+	cursor?: Prisma.GuserWhereUniqueInput;
 
 	@IsOptional()
 	@Field()
@@ -27,5 +27,5 @@ export class GetUsersInput {
 
 	@IsOptional()
 	@Field()
-	orderBy?: Prisma.UserOrderByWithRelationInput;
+	orderBy?: Prisma.GuserOrderByWithRelationInput;
 }

@@ -1,6 +1,5 @@
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from './users/users.module';
 import { GusersModule } from './gusers/gusers.module';
 import { GraphqlModule } from './graphql/graphql.module';
 import { PrismaService } from './prisma/prisma.service';
@@ -23,7 +22,6 @@ if (isDevelopment) {
 
 @Module({
 	imports: [
-		UsersModule,
 		GusersModule,
 		GraphqlModule,
 		TransfersModule,

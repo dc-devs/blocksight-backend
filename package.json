@@ -26,6 +26,7 @@
 		"docker:bash": "docker exec -it node bash",
 		"prisma:studio": "yarn prisma studio",
 		"prisma:generate": "yarn prisma generate --watch",
+		"prisma:migrate": "dotenv -e .env.development -- yarn prisma migrate dev --name",
 		"mk:start": "minikube start",
 		"mk:tunnel": "minikube tunnel",
 		"deploy:dev": "helm package . && helm install blocksight-development blocksight-chart-1.0.0.tgz",
