@@ -72,10 +72,10 @@ describe('Users', () => {
 
 		describe('validation', () => {
 			describe('when sending no data', () => {
-				let newUser;
+				let createUserInput;
 
 				beforeEach(() => {
-					newUser = {};
+					createUserInput = {};
 				});
 
 				it('should return an error', async () => {
@@ -92,9 +92,10 @@ describe('Users', () => {
 								}
 							}`,
 						variables: {
-							createUserInput: newUser,
+							createUserInput,
 						},
 					};
+
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
 						.send(query);
@@ -124,10 +125,10 @@ describe('Users', () => {
 
 			describe('email', () => {
 				describe('when missing email', () => {
-					let newUser;
+					let createUserInput;
 
 					beforeEach(() => {
-						newUser = {
+						createUserInput = {
 							password: '123456789',
 						};
 					});
@@ -146,7 +147,7 @@ describe('Users', () => {
 							}
 						}`,
 							variables: {
-								createUserInput: newUser,
+								createUserInput,
 							},
 						};
 						const response = await request(app.getHttpServer())
@@ -173,10 +174,10 @@ describe('Users', () => {
 				});
 
 				describe('when sending an email that is not an email', () => {
-					let newUser;
+					let createUserInput;
 
 					beforeEach(() => {
-						newUser = {
+						createUserInput = {
 							email: 'david-test-2',
 							password: '123456789',
 						};
@@ -196,7 +197,7 @@ describe('Users', () => {
 									}
 								}`,
 							variables: {
-								createUserInput: newUser,
+								createUserInput,
 							},
 						};
 						const response = await request(app.getHttpServer())
@@ -221,10 +222,10 @@ describe('Users', () => {
 				});
 
 				describe('when sending an email that already exists', () => {
-					let newUser;
+					let createUserInput;
 
 					beforeEach(() => {
-						newUser = {
+						createUserInput = {
 							email: firstUser.email,
 							password: '123456789',
 						};
@@ -244,7 +245,7 @@ describe('Users', () => {
 									}
 								}`,
 							variables: {
-								createUserInput: newUser,
+								createUserInput,
 							},
 						};
 						const response = await request(app.getHttpServer())
@@ -276,10 +277,10 @@ describe('Users', () => {
 
 			describe('password', () => {
 				describe('when missing password', () => {
-					let newUser;
+					let createUserInput;
 
 					beforeEach(() => {
-						newUser = {
+						createUserInput = {
 							email: 'david-test-2@gmail.com',
 						};
 					});
@@ -298,7 +299,7 @@ describe('Users', () => {
 								}
 							}`,
 							variables: {
-								createUserInput: newUser,
+								createUserInput,
 							},
 						};
 						const response = await request(app.getHttpServer())
@@ -324,10 +325,10 @@ describe('Users', () => {
 					});
 				});
 				describe('when sending a password that is not long enough', () => {
-					let newUser;
+					let createUserInput;
 
 					beforeEach(() => {
-						newUser = {
+						createUserInput = {
 							email: 'david-test-2@gmail.com',
 							password: '1234567',
 						};
@@ -347,7 +348,7 @@ describe('Users', () => {
 									}
 								}`,
 							variables: {
-								createUserInput: newUser,
+								createUserInput,
 							},
 						};
 						const response = await request(app.getHttpServer())
