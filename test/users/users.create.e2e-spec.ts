@@ -1,9 +1,11 @@
 import * as request from 'supertest';
 import { UserRole } from '@prisma/client';
+import { firstUser } from '../../prisma/users.seed';
+import ErrorCode from 'src/prisma/error-code.enum';
 import ErrorMessage from './enums/error-message.enum';
 import UserProperty from './enums/user-property.enum';
-import initializeTestApp from '../helpers/init/initializeTestApp';
 import { INestApplication, HttpStatus } from '@nestjs/common';
+import initializeTestApp from '../helpers/init/initializeTestApp';
 import ExtensionCodes from '../../src/graphql/extension-codes.enum';
 
 describe('Users', () => {
@@ -18,23 +20,28 @@ describe('Users', () => {
 	});
 
 	describe('Create', () => {
-		describe('when sending an email and a password', () => {
-			let newUser;
+		describe('when sending a valid email and a password', () => {
+			let email;
+			let createUserInput;
+			let expectedUserResponse;
 
 			beforeEach(() => {
-				newUser = {
-					email: 'test-1@gmail.com',
+				email = 'test-1@gmail.com';
+
+				createUserInput = {
+					email,
 					password: '12345678',
 				};
-			});
 
-			it('should create a new user', async () => {
-				const expectedUserResponse = expect.objectContaining({
-					email: 'test-1@gmail.com',
+				expectedUserResponse = expect.objectContaining({
+					email,
 					role: UserRole.USER,
 					createdAt: expect.any(String),
 					updatedAt: expect.any(String),
 				});
+			});
+
+			it('should create a new user', async () => {
 				const query = {
 					operationName: 'Mutation',
 					query: `
@@ -48,7 +55,7 @@ describe('Users', () => {
 							}
 						}`,
 					variables: {
-						createUserInput: newUser,
+						createUserInput,
 					},
 				};
 				const response = await request(app.getHttpServer())
@@ -63,70 +70,72 @@ describe('Users', () => {
 			});
 		});
 
-		describe('when sending no data', () => {
-			let newUser;
+		describe('validation', () => {
+			describe('when sending no data', () => {
+				let newUser;
 
-			beforeEach(() => {
-				newUser = {};
-			});
-
-			it('should return an error', async () => {
-				const query = {
-					operationName: 'Mutation',
-					query: `
-						mutation Mutation($createUserInput: CreateUserInput!) {
-							createUser(createUserInput: $createUserInput) {
-								id
-								email
-								role
-								createdAt
-								updatedAt
-							}
-						}`,
-					variables: {
-						createUserInput: newUser,
-					},
-				};
-				const response = await request(app.getHttpServer())
-					.post('/graphql')
-					.send(query);
-
-				const errors = response.body.errors;
-				const emailError = errors[0];
-				const passwordError = errors[1];
-
-				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-
-				expect(errors.length).toEqual(2);
-
-				errors.forEach((error) => {
-					expect(error.extensions.code).toEqual(
-						ExtensionCodes.BAD_USER_INPUT
-					);
+				beforeEach(() => {
+					newUser = {};
 				});
 
-				expect(emailError.message).toContain(
-					ErrorMessage.EMAIL_MUST_BE_STRING
-				);
-				expect(passwordError.message).toContain(
-					ErrorMessage.PASSWORD_MUST_BE_STRING
-				);
+				it('should return an error', async () => {
+					const query = {
+						operationName: 'Mutation',
+						query: `
+							mutation Mutation($createUserInput: CreateUserInput!) {
+								createUser(createUserInput: $createUserInput) {
+									id
+									email
+									role
+									createdAt
+									updatedAt
+								}
+							}`,
+						variables: {
+							createUserInput: newUser,
+						},
+					};
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(query);
+
+					const errors = response.body.errors;
+					const emailError = errors[0];
+					const passwordError = errors[1];
+
+					expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+
+					expect(errors.length).toEqual(2);
+
+					errors.forEach((error) => {
+						expect(error.extensions.code).toEqual(
+							ExtensionCodes.BAD_USER_INPUT
+						);
+					});
+
+					expect(emailError.message).toContain(
+						ErrorMessage.EMAIL_MUST_BE_STRING
+					);
+					expect(passwordError.message).toContain(
+						ErrorMessage.PASSWORD_MUST_BE_STRING
+					);
+				});
 			});
-		});
 
-		describe('when sending only email', () => {
-			let newUser;
+			describe('email', () => {
+				describe('when missing email', () => {
+					let newUser;
 
-			beforeEach(() => {
-				newUser = {
-					email: 'david-test-2@gmail.com',
-				};
-			});
+					beforeEach(() => {
+						newUser = {
+							password: '123456789',
+						};
+					});
 
-			it('should return an error', async () => {
-				const query = {
-					operationName: 'Mutation',
-					query: `
+					it('should return an error', async () => {
+						const query = {
+							operationName: 'Mutation',
+							query: `
 						mutation Mutation($createUserInput: CreateUserInput!) {
 							createUser(createUserInput: $createUserInput) {
 								id
@@ -136,171 +145,231 @@ describe('Users', () => {
 								updatedAt
 							}
 						}`,
-					variables: {
-						createUserInput: newUser,
-					},
-				};
-				const response = await request(app.getHttpServer())
-					.post('/graphql')
-					.send(query);
+							variables: {
+								createUserInput: newUser,
+							},
+						};
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(query);
 
-				const errors = response.body.errors;
-				const passwordError = errors[0];
+						const errors = response.body.errors;
+						const emailError = errors[0];
 
-				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+						expect(response.statusCode).toEqual(
+							HttpStatus.BAD_REQUEST
+						);
 
-				expect(errors.length).toEqual(1);
+						expect(errors.length).toEqual(1);
 
-				expect(passwordError.extensions.code).toEqual(
-					ExtensionCodes.BAD_USER_INPUT
-				);
+						expect(emailError.extensions.code).toEqual(
+							ExtensionCodes.BAD_USER_INPUT
+						);
 
-				expect(passwordError.message).toContain(
-					ErrorMessage.PASSWORD_REQUIRED
-				);
+						expect(emailError.message).toContain(
+							ErrorMessage.EMAIL_REQUIRED
+						);
+					});
+				});
+
+				describe('when sending an email that is not an email', () => {
+					let newUser;
+
+					beforeEach(() => {
+						newUser = {
+							email: 'david-test-2',
+							password: '123456789',
+						};
+					});
+
+					it('should return an error', async () => {
+						const query = {
+							operationName: 'Mutation',
+							query: `
+								mutation Mutation($createUserInput: CreateUserInput!) {
+									createUser(createUserInput: $createUserInput) {
+										id
+										email
+										role
+										createdAt
+										updatedAt
+									}
+								}`,
+							variables: {
+								createUserInput: newUser,
+							},
+						};
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(query);
+
+						const errors = response.body.errors;
+						const emailError = errors[0];
+
+						expect(response.statusCode).toEqual(HttpStatus.OK);
+
+						expect(errors.length).toEqual(1);
+
+						expect(emailError.extensions.code).toEqual(
+							ExtensionCodes.BAD_USER_INPUT
+						);
+
+						expect(
+							emailError.extensions.response.message
+						).toContain(ErrorMessage.EMAIL_IS_EMAIL);
+					});
+				});
+
+				describe('when sending an email that already exists', () => {
+					let newUser;
+
+					beforeEach(() => {
+						newUser = {
+							email: firstUser.email,
+							password: '123456789',
+						};
+					});
+
+					it('should return an error', async () => {
+						const query = {
+							operationName: 'Mutation',
+							query: `
+								mutation Mutation($createUserInput: CreateUserInput!) {
+									createUser(createUserInput: $createUserInput) {
+										id
+										email
+										role
+										createdAt
+										updatedAt
+									}
+								}`,
+							variables: {
+								createUserInput: newUser,
+							},
+						};
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(query);
+
+						const errors = response.body.errors;
+						const emailError = errors[0];
+						const { extensions } = emailError;
+						const { exception } = extensions;
+
+						expect(response.statusCode).toEqual(HttpStatus.OK);
+						expect(errors.length).toEqual(1);
+
+						expect(extensions.code).toEqual(
+							ExtensionCodes.INTERNAL_SERVER_ERROR
+						);
+
+						expect(exception.code).toEqual(
+							ErrorCode.UNIQUE_CONSTRAINT
+						);
+
+						expect(exception.meta.target).toContain(
+							UserProperty.EMAIL
+						);
+					});
+				});
 			});
-		});
 
-		describe('when sending an email that is not an email', () => {
-			let newUser;
+			describe('password', () => {
+				describe('when missing password', () => {
+					let newUser;
 
-			beforeEach(() => {
-				newUser = {
-					email: 'david-test-2',
-					password: '123456789',
-				};
-			});
+					beforeEach(() => {
+						newUser = {
+							email: 'david-test-2@gmail.com',
+						};
+					});
 
-			it('should return an error', async () => {
-				const query = {
-					operationName: 'Mutation',
-					query: `
-						mutation Mutation($createUserInput: CreateUserInput!) {
-							createUser(createUserInput: $createUserInput) {
-								id
-								email
-								role
-								createdAt
-								updatedAt
-							}
-						}`,
-					variables: {
-						createUserInput: newUser,
-					},
-				};
-				const response = await request(app.getHttpServer())
-					.post('/graphql')
-					.send(query);
+					it('should return an error', async () => {
+						const query = {
+							operationName: 'Mutation',
+							query: `
+							mutation Mutation($createUserInput: CreateUserInput!) {
+								createUser(createUserInput: $createUserInput) {
+									id
+									email
+									role
+									createdAt
+									updatedAt
+								}
+							}`,
+							variables: {
+								createUserInput: newUser,
+							},
+						};
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(query);
 
-				const errors = response.body.errors;
-				const emailError = errors[0];
+						const errors = response.body.errors;
+						const passwordError = errors[0];
 
-				expect(response.statusCode).toEqual(HttpStatus.OK);
+						expect(response.statusCode).toEqual(
+							HttpStatus.BAD_REQUEST
+						);
 
-				expect(errors.length).toEqual(1);
+						expect(errors.length).toEqual(1);
 
-				expect(emailError.extensions.code).toEqual(
-					ExtensionCodes.BAD_USER_INPUT
-				);
+						expect(passwordError.extensions.code).toEqual(
+							ExtensionCodes.BAD_USER_INPUT
+						);
 
-				expect(emailError.extensions.response.message).toContain(
-					ErrorMessage.EMAIL_IS_EMAIL
-				);
-			});
-		});
+						expect(passwordError.message).toContain(
+							ErrorMessage.PASSWORD_REQUIRED
+						);
+					});
+				});
+				describe('when sending a password that is not long enough', () => {
+					let newUser;
 
-		describe('when sending only password', () => {
-			let newUser;
+					beforeEach(() => {
+						newUser = {
+							email: 'david-test-2@gmail.com',
+							password: '1234567',
+						};
+					});
 
-			beforeEach(() => {
-				newUser = {
-					password: '123456789',
-				};
-			});
+					it('should return an error', async () => {
+						const query = {
+							operationName: 'Mutation',
+							query: `
+								mutation Mutation($createUserInput: CreateUserInput!) {
+									createUser(createUserInput: $createUserInput) {
+										id
+										email
+										role
+										createdAt
+										updatedAt
+									}
+								}`,
+							variables: {
+								createUserInput: newUser,
+							},
+						};
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(query);
 
-			it('should return an error', async () => {
-				const query = {
-					operationName: 'Mutation',
-					query: `
-						mutation Mutation($createUserInput: CreateUserInput!) {
-							createUser(createUserInput: $createUserInput) {
-								id
-								email
-								role
-								createdAt
-								updatedAt
-							}
-						}`,
-					variables: {
-						createUserInput: newUser,
-					},
-				};
-				const response = await request(app.getHttpServer())
-					.post('/graphql')
-					.send(query);
+						const errors = response.body.errors;
+						const emailError = errors[0];
 
-				const errors = response.body.errors;
-				const emailError = errors[0];
+						expect(response.statusCode).toEqual(HttpStatus.OK);
 
-				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+						expect(errors.length).toEqual(1);
 
-				expect(errors.length).toEqual(1);
+						expect(emailError.extensions.code).toEqual(
+							ExtensionCodes.BAD_USER_INPUT
+						);
 
-				expect(emailError.extensions.code).toEqual(
-					ExtensionCodes.BAD_USER_INPUT
-				);
-
-				expect(emailError.message).toContain(
-					ErrorMessage.EMAIL_REQUIRED
-				);
-			});
-		});
-
-		describe('when sending a password that is not long enough', () => {
-			let newUser;
-
-			beforeEach(() => {
-				newUser = {
-					email: 'david-test-2@gmail.com',
-					password: '1234567',
-				};
-			});
-
-			it('should return an error', async () => {
-				const query = {
-					operationName: 'Mutation',
-					query: `
-						mutation Mutation($createUserInput: CreateUserInput!) {
-							createUser(createUserInput: $createUserInput) {
-								id
-								email
-								role
-								createdAt
-								updatedAt
-							}
-						}`,
-					variables: {
-						createUserInput: newUser,
-					},
-				};
-				const response = await request(app.getHttpServer())
-					.post('/graphql')
-					.send(query);
-
-				const errors = response.body.errors;
-				const emailError = errors[0];
-
-				expect(response.statusCode).toEqual(HttpStatus.OK);
-
-				expect(errors.length).toEqual(1);
-
-				expect(emailError.extensions.code).toEqual(
-					ExtensionCodes.BAD_USER_INPUT
-				);
-
-				expect(emailError.extensions.response.message).toContain(
-					ErrorMessage.PASSWORD_MIN_LENGTH
-				);
+						expect(
+							emailError.extensions.response.message
+						).toContain(ErrorMessage.PASSWORD_MIN_LENGTH);
+					});
+				});
 			});
 		});
 	});
