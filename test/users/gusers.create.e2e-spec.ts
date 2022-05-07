@@ -1,7 +1,7 @@
 import * as request from 'supertest';
 import { UserRole } from '@prisma/client';
-import ErrorMessages from './enums/error-messages.enum';
-import UserProperties from './enums/user-properties.enum';
+import ErrorMessage from './enums/error-message.enum';
+import UserProperty from './enums/user-property.enum';
 import initializeTestApp from '../init/initializeTestApp';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import ExtensionCodes from '../helpers/enums/extension-codes.enum';
@@ -59,7 +59,7 @@ describe('Users', () => {
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(user).toEqual(expectedUserResponse);
-				expect(user).not.toHaveProperty(UserProperties.PASSWORD);
+				expect(user).not.toHaveProperty(UserProperty.PASSWORD);
 			});
 		});
 
@@ -106,10 +106,10 @@ describe('Users', () => {
 				});
 
 				expect(emailError.message).toContain(
-					ErrorMessages.EMAIL_MUST_BE_STRING
+					ErrorMessage.EMAIL_MUST_BE_STRING
 				);
 				expect(passwordError.message).toContain(
-					ErrorMessages.PASSWORD_MUST_BE_STRING
+					ErrorMessage.PASSWORD_MUST_BE_STRING
 				);
 			});
 		});
@@ -156,7 +156,7 @@ describe('Users', () => {
 				);
 
 				expect(passwordError.message).toContain(
-					ErrorMessages.PASSWORD_REQUIRED
+					ErrorMessage.PASSWORD_REQUIRED
 				);
 			});
 		});
@@ -205,7 +205,7 @@ describe('Users', () => {
 				);
 
 				expect(emailError.extensions.response.message).toContain(
-					ErrorMessages.EMAIL_IS_EMAIL
+					ErrorMessage.EMAIL_IS_EMAIL
 				);
 			});
 		});
@@ -252,7 +252,7 @@ describe('Users', () => {
 				);
 
 				expect(emailError.message).toContain(
-					ErrorMessages.EMAIL_REQUIRED
+					ErrorMessage.EMAIL_REQUIRED
 				);
 			});
 		});
@@ -300,7 +300,7 @@ describe('Users', () => {
 				);
 
 				expect(emailError.extensions.response.message).toContain(
-					ErrorMessages.PASSWORD_MIN_LENGTH
+					ErrorMessage.PASSWORD_MIN_LENGTH
 				);
 			});
 		});

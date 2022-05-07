@@ -6,7 +6,7 @@ import { UpdateUserInput } from '../src/users/dto/update-user.input';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import expectedUserObject from './helpers/expectedModelObjects/expectedUserObject';
 
-const enum UserProperties {
+const enum UserProperty {
 	PASSWORD = 'password',
 }
 
@@ -44,7 +44,7 @@ describe('Users', () => {
 
 				response.body.forEach((user) => {
 					expect(user).toEqual(expectedUserObject);
-					expect(user).not.toHaveProperty(UserProperties.PASSWORD);
+					expect(user).not.toHaveProperty(UserProperty.PASSWORD);
 				});
 			});
 		});
@@ -76,9 +76,7 @@ describe('Users', () => {
 
 					response.body.forEach((user) => {
 						expect(user).toEqual(expectedUserObject);
-						expect(user).not.toHaveProperty(
-							UserProperties.PASSWORD
-						);
+						expect(user).not.toHaveProperty(UserProperty.PASSWORD);
 						expect(user.role).toEqual(role);
 					});
 				});
@@ -98,7 +96,7 @@ describe('Users', () => {
 						response.body.forEach((user) => {
 							expect(user).toEqual(expectedUserObject);
 							expect(user).not.toHaveProperty(
-								UserProperties.PASSWORD
+								UserProperty.PASSWORD
 							);
 						});
 
@@ -121,7 +119,7 @@ describe('Users', () => {
 						response.body.forEach((user) => {
 							expect(user).toEqual(expectedUserObject);
 							expect(user).not.toHaveProperty(
-								UserProperties.PASSWORD
+								UserProperty.PASSWORD
 							);
 						});
 
@@ -152,9 +150,7 @@ describe('Users', () => {
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(response.body).toEqual(expectedUserObject);
-				expect(response.body).not.toHaveProperty(
-					UserProperties.PASSWORD
-				);
+				expect(response.body).not.toHaveProperty(UserProperty.PASSWORD);
 			});
 		});
 	});

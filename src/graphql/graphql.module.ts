@@ -3,6 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import ErrorMessage from './error-message.enum';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 const environment = process.env.NODE_ENV || 'development';
@@ -21,7 +22,9 @@ const GraphqlModule = GraphQLModule.forRoot<ApolloDriverConfig>({
 	debug: false,
 	formatError: (error: GraphQLError) => {
 		const graphQLFormattedError: GraphQLFormattedError = {
-			message: !error.message.includes('prisma') ? error.message : 'Prisma Error',
+			message: !error.message.includes('prisma')
+				? error.message
+				: ErrorMessage.DATABASE_ERROR,
 			extensions: error.extensions,
 		};
 
@@ -29,6 +32,4 @@ const GraphqlModule = GraphQLModule.forRoot<ApolloDriverConfig>({
 	},
 });
 
-export { 
-	GraphqlModule
-};
+export { GraphqlModule };

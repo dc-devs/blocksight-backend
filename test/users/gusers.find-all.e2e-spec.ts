@@ -1,6 +1,6 @@
 import * as request from 'supertest';
-import ErrorMessages from './enums/error-messages.enum';
-import UserProperties from './enums/user-properties.enum';
+import ErrorMessage from './enums/error-message.enum';
+import UserProperty from './enums/user-property.enum';
 import initializeTestApp from '../init/initializeTestApp';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import ExtensionCodes from '../helpers/enums/extension-codes.enum';
@@ -47,9 +47,11 @@ describe('Users', () => {
 				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
 				expect(errors.length).toEqual(1);
 				expect(message).toEqual(
-					ErrorMessages.EXTRA_PARAM_SHOULD_NOT_EXIST
+					ErrorMessage.EXTRA_PARAM_SHOULD_NOT_EXIST
 				);
-				expect(extensions.code).toEqual(ExtensionCodes.GRAPHQL_VALIDATION_FAILED);
+				expect(extensions.code).toEqual(
+					ExtensionCodes.GRAPHQL_VALIDATION_FAILED
+				);
 			});
 		});
 
@@ -80,7 +82,7 @@ describe('Users', () => {
 
 				users.forEach((user) => {
 					expect(user).toEqual(expectedUserObject);
-					expect(user).not.toHaveProperty(UserProperties.PASSWORD);
+					expect(user).not.toHaveProperty(UserProperty.PASSWORD);
 				});
 			});
 		});
@@ -118,9 +120,7 @@ describe('Users', () => {
 
 					users.forEach((user) => {
 						expect(user).toEqual(expectedUserObject);
-						expect(user).not.toHaveProperty(
-							UserProperties.PASSWORD
-						);
+						expect(user).not.toHaveProperty(UserProperty.PASSWORD);
 						expect(user.role).toEqual(role);
 					});
 				});
@@ -159,7 +159,7 @@ describe('Users', () => {
 						users.forEach((user) => {
 							expect(user).toEqual(expectedUserObject);
 							expect(user).not.toHaveProperty(
-								UserProperties.PASSWORD
+								UserProperty.PASSWORD
 							);
 						});
 
@@ -203,7 +203,7 @@ describe('Users', () => {
 						users.forEach((user) => {
 							expect(user).toEqual(expectedUserObject);
 							expect(user).not.toHaveProperty(
-								UserProperties.PASSWORD
+								UserProperty.PASSWORD
 							);
 						});
 

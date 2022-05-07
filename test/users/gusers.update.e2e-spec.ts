@@ -1,6 +1,8 @@
 import * as request from 'supertest';
-import ErrorMessages from './enums/error-messages.enum';
-import UserProperties from './enums/user-properties.enum';
+import ErrorMessage from './enums/error-message.enum';
+import GraphQLErrorMessage from '../../src/graphql/error-message.enum';
+import UserProperty from './enums/user-property.enum';
+import ErrroeCode from '../../src/prisma/error-code.enum';
 import initializeTestApp from '../init/initializeTestApp';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import ExtensionCodes from '../helpers/enums/extension-codes.enum';
@@ -65,11 +67,11 @@ describe('Users', () => {
 				});
 
 				expect(roleError.message).toContain(
-					ErrorMessages.ROLE_FIELD_NOT_DEFINED
+					ErrorMessage.ROLE_FIELD_NOT_DEFINED
 				);
 
 				expect(passwordError.message).toContain(
-					ErrorMessages.PASSWORD_FIELD_NOT_DEFINED
+					ErrorMessage.PASSWORD_FIELD_NOT_DEFINED
 				);
 			});
 		});
@@ -108,39 +110,34 @@ describe('Users', () => {
 
 				const errors = response.body.errors;
 				const prismaError = errors[0];
+				const exception = prismaError.extensions.exception;
 
 				expect(errors.length).toEqual(1);
 
 				expect(prismaError.message).toContain(
-					ErrorMessages.PRISMA_ERROR
+					GraphQLErrorMessage.DATABASE_ERROR
 				);
-				expect(prismaError.extensions.exception.meta.cause).toContain(
-					ErrorMessages.RECORD_NOT_FOUND
+				expect(exception.meta.cause).toContain(
+					ErrorMessage.RECORD_NOT_FOUND
 				);
 			});
 		});
 
 		describe('when sending a valid user id and udpate data', () => {
-			let updateUserInput;
+			describe('and the email is not unique', () => {
+				let updateUserInput;
 
-			beforeEach(() => {
-				updateUserInput = {
-					email: 'test-test-1@gmail.com',
-				};
-			});
-
-			it('should update user', async () => {
-				const id = 1;
-				const expectedUserResponse = expect.objectContaining({
-					id,
-					...updateUserInput,
-					role: UserRole.SUPER_ADMIN,
-					createdAt: expect.any(String),
-					updatedAt: expect.any(String),
+				beforeEach(() => {
+					updateUserInput = {
+						email: 'davidc@prisma.io',
+					};
 				});
-				const query = {
-					operationName: 'Mutation',
-					query: `
+
+				it('should return an error', async () => {
+					const id = 20;
+					const query = {
+						operationName: 'Mutation',
+						query: `
 						mutation Mutation($id: Int!, $data: UpdateGuserInput!) {
   							updateGuser(id: $id, updateGuserInput: $data) {
 								id
@@ -150,19 +147,78 @@ describe('Users', () => {
 								updatedAt
 							}
 						}`,
-					variables: {
-						id,
-						data: updateUserInput,
-					},
-				};
-				const response = await request(app.getHttpServer())
-					.post('/graphql')
-					.send(query);
+						variables: {
+							id,
+							data: updateUserInput,
+						},
+					};
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(query);
 
-				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(response.body.data.updateGuser).toEqual(
-					expectedUserResponse
-				);
+					const errors = response.body.errors;
+					const prismaError = errors[0];
+					const exception = prismaError.extensions.exception;
+
+					expect(errors.length).toEqual(1);
+
+					expect(prismaError.message).toEqual(
+						GraphQLErrorMessage.DATABASE_ERROR
+					);
+					expect(exception.code).toEqual(
+						ErrroeCode.UNIQUE_CONSTRAINT
+					);
+					expect(exception.meta.target[0]).toEqual(
+						UserProperty.EMAIL
+					);
+				});
+			});
+
+			describe('and the email is unique', () => {
+				let updateUserInput;
+
+				beforeEach(() => {
+					updateUserInput = {
+						email: 'test-test-1@gmail.com',
+					};
+				});
+
+				it('should update user', async () => {
+					const id = 20;
+					const expectedUserResponse = expect.objectContaining({
+						id,
+						...updateUserInput,
+						role: UserRole.USER,
+						createdAt: expect.any(String),
+						updatedAt: expect.any(String),
+					});
+					const query = {
+						operationName: 'Mutation',
+						query: `
+						mutation Mutation($id: Int!, $data: UpdateGuserInput!) {
+  							updateGuser(id: $id, updateGuserInput: $data) {
+								id
+								email
+								role
+								createdAt
+								updatedAt
+							}
+						}`,
+						variables: {
+							id,
+							data: updateUserInput,
+						},
+					};
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(query);
+
+					const user = response.body.data.updateGuser;
+
+					expect(response.statusCode).toEqual(HttpStatus.OK);
+					expect(user).toEqual(expectedUserResponse);
+					expect(user).not.toHaveProperty(UserProperty.PASSWORD);
+				});
 			});
 		});
 	});
