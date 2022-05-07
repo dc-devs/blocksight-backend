@@ -25,7 +25,7 @@ describe('Users', () => {
 					operationName: 'Query',
 					query: `
 						query Query {
-							gusers {
+							users {
 								id
 								email
 								role
@@ -61,7 +61,7 @@ describe('Users', () => {
 					operationName: 'Query',
 					query: `
 						query Query {
-							gusers {
+							users {
 								id
 								email
 								role
@@ -75,7 +75,7 @@ describe('Users', () => {
 					.post('/graphql')
 					.send(query);
 
-				const users = response.body.data.gusers;
+				const users = response.body.data.users;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(users).toHaveLength(55);
@@ -95,7 +95,7 @@ describe('Users', () => {
 						operationName: 'Query',
 						query: `
 							query Query($where: UserWhereInput) {
-								gusers(where: $where) {
+								users(where: $where) {
 									id
 									email
 									role
@@ -113,7 +113,7 @@ describe('Users', () => {
 						.post('/graphql')
 						.send(query);
 
-					const users = response.body.data.gusers;
+					const users = response.body.data.users;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
 					expect(users).toHaveLength(1);
@@ -134,7 +134,7 @@ describe('Users', () => {
 							operationName: 'Query',
 							query: `
 								query Query($skip: Int, $take: Int) {
-  									gusers(skip: $skip, take: $take) {
+  									users(skip: $skip, take: $take) {
 										id
 										email
 										role
@@ -151,7 +151,7 @@ describe('Users', () => {
 							.post('/graphql')
 							.send(query);
 
-						const users = response.body.data.gusers;
+						const users = response.body.data.users;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 						expect(users).toHaveLength(10);
@@ -178,7 +178,7 @@ describe('Users', () => {
 							operationName: 'Query',
 							query: `
 								query Query($cursor: UserWhereUniqueInput, $take: Int) {
-									gusers(cursor: $cursor, take: $take) {
+									users(cursor: $cursor, take: $take) {
 										id
 										email
 										role
@@ -195,7 +195,7 @@ describe('Users', () => {
 							.post('/graphql')
 							.send(query);
 
-						const users = response.body.data.gusers;
+						const users = response.body.data.users;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 						expect(users).toHaveLength(10);

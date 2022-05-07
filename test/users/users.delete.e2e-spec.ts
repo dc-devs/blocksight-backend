@@ -28,7 +28,7 @@ describe('Users', () => {
 					operationName: 'Mutation',
 					query: `
 						mutation Mutation($id: Int!) {
-							deleteGuser(id: $id) {
+							deleteUser(id: $id) {
 								id
 								email
 								role
@@ -44,7 +44,7 @@ describe('Users', () => {
 					.post('/graphql')
 					.send(query);
 
-				const user = response.body.data.deleteGuser;
+				const user = response.body.data.deleteUser;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(user).toEqual(expectedUserObject);
@@ -59,7 +59,7 @@ describe('Users', () => {
 					operationName: 'Mutation',
 					query: `
 						mutation Mutation($id: Int!) {
-							deleteGuser(id: $id) {
+							deleteUser(id: $id) {
 								id
 								email
 								role

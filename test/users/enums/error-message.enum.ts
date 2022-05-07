@@ -9,7 +9,7 @@ const enum ErrorMessage {
 	PASSWORD_MIN_LENGTH = 'password must be longer than or equal to 8 characters',
 	PASSWORD_FIELD_NOT_DEFINED = 'Field "password" is not defined',
 	ROLE_FIELD_NOT_DEFINED = 'Field "role" is not defined',
-	EXTRA_PARAM_SHOULD_NOT_EXIST = 'Cannot query field "extraParam" on type "Guser".',
+	EXTRA_PARAM_SHOULD_NOT_EXIST = 'Cannot query field "extraParam" on type "User".',
 }
 
 export default ErrorMessage;

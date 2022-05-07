@@ -17,7 +17,7 @@ while (count <= userCount) {
 }
 
 const main = async () => {
-	await prisma.guser.createMany({
+	await prisma.user.createMany({
 		data: [
 			{
 				email: `davidc@prisma.io`,

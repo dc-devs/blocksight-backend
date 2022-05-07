@@ -23,7 +23,7 @@ describe('Users', () => {
 					operationName: 'Query',
 					query: `
 						query Query($id: Int!) {
-							guser(id: $id) {
+							user(id: $id) {
 								id
 								email
 								role
@@ -37,10 +37,10 @@ describe('Users', () => {
 					.post('/graphql')
 					.send(query);
 
-				const guser = response.body.data.guser;
+				const user = response.body.data.user;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(guser).toBeNull();
+				expect(user).toBeNull();
 			});
 		});
 		describe('when route requested with an id for user that does exist', () => {
@@ -50,7 +50,7 @@ describe('Users', () => {
 					operationName: 'Query',
 					query: `
 						query Query($id: Int!) {
-							guser(id: $id) {
+							user(id: $id) {
 								id
 								email
 								role
@@ -64,7 +64,7 @@ describe('Users', () => {
 					.post('/graphql')
 					.send(query);
 
-				const user = response.body.data.guser;
+				const user = response.body.data.user;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(user).toEqual(expectedUserObject);

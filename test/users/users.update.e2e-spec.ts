@@ -36,8 +36,8 @@ describe('Users', () => {
 				const query = {
 					operationName: 'Mutation',
 					query: `
-						mutation Mutation($id: Int!, $data: UpdateGuserInput!) {
-  							updateGuser(id: $id, updateGuserInput: $data) {
+						mutation Mutation($id: Int!, $data: UpdateUserInput!) {
+  							updateUser(id: $id, updateUserInput: $data) {
 								id
 								email
 								role
@@ -90,8 +90,8 @@ describe('Users', () => {
 				const query = {
 					operationName: 'Mutation',
 					query: `
-						mutation Mutation($id: Int!, $data: UpdateGuserInput!) {
-  							updateGuser(id: $id, updateGuserInput: $data) {
+						mutation Mutation($id: Int!, $data: UpdateUserInput!) {
+  							updateUser(id: $id, updateUserInput: $data) {
 								id
 								email
 								role
@@ -138,8 +138,8 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Mutation',
 						query: `
-						mutation Mutation($id: Int!, $data: UpdateGuserInput!) {
-  							updateGuser(id: $id, updateGuserInput: $data) {
+						mutation Mutation($id: Int!, $data: UpdateUserInput!) {
+  							updateUser(id: $id, updateUserInput: $data) {
 								id
 								email
 								role
@@ -193,8 +193,8 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Mutation',
 						query: `
-						mutation Mutation($id: Int!, $data: UpdateGuserInput!) {
-  							updateGuser(id: $id, updateGuserInput: $data) {
+						mutation Mutation($id: Int!, $data: UpdateUserInput!) {
+  							updateUser(id: $id, updateUserInput: $data) {
 								id
 								email
 								role
@@ -211,7 +211,7 @@ describe('Users', () => {
 						.post('/graphql')
 						.send(query);
 
-					const user = response.body.data.updateGuser;
+					const user = response.body.data.updateUser;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
 					expect(user).toEqual(expectedUserResponse);

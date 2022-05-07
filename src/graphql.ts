@@ -36,17 +36,17 @@ export class UserWhereUniqueInput {
     email?: Nullable<string>;
 }
 
-export class CreateGuserInput {
+export class CreateUserInput {
     email: string;
     password: string;
 }
 
-export class UpdateGuserInput {
+export class UpdateUserInput {
     email?: Nullable<string>;
 }
 
-export class Guser {
-    __typename?: 'Guser';
+export class User {
+    __typename?: 'User';
     id: number;
     email: string;
     role: string;
@@ -57,19 +57,19 @@ export class Guser {
 export abstract class IQuery {
     __typename?: 'IQuery';
 
-    abstract gusers(skip?: Nullable<number>, take?: Nullable<number>, cursor?: Nullable<UserWhereUniqueInput>, orderBy?: Nullable<UserOrderByInput>, where?: Nullable<UserWhereInput>): Nullable<Guser>[] | Promise<Nullable<Guser>[]>;
+    abstract users(skip?: Nullable<number>, take?: Nullable<number>, cursor?: Nullable<UserWhereUniqueInput>, orderBy?: Nullable<UserOrderByInput>, where?: Nullable<UserWhereInput>): Nullable<User>[] | Promise<Nullable<User>[]>;
 
-    abstract guser(id: number): Nullable<Guser> | Promise<Nullable<Guser>>;
+    abstract user(id: number): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class IMutation {
     __typename?: 'IMutation';
 
-    abstract createGuser(createGuserInput: CreateGuserInput): Guser | Promise<Guser>;
+    abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
 
-    abstract updateGuser(id: number, updateGuserInput: UpdateGuserInput): Guser | Promise<Guser>;
+    abstract updateUser(id: number, updateUserInput: UpdateUserInput): User | Promise<User>;
 
-    abstract deleteGuser(id: number): Guser | Promise<Guser>;
+    abstract deleteUser(id: number): User | Promise<User>;
 }
 
 export type JSON = any;

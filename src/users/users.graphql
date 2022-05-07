@@ -6,7 +6,7 @@ enum SortOrder {
 	desc
 }
 
-type Guser {
+type User {
 	id: Int!
 	email: String!
 	role: String!
@@ -39,27 +39,27 @@ input UserWhereUniqueInput {
 }
 
 type Query {
-	gusers(
+	users(
 		skip: Int
 		take: Int
 		cursor: UserWhereUniqueInput
 		orderBy: UserOrderByInput
 		where: UserWhereInput
-	): [Guser]!
-	guser(id: Int!): Guser
+	): [User]!
+	user(id: Int!): User
 }
 
-input CreateGuserInput {
+input CreateUserInput {
 	email: String!
 	password: String!
 }
 
-input UpdateGuserInput {
+input UpdateUserInput {
 	email: String
 }
 
 type Mutation {
-	createGuser(createGuserInput: CreateGuserInput!): Guser!
-	updateGuser(id: Int!, updateGuserInput: UpdateGuserInput!): Guser!
-	deleteGuser(id: Int!): Guser!
+	createUser(createUserInput: CreateUserInput!): User!
+	updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
+	deleteUser(id: Int!): User!
 }

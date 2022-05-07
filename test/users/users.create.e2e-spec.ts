@@ -38,8 +38,8 @@ describe('Users', () => {
 				const query = {
 					operationName: 'Mutation',
 					query: `
-						mutation Mutation($createGuserInput: CreateGuserInput!) {
-							createGuser(createGuserInput: $createGuserInput) {
+						mutation Mutation($createUserInput: CreateUserInput!) {
+							createUser(createUserInput: $createUserInput) {
 								id
 								email
 								role
@@ -48,14 +48,14 @@ describe('Users', () => {
 							}
 						}`,
 					variables: {
-						createGuserInput: newUser,
+						createUserInput: newUser,
 					},
 				};
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
 					.send(query);
 
-				const user = response.body.data.createGuser;
+				const user = response.body.data.createUser;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(user).toEqual(expectedUserResponse);
@@ -74,8 +74,8 @@ describe('Users', () => {
 				const query = {
 					operationName: 'Mutation',
 					query: `
-						mutation Mutation($createGuserInput: CreateGuserInput!) {
-							createGuser(createGuserInput: $createGuserInput) {
+						mutation Mutation($createUserInput: CreateUserInput!) {
+							createUser(createUserInput: $createUserInput) {
 								id
 								email
 								role
@@ -84,7 +84,7 @@ describe('Users', () => {
 							}
 						}`,
 					variables: {
-						createGuserInput: newUser,
+						createUserInput: newUser,
 					},
 				};
 				const response = await request(app.getHttpServer())
@@ -127,8 +127,8 @@ describe('Users', () => {
 				const query = {
 					operationName: 'Mutation',
 					query: `
-						mutation Mutation($createGuserInput: CreateGuserInput!) {
-							createGuser(createGuserInput: $createGuserInput) {
+						mutation Mutation($createUserInput: CreateUserInput!) {
+							createUser(createUserInput: $createUserInput) {
 								id
 								email
 								role
@@ -137,7 +137,7 @@ describe('Users', () => {
 							}
 						}`,
 					variables: {
-						createGuserInput: newUser,
+						createUserInput: newUser,
 					},
 				};
 				const response = await request(app.getHttpServer())
@@ -175,8 +175,8 @@ describe('Users', () => {
 				const query = {
 					operationName: 'Mutation',
 					query: `
-						mutation Mutation($createGuserInput: CreateGuserInput!) {
-							createGuser(createGuserInput: $createGuserInput) {
+						mutation Mutation($createUserInput: CreateUserInput!) {
+							createUser(createUserInput: $createUserInput) {
 								id
 								email
 								role
@@ -185,7 +185,7 @@ describe('Users', () => {
 							}
 						}`,
 					variables: {
-						createGuserInput: newUser,
+						createUserInput: newUser,
 					},
 				};
 				const response = await request(app.getHttpServer())
@@ -222,8 +222,8 @@ describe('Users', () => {
 				const query = {
 					operationName: 'Mutation',
 					query: `
-						mutation Mutation($createGuserInput: CreateGuserInput!) {
-							createGuser(createGuserInput: $createGuserInput) {
+						mutation Mutation($createUserInput: CreateUserInput!) {
+							createUser(createUserInput: $createUserInput) {
 								id
 								email
 								role
@@ -232,7 +232,7 @@ describe('Users', () => {
 							}
 						}`,
 					variables: {
-						createGuserInput: newUser,
+						createUserInput: newUser,
 					},
 				};
 				const response = await request(app.getHttpServer())
@@ -270,8 +270,8 @@ describe('Users', () => {
 				const query = {
 					operationName: 'Mutation',
 					query: `
-						mutation Mutation($createGuserInput: CreateGuserInput!) {
-							createGuser(createGuserInput: $createGuserInput) {
+						mutation Mutation($createUserInput: CreateUserInput!) {
+							createUser(createUserInput: $createUserInput) {
 								id
 								email
 								role
@@ -280,7 +280,7 @@ describe('Users', () => {
 							}
 						}`,
 					variables: {
-						createGuserInput: newUser,
+						createUserInput: newUser,
 					},
 				};
 				const response = await request(app.getHttpServer())
