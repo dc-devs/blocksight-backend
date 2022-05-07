@@ -41,12 +41,8 @@ export class CreateGuserInput {
     password: string;
 }
 
-export class UpdateGuserData {
-    email?: Nullable<string>;
-}
-
 export class UpdateGuserInput {
-    data: UpdateGuserData;
+    email?: Nullable<string>;
 }
 
 export class Guser {
@@ -73,7 +69,7 @@ export abstract class IMutation {
 
     abstract updateGuser(id: number, updateGuserInput: UpdateGuserInput): Guser | Promise<Guser>;
 
-    abstract deleteGuser(id: number): Nullable<Guser> | Promise<Nullable<Guser>>;
+    abstract deleteGuser(id: number): Guser | Promise<Guser>;
 }
 
 export type JSON = any;

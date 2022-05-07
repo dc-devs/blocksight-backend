@@ -61,5 +61,5 @@ input UpdateGuserInput {
 type Mutation {
 	createGuser(createGuserInput: CreateGuserInput!): Guser!
 	updateGuser(id: Int!, updateGuserInput: UpdateGuserInput!): Guser!
-	deleteGuser(id: Int!): Guser
+	deleteGuser(id: Int!): Guser!
 }

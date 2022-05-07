@@ -193,7 +193,6 @@ describe('Users', () => {
 					.send(query);
 
 				const errors = response.body.errors;
-				console.log(errors);
 				const emailError = errors[0];
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);

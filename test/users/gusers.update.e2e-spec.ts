@@ -2,7 +2,7 @@ import * as request from 'supertest';
 import ErrorMessage from './enums/error-message.enum';
 import GraphQLErrorMessage from '../../src/graphql/error-message.enum';
 import UserProperty from './enums/user-property.enum';
-import ErrroeCode from '../../src/prisma/error-code.enum';
+import ErrorCode from '../../src/prisma/error-code.enum';
 import initializeTestApp from '../init/initializeTestApp';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import ExtensionCodes from '../helpers/enums/extension-codes.enum';
@@ -118,7 +118,7 @@ describe('Users', () => {
 					GraphQLErrorMessage.DATABASE_ERROR
 				);
 				expect(exception.meta.cause).toContain(
-					ErrorMessage.RECORD_NOT_FOUND
+					ErrorMessage.UPDATE_RECORD_NOT_FOUND
 				);
 			});
 		});
@@ -165,9 +165,7 @@ describe('Users', () => {
 					expect(prismaError.message).toEqual(
 						GraphQLErrorMessage.DATABASE_ERROR
 					);
-					expect(exception.code).toEqual(
-						ErrroeCode.UNIQUE_CONSTRAINT
-					);
+					expect(exception.code).toEqual(ErrorCode.UNIQUE_CONSTRAINT);
 					expect(exception.meta.target[0]).toEqual(
 						UserProperty.EMAIL
 					);

@@ -1,5 +1,6 @@
 const enum ErrorMessage {
-	RECORD_NOT_FOUND = 'Record to update not found',
+	UPDATE_RECORD_NOT_FOUND = 'Record to update not found',
+	DELETE_RECORD_NOT_FOUND = 'Record to delete does not exist.',
 	EMAIL_REQUIRED = 'Field "email" of required type "String!" was not provided.',
 	EMAIL_MUST_BE_STRING = 'Field "email" of required type "String!" was not provided.',
 	EMAIL_IS_EMAIL = 'email must be an email',
