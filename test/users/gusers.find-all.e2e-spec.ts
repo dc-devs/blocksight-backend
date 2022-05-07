@@ -3,7 +3,7 @@ import ErrorMessage from './enums/error-message.enum';
 import UserProperty from './enums/user-property.enum';
 import initializeTestApp from '../init/initializeTestApp';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import ExtensionCodes from '../helpers/enums/extension-codes.enum';
+import ExtensionCodes from '../../src/graphql/extension-codes.enum';
 import expectedUserObject from './expected-objects/expected-user-object';
 
 describe('Users', () => {

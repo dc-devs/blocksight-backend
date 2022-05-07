@@ -13,6 +13,8 @@ const initializeTestApp = async () => {
 
 	app.enableCors();
 
+	app.useLogger([]);
+
 	app.useGlobalPipes(
 		new ValidationPipe({
 			whitelist: true,
