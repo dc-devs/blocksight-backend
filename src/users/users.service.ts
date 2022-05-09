@@ -39,7 +39,7 @@ export class UsersService {
 		});
 	}
 
-	async create(args: CreateUserInput): Promise<Partial<User>> {
+	create(args: CreateUserInput): Promise<Partial<User>> {
 		const { email, password } = args;
 		const emailLowerCase = email.toLowerCase();
 

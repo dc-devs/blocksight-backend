@@ -1,12 +1,12 @@
 import * as request from 'supertest';
 import { UserRole } from '@prisma/client';
 import { firstUser } from '../../prisma/users.seed';
-import ErrorCode from 'src/prisma/error-code.enum';
 import ErrorMessage from './enums/error-message.enum';
 import UserProperty from './enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
-import ExtensionCodes from '../../src/graphql/extension-codes.enum';
+import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
+import UserValidationError from '../../src/users/validation/user-validation-error.enum';
 
 describe('Users', () => {
 	let app: INestApplication;
@@ -110,7 +110,7 @@ describe('Users', () => {
 
 					errors.forEach((error) => {
 						expect(error.extensions.code).toEqual(
-							ExtensionCodes.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT
 						);
 					});
 
@@ -164,7 +164,7 @@ describe('Users', () => {
 						expect(errors.length).toEqual(1);
 
 						expect(emailError.extensions.code).toEqual(
-							ExtensionCodes.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT
 						);
 
 						expect(emailError.message).toContain(
@@ -206,19 +206,19 @@ describe('Users', () => {
 
 						const errors = response.body.errors;
 						const emailError = errors[0];
-						const {extensions} = emailError;
+						const { extensions } = emailError;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 
 						expect(errors.length).toEqual(1);
 
 						expect(extensions.code).toEqual(
-							ExtensionCodes.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT
 						);
 
-						expect(
-							extensions.response.message
-						).toContain(ErrorMessage.EMAIL_IS_EMAIL);
+						expect(extensions.response.message).toContain(
+							ErrorMessage.EMAIL_IS_EMAIL
+						);
 					});
 				});
 
@@ -254,23 +254,19 @@ describe('Users', () => {
 							.send(query);
 
 						const errors = response.body.errors;
-						const emailError = errors[0];
-						const { extensions } = emailError;
-						const { exception } = extensions;
+						const error = errors[0];
+						const { extensions } = error;
+						const emailError = extensions.errors.email;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 						expect(errors.length).toEqual(1);
 
-						expect(extensions.code).toEqual(
-							ExtensionCodes.INTERNAL_SERVER_ERROR
+						expect(emailError.type).toEqual(
+							ExtensionCode.BAD_USER_INPUT
 						);
 
-						expect(exception.code).toEqual(
-							ErrorCode.UNIQUE_CONSTRAINT
-						);
-
-						expect(exception.meta.target).toContain(
-							UserProperty.EMAIL
+						expect(emailError.message).toEqual(
+							UserValidationError.EMAIL_IS_TAKEN
 						);
 					});
 				});
@@ -317,7 +313,7 @@ describe('Users', () => {
 						expect(errors.length).toEqual(1);
 
 						expect(passwordError.extensions.code).toEqual(
-							ExtensionCodes.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT
 						);
 
 						expect(passwordError.message).toContain(
@@ -325,7 +321,7 @@ describe('Users', () => {
 						);
 					});
 				});
-				
+
 				describe('when sending a password that is not long enough', () => {
 					let createUserInput;
 
@@ -359,19 +355,19 @@ describe('Users', () => {
 
 						const errors = response.body.errors;
 						const passwordError = errors[0];
-						const {extensions} = passwordError;
+						const { extensions } = passwordError;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 
 						expect(errors.length).toEqual(1);
 
 						expect(extensions.code).toEqual(
-							ExtensionCodes.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT
 						);
 
-						expect(
-							extensions.response.message
-						).toContain(ErrorMessage.PASSWORD_MIN_LENGTH);
+						expect(extensions.response.message).toContain(
+							ErrorMessage.PASSWORD_MIN_LENGTH
+						);
 					});
 				});
 			});

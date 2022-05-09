@@ -1,12 +1,12 @@
 import * as request from 'supertest';
-import ErrorMessage from './enums/error-message.enum';
-import GraphQLErrorMessage from '../../src/graphql/error-message.enum';
-import UserProperty from './enums/user-property.enum';
-import ErrorCode from '../../src/prisma/error-code.enum';
-import initializeTestApp from '../helpers/init/initializeTestApp';
-import { INestApplication, HttpStatus } from '@nestjs/common';
-import ExtensionCodes from '../../src/graphql/extension-codes.enum';
 import { UserRole } from '@prisma/client';
+import UserProperty from './enums/user-property.enum';
+import ErrorMessage from './enums/error-message.enum';
+import ErrorCode from '../../src/prisma/error-code.enum';
+import { INestApplication, HttpStatus } from '@nestjs/common';
+import initializeTestApp from '../helpers/init/initializeTestApp';
+import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
+import GraphQLErrorMessage from '../../src/graphql/errors/error-message.enum';
 
 describe('Users', () => {
 	let app: INestApplication;
@@ -62,7 +62,7 @@ describe('Users', () => {
 
 				errors.forEach((error) => {
 					expect(error.extensions.code).toEqual(
-						ExtensionCodes.BAD_USER_INPUT
+						ExtensionCode.BAD_USER_INPUT
 					);
 				});
 

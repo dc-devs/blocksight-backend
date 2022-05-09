@@ -4,6 +4,7 @@ import { GetUsersInput } from './dto/get-users.input';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import generateGraphQLError from '../graphql/errors/generate-graphql-error';
 
 @Resolver('User')
 export class UsersResolver {
@@ -23,8 +24,12 @@ export class UsersResolver {
 	}
 
 	@Mutation('createUser')
-	create(@Args('createUserInput') createUserInput: CreateUserInput) {
-		return this.usersService.create(createUserInput);
+	async create(@Args('createUserInput') createUserInput: CreateUserInput) {
+		try {
+			return await this.usersService.create(createUserInput);
+		} catch (error) {
+			generateGraphQLError(error);
+		}
 	}
 
 	@Mutation('updateUser')

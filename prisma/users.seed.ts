@@ -8,12 +8,14 @@ const firstUser = {
 	password: '12345678',
 	role: UserRole.SUPER_ADMIN,
 };
+users.push(firstUser);
 
 const secondUser = {
 	email: 'david@prisma.io',
 	password: '12345678',
 	role: UserRole.ADMIN,
 };
+users.push(secondUser);
 
 let count = 1;
 let userCount = 53;
@@ -28,4 +30,6 @@ while (count <= userCount) {
 	count += 1;
 }
 
-export { firstUser, secondUser, users };
+const allUsersCount = users.length;
+
+export { firstUser, secondUser, users, allUsersCount };

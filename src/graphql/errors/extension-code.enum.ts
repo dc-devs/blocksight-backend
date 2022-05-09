@@ -1,7 +1,7 @@
-const enum ExtensionCodes {
+const enum ExtensionCode {
 	BAD_USER_INPUT = 'BAD_USER_INPUT',
 	INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR',
 	GRAPHQL_VALIDATION_FAILED = 'GRAPHQL_VALIDATION_FAILED',
 }
 
-export default ExtensionCodes;
+export default ExtensionCode;

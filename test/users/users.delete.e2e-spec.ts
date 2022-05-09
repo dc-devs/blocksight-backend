@@ -4,8 +4,7 @@ import UserProperty from './enums/user-property.enum';
 import initializeTestApp from '../helpers/init/initializeTestApp';
 import expectedUserObject from './expected-objects/expected-user-object';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import ExtensionCodes from '../../src/graphql/extension-codes.enum';
-import GraphQLErrorMessage from '../../src/graphql/error-message.enum';
+import GraphQLErrorMessage from '../../src/graphql/errors/error-message.enum';
 import ErrorCode from '../../src/prisma/error-code.enum';
 
 describe('Users', () => {

@@ -1,9 +1,10 @@
 import * as request from 'supertest';
 import ErrorMessage from './enums/error-message.enum';
 import UserProperty from './enums/user-property.enum';
+import { allUsersCount } from '../../prisma/users.seed';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
-import ExtensionCodes from '../../src/graphql/extension-codes.enum';
+import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
 import expectedUserObject from './expected-objects/expected-user-object';
 
 describe('Users', () => {
@@ -50,7 +51,7 @@ describe('Users', () => {
 					ErrorMessage.EXTRA_PARAM_SHOULD_NOT_EXIST
 				);
 				expect(extensions.code).toEqual(
-					ExtensionCodes.GRAPHQL_VALIDATION_FAILED
+					ExtensionCode.GRAPHQL_VALIDATION_FAILED
 				);
 			});
 		});
@@ -76,9 +77,8 @@ describe('Users', () => {
 					.send(query);
 
 				const users = response.body.data.users;
-
 				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(users).toHaveLength(55);
+				expect(users.length <= allUsersCount).toBe(true);
 
 				users.forEach((user) => {
 					expect(user).toEqual(expectedUserObject);
