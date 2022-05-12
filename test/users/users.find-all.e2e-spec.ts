@@ -19,43 +19,6 @@ describe('Users', () => {
 	});
 
 	describe('Find all', () => {
-		describe('when sending a query with an unexpected user field', () => {
-			it('should return with an unexpected field error', async () => {
-				const extraParam = 'extraParam';
-				const query = {
-					operationName: 'Query',
-					query: `
-						query Query {
-							users {
-								id
-								email
-								role
-								${extraParam}
-								createdAt
-								updatedAt
-							}
-						}`,
-					variables: {},
-				};
-				const response = await request(app.getHttpServer())
-					.post('/graphql')
-					.send(query);
-
-				const errors = response.body.errors;
-				const error = errors[0];
-				const { message, extensions } = error;
-
-				expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-				expect(errors.length).toEqual(1);
-				expect(message).toEqual(
-					ErrorMessage.EXTRA_PARAM_SHOULD_NOT_EXIST
-				);
-				expect(extensions.code).toEqual(
-					ExtensionCode.GRAPHQL_VALIDATION_FAILED
-				);
-			});
-		});
-
 		describe('when sending a query to get all users', () => {
 			it('should return all users', async () => {
 				const query = {
@@ -211,6 +174,45 @@ describe('Users', () => {
 						const lastUserId = cursor.id + take - 1;
 						expect(lastUser.id).toEqual(lastUserId);
 					});
+				});
+			});
+		});
+
+		describe('validation', () => {
+			describe('when sending a query with an unexpected user field', () => {
+				it('should return with an unexpected field error', async () => {
+					const extraParam = 'extraParam';
+					const query = {
+						operationName: 'Query',
+						query: `
+							query Query {
+								users {
+									id
+									email
+									role
+									${extraParam}
+									createdAt
+									updatedAt
+								}
+							}`,
+						variables: {},
+					};
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(query);
+
+					const errors = response.body.errors;
+					const error = errors[0];
+					const { message, extensions } = error;
+
+					expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
+					expect(errors.length).toEqual(1);
+					expect(message).toEqual(
+						ErrorMessage.EXTRA_PARAM_SHOULD_NOT_EXIST
+					);
+					expect(extensions.code).toEqual(
+						ExtensionCode.GRAPHQL_VALIDATION_FAILED
+					);
 				});
 			});
 		});

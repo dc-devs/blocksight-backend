@@ -16,33 +16,6 @@ describe('Users', () => {
 	});
 
 	describe('Find One', () => {
-		describe('when sending a query with an id for user that does not exist', () => {
-			it('should return null', async () => {
-				const id = 100;
-				const query = {
-					operationName: 'Query',
-					query: `
-						query Query($id: Int!) {
-							user(id: $id) {
-								id
-								email
-								role
-								createdAt
-								updatedAt
-							}
-						}`,
-					variables: { id },
-				};
-				const response = await request(app.getHttpServer())
-					.post('/graphql')
-					.send(query);
-
-				const user = response.body.data.user;
-
-				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(user).toBeNull();
-			});
-		});
 		describe('when route requested with an id for user that does exist', () => {
 			it('should return user', async () => {
 				const id = 1;
@@ -69,6 +42,36 @@ describe('Users', () => {
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(user).toEqual(expectedUserObject);
 				expect(user).not.toHaveProperty(UserProperty.PASSWORD);
+			});
+		});
+
+		describe('validation', () => {
+			describe('when sending a query with an id for user that does not exist', () => {
+				it('should return null', async () => {
+					const id = 100;
+					const query = {
+						operationName: 'Query',
+						query: `
+						query Query($id: Int!) {
+							user(id: $id) {
+								id
+								email
+								role
+								createdAt
+								updatedAt
+							}
+						}`,
+						variables: { id },
+					};
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(query);
+
+					const user = response.body.data.user;
+
+					expect(response.statusCode).toEqual(HttpStatus.OK);
+					expect(user).toBeNull();
+				});
 			});
 		});
 	});

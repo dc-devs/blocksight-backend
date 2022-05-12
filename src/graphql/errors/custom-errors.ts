@@ -16,6 +16,18 @@ const userErrors = {
 			});
 		},
 	},
+	[ErrorCode.RECORD_NOT_FOUND]: {
+		cause: (message: string) => {
+			throw new UserInputError(ExtensionCode.BAD_USER_INPUT, {
+				errors: {
+					cause: {
+						type: ExtensionCode.BAD_USER_INPUT,
+						message
+					},
+				},
+			});
+		},
+	},
 };
 
 export default userErrors;

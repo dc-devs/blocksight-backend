@@ -33,11 +33,15 @@ export class UsersResolver {
 	}
 
 	@Mutation('updateUser')
-	update(
+	async update(
 		@Args('id', { type: () => Int }) id: number,
 		@Args('updateUserInput') updateUserInput: UpdateUserInput
 	) {
-		return this.usersService.update(id, updateUserInput);
+		try {
+			return await this.usersService.update(id, updateUserInput);
+		} catch (error) {
+			generateGraphQLError(error);
+		}
 	}
 
 	@Mutation('deleteUser')
