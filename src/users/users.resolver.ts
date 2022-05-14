@@ -1,5 +1,4 @@
 import { User } from '@prisma/client';
-import { Prisma } from '@prisma/client';
 import { UsersService } from './users.service';
 import { GetUsersInput } from './dto/get-users.input';
 import { GetUserInput } from './dto/get-user.input';
@@ -13,8 +12,8 @@ export class UsersResolver {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Query('users')
-	findAll(@Args() args: GetUsersInput): Promise<Partial<User>[]> {
-		return this.usersService.findAll(args);
+	findAll(@Args() getUsersInput: GetUsersInput): Promise<Partial<User>[]> {
+		return this.usersService.findAll(getUsersInput);
 	}
 
 	@Query('user')

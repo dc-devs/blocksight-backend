@@ -1,5 +1,4 @@
 import { User } from '@prisma/client';
-import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import { GetUserInput } from './dto/get-user.input';
 import { GetUsersInput } from './dto/get-users.input';
@@ -38,6 +37,15 @@ export class UsersService {
 		return this.prisma.user.findUnique({
 			where: { id, email },
 			select,
+		});
+	}
+	
+	_findOne(getUserInput: GetUserInput): Promise<Partial<User> | null> {
+		const { id, email } = getUserInput;
+
+		return this.prisma.user.findUnique({
+			where: { id, email },
+			select: { ...select, password: true },
 		});
 	}
 
