@@ -6,7 +6,7 @@ import ErrorMessage from './enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
 import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
-import UserValidationError from '../../src/users/validation/user-validation-error.enum';
+import UserValidationError from '../../src/users/validation-errors/user-validation-error.enum';
 
 describe('Users', () => {
 	let app: INestApplication;

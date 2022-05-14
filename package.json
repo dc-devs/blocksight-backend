@@ -18,7 +18,7 @@
 		"test": "export NODE_ENV=test && dotenv -e .env.test -- jest",
 		"test:watch": "dotenv -e .env.test && export NODE_ENV=test && jest --watch",
 		"test:cov": "jest --coverage",
-		"gen-typings": "ts-node src/graphql/helpers/generate-typings",
+		"gen-typings": "ts-node src/graphql/utils/generate-typings",
 		"test:unit": "jest src/transactions/utils/parse-transaction.spec.ts",
 		"pretest:e2e": "dotenv -e .env.test -- prisma migrate reset --force",
 		"test:e2e": "export NODE_ENV=test && jest --config ./test/helpers/config/jest-e2e.json",

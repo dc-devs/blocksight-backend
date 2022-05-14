@@ -1,13 +1,10 @@
 import { User } from '@prisma/client';
-import { UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { GetUserInput } from './dto/get-user.input';
 import { GetUsersInput } from './dto/get-users.input';
-import { GqlAuthGuard } from '../auth/gql-auth.guard';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { CurrentUser } from '../graphql/decorators/current-user.decorator';
 import generateGraphQLError from '../graphql/errors/generate-graphql-error';
 
 @Resolver('User')
@@ -54,11 +51,5 @@ export class UsersResolver {
 		@Args('id', { type: () => Int }) id: number
 	): Promise<Partial<User>> {
 		return this.usersService.delete(id);
-	}
-
-	@Query('currentUser')
-	@UseGuards(GqlAuthGuard)
-	currentUser(@CurrentUser() user: Partial<User>): Promise<Partial<User>> {
-		return this.usersService.findOne({ id: user.id });
 	}
 }
