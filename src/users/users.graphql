@@ -56,6 +56,7 @@ type Query {
 		where: UserWhereInput
 	): [User]!
 	user(getUserInput: UserWhereUniqueInput!): User
+	currentUser(getUserInput: UserWhereUniqueInput!): User
 }
 
 type Mutation {

@@ -1,10 +1,13 @@
 import { User } from '@prisma/client';
+import { UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { GetUsersInput } from './dto/get-users.input';
 import { GetUserInput } from './dto/get-user.input';
+import { GetUsersInput } from './dto/get-users.input';
+import { GqlAuthGuard } from '../auth/gql-auth.guard';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { CurrentUser } from '../graphql/decorators/current-user.decorator';
 import generateGraphQLError from '../graphql/errors/generate-graphql-error';
 
 @Resolver('User')
@@ -17,12 +20,16 @@ export class UsersResolver {
 	}
 
 	@Query('user')
-	findOne(@Args('getUserInput') getUserInput: GetUserInput) {
+	findOne(
+		@Args('getUserInput') getUserInput: GetUserInput
+	): Promise<Partial<User>> {
 		return this.usersService.findOne(getUserInput);
 	}
 
 	@Mutation('createUser')
-	async create(@Args('createUserInput') createUserInput: CreateUserInput) {
+	async create(
+		@Args('createUserInput') createUserInput: CreateUserInput
+	): Promise<Partial<User>> {
 		try {
 			return await this.usersService.create(createUserInput);
 		} catch (error) {
@@ -34,7 +41,7 @@ export class UsersResolver {
 	async update(
 		@Args('id', { type: () => Int }) id: number,
 		@Args('updateUserInput') updateUserInput: UpdateUserInput
-	) {
+	): Promise<Partial<User>> {
 		try {
 			return await this.usersService.update(id, updateUserInput);
 		} catch (error) {
@@ -43,7 +50,15 @@ export class UsersResolver {
 	}
 
 	@Mutation('deleteUser')
-	remove(@Args('id', { type: () => Int }) id: number) {
+	remove(
+		@Args('id', { type: () => Int }) id: number
+	): Promise<Partial<User>> {
 		return this.usersService.delete(id);
+	}
+
+	@Query('currentUser')
+	@UseGuards(GqlAuthGuard)
+	currentUser(@CurrentUser() user: Partial<User>): Promise<Partial<User>> {
+		return this.usersService.findOne({ id: user.id });
 	}
 }
