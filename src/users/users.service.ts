@@ -1,5 +1,6 @@
 import { User } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
+import { encodePassword } from './utils/bcrypt';
 import { GetUserInput } from './dto/get-user.input';
 import { GetUsersInput } from './dto/get-users.input';
 import { PrismaService } from '../prisma/prisma.service';
@@ -52,11 +53,12 @@ export class UsersService {
 	create(createUserInput: CreateUserInput): Promise<Partial<User>> {
 		const { email, password } = createUserInput;
 		const emailLowerCase = email.toLowerCase();
+		const encodedPassword = encodePassword(password);
 
 		return this.prisma.user.create({
 			data: {
 				email: emailLowerCase,
-				password,
+				password: encodedPassword,
 			},
 			select,
 		});

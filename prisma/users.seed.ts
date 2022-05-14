@@ -1,18 +1,19 @@
 import { faker } from '@faker-js/faker';
 import { UserRole } from '@prisma/client';
+import { encodePassword } from '../src/users/utils/bcrypt';
 
 const users = [];
 
 const firstUser = {
 	email: 'davidc@prisma.io',
-	password: '12345678',
+	password: encodePassword('12345678'),
 	role: UserRole.SUPER_ADMIN,
 };
 users.push(firstUser);
 
 const secondUser = {
 	email: 'david@prisma.io',
-	password: '12345678',
+	password: encodePassword('12345678'),
 	role: UserRole.ADMIN,
 };
 users.push(secondUser);
@@ -23,7 +24,7 @@ let userCount = 53;
 while (count <= userCount) {
 	const user = {
 		email: faker.internet.email(),
-		password: faker.internet.password(),
+		password: encodePassword(faker.internet.password()),
 	};
 
 	users.push(user);
