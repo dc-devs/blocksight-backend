@@ -38,6 +38,15 @@ input UserWhereUniqueInput {
 	email: String
 }
 
+input CreateUserInput {
+	email: String!
+	password: String!
+}
+
+input UpdateUserInput {
+	email: String
+}
+
 type Query {
 	users(
 		skip: Int
@@ -46,16 +55,7 @@ type Query {
 		orderBy: UserOrderByInput
 		where: UserWhereInput
 	): [User]!
-	user(id: Int!): User
-}
-
-input CreateUserInput {
-	email: String!
-	password: String!
-}
-
-input UpdateUserInput {
-	email: String
+	user(getUserInput: UserWhereUniqueInput!): User
 }
 
 type Mutation {

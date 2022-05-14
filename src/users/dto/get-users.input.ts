@@ -7,25 +7,25 @@ import { IsNumber, IsOptional } from 'class-validator';
 // https://docs.nestjs.com/graphql/resolvers#class-inheritance
 @ArgsType()
 export class GetUsersInput {
+	@Field()
 	@IsNumber()
 	@IsOptional()
-	@Field()
 	skip?: number;
 
+	@Field()
 	@IsNumber()
 	@IsOptional()
-	@Field()
 	take?: number;
 
-	@IsOptional()
 	@Field()
+	@IsOptional()
 	cursor?: Prisma.UserWhereUniqueInput;
 
-	@IsOptional()
 	@Field()
+	@IsOptional()
 	where?: Prisma.UserWhereInput;
 
-	@IsOptional()
 	@Field()
+	@IsOptional()
 	orderBy?: Prisma.UserOrderByWithRelationInput;
 }

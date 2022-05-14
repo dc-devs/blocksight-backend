@@ -1,19 +1,9 @@
-// https://docs.nestjs.com/controllers#request-payloads
-import { Prisma } from '@prisma/client';
+import { IsEmail } from 'class-validator';
 import { Field, ArgsType } from '@nestjs/graphql';
-import { IsString, IsEmail } from 'class-validator';
 
 @ArgsType()
 export class UpdateUserInput {
-	@IsEmail()
 	@Field()
+	@IsEmail()
 	email: string;
-
-	// @IsString()
-	// @Field()
-	// role: Prisma.EnumUserRoleFieldUpdateOperationsInput;
-
-	// @IsString()
-	// @Field()
-	// password: string;
 }

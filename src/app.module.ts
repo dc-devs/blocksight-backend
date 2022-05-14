@@ -1,8 +1,9 @@
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
-import { GraphqlModule } from './graphql/graphql.module';
+// import { AuthModule } from './auth/auth.module';
 import { PrismaService } from './prisma/prisma.service';
+import { GraphqlModule } from './graphql/graphql.module';
 import { TransfersModule } from './transfers/transfers.module';
 import { PingController } from './ping/controller/ping.controller';
 import { TransactionsModule } from './transactions/transactions.module';
@@ -31,6 +32,7 @@ if (isDevelopment) {
 			isGlobal: true,
 			envFilePath: ['.env', `.env.${environment}`],
 		}),
+		// AuthModule,
 	],
 	controllers: [PingController],
 	providers: [AppService, PrismaService],

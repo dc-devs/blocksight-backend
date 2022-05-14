@@ -1,21 +1,20 @@
-// https://docs.nestjs.com/controllers#request-payloads
 import { Field, ArgsType } from '@nestjs/graphql';
 import { IsString, IsEmail, MinLength, IsOptional } from 'class-validator';
 
 @ArgsType()
 export class CreateUserInput {
-	@IsEmail()
 	@Field()
+	@IsEmail()
 	email: string;
 
+	@Field()
 	@IsString()
 	@MinLength(8)
-	@Field()
 	password: string;
 
-	@IsString()
-	@MinLength(8)
-	@IsOptional()
 	@Field()
+	@IsString()
+	@IsOptional()
+	@MinLength(8)
 	passwordConfirmation: string;
 }

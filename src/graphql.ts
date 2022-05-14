@@ -59,7 +59,7 @@ export abstract class IQuery {
 
     abstract users(skip?: Nullable<number>, take?: Nullable<number>, cursor?: Nullable<UserWhereUniqueInput>, orderBy?: Nullable<UserOrderByInput>, where?: Nullable<UserWhereInput>): Nullable<User>[] | Promise<Nullable<User>[]>;
 
-    abstract user(id: number): Nullable<User> | Promise<Nullable<User>>;
+    abstract user(getUserInput: UserWhereUniqueInput): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class IMutation {

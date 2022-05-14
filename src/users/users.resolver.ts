@@ -1,6 +1,8 @@
 import { User } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { UsersService } from './users.service';
 import { GetUsersInput } from './dto/get-users.input';
+import { GetUserInput } from './dto/get-user.input';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
@@ -16,11 +18,8 @@ export class UsersResolver {
 	}
 
 	@Query('user')
-	findOne(
-		@Args('id', { type: () => Int })
-		id: number
-	) {
-		return this.usersService.findOne(id);
+	findOne(@Args('getUserInput') getUserInput: GetUserInput) {
+		return this.usersService.findOne(getUserInput);
 	}
 
 	@Mutation('createUser')
