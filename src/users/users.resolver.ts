@@ -4,7 +4,9 @@ import { GetUserInput } from './dto/get-user.input';
 import { GetUsersInput } from './dto/get-users.input';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { UseGuards } from '@nestjs/common';
+import { Resolver, Context, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import generateGraphQLError from '../graphql/errors/generate-graphql-error';
 
 @Resolver('User')
@@ -17,7 +19,9 @@ export class UsersResolver {
 	}
 
 	@Query('user')
-	findOne(@Args('getUserInput') getUserInput: GetUserInput) {
+	findOne(
+		@Args('getUserInput') getUserInput: GetUserInput
+	) {
 		return this.usersService.findOne(getUserInput);
 	}
 

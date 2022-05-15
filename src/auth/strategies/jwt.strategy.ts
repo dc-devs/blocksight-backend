@@ -1,8 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { JwtConstants } from '../constants/jwt.constants';
-import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { User } from '../../users/entities/user.entity';
 import { UsersService } from '../../users/users.service';
+import { JwtConstants } from '../constants/jwt.constants';
+
+interface Payload {
+	data: User
+}
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,10 +19,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		});
 	}
 
-	validate(payload: any) {
-		console.log('');
-		console.log('[JwtStrategy]::validate', payload);
-		console.log('');
-		return this.usersService.findOne({ id: payload.sub });
+	validate(payload: Payload) {
+		const { data } = payload;
+		return this.usersService.findOne({ id: data.id });
 	}
 }
