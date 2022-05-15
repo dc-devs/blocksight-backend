@@ -1,10 +1,23 @@
-input LogInInput {
+input LoginInput {
 	email: String!
 	password: String!
 }
 
+type User {
+	id: Int!
+	email: String!
+	role: String!
+	createdAt: DateTime!
+	updatedAt: DateTime!
+}
+
+type LoginResponse {
+	access_token: String
+	user: User
+}
+
 type Mutation {
-	logIn(logInInput: LogInInput!): String!
+	login(loginInput: LoginInput!): LoginResponse!
 	# currentUser(): User
 	# signOut()
 }

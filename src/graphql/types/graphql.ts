@@ -12,7 +12,7 @@ export enum SortOrder {
     desc = "desc"
 }
 
-export class LogInInput {
+export class LoginInput {
     email: string;
     password: string;
 }
@@ -50,18 +50,6 @@ export class UpdateUserInput {
     email?: Nullable<string>;
 }
 
-export abstract class IMutation {
-    __typename?: 'IMutation';
-
-    abstract logIn(logInInput: LogInInput): string | Promise<string>;
-
-    abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
-
-    abstract updateUser(id: number, updateUserInput: UpdateUserInput): User | Promise<User>;
-
-    abstract deleteUser(id: number): User | Promise<User>;
-}
-
 export class User {
     __typename?: 'User';
     id: number;
@@ -69,6 +57,24 @@ export class User {
     role: string;
     createdAt: DateTime;
     updatedAt: DateTime;
+}
+
+export class LoginResponse {
+    __typename?: 'LoginResponse';
+    access_token?: Nullable<string>;
+    user?: Nullable<User>;
+}
+
+export abstract class IMutation {
+    __typename?: 'IMutation';
+
+    abstract login(loginInput: LoginInput): LoginResponse | Promise<LoginResponse>;
+
+    abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
+
+    abstract updateUser(id: number, updateUserInput: UpdateUserInput): User | Promise<User>;
+
+    abstract deleteUser(id: number): User | Promise<User>;
 }
 
 export abstract class IQuery {
