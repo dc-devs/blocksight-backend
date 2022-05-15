@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 import { GetUserInput } from './dto/get-user.input';
 import { GetUsersInput } from './dto/get-users.input';
@@ -12,21 +12,17 @@ export class UsersResolver {
 	constructor(private readonly usersService: UsersService) {}
 
 	@Query('users')
-	findAll(@Args() getUsersInput: GetUsersInput): Promise<Partial<User>[]> {
+	findAll(@Args() getUsersInput: GetUsersInput) {
 		return this.usersService.findAll(getUsersInput);
 	}
 
 	@Query('user')
-	findOne(
-		@Args('getUserInput') getUserInput: GetUserInput
-	): Promise<Partial<User>> {
+	findOne(@Args('getUserInput') getUserInput: GetUserInput) {
 		return this.usersService.findOne(getUserInput);
 	}
 
 	@Mutation('createUser')
-	async create(
-		@Args('createUserInput') createUserInput: CreateUserInput
-	): Promise<Partial<User>> {
+	async create(@Args('createUserInput') createUserInput: CreateUserInput) {
 		try {
 			return await this.usersService.create(createUserInput);
 		} catch (error) {
@@ -38,7 +34,7 @@ export class UsersResolver {
 	async update(
 		@Args('id', { type: () => Int }) id: number,
 		@Args('updateUserInput') updateUserInput: UpdateUserInput
-	): Promise<Partial<User>> {
+	) {
 		try {
 			return await this.usersService.update(id, updateUserInput);
 		} catch (error) {
@@ -47,9 +43,7 @@ export class UsersResolver {
 	}
 
 	@Mutation('deleteUser')
-	remove(
-		@Args('id', { type: () => Int }) id: number
-	): Promise<Partial<User>> {
+	remove(@Args('id', { type: () => Int }) id: number) {
 		return this.usersService.delete(id);
 	}
 }

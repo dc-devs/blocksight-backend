@@ -1,6 +1,7 @@
 import { compareSync } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
+import { UserRole, User } from '@prisma/client';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
@@ -11,8 +12,10 @@ export class AuthService {
 	) {}
 
 	// Add DTO
-	// Use Bcrypt to encode password
 	async validateUser(email: string, suppliedPassword: string): Promise<any> {
+		console.log('');
+		console.log('[AuthService]::validateUser', email, suppliedPassword);
+		console.log('');
 		let validatedUser = null;
 		const user = await this.usersService._findOne({ email });
 		const hasCorrectPassword = compareSync(suppliedPassword, user.password);
@@ -39,6 +42,13 @@ export class AuthService {
 
 		return {
 			access_token,
+			user: {
+				id: 10,
+				email: 'david.w.christian@gmail.com',
+				role: 'USER' as UserRole,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+			},
 		};
 	}
 }

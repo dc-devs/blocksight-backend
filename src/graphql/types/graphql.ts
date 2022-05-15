@@ -12,6 +12,11 @@ export enum SortOrder {
     desc = "desc"
 }
 
+export class LogInInput {
+    email: string;
+    password: string;
+}
+
 export class UserOrderByInput {
     id?: Nullable<SortOrder>;
     email?: Nullable<SortOrder>;
@@ -45,6 +50,18 @@ export class UpdateUserInput {
     email?: Nullable<string>;
 }
 
+export abstract class IMutation {
+    __typename?: 'IMutation';
+
+    abstract logIn(logInInput: LogInInput): string | Promise<string>;
+
+    abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
+
+    abstract updateUser(id: number, updateUserInput: UpdateUserInput): User | Promise<User>;
+
+    abstract deleteUser(id: number): User | Promise<User>;
+}
+
 export class User {
     __typename?: 'User';
     id: number;
@@ -62,16 +79,6 @@ export abstract class IQuery {
     abstract user(getUserInput: UserWhereUniqueInput): Nullable<User> | Promise<Nullable<User>>;
 
     abstract currentUser(getUserInput: UserWhereUniqueInput): Nullable<User> | Promise<Nullable<User>>;
-}
-
-export abstract class IMutation {
-    __typename?: 'IMutation';
-
-    abstract createUser(createUserInput: CreateUserInput): User | Promise<User>;
-
-    abstract updateUser(id: number, updateUserInput: UpdateUserInput): User | Promise<User>;
-
-    abstract deleteUser(id: number): User | Promise<User>;
 }
 
 export type JSON = any;

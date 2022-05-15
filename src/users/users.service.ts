@@ -1,11 +1,12 @@
-import { User } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
+import { User } from './entities/user.entity';
 import { encodePassword } from './utils/bcrypt';
 import { GetUserInput } from './dto/get-user.input';
 import { GetUsersInput } from './dto/get-users.input';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateUserInput } from './dto/update-user.input';
 import { CreateUserInput } from './dto/create-user.input';
+import { UserWithPassword } from './entities/user-with-password.entity';
 
 const select = {
 	id: true,
@@ -19,7 +20,7 @@ const select = {
 export class UsersService {
 	constructor(private prisma: PrismaService) {}
 
-	findAll(getUsersInput: GetUsersInput): Promise<Partial<User>[]> {
+	findAll(getUsersInput: GetUsersInput): Promise<User[]> {
 		const { skip, cursor, take, orderBy, where } = getUsersInput;
 
 		return this.prisma.user.findMany({
@@ -32,7 +33,7 @@ export class UsersService {
 		});
 	}
 
-	findOne(getUserInput: GetUserInput): Promise<Partial<User> | null> {
+	findOne(getUserInput: GetUserInput): Promise<User | null> {
 		const { id, email } = getUserInput;
 
 		return this.prisma.user.findUnique({
@@ -40,8 +41,8 @@ export class UsersService {
 			select,
 		});
 	}
-	
-	_findOne(getUserInput: GetUserInput): Promise<Partial<User> | null> {
+
+	_findOne(getUserInput: GetUserInput): Promise<UserWithPassword | null> {
 		const { id, email } = getUserInput;
 
 		return this.prisma.user.findUnique({
@@ -50,7 +51,7 @@ export class UsersService {
 		});
 	}
 
-	create(createUserInput: CreateUserInput): Promise<Partial<User>> {
+	create(createUserInput: CreateUserInput): Promise<User> {
 		const { email, password } = createUserInput;
 		const emailLowerCase = email.toLowerCase();
 		const encodedPassword = encodePassword(password);
@@ -64,7 +65,7 @@ export class UsersService {
 		});
 	}
 
-	update(id: number, data: UpdateUserInput): Promise<Partial<User>> {
+	update(id: number, data: UpdateUserInput): Promise<User> {
 		return this.prisma.user.update({
 			where: {
 				id,
@@ -74,7 +75,7 @@ export class UsersService {
 		});
 	}
 
-	delete(id: number): Promise<Partial<User>> {
+	delete(id: number): Promise<User> {
 		return this.prisma.user.delete({
 			where: {
 				id,
