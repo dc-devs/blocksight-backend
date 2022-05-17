@@ -24,13 +24,13 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Query',
 						query: `
-							query Query($getUserInput: UserWhereUniqueInput!) {
-								user(getUserInput: $getUserInput) {
+							query Query($getUserInput: GetUserInput!) {
+								findOneUser(getUserInput: $getUserInput) {
 									id
 									role
 									email
-									createdAt
 									updatedAt
+									createdAt
 								}
 							}`,
 						variables: {
@@ -44,7 +44,7 @@ describe('Users', () => {
 						.post('/graphql')
 						.send(query);
 
-					const user = response.body.data.user;
+					const user = response.body.data.findOneUser;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
 					expect(user.id).toEqual(id);
@@ -60,13 +60,13 @@ describe('Users', () => {
 						const query = {
 							operationName: 'Query',
 							query: `
-								query Query($getUserInput: UserWhereUniqueInput!) {
-									user(getUserInput: $getUserInput) {
+								query Query($getUserInput: GetUserInput!) {
+									findOneUser(getUserInput: $getUserInput) {
 										id
 										role
 										email
-										createdAt
 										updatedAt
+										createdAt
 									}
 								}`,
 							variables: {
@@ -80,7 +80,7 @@ describe('Users', () => {
 							.post('/graphql')
 							.send(query);
 
-						const user = response.body.data.user;
+						const user = response.body.data.findOneUser;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 						expect(user).toBeNull();
@@ -96,8 +96,8 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Query',
 						query: `
-							query Query($getUserInput: UserWhereUniqueInput!) {
-								user(getUserInput: $getUserInput) {
+							query Query($getUserInput: GetUserInput!) {
+								findOneUser(getUserInput: $getUserInput) {
 									id
 									role
 									email
@@ -115,7 +115,7 @@ describe('Users', () => {
 						.post('/graphql')
 						.send(query);
 
-					const user = response.body.data.user;
+					const user = response.body.data.findOneUser;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
 					expect(user).toEqual(expectedUserObject);
@@ -130,8 +130,8 @@ describe('Users', () => {
 						const query = {
 							operationName: 'Query',
 							query: `
-								query Query($getUserInput: UserWhereUniqueInput!) {
-									user(getUserInput: $getUserInput) {
+								query Query($getUserInput: GetUserInput!) {
+									findOneUser(getUserInput: $getUserInput) {
 										id
 										role
 										email
@@ -150,7 +150,7 @@ describe('Users', () => {
 							.post('/graphql')
 							.send(query);
 
-						const user = response.body.data.user;
+						const user = response.body.data.findOneUser;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 						expect(user).toBeNull();
@@ -165,8 +165,8 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Query',
 						query: `
-							query Query($getUserInput: UserWhereUniqueInput!) {
-								user(getUserInput: $getUserInput) {
+							query Query($getUserInput: GetUserInput!) {
+								findOneUser(getUserInput: $getUserInput) {
 									id
 									role
 									email
@@ -183,7 +183,7 @@ describe('Users', () => {
 						.post('/graphql')
 						.send(query);
 
-					const user = response.body.data.user;
+					const user = response.body.data.findOneUser;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
 					expect(user).toBeNull();

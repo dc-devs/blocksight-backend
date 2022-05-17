@@ -38,14 +38,14 @@ type LoginResponse {
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+  deleteUser(id: Int!): User!
   login: LoginResponse!
-  removeUser(id: Int!): User!
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
-  user(getUserInput: GetUserInput!): User!
-  users(getUsersInput: GetUsersInput!): [User!]!
+  findAllUsers(getUsersInput: GetUsersInput!): [User!]!
+  findOneUser(getUserInput: GetUserInput!): User
 }
 
 input UpdateUserInput {

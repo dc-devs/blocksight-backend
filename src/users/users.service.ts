@@ -42,7 +42,7 @@ export class UsersService {
 		});
 	}
 
-	_findOne(getUserInput: GetUserInput): Promise<UserWithPassword> | Promise<null> {
+	_findOne(getUserInput: GetUserInput): Promise<UserWithPassword | null> {
 		const { id, email } = getUserInput;
 
 		return this.prisma.user.findUnique({

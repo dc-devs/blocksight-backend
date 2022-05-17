@@ -69,54 +69,6 @@ describe('Users', () => {
 
 		describe('validation', () => {
 			describe('email', () => {
-				describe('when missing email', () => {
-					let updateUserInput;
-
-					beforeEach(() => {
-						updateUserInput = {};
-					});
-
-					it('should return an error', async () => {
-						const id = 20;
-						const query = {
-							operationName: 'Mutation',
-							query: `
-								mutation Mutation($id: Int!, $data: UpdateUserInput!) {
-									updateUser(id: $id, updateUserInput: $data) {
-										id
-										email
-										role
-										createdAt
-										updatedAt
-									}
-								}`,
-							variables: {
-								id,
-								data: updateUserInput,
-							},
-						};
-						const response = await request(app.getHttpServer())
-							.post('/graphql')
-							.send(query);
-
-						const errors = response.body.errors;
-						const emailError = errors[0];
-						const { extensions } = emailError;
-
-						expect(response.statusCode).toEqual(HttpStatus.OK);
-
-						expect(errors.length).toEqual(1);
-
-						expect(extensions.code).toEqual(
-							ExtensionCode.BAD_USER_INPUT
-						);
-
-						expect(extensions.response.message[0]).toContain(
-							ErrorMessage.EMAIL_IS_EMAIL
-						);
-					});
-				});
-
 				describe('when sending an email that is not an email', () => {
 					let id = 20;
 					let updateUserInput;

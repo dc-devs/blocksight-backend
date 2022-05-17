@@ -13,18 +13,32 @@ import generateGraphQLError from '../graphql/errors/generate-graphql-error';
 export class UsersResolver {
 	constructor(private readonly usersService: UsersService) {}
 
-	@Query(() => User)
-	user(@Args('getUserInput') getUserInput: GetUserInput) {
-		return this.usersService.findOne(getUserInput);
-	}
-
+	// LEFT OFF, Getting passing tests for this Resolver
+	// Todo:
+	// 1. Finish implementing the WHERE, AND, OR in DTO and write simple tests for
+	//
+	// 2. Update GetUsersInput to FindAllUsersInput
+	//    ensure these match the Resolver Name
+	//
+	// 3. Update named object that comes back in request, @Query arg
 	@Query(() => [User])
-	users(@Args('getUsersInput') getUsersInput: GetUsersInput) {
+	findAllUsers(
+		@Args('getUsersInput') getUsersInput: GetUsersInput
+	): Promise<User[]> {
 		return this.usersService.findAll(getUsersInput);
 	}
 
+	@Query(() => User, { nullable: true })
+	findOneUser(
+		@Args('getUserInput') getUserInput: GetUserInput
+	): Promise<User | null> {
+		return this.usersService.findOne(getUserInput);
+	}
+
 	@Mutation(() => User)
-	async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+	async createUser(
+		@Args('createUserInput') createUserInput: CreateUserInput
+	): Promise<User> {
 		try {
 			return await this.usersService.create(createUserInput);
 		} catch (error) {
@@ -36,7 +50,7 @@ export class UsersResolver {
 	async updateUser(
 		@Args('id', { type: () => Int }) id: number,
 		@Args('updateUserInput') updateUserInput: UpdateUserInput
-	) {
+	): Promise<User> {
 		try {
 			return await this.usersService.update(id, updateUserInput);
 		} catch (error) {
@@ -45,7 +59,7 @@ export class UsersResolver {
 	}
 
 	@Mutation(() => User)
-	removeUser(@Args('id', { type: () => Int }) id: number) {
+	deleteUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
 		return this.usersService.delete(id);
 	}
 }

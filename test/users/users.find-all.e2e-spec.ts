@@ -24,22 +24,25 @@ describe('Users', () => {
 				const query = {
 					operationName: 'Query',
 					query: `
-						query Query {
-							users {
+						query Query($getUsersInput: GetUsersInput!) {
+							findAllUsers(getUsersInput: $getUsersInput) {
 								id
-								email
 								role
+								email
 								createdAt
 								updatedAt
 							}
 						}`,
-					variables: {},
+					variables: {
+						getUsersInput: {},
+					},
 				};
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
 					.send(query);
 
-				const users = response.body.data.users;
+				const users = response.body.data.findAllUsers;
+
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(users.length <= allUsersCount).toBe(true);
 
@@ -57,26 +60,29 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Query',
 						query: `
-							query Query($where: UserWhereInput) {
-								users(where: $where) {
+							query Query($getUsersInput: GetUsersInput!) {
+								findAllUsers(getUsersInput: $getUsersInput) {
 									id
-									email
 									role
+									email
 									createdAt
 									updatedAt
 								}
 							}`,
 						variables: {
-							where: {
-								role,
+							getUsersInput: {
+								where: {
+									role,
+								},
 							},
 						},
 					};
+
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
 						.send(query);
 
-					const users = response.body.data.users;
+					const users = response.body.data.findAllUsers;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
 					expect(users).toHaveLength(1);
@@ -96,25 +102,27 @@ describe('Users', () => {
 						const query = {
 							operationName: 'Query',
 							query: `
-								query Query($skip: Int, $take: Int) {
-  									users(skip: $skip, take: $take) {
+								query Query($getUsersInput: GetUsersInput!) {
+									findAllUsers(getUsersInput: $getUsersInput) {
 										id
-										email
 										role
+										email
 										createdAt
 										updatedAt
 									}
 								}`,
 							variables: {
-								skip,
-								take,
+								getUsersInput: {
+									skip,
+									take,
+								},
 							},
 						};
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
 							.send(query);
 
-						const users = response.body.data.users;
+						const users = response.body.data.findAllUsers;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 						expect(users).toHaveLength(10);
@@ -140,25 +148,28 @@ describe('Users', () => {
 						const query = {
 							operationName: 'Query',
 							query: `
-								query Query($cursor: UserWhereUniqueInput, $take: Int) {
-									users(cursor: $cursor, take: $take) {
+								query Query($getUsersInput: GetUsersInput!) {
+									findAllUsers(getUsersInput: $getUsersInput) {
 										id
-										email
 										role
+										email
 										createdAt
 										updatedAt
 									}
 								}`,
 							variables: {
-								cursor,
-								take,
+								getUsersInput: {
+									cursor,
+									take,
+								},
 							},
 						};
+
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
 							.send(query);
 
-						const users = response.body.data.users;
+						const users = response.body.data.findAllUsers;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 						expect(users).toHaveLength(10);
@@ -185,14 +196,14 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Query',
 						query: `
-							query Query {
-								users {
+							query Query($getUsersInput: GetUsersInput!) {
+								findAllUsers(getUsersInput: $getUsersInput) {
 									id
-									email
 									role
-									${extraParam}
+									email
 									createdAt
 									updatedAt
+									${extraParam}
 								}
 							}`,
 						variables: {},
@@ -218,3 +229,8 @@ describe('Users', () => {
 		});
 	});
 });
+
+// console.log('');
+// console.log('-- RESPONSE --');
+// console.log(response.body);
+// console.log('');
