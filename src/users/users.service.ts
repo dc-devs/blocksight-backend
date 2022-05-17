@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './entities/user.entity';
+import { User } from './models/user.model';
 import { encodePassword } from './utils/bcrypt';
 import { GetUserInput } from './dto/get-user.input';
 import { GetUsersInput } from './dto/get-users.input';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateUserInput } from './dto/update-user.input';
 import { CreateUserInput } from './dto/create-user.input';
-import { UserWithPassword } from './entities/user-with-password.entity';
+import { UserWithPassword } from './models/user-with-password.model';
 
 const select = {
 	id: true,

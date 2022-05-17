@@ -2,20 +2,20 @@ import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LogInInput } from './dto/login.input';
 import { LoginResponse } from './dto/login.response';
-import { User } from '../users/entities/user.entity';
+import { User } from '../users/models/user.model';
 import { UsersService } from '../users/users.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
 import { CurrentUser } from '../graphql/decorators/current-user.decorator';
 
-@Resolver('Auth')
+@Resolver((of) => LoginResponse)
 export class AuthResolver {
 	constructor(
 		private readonly authService: AuthService,
 		private readonly usersService: UsersService
 	) {}
 
-	@Mutation('login')
+	@Mutation((returns) => LoginResponse)
 	@UseGuards(LocalAuthGuard)
 	async login(@Context('user') user: User) {
 		return this.authService.login(user);

@@ -1,15 +1,15 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsNumber, IsOptional, IsEmail } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 @InputType()
-export class GetUserInput {
-	@IsEmail()
-	@IsOptional()
-	@Field({ nullable: true })
-	email?: string;
-
+export class Cursor {
 	@IsNumber()
 	@IsOptional()
 	@Field({ nullable: true })
 	id?: number;
+
+	@IsString()
+	@IsOptional()
+	@Field({ nullable: true })
+	email?: string;
 }

@@ -1,4 +1,4 @@
-import { User as PrismaUser } from '@prisma/client';
+import { UserRole, User as PrismaUser } from '@prisma/client';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { IsNumber, IsString, IsEmail, IsDate } from 'class-validator';
 
@@ -6,25 +6,25 @@ import { IsNumber, IsString, IsEmail, IsDate } from 'class-validator';
 export class UserWithPassword {
 	@Field()
 	@IsNumber()
-	id: PrismaUser['id'];
+	id: number;
 
 	@Field()
 	@IsEmail()
-	email: PrismaUser['email'];
+	email: string;
 
 	@Field()
 	@IsString()
-	role: PrismaUser['role'];
+	role: UserRole;
 
 	@Field()
 	@IsString()
-	password: PrismaUser['password'];
+	password: string;
 
 	@Field()
 	@IsDate()
-	createdAt: PrismaUser['createdAt'];
+	createdAt: Date;
 
 	@Field()
 	@IsDate()
-	updatedAt: PrismaUser['updatedAt'];
+	updatedAt: Date;
 }

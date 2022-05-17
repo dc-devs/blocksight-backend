@@ -1,32 +1,30 @@
-import { User } from './entities/user.entity';
+import { User } from './models/user.model';
 import { UsersService } from './users.service';
 import { GetUserInput } from './dto/get-user.input';
 import { GetUsersInput } from './dto/get-users.input';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Resolver, Context, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import generateGraphQLError from '../graphql/errors/generate-graphql-error';
 
-@Resolver('User')
+@Resolver(() => User)
 export class UsersResolver {
 	constructor(private readonly usersService: UsersService) {}
 
-	@Query('users')
-	findAll(@Args() getUsersInput: GetUsersInput) {
-		return this.usersService.findAll(getUsersInput);
-	}
-
-	@Query('user')
-	findOne(
-		@Args('getUserInput') getUserInput: GetUserInput
-	) {
+	@Query(() => User)
+	user(@Args('getUserInput') getUserInput: GetUserInput) {
 		return this.usersService.findOne(getUserInput);
 	}
 
-	@Mutation('createUser')
-	async create(@Args('createUserInput') createUserInput: CreateUserInput) {
+	@Query(() => [User])
+	users(@Args('getUsersInput') getUsersInput: GetUsersInput) {
+		return this.usersService.findAll(getUsersInput);
+	}
+
+	@Mutation(() => User)
+	async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
 		try {
 			return await this.usersService.create(createUserInput);
 		} catch (error) {
@@ -34,8 +32,8 @@ export class UsersResolver {
 		}
 	}
 
-	@Mutation('updateUser')
-	async update(
+	@Mutation(() => User)
+	async updateUser(
 		@Args('id', { type: () => Int }) id: number,
 		@Args('updateUserInput') updateUserInput: UpdateUserInput
 	) {
@@ -46,8 +44,8 @@ export class UsersResolver {
 		}
 	}
 
-	@Mutation('deleteUser')
-	remove(@Args('id', { type: () => Int }) id: number) {
+	@Mutation(() => User)
+	removeUser(@Args('id', { type: () => Int }) id: number) {
 		return this.usersService.delete(id);
 	}
 }

@@ -2,7 +2,7 @@ import { UserRole } from '@prisma/client'; // TODO: REMOVE
 import { compareSync } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
-import { User } from '../users/entities/user.entity';
+import { User } from '../users/models/user.model';
 import { UsersService } from '../users/users.service';
 
 @Injectable()
