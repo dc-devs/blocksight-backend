@@ -1,11 +1,17 @@
 import * as request from 'supertest';
+import { UserRole } from '@prisma/client';
 import ErrorMessage from './enums/error-message.enum';
 import UserProperty from './enums/user-property.enum';
-import { allUsersCount } from '../../prisma/users.seed';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
 import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
 import expectedUserObject from './expected-objects/expected-user-object';
+import {
+	allUsersCount,
+	thirdUser as thirdUserAdmin,
+	secondUser as secondUserAdmin,
+	firstUser as firstUserSuperAdmin,
+} from '../../prisma/users.seed';
 
 describe('Users', () => {
 	let app: INestApplication;
@@ -24,8 +30,8 @@ describe('Users', () => {
 				const query = {
 					operationName: 'Query',
 					query: `
-						query Query($getUsersInput: GetUsersInput!) {
-							findAllUsers(getUsersInput: $getUsersInput) {
+						query Query($findAllUsersInput: FindAllUsersInput!) {
+							findAllUsers(findAllUsersInput: $findAllUsersInput) {
 								id
 								role
 								email
@@ -34,7 +40,7 @@ describe('Users', () => {
 							}
 						}`,
 					variables: {
-						getUsersInput: {},
+						findAllUsersInput: {},
 					},
 				};
 				const response = await request(app.getHttpServer())
@@ -54,14 +60,14 @@ describe('Users', () => {
 		});
 
 		describe('when sending a query with arguments', () => {
-			describe("and the where argument aims to fetch users with 'role: SUPER_ADMIN' ", () => {
-				it('should return all users with that role', async () => {
-					const role = 'SUPER_ADMIN';
-					const query = {
-						operationName: 'Query',
-						query: `
-							query Query($getUsersInput: GetUsersInput!) {
-								findAllUsers(getUsersInput: $getUsersInput) {
+			describe('where', () => {
+				describe("and the where argument aims to fetch users with 'role: SUPER_ADMIN'", () => {
+					it('should return all users with that role', async () => {
+						const query = {
+							operationName: 'Query',
+							query: `
+							query Query($findAllUsersInput: FindAllUsersInput!) {
+								findAllUsers(findAllUsersInput: $findAllUsersInput) {
 									id
 									role
 									email
@@ -69,98 +75,96 @@ describe('Users', () => {
 									updatedAt
 								}
 							}`,
-						variables: {
-							getUsersInput: {
-								where: {
-									role,
+							variables: {
+								findAllUsersInput: {
+									where: {
+										role: UserRole.SUPER_ADMIN,
+									},
 								},
 							},
-						},
-					};
+						};
 
-					const response = await request(app.getHttpServer())
-						.post('/graphql')
-						.send(query);
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(query);
 
-					const users = response.body.data.findAllUsers;
+						const users = response.body.data.findAllUsers;
 
-					expect(response.statusCode).toEqual(HttpStatus.OK);
-					expect(users).toHaveLength(1);
+						expect(response.statusCode).toEqual(HttpStatus.OK);
+						expect(users).toHaveLength(1);
 
-					users.forEach((user) => {
+						users.forEach((user) => {
+							expect(user).toEqual(expectedUserObject);
+							expect(user).not.toHaveProperty(
+								UserProperty.PASSWORD
+							);
+							expect(user.role).toEqual(UserRole.SUPER_ADMIN);
+						});
+					});
+				});
+
+				describe("and the where AND argument aims to fetch one users with 'role: ADMIN' and a specified email", () => {
+					it('should return all users with that role', async () => {
+						const query = {
+							operationName: 'Query',
+							query: `
+							query Query($findAllUsersInput: FindAllUsersInput!) {
+								findAllUsers(findAllUsersInput: $findAllUsersInput) {
+									id
+									role
+									email
+									createdAt
+									updatedAt
+								}
+							}`,
+							variables: {
+								findAllUsersInput: {
+									where: {
+										role: UserRole.ADMIN,
+										AND: [{ email: thirdUserAdmin.email }],
+									},
+								},
+							},
+						};
+
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(query);
+
+						const users = response.body.data.findAllUsers;
+						const user = users[0];
+
+						expect(response.statusCode).toEqual(HttpStatus.OK);
+
+						expect(users).toHaveLength(1);
+
+						expect(user.role).toEqual(UserRole.ADMIN);
+						expect(user.email).toEqual(thirdUserAdmin.email);
 						expect(user).toEqual(expectedUserObject);
 						expect(user).not.toHaveProperty(UserProperty.PASSWORD);
-						expect(user.role).toEqual(role);
 					});
 				});
-			});
-			describe('and the skip and take arguments are used to implement pagination', () => {
-				describe('and the skip param is 10, and the take param is 10', () => {
-					it('should return the first 10 users', async () => {
-						const skip = 10;
-						const take = 10;
+
+				describe("and the where NOT argument aims to fetch one users with 'role: ADMIN' and not a specified email", () => {
+					it('should return all users with that role', async () => {
 						const query = {
 							operationName: 'Query',
 							query: `
-								query Query($getUsersInput: GetUsersInput!) {
-									findAllUsers(getUsersInput: $getUsersInput) {
-										id
-										role
-										email
-										createdAt
-										updatedAt
-									}
-								}`,
+							query Query($findAllUsersInput: FindAllUsersInput!) {
+								findAllUsers(findAllUsersInput: $findAllUsersInput) {
+									id
+									role
+									email
+									createdAt
+									updatedAt
+								}
+							}`,
 							variables: {
-								getUsersInput: {
-									skip,
-									take,
-								},
-							},
-						};
-						const response = await request(app.getHttpServer())
-							.post('/graphql')
-							.send(query);
-
-						const users = response.body.data.findAllUsers;
-
-						expect(response.statusCode).toEqual(HttpStatus.OK);
-						expect(users).toHaveLength(10);
-
-						users.forEach((user) => {
-							expect(user).toEqual(expectedUserObject);
-							expect(user).not.toHaveProperty(
-								UserProperty.PASSWORD
-							);
-						});
-
-						const lastUser = users[users.length - 1];
-						const lastUserId = skip + take;
-						expect(lastUser.id).toEqual(lastUserId);
-					});
-				});
-			});
-			describe('and the cursor and take arguments are used to implement pagination', () => {
-				describe('and the cursor param is 11, and the take param is 10', () => {
-					it('should return the first 10 users', async () => {
-						const cursor = { id: 11 };
-						const take = 10;
-						const query = {
-							operationName: 'Query',
-							query: `
-								query Query($getUsersInput: GetUsersInput!) {
-									findAllUsers(getUsersInput: $getUsersInput) {
-										id
-										role
-										email
-										createdAt
-										updatedAt
-									}
-								}`,
-							variables: {
-								getUsersInput: {
-									cursor,
-									take,
+								findAllUsersInput: {
+									where: {
+										role: UserRole.ADMIN,
+										NOT: [{ email: thirdUserAdmin.email }],
+									},
 								},
 							},
 						};
@@ -170,9 +174,70 @@ describe('Users', () => {
 							.send(query);
 
 						const users = response.body.data.findAllUsers;
+						const user = users[0];
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
-						expect(users).toHaveLength(10);
+
+						expect(users).toHaveLength(1);
+
+						expect(user.role).toEqual(UserRole.ADMIN);
+						expect(user.email).toEqual(secondUserAdmin.email);
+						expect(user).toEqual(expectedUserObject);
+						expect(user).not.toHaveProperty(UserProperty.PASSWORD);
+					});
+				});
+
+				describe("and the where OR argument aims to fetch one users with 'role: ADMIN' or 'role: SUPER_ADMIN'", () => {
+					it('should return all users with that role', async () => {
+						const query = {
+							operationName: 'Query',
+							query: `
+							query Query($findAllUsersInput: FindAllUsersInput!) {
+								findAllUsers(findAllUsersInput: $findAllUsersInput) {
+									id
+									role
+									email
+									createdAt
+									updatedAt
+								}
+							}`,
+							variables: {
+								findAllUsersInput: {
+									where: {
+										OR: [
+											{ role: UserRole.ADMIN },
+											{ role: UserRole.SUPER_ADMIN },
+										],
+									},
+								},
+							},
+						};
+
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(query);
+
+						const users = response.body.data.findAllUsers;
+						const firstSelectedUser = users[0];
+						const thirdSelectedUser = users[2];
+
+						expect(response.statusCode).toEqual(HttpStatus.OK);
+
+						expect(users).toHaveLength(3);
+
+						expect(firstSelectedUser.role).toEqual(
+							firstUserSuperAdmin.role
+						);
+						expect(firstSelectedUser.email).toEqual(
+							firstUserSuperAdmin.email
+						);
+
+						expect(thirdSelectedUser.role).toEqual(
+							thirdUserAdmin.role
+						);
+						expect(thirdSelectedUser.email).toEqual(
+							thirdUserAdmin.email
+						);
 
 						users.forEach((user) => {
 							expect(user).toEqual(expectedUserObject);
@@ -180,10 +245,103 @@ describe('Users', () => {
 								UserProperty.PASSWORD
 							);
 						});
+					});
+				});
+			});
 
-						const lastUser = users[users.length - 1];
-						const lastUserId = cursor.id + take - 1;
-						expect(lastUser.id).toEqual(lastUserId);
+			describe('pagination', () => {
+				describe('and the skip and take arguments are used to implement pagination', () => {
+					describe('and the skip param is 10, and the take param is 10', () => {
+						it('should return the first 10 users', async () => {
+							const skip = 10;
+							const take = 10;
+							const query = {
+								operationName: 'Query',
+								query: `
+									query Query($findAllUsersInput: FindAllUsersInput!) {
+										findAllUsers(findAllUsersInput: $findAllUsersInput) {
+											id
+											role
+											email
+											createdAt
+											updatedAt
+										}
+									}`,
+								variables: {
+									findAllUsersInput: {
+										skip,
+										take,
+									},
+								},
+							};
+							const response = await request(app.getHttpServer())
+								.post('/graphql')
+								.send(query);
+
+							const users = response.body.data.findAllUsers;
+
+							expect(response.statusCode).toEqual(HttpStatus.OK);
+							expect(users).toHaveLength(10);
+
+							users.forEach((user) => {
+								expect(user).toEqual(expectedUserObject);
+								expect(user).not.toHaveProperty(
+									UserProperty.PASSWORD
+								);
+							});
+
+							const lastUser = users[users.length - 1];
+							const lastUserId = skip + take;
+							expect(lastUser.id).toEqual(lastUserId);
+						});
+					});
+				});
+
+				describe('and the cursor and take arguments are used to implement pagination', () => {
+					describe('and the cursor param is 11, and the take param is 10', () => {
+						it('should return the first 10 users', async () => {
+							const cursor = { id: 11 };
+							const take = 10;
+							const query = {
+								operationName: 'Query',
+								query: `
+									query Query($findAllUsersInput: FindAllUsersInput!) {
+										findAllUsers(findAllUsersInput: $findAllUsersInput) {
+											id
+											role
+											email
+											createdAt
+											updatedAt
+										}
+									}`,
+								variables: {
+									findAllUsersInput: {
+										cursor,
+										take,
+									},
+								},
+							};
+
+							const response = await request(app.getHttpServer())
+								.post('/graphql')
+								.send(query);
+
+							const users = response.body.data.findAllUsers;
+
+							expect(response.statusCode).toEqual(HttpStatus.OK);
+							expect(users).toHaveLength(10);
+
+							users.forEach((user) => {
+								expect(user).toEqual(expectedUserObject);
+								expect(user).not.toHaveProperty(
+									UserProperty.PASSWORD
+								);
+							});
+
+							const lastUser = users[users.length - 1];
+							const lastUserId = cursor.id + take - 1;
+							expect(lastUser.id).toEqual(lastUserId);
+						});
 					});
 				});
 			});
@@ -196,8 +354,8 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Query',
 						query: `
-							query Query($getUsersInput: GetUsersInput!) {
-								findAllUsers(getUsersInput: $getUsersInput) {
+							query Query($findAllUsersInput: FindAllUsersInput!) {
+								findAllUsers(findAllUsersInput: $findAllUsersInput) {
 									id
 									role
 									email
@@ -229,8 +387,3 @@ describe('Users', () => {
 		});
 	});
 });
-
-// console.log('');
-// console.log('-- RESPONSE --');
-// console.log(response.body);
-// console.log('');

@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import { UserRole } from '@prisma/client';
 import { Field, InputType } from '@nestjs/graphql';
 import {
@@ -9,7 +10,7 @@ import {
 } from 'class-validator';
 
 @InputType()
-export class UserWhereInput {
+class UserInput {
 	@IsNumber()
 	@IsOptional()
 	@IsOptional()
@@ -41,31 +42,17 @@ export class UserWhereInput {
 	updatedAt?: Date;
 }
 
-// @ArgsType()
-// export class UserWhereInput extends UserSpecificWhereInput {
-// 	@IsOptional()
-// @IsOptional()
-// @Field({ nullable: true })
-// 	AND?: ;
+@InputType()
+export class UserWhereInput extends UserInput {
+	@IsOptional()
+	@Field(() => [UserInput], { nullable: true })
+	AND?: [UserInput];
 
-// 	@IsOptional()
-// @IsOptional()
-// @Field({ nullable: true })
-// 	OR?: ;
+	@IsOptional()
+	@Field(() => [UserInput], { nullable: true })
+	OR?: [UserInput];
 
-// 	@IsOptional()
-// @IsOptional()
-// @Field({ nullable: true })
-// 	NOT?: ;
-// }
-
-// input UserWhereInput {
-// 	AND: [UserWhereInput]
-// 	OR: [UserWhereInput]
-// 	NOT: [UserWhereInput]
-// 	id: Int
-// 	email: String
-// 	role: String
-// 	createdAt: DateTime
-// 	updatedAt: DateTime
-// }
+	@IsOptional()
+	@Field(() => [UserInput], { nullable: true })
+	NOT?: [UserInput];
+}

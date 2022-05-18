@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/DWC01/dapp-sandbox-contracts">
-    <img src="src/images/logo.png" alt="Logo" width="419" height="128">
+    <img src="/images/logo.png" alt="Logo" width="419" height="128">
   </a>
 
   <p align="center">

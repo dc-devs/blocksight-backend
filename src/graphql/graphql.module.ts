@@ -17,11 +17,9 @@ const plugins = isDevelopment
 const GraphqlModule = GraphQLModule.forRoot<ApolloDriverConfig>({
 	plugins,
 	debug: false,
-	sortSchema: true,
 	playground: false,
 	driver: ApolloDriver,
 	autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-	// resolvers: { DateTime: GraphQLDateTime, JSON: GraphQLJSON },
 	formatError: (error: GraphQLError) => {
 		const graphQLFormattedError: GraphQLFormattedError = {
 			message: !error.message.includes('prisma')

@@ -24,8 +24,8 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Query',
 						query: `
-							query Query($getUserInput: GetUserInput!) {
-								findOneUser(getUserInput: $getUserInput) {
+							query Query($findOneUserInput: FindOneUserInput!) {
+								findOneUser(findOneUserInput: $findOneUserInput) {
 									id
 									role
 									email
@@ -34,7 +34,7 @@ describe('Users', () => {
 								}
 							}`,
 						variables: {
-							getUserInput: {
+							findOneUserInput: {
 								id,
 							},
 						},
@@ -60,8 +60,8 @@ describe('Users', () => {
 						const query = {
 							operationName: 'Query',
 							query: `
-								query Query($getUserInput: GetUserInput!) {
-									findOneUser(getUserInput: $getUserInput) {
+								query Query($findOneUserInput: FindOneUserInput!) {
+									findOneUser(findOneUserInput: $findOneUserInput) {
 										id
 										role
 										email
@@ -70,7 +70,7 @@ describe('Users', () => {
 									}
 								}`,
 							variables: {
-								getUserInput: {
+								findOneUserInput: {
 									id,
 								},
 							},
@@ -96,8 +96,8 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Query',
 						query: `
-							query Query($getUserInput: GetUserInput!) {
-								findOneUser(getUserInput: $getUserInput) {
+							query Query($findOneUserInput: FindOneUserInput!) {
+								findOneUser(findOneUserInput: $findOneUserInput) {
 									id
 									role
 									email
@@ -106,7 +106,7 @@ describe('Users', () => {
 								}
 							}`,
 						variables: {
-							getUserInput: {
+							findOneUserInput: {
 								email,
 							},
 						},
@@ -130,8 +130,8 @@ describe('Users', () => {
 						const query = {
 							operationName: 'Query',
 							query: `
-								query Query($getUserInput: GetUserInput!) {
-									findOneUser(getUserInput: $getUserInput) {
+								query Query($findOneUserInput: FindOneUserInput!) {
+									findOneUser(findOneUserInput: $findOneUserInput) {
 										id
 										role
 										email
@@ -140,7 +140,7 @@ describe('Users', () => {
 									}
 								}`,
 							variables: {
-								getUserInput: {
+								findOneUserInput: {
 									email,
 								},
 							},
@@ -165,8 +165,8 @@ describe('Users', () => {
 					const query = {
 						operationName: 'Query',
 						query: `
-							query Query($getUserInput: GetUserInput!) {
-								findOneUser(getUserInput: $getUserInput) {
+							query Query($findOneUserInput: FindOneUserInput!) {
+								findOneUser(findOneUserInput: $findOneUserInput) {
 									id
 									role
 									email
@@ -175,7 +175,7 @@ describe('Users', () => {
 								}
 							}`,
 						variables: {
-							getUserInput: {},
+							findOneUserInput: {},
 						},
 					};
 

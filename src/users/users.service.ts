@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
 import { User } from './models/user.model';
+import { Injectable } from '@nestjs/common';
 import { encodePassword } from './utils/bcrypt';
-import { GetUserInput } from './dto/get-user.input';
-import { GetUsersInput } from './dto/get-users.input';
+import { FindAllUsersInput } from './dto/find-all-users.input';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateUserInput } from './dto/update-user.input';
 import { CreateUserInput } from './dto/create-user.input';
+import { FindOneUserInput } from './dto/find-one-user.input';
 import { UserWithPassword } from './models/user-with-password.model';
 
 const select = {
@@ -20,9 +20,8 @@ const select = {
 export class UsersService {
 	constructor(private prisma: PrismaService) {}
 
-	findAll(getUsersInput: GetUsersInput): Promise<User[]> {
-		const { skip, cursor, take, orderBy, where } = getUsersInput;
-
+	findAll(findAllUsersInput: FindAllUsersInput): Promise<User[]> {
+		const { skip, cursor, take, orderBy, where } = findAllUsersInput;
 		return this.prisma.user.findMany({
 			skip,
 			take,
@@ -33,8 +32,8 @@ export class UsersService {
 		});
 	}
 
-	findOne(getUserInput: GetUserInput): Promise<User | null> {
-		const { id, email } = getUserInput;
+	findOne(findOneUserInput: FindOneUserInput): Promise<User | null> {
+		const { id, email } = findOneUserInput;
 
 		return this.prisma.user.findUnique({
 			where: { id, email },
@@ -42,8 +41,8 @@ export class UsersService {
 		});
 	}
 
-	_findOne(getUserInput: GetUserInput): Promise<UserWithPassword | null> {
-		const { id, email } = getUserInput;
+	_findOne(findOneUserInput: FindOneUserInput): Promise<UserWithPassword | null> {
+		const { id, email } = findOneUserInput;
 
 		return this.prisma.user.findUnique({
 			where: { id, email },

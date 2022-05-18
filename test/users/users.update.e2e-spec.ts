@@ -30,11 +30,11 @@ describe('Users', () => {
 			});
 
 			it('should update user', async () => {
-				const id = 2;
+				const id = 50;
 				const expectedUserResponse = expect.objectContaining({
 					id,
 					...updateUserInput,
-					role: UserRole.ADMIN,
+					role: UserRole.USER,
 					createdAt: expect.any(String),
 					updatedAt: expect.any(String),
 				});
@@ -177,7 +177,7 @@ describe('Users', () => {
 					beforeEach(() => {
 						updateUserInput = {
 							email: 'test-test-1@gmail.com',
-							role: 'ADMIN',
+							role: UserRole.ADMIN,
 							password: '12345678',
 						};
 					});
@@ -268,7 +268,7 @@ describe('Users', () => {
 						expect(extensions.errors.cause.type).toEqual(
 							ExtensionCode.BAD_USER_INPUT
 						);
-						
+
 						expect(extensions.errors.cause.message).toEqual(
 							ErrorMessage.UPDATE_RECORD_NOT_FOUND
 						);

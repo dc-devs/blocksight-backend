@@ -39,3 +39,4 @@ lerna-debug.log*
 .env.production
 
 blocksight-chart/values-env.yaml
+scraps

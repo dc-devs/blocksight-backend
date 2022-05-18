@@ -2,15 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input CreateUserInput {
-  email: String!
-  password: String!
-  passwordConfirmation: String
-}
-
-input Cursor {
-  email: String
+type User {
   id: Float
+  email: String
+  role: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 """
@@ -18,60 +15,74 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-input GetUserInput {
-  email: String
-  id: Float
-}
-
-input GetUsersInput {
-  cursor: Cursor
-  orderBy: UserOrderByInput
-  skip: Float
-  take: Float
-  where: UserWhereInput
-}
-
 type LoginResponse {
   access_token: String!
   user: User!
 }
 
-type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
-  deleteUser(id: Int!): User!
-  login: LoginResponse!
-  updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
-}
-
 type Query {
-  findAllUsers(getUsersInput: GetUsersInput!): [User!]!
-  findOneUser(getUserInput: GetUserInput!): User
+  findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
+  findOneUser(findOneUserInput: FindOneUserInput!): User
 }
 
-input UpdateUserInput {
-  email: String
+input FindAllUsersInput {
+  skip: Float
+  take: Float
+  cursor: Cursor
+  where: UserWhereInput
+  orderBy: UserOrderByInput
 }
 
-type User {
-  createdAt: DateTime
-  email: String
+input Cursor {
   id: Float
+  email: String
+}
+
+input UserWhereInput {
+  id: Float
+  email: String
   role: String
+  createdAt: DateTime
+  updatedAt: DateTime
+  AND: [UserInput!]
+  OR: [UserInput!]
+  NOT: [UserInput!]
+}
+
+input UserInput {
+  id: Float
+  email: String
+  role: String
+  createdAt: DateTime
   updatedAt: DateTime
 }
 
 input UserOrderByInput {
-  createdAt: String
-  email: String
   id: String
+  email: String
   role: String
+  createdAt: String
   updatedAt: String
 }
 
-input UserWhereInput {
-  createdAt: DateTime
+input FindOneUserInput {
   email: String
   id: Float
-  role: String
-  updatedAt: DateTime
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
+  deleteUser(id: Int!): User!
+  login: LoginResponse!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  passwordConfirmation: String
+}
+
+input UpdateUserInput {
+  email: String
 }

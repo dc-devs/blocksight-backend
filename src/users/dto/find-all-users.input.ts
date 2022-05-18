@@ -5,7 +5,7 @@ import { IsNumber, IsOptional } from 'class-validator';
 import { UserOrderByInput } from './user-order-by.input';
 
 @InputType()
-export class GetUsersInput {
+export class FindAllUsersInput {
 	@IsNumber()
 	@IsOptional()
 	@Field({ nullable: true })

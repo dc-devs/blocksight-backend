@@ -62,11 +62,6 @@ describe('Users', () => {
 					.post('/graphql')
 					.send(query);
 
-				console.log('');
-				console.log('RESPONSE');
-				console.log(response.body);
-				console.log('');
-
 				const user = response.body.data.createUser;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);

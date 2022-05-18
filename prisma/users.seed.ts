@@ -18,6 +18,13 @@ const secondUser = {
 };
 users.push(secondUser);
 
+const thirdUser = {
+	email: 'dave@prisma.io',
+	password: encodePassword('12345678'),
+	role: UserRole.ADMIN,
+};
+users.push(thirdUser);
+
 let count = 1;
 let userCount = 53;
 
@@ -33,4 +40,4 @@ while (count <= userCount) {
 
 const allUsersCount = users.length;
 
-export { firstUser, secondUser, users, allUsersCount };
+export { firstUser, secondUser, thirdUser, users, allUsersCount };
