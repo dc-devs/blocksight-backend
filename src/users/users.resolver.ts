@@ -1,5 +1,3 @@
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { User } from './models/user.model';
 import { UsersService } from './users.service';
 import { CreateUserInput } from './dto/create-user.input';
@@ -13,18 +11,18 @@ import generateGraphQLError from '../graphql/errors/generate-graphql-error';
 export class UsersResolver {
 	constructor(private readonly usersService: UsersService) {}
 
-	@Query(() => [User])
-	findAllUsers(
-		@Args('findAllUsersInput') findAllUsersInput: FindAllUsersInput,
-	): Promise<User[]> {
-		return this.usersService.findAll(findAllUsersInput);
-	}
-
 	@Query(() => User, { nullable: true })
 	findOneUser(
 		@Args('findOneUserInput') findOneUserInput: FindOneUserInput,
 	): Promise<User | null> {
 		return this.usersService.findOne(findOneUserInput);
+	}
+
+	@Query(() => [User])
+	findAllUsers(
+		@Args('findAllUsersInput') findAllUsersInput: FindAllUsersInput,
+	): Promise<User[]> {
+		return this.usersService.findAll(findAllUsersInput);
 	}
 
 	@Mutation(() => User)

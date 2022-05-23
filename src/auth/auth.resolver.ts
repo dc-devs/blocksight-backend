@@ -1,35 +1,42 @@
 import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LogInInput } from './dto/login.input';
-import { LoginResponse } from './dto/login.response';
 import { User } from '../users/models/user.model';
-import { UsersService } from '../users/users.service';
+import { SessionInput } from './dto/session.input';
+import { LoginResponse } from './dto/login-response.model';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
-import { CurrentUser } from '../graphql/decorators/current-user.decorator';
+import { ProtectedData } from './dto/protected-data.response'
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
+import generateGraphQLError from '../graphql/errors/generate-graphql-error';
 
-@Resolver((of) => LoginResponse)
+@Resolver()
 export class AuthResolver {
-	constructor(
-		private readonly authService: AuthService,
-		private readonly usersService: UsersService
-	) {}
+	constructor(private readonly authService: AuthService) {}
 
-	@Mutation((returns) => LoginResponse)
+	@Mutation(() => LoginResponse)
 	@UseGuards(LocalAuthGuard)
-	async login(@Context('user') user: User) {
+	async login(
+		@Args('sessionInput') sessionInput: SessionInput,
+		@Context('user') user: User,
+	) {
+		console.log('');
+		console.log('[AuthResolver::login] callling authService.login');
+		console.log('');
 		return this.authService.login(user);
 	}
 
-	// @Query('signOut')
-	// @UseGuards(GqlAuthGuard)
-	// signOut(@CurrentUser() user: Partial<User>): Promise<Partial<User>> {
-	// 	return this.usersService.findOne({ id: user.id });
-	// }
+	@Mutation(() => LoginResponse)
+	async signup(@Args('sessionInput') sessionInput: SessionInput) {
+		try {
+			return this.authService.signUp(sessionInput);
+		} catch (error) {
+			generateGraphQLError(error);
+		}
+	}
 
-	// @Query('currentUser')
-	// @UseGuards(GqlAuthGuard)
-	// currentUser(@CurrentUser() user: Partial<User>): Promise<Partial<User>> {
-	// 	return this.usersService.findOne({ id: user.id });
-	// }
+	@Query(() => ProtectedData)
+	@UseGuards(JwtAuthGuard)
+	async protectedRoute() {
+		return { isProtectedData: true };
+	}
 }

@@ -1,8 +1,8 @@
-import { Field, ArgsType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { IsString, IsEmail } from 'class-validator';
 
-@ArgsType()
-export class LogInInput {
+@InputType()
+export class SessionInput {
 	@Field()
 	@IsEmail()
 	email: string;

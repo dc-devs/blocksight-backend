@@ -6,18 +6,25 @@ import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from '../users/users.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtConstants } from './constants/jwt.constants';
+// import { SessionSerializer } from './session.serializer';
 import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
 	imports: [
 		UsersModule,
-		PassportModule,
+		PassportModule.register({session: true}),
 		JwtModule.register({
 			secret: JwtConstants.SECRET,
 			signOptions: { expiresIn: '999s' },
 		}),
 	],
-	providers: [AuthResolver, AuthService, LocalStrategy, JwtStrategy],
+	providers: [
+		AuthResolver,
+		AuthService,
+		LocalStrategy,
+		JwtStrategy,
+		// SessionSerializer,
+	],
 	exports: [AuthService],
 })
 export class AuthModule {}

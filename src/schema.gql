@@ -20,9 +20,19 @@ type LoginResponse {
   user: User!
 }
 
+type ProtectedData {
+  isProtectedData: Boolean!
+}
+
 type Query {
-  findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
   findOneUser(findOneUserInput: FindOneUserInput!): User
+  findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
+  protectedRoute: ProtectedData!
+}
+
+input FindOneUserInput {
+  email: String
+  id: Float
 }
 
 input FindAllUsersInput {
@@ -65,16 +75,12 @@ input UserOrderByInput {
   updatedAt: String
 }
 
-input FindOneUserInput {
-  email: String
-  id: Float
-}
-
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
   deleteUser(id: Int!): User!
-  login: LoginResponse!
+  login(sessionInput: SessionInput!): LoginResponse!
+  signup(sessionInput: SessionInput!): LoginResponse!
 }
 
 input CreateUserInput {
@@ -85,4 +91,9 @@ input CreateUserInput {
 
 input UpdateUserInput {
   email: String
+}
+
+input SessionInput {
+  email: String!
+  password: String!
 }
