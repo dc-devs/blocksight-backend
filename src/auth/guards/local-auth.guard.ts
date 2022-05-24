@@ -4,19 +4,39 @@ import { Injectable, ExecutionContext } from '@nestjs/common';
 
 @Injectable()
 export class LocalAuthGuard extends AuthGuard('local') {
-	getRequest(context: ExecutionContext) {
+	// getRequest(context: ExecutionContext) {
+	// 	const ctx = GqlExecutionContext.create(context);
+	// 	const request = ctx.getContext();
+
+	// 	request.body = ctx.getArgs().sessionInput;
+
+	// 	console.log('');
+	// 	console.log(
+	// 		'[LocalAuthGuard::getRequest] Adding GraphQL context args to request body..',
+	// 	);
+	// 	console.log(request.body);
+	// 	console.log('');
+
+	// 	return request;
+	// }
+	async canActivate(context: ExecutionContext) {
 		const ctx = GqlExecutionContext.create(context);
-		const request = ctx.getContext();
+		const request = ctx.getContext().req;
 
 		request.body = ctx.getArgs().sessionInput;
 
+		const result = true; //(await super.canActivate(ctx)) as boolean;
 		console.log('');
-		console.log(
-			'[LocalAuthGuard::getRequest] Adding GraphQL context args to request body..',
-		);
-		console.log(request.body);
+		console.log('[LocalAuthGuard::canActivate]');
+		console.log(result);
 		console.log('');
 
-		return request;
+		await super.logIn(request);
+
+		console.log('');
+		console.log('[LocalAuthGuard::logIn]');
+		console.log('');
+
+		return result;
 	}
 }

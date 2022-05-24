@@ -4,11 +4,14 @@ import { User } from '../users/models/user.model';
 import { SessionInput } from './dto/session.input';
 import { LoginResponse } from './dto/login-response.model';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { ProtectedData } from './dto/protected-data.response'
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { ProtectedData } from './dto/protected-data.response';
+import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
 import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
 import generateGraphQLError from '../graphql/errors/generate-graphql-error';
 
+// LEFT OFF
+// watch https://youtu.be/_L225zpUK0M?t=1744 to implement passport and session magic...
+// In this case I think we'll be ripping out JWT stuffs in implementing passport session only..
 @Resolver()
 export class AuthResolver {
 	constructor(private readonly authService: AuthService) {}
@@ -35,7 +38,7 @@ export class AuthResolver {
 	}
 
 	@Query(() => ProtectedData)
-	@UseGuards(JwtAuthGuard)
+	@UseGuards(AuthenticatedGuard)
 	async protectedRoute() {
 		return { isProtectedData: true };
 	}

@@ -1,9 +1,9 @@
-// import * as passport from 'passport';
+import * as passport from 'passport';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
-// import * as session from 'express-session';
+import * as session from 'express-session';
 import { ValidationPipe } from '@nestjs/common';
-// import { SessionConstants } from './auth/constants/session.constants';
+import { SessionConstants } from './auth/constants/session.constants';
 
 const bootstrap = async () => {
 	const app = await NestFactory.create(AppModule, {
@@ -13,17 +13,30 @@ const bootstrap = async () => {
 
 	app.enableCors();
 
-	// app.use(
-	// 	session({
-	// 		resave: false,
-	// 		saveUninitialized: false,
-	// 		secret: SessionConstants.SECRET,
-	// 		// cookie: { secure: true },
-	// 	}),
-	// );
+	const environment = process.env.NODE_ENV || 'development';
+	const isDevelopment = environment === 'development';
+	const oneHour = 1000 * 60 * 60;
+	const oneDay = oneHour * 24;
+	const sixtyDays = oneDay * 60;
 
-	// app.use(passport.initialize());
-	// app.use(passport.session());
+	const sessionConfig = {
+		resave: false,
+		saveUninitialized: false,
+		secret: SessionConstants.SECRET,
+		cookie: {
+			secure: true,
+			maxAge: sixtyDays,
+		},
+	};
+
+	if (isDevelopment) {
+		sessionConfig.cookie.secure = false;
+	}
+
+	app.use(session(sessionConfig));
+
+	app.use(passport.initialize());
+	app.use(passport.session());
 
 	app.useGlobalPipes(
 		new ValidationPipe({

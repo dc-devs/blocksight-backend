@@ -6,8 +6,8 @@ import { PassportModule } from '@nestjs/passport';
 import { UsersModule } from '../users/users.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtConstants } from './constants/jwt.constants';
-// import { SessionSerializer } from './session.serializer';
 import { LocalStrategy } from './strategies/local.strategy';
+import { SessionSerializer } from '../auth/serializers/session.serializer';
 
 @Module({
 	imports: [
@@ -23,7 +23,7 @@ import { LocalStrategy } from './strategies/local.strategy';
 		AuthService,
 		LocalStrategy,
 		JwtStrategy,
-		// SessionSerializer,
+		SessionSerializer,
 	],
 	exports: [AuthService],
 })
