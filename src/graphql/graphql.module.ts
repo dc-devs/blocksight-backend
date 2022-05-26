@@ -16,6 +16,10 @@ const plugins = isDevelopment
 
 const GraphqlModule = GraphQLModule.forRoot<ApolloDriverConfig>({
 	plugins,
+	cors: {
+		credentials: true,
+		origin: ['http://localhost:3000', 'https://studio.apollographql.com'],
+	},
 	debug: false,
 	playground: false,
 	driver: ApolloDriver,

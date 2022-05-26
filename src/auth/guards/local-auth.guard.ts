@@ -1,9 +1,8 @@
-import { AuthGuard } from '@nestjs/passport';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Injectable, ExecutionContext } from '@nestjs/common';
 
 @Injectable()
-export class LocalAuthGuard extends AuthGuard('local') {
+export class LocalAuthGuard {
 	// getRequest(context: ExecutionContext) {
 	// 	const ctx = GqlExecutionContext.create(context);
 	// 	const request = ctx.getContext();
@@ -30,8 +29,6 @@ export class LocalAuthGuard extends AuthGuard('local') {
 		console.log('[LocalAuthGuard::canActivate]');
 		console.log(result);
 		console.log('');
-
-		await super.logIn(request);
 
 		console.log('');
 		console.log('[LocalAuthGuard::logIn]');

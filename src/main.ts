@@ -1,46 +1,49 @@
-import * as passport from 'passport';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import * as session from 'express-session';
 import { ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { SessionConstants } from './auth/constants/session.constants';
 
 const bootstrap = async () => {
-	const app = await NestFactory.create(AppModule, {
+	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
 		logger: ['verbose'],
 	});
 	const port = process.env.PORT || 3001;
 
-	app.enableCors();
+	app.enableCors({
+		credentials: true,
+		origin: [
+			'http://localhost:3000',
+			'http://localhost:4000/graphql',
+			'https://studio.apollographql.com',
+		],
+	});
 
-	const environment = process.env.NODE_ENV || 'development';
-	const isDevelopment = environment === 'development';
 	const oneHour = 1000 * 60 * 60;
 	const oneDay = oneHour * 24;
 	const sixtyDays = oneDay * 60;
 
-	const sessionConfig = {
+	const sessionConfig: session.SessionOptions = {
+		name: '_bb_session',
 		resave: false,
 		saveUninitialized: false,
 		secret: SessionConstants.SECRET,
 		cookie: {
+			httpOnly: true,
 			secure: true,
 			maxAge: sixtyDays,
+			sameSite: 'none',
 		},
 	};
 
-	if (isDevelopment) {
-		sessionConfig.cookie.secure = false;
-	}
-
+	// TODO, ensure that this is actually getting the NODE_ENV
+	app.set('trust proxy', true); // process.env.NODE_ENV !== 'production
 	app.use(session(sessionConfig));
-
-	app.use(passport.initialize());
-	app.use(passport.session());
 
 	app.useGlobalPipes(
 		new ValidationPipe({
-			whitelist: true, // blocking DTO
+			whitelist: true,
 			transform: true,
 			forbidNonWhitelisted: true,
 			transformOptions: {

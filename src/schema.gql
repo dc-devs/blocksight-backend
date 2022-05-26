@@ -15,19 +15,14 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type LoginResponse {
-  access_token: String!
+type SessionResponse {
   user: User!
-}
-
-type ProtectedData {
-  isProtectedData: Boolean!
 }
 
 type Query {
   findOneUser(findOneUserInput: FindOneUserInput!): User
   findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
-  protectedRoute: ProtectedData!
+  protectedRoute: User!
 }
 
 input FindOneUserInput {
@@ -79,8 +74,8 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
   deleteUser(id: Int!): User!
-  login(sessionInput: SessionInput!): LoginResponse!
-  signup(sessionInput: SessionInput!): LoginResponse!
+  login(sessionInput: SessionInput!): SessionResponse!
+  signup(sessionInput: SessionInput!): SessionResponse!
 }
 
 input CreateUserInput {

@@ -1,45 +1,58 @@
-import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { User } from '../users/models/user.model';
 import { SessionInput } from './dto/session.input';
-import { LoginResponse } from './dto/login-response.model';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { SessionResponse } from './dto/session-response.model';
 import { ProtectedData } from './dto/protected-data.response';
+import { UseGuards, UnauthorizedException } from '@nestjs/common';
 import { AuthenticatedGuard } from 'src/auth/guards/authenticated.guard';
 import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
 import generateGraphQLError from '../graphql/errors/generate-graphql-error';
+import { UsersService } from '../users/users.service';
+import { SessionConstants } from '../auth/constants/session.constants';
 
-// LEFT OFF
-// watch https://youtu.be/_L225zpUK0M?t=1744 to implement passport and session magic...
-// In this case I think we'll be ripping out JWT stuffs in implementing passport session only..
 @Resolver()
 export class AuthResolver {
-	constructor(private readonly authService: AuthService) {}
+	constructor(
+		private usersService: UsersService,
+		private readonly authService: AuthService,
+	) {}
 
-	@Mutation(() => LoginResponse)
-	@UseGuards(LocalAuthGuard)
+	@Mutation(() => SessionResponse)
 	async login(
 		@Args('sessionInput') sessionInput: SessionInput,
-		@Context('user') user: User,
+		@Context('req') request,
+		@Context() ctx,
 	) {
-		console.log('');
-		console.log('[AuthResolver::login] callling authService.login');
-		console.log('');
+		const user = await this.authService.validateUser(sessionInput);
+
+		if (!user) {
+			throw new UnauthorizedException();
+		}
+
+		if (request.session) {
+			request.session.userId = user.id;
+		}
+
 		return this.authService.login(user);
 	}
 
-	@Mutation(() => LoginResponse)
+	@Mutation(() => SessionResponse)
 	async signup(@Args('sessionInput') sessionInput: SessionInput) {
 		try {
-			return this.authService.signUp(sessionInput);
+			const newUser = await this.usersService.create({ ...sessionInput });
+			return await this.authService.login(newUser);
 		} catch (error) {
 			generateGraphQLError(error);
 		}
 	}
 
-	@Query(() => ProtectedData)
-	@UseGuards(AuthenticatedGuard)
-	async protectedRoute() {
-		return { isProtectedData: true };
+	@Query(() => User)
+	// @UseGuards(AuthenticatedGuard)
+	async protectedRoute(@Context('req') request) {
+		// Not sure still on how this works, since its only a single session in memory on the server..
+		// These two lines can basically be the middleware to get the user from the session and return to front end..
+		const id = request.session.userId;
+		return await this.usersService.findOne({ id });
 	}
 }
