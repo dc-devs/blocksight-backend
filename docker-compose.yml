@@ -23,21 +23,33 @@ services:
     ports:
       - '5433:5432'
     volumes: 
-      - /tmp:/tmp
-  redis-development:
-    container_name: 'redis-development'
-    image: redis:7.0.0
-    ports:
-      - '6379:6379'
-  redis-test:
-    container_name: 'redis-test'
-    image: redis:7.0.0
-    ports:
-      - '6380:6379'
+      - database-test:/tmp
+  # redis-development:
+  #   container_name: 'redis-development'
+  #   image: redis:7.0.0
+  #   restart: always
+  #   ports:
+  #     - '6379:6379'
+  #   command: redis-server --save 20 1
+  #   volumes: 
+  #     - redis-development:/data
+  # redis-test:
+  #   container_name: 'redis-test'
+  #   image: redis:7.0.0
+  #   restart: always
+  #   ports:
+  #     - '6380:6379'
+  #   command: redis-server --save 20 1
+  #   volumes: 
+  #     - redis-test:/data
 
 volumes:
   database-development:
     driver: local
   database-test:
     driver: local
+  # redis-development:
+  #   driver: local
+  # redis-test:
+  #   driver: local
 

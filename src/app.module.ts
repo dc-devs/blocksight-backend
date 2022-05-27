@@ -1,3 +1,4 @@
+import Logger from './utils/logger';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
@@ -13,10 +14,8 @@ const environment = process.env.NODE_ENV || 'development';
 const isDevelopment = environment === 'development';
 
 if (isDevelopment) {
-	console.log('');
-	console.log('[BlockSight] Environment:', environment);
-	console.log('[Blocksight] Loading: ', ['.env', `.${environment}.env`]);
-	console.log('');
+	Logger.debug('Environment:', environment);
+	Logger.debug('Loading:', ['.env', `.${environment}.env`]);
 }
 
 @Module({

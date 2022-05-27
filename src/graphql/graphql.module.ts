@@ -1,7 +1,5 @@
 import { join } from 'path';
-import GraphQLJSON from 'graphql-type-json';
 import { GraphQLModule } from '@nestjs/graphql';
-import { GraphQLDateTime } from 'graphql-iso-date';
 import ErrorMessage from './errors/error-message.enum';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
