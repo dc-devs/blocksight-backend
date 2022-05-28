@@ -1,6 +1,5 @@
 import { User } from './models/user.model';
 import { UsersService } from './users.service';
-import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { FindOneUserInput } from './dto/find-one-user.input';
 import { FindAllUsersInput } from './dto/find-all-users.input';
@@ -23,17 +22,6 @@ export class UsersResolver {
 		@Args('findAllUsersInput') findAllUsersInput: FindAllUsersInput,
 	): Promise<User[]> {
 		return this.usersService.findAll(findAllUsersInput);
-	}
-
-	@Mutation(() => User)
-	async createUser(
-		@Args('createUserInput') createUserInput: CreateUserInput,
-	): Promise<User> {
-		try {
-			return await this.usersService.create(createUserInput);
-		} catch (error) {
-			generateGraphQLError(error);
-		}
 	}
 
 	@Mutation(() => User)

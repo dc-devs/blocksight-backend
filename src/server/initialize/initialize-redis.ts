@@ -15,10 +15,6 @@ const initializeRedis = async () => {
 		);
 	});
 	
-	redisClient.on('connect', () => {
-		Logger.success('Redis:', `'Connected to redis successfully'`);
-	});
-	
 	await redisClient.connect();
 
 	return redisClient;

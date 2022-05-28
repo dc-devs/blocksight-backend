@@ -22,7 +22,7 @@ type SessionResponse {
 type Query {
   findOneUser(findOneUserInput: FindOneUserInput!): User
   findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
-  protectedRoute: User!
+  currentUser: User!
 }
 
 input FindOneUserInput {
@@ -71,17 +71,10 @@ input UserOrderByInput {
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
   deleteUser(id: Int!): User!
   login(sessionInput: SessionInput!): SessionResponse!
-  signup(sessionInput: SessionInput!): SessionResponse!
-}
-
-input CreateUserInput {
-  email: String!
-  password: String!
-  passwordConfirmation: String
+  signup(createUserInput: CreateUserInput!): SessionResponse!
 }
 
 input UpdateUserInput {
@@ -91,4 +84,10 @@ input UpdateUserInput {
 input SessionInput {
   email: String!
   password: String!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  passwordConfirmation: String
 }
