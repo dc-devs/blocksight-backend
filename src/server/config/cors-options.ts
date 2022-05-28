@@ -1,4 +1,4 @@
-import AppUrl from 'src/common/enums/app-url';
+import AppUrl from '../../common/enums/app-url';
 
 export default {
 	credentials: true,

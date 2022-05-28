@@ -4,7 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import ErrorMessage from './errors/error-message.enum';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { isDevelopmentEnv } from 'src/common/constants/environment';
+import { isDevelopmentEnv } from '../common/constants/environment';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 const plugins = isDevelopmentEnv

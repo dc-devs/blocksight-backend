@@ -1,13 +1,15 @@
 import * as request from 'supertest';
 import { UserRole } from '@prisma/client';
 import { firstUser } from '../../prisma/users.seed';
-import ErrorMessage from './enums/error-message.enum';
-import UserProperty from './enums/user-property.enum';
+import ErrorMessage from '../users/enums/error-message.enum';
+import UserProperty from '../users/enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
 import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
 import UserValidationError from '../../src/users/validation-errors/user-validation-error.enum';
 
+// TODO: Create Auth e2e tests..
+// Move user create test to Auth..
 describe('Users', () => {
 	let app: INestApplication;
 
@@ -46,12 +48,14 @@ describe('Users', () => {
 					operationName: 'Mutation',
 					query: `
 						mutation Mutation($createUserInput: CreateUserInput!) {
-							createUser(createUserInput: $createUserInput) {
+							signup(createUserInput: $createUserInput) {
+								user {
 								id
 								email
 								role
 								createdAt
 								updatedAt
+								}
 							}
 						}`,
 					variables: {
@@ -62,7 +66,9 @@ describe('Users', () => {
 					.post('/graphql')
 					.send(query);
 
-				const user = response.body.data.createUser;
+				console.log(response.body);
+
+				const user = response.body.data.signup.user;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(user).toEqual(expectedUserResponse);
@@ -83,12 +89,14 @@ describe('Users', () => {
 						operationName: 'Mutation',
 						query: `
 							mutation Mutation($createUserInput: CreateUserInput!) {
-								createUser(createUserInput: $createUserInput) {
+								signup(createUserInput: $createUserInput) {
+									user {
 									id
 									email
 									role
 									createdAt
 									updatedAt
+									}
 								}
 							}`,
 						variables: {
@@ -110,15 +118,15 @@ describe('Users', () => {
 
 					errors.forEach((error) => {
 						expect(error.extensions.code).toEqual(
-							ExtensionCode.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT,
 						);
 					});
 
 					expect(emailError.message).toContain(
-						ErrorMessage.EMAIL_MUST_BE_STRING
+						ErrorMessage.EMAIL_MUST_BE_STRING,
 					);
 					expect(passwordError.message).toContain(
-						ErrorMessage.PASSWORD_MUST_BE_STRING
+						ErrorMessage.PASSWORD_MUST_BE_STRING,
 					);
 				});
 			});
@@ -138,12 +146,14 @@ describe('Users', () => {
 							operationName: 'Mutation',
 							query: `
 								mutation Mutation($createUserInput: CreateUserInput!) {
-									createUser(createUserInput: $createUserInput) {
+									signup(createUserInput: $createUserInput) {
+										user {
 										id
 										email
 										role
 										createdAt
 										updatedAt
+										}
 									}
 								}`,
 							variables: {
@@ -158,17 +168,17 @@ describe('Users', () => {
 						const emailError = errors[0];
 
 						expect(response.statusCode).toEqual(
-							HttpStatus.BAD_REQUEST
+							HttpStatus.BAD_REQUEST,
 						);
 
 						expect(errors.length).toEqual(1);
 
 						expect(emailError.extensions.code).toEqual(
-							ExtensionCode.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT,
 						);
 
 						expect(emailError.message).toContain(
-							ErrorMessage.EMAIL_REQUIRED
+							ErrorMessage.EMAIL_REQUIRED,
 						);
 					});
 				});
@@ -188,12 +198,14 @@ describe('Users', () => {
 							operationName: 'Mutation',
 							query: `
 								mutation Mutation($createUserInput: CreateUserInput!) {
-									createUser(createUserInput: $createUserInput) {
+									signup(createUserInput: $createUserInput) {
+										user {
 										id
 										email
 										role
 										createdAt
 										updatedAt
+										}
 									}
 								}`,
 							variables: {
@@ -213,11 +225,11 @@ describe('Users', () => {
 						expect(errors.length).toEqual(1);
 
 						expect(extensions.code).toEqual(
-							ExtensionCode.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT,
 						);
 
 						expect(extensions.response.message).toContain(
-							ErrorMessage.EMAIL_IS_EMAIL
+							ErrorMessage.EMAIL_IS_EMAIL,
 						);
 					});
 				});
@@ -237,12 +249,14 @@ describe('Users', () => {
 							operationName: 'Mutation',
 							query: `
 								mutation Mutation($createUserInput: CreateUserInput!) {
-									createUser(createUserInput: $createUserInput) {
+									signup(createUserInput: $createUserInput) {
+										user {
 										id
 										email
 										role
 										createdAt
 										updatedAt
+										}
 									}
 								}`,
 							variables: {
@@ -262,11 +276,11 @@ describe('Users', () => {
 						expect(errors.length).toEqual(1);
 
 						expect(emailError.type).toEqual(
-							ExtensionCode.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT,
 						);
 
 						expect(emailError.message).toEqual(
-							UserValidationError.EMAIL_IS_TAKEN
+							UserValidationError.EMAIL_IS_TAKEN,
 						);
 					});
 				});
@@ -287,12 +301,14 @@ describe('Users', () => {
 							operationName: 'Mutation',
 							query: `
 								mutation Mutation($createUserInput: CreateUserInput!) {
-									createUser(createUserInput: $createUserInput) {
+									signup(createUserInput: $createUserInput) {
+										user {
 										id
 										email
 										role
 										createdAt
 										updatedAt
+										}
 									}
 								}`,
 							variables: {
@@ -307,17 +323,17 @@ describe('Users', () => {
 						const passwordError = errors[0];
 
 						expect(response.statusCode).toEqual(
-							HttpStatus.BAD_REQUEST
+							HttpStatus.BAD_REQUEST,
 						);
 
 						expect(errors.length).toEqual(1);
 
 						expect(passwordError.extensions.code).toEqual(
-							ExtensionCode.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT,
 						);
 
 						expect(passwordError.message).toContain(
-							ErrorMessage.PASSWORD_REQUIRED
+							ErrorMessage.PASSWORD_REQUIRED,
 						);
 					});
 				});
@@ -337,12 +353,14 @@ describe('Users', () => {
 							operationName: 'Mutation',
 							query: `
 								mutation Mutation($createUserInput: CreateUserInput!) {
-									createUser(createUserInput: $createUserInput) {
+									signup(createUserInput: $createUserInput) {
+										user {
 										id
 										email
 										role
 										createdAt
 										updatedAt
+										}
 									}
 								}`,
 							variables: {
@@ -362,11 +380,11 @@ describe('Users', () => {
 						expect(errors.length).toEqual(1);
 
 						expect(extensions.code).toEqual(
-							ExtensionCode.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT,
 						);
 
 						expect(extensions.response.message).toContain(
-							ErrorMessage.PASSWORD_MIN_LENGTH
+							ErrorMessage.PASSWORD_MIN_LENGTH,
 						);
 					});
 				});
