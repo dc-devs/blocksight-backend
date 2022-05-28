@@ -1,25 +1,21 @@
 import { join } from 'path';
+import { corsOptions } from '../server/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import ErrorMessage from './errors/error-message.enum';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { isDevelopmentEnv } from 'src/common/constants/environment';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
-const environment = process.env.NODE_ENV || 'development';
-const isDevelopment = environment === 'development';
-
-const plugins = isDevelopment
+const plugins = isDevelopmentEnv
 	? [ApolloServerPluginLandingPageLocalDefault()]
 	: [];
 
 const GraphqlModule = GraphQLModule.forRoot<ApolloDriverConfig>({
 	plugins,
-	cors: {
-		credentials: true,
-		origin: ['http://localhost:3000', 'https://studio.apollographql.com'],
-	},
 	debug: false,
 	playground: false,
+	cors: corsOptions,
 	driver: ApolloDriver,
 	autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
 	formatError: (error: GraphQLError) => {
