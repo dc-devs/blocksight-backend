@@ -3,31 +3,30 @@ import * as connectRedis from 'connect-redis';
 import initializeRedis from './initialize-redis';
 import { SessionConstants } from '../../auth/constants/session.constants';
 
-const initializeSession = () => {
-	const redisClient = initializeRedis();
+const initializeSession = async () => {
+	const redisClient = await initializeRedis();
 	
-	// Configure redis client
-	// const RedisStore = connectRedis(session);
+	const RedisStore = connectRedis(session);
 	
-	// const oneHour = 1000 * 60 * 60;
-	// const oneDay = oneHour * 24;
-	// const sixtyDays = oneDay * 60;
+	const oneHour = 1000 * 60 * 60;
+	const oneDay = oneHour * 24;
+	const sixtyDays = oneDay * 60;
 	
-	// const sessionConfig: session.SessionOptions = {
-	// 	store: new RedisStore({ client: redisClient }),
-	// 	name: '_bb_session',
-	// 	resave: false,
-	// 	saveUninitialized: false,
-	// 	secret: SessionConstants.SECRET,
-	// 	cookie: {
-	// 		httpOnly: true,
-	// 		secure: true,
-	// 		maxAge: sixtyDays,
-	// 		sameSite: 'none',
-	// 	},
-	// };
+	const sessionConfig: session.SessionOptions = {
+		store: new RedisStore({ client: redisClient }),
+		name: '_bb_session',
+		resave: false,
+		saveUninitialized: false,
+		secret: SessionConstants.SECRET,
+		cookie: {
+			httpOnly: true,
+			secure: true,
+			maxAge: sixtyDays,
+			sameSite: 'none',
+		},
+	};
 
-	// return session(sessionConfig);
+	return session(sessionConfig);
 }
 
 export default initializeSession;

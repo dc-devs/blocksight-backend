@@ -13,9 +13,9 @@ const bootstrap = async () => {
 		logger: ['verbose'],
 	});
 
-	const session = initializeSession();
+	const session = await initializeSession();
 
-	// app.use(session);
+	app.use(session);
 
 	app.enableCors(corsOptions);
 

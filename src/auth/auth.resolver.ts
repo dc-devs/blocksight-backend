@@ -30,6 +30,11 @@ export class AuthResolver {
 			throw new UnauthorizedException();
 		}
 
+		console.log('');
+		console.log('--- Request ---');
+		console.log(request);
+		console.log('');
+
 		if (request.session) {
 			request.session.userId = user.id;
 		}
