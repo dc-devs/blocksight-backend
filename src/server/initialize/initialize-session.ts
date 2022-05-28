@@ -1,7 +1,7 @@
 import * as session from 'express-session';
 import * as connectRedis from 'connect-redis';
 import initializeRedis from './initialize-redis';
-import { SessionConstants } from '../../auth/constants/session.constants';
+import { SessionConstants } from '../../models/auth/constants/session.constants';
 
 const initializeSession = async () => {
 	const redisClient = await initializeRedis();

@@ -1,6 +1,6 @@
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
+import { AuthModule } from './models/auth/auth.module';
+import { UsersModule } from './models/users/users.module';
 import { PrismaService } from './prisma/prisma.service';
 import environment from './common/constants/environment';
 import { GraphqlModule } from './graphql/graphql.module';

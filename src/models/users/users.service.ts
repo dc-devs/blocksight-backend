@@ -2,7 +2,7 @@ import { User } from './models/user.model';
 import { Injectable } from '@nestjs/common';
 import { encodePassword } from './utils/bcrypt';
 import { FindAllUsersInput } from './dto/find-all-users.input';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { UpdateUserInput } from './dto/update-user.input';
 import { CreateUserInput } from './dto/create-user.input';
 import { FindOneUserInput } from './dto/find-one-user.input';

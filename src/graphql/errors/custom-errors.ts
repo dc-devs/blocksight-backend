@@ -1,7 +1,7 @@
 import ExtensionCode from './extension-code.enum';
 import ErrorCode from '../../prisma/error-code.enum';
 import { UserInputError } from 'apollo-server-express';
-import UserValidationError from '../../users/validation-errors/user-validation-error.enum';
+import UserValidationError from '../../models/users/validation-errors/user-validation-error.enum';
 
 const userErrors = {
 	[ErrorCode.UNIQUE_CONSTRAINT]: {

@@ -6,11 +6,9 @@ import UserProperty from '../users/enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
 import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
-import UserValidationError from '../../src/users/validation-errors/user-validation-error.enum';
+import UserValidationError from '../../src/models/users/validation-errors/user-validation-error.enum';
 
-// TODO: Create Auth e2e tests..
-// Move user create test to Auth..
-describe('Users', () => {
+describe('Auth', () => {
 	let app: INestApplication;
 
 	beforeAll(async () => {
@@ -21,8 +19,8 @@ describe('Users', () => {
 		await app.close();
 	});
 
-	describe('Create', () => {
-		describe('when sending a valid email and a password', () => {
+	describe('Signup', () => {
+		describe('when signing up with a valid email and a password', () => {
 			let email;
 			let createUserInput;
 			let expectedUserResponse;
@@ -65,8 +63,6 @@ describe('Users', () => {
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
 					.send(query);
-
-				console.log(response.body);
 
 				const user = response.body.data.signup.user;
 

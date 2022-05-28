@@ -1,12 +1,12 @@
 import { UseGuards } from '@nestjs/common';
 import { User } from '../users/models/user.model';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { SessionInput, SessionResponse } from './dto';
 import { CreateUserInput } from '../users/dto/create-user.input';
 import { LogInUser, IsValidUser, IsAuthenticated } from './guards';
 import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
-import generateGraphQLError from '../graphql/errors/generate-graphql-error';
+import generateGraphQLError from '../../graphql/errors/generate-graphql-error';
 
 @Resolver()
 export class AuthResolver {

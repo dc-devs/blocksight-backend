@@ -20,7 +20,7 @@ describe('Users', () => {
 
 	// Add Tests to create user for unique email constraint
 	describe('Delete one', () => {
-		describe('when passed a valid user id', () => {
+		describe('when sending a valid user id', () => {
 			it('should delete that user', async () => {
 				const id = 55;
 				const query = {
@@ -52,7 +52,7 @@ describe('Users', () => {
 		});
 
 		describe('validation', () => {
-			describe('when passed an invalid user id', () => {
+			describe('when sending an invalid user id', () => {
 				it('should delete that user', async () => {
 					const id = 100;
 					const query = {

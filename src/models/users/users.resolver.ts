@@ -4,7 +4,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { FindOneUserInput } from './dto/find-one-user.input';
 import { FindAllUsersInput } from './dto/find-all-users.input';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import generateGraphQLError from '../graphql/errors/generate-graphql-error';
+import generateGraphQLError from '../../graphql/errors/generate-graphql-error';
 
 @Resolver(() => User)
 export class UsersResolver {

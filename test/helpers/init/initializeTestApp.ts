@@ -2,7 +2,7 @@ import * as session from 'express-session';
 import { AppModule } from '../../../src/app.module';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { SessionConstants } from '../../../src/auth/constants/session.constants';
+import { SessionConstants } from '../../../src/models/auth/constants/session.constants';
 
 const initializeTestApp = async () => {
 	let app: INestApplication;
