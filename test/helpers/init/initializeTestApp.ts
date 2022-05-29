@@ -32,8 +32,6 @@ const initializeTestApp = async () => {
 
 	await app.init();
 
-	logInitMessage();
-
 	return app;
 };
 

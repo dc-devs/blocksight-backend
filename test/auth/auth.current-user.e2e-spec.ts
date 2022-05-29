@@ -98,5 +98,46 @@ describe('Auth', () => {
 				});
 			});
 		});
+		describe('validation', () => {
+			describe('when not logged in', () => {
+				describe('and fetching current user', () => {
+					it('should return current user', async () => {
+						const currentUserQuery = {
+							operationName: 'Query',
+							query: `
+							query Query {
+								currentUser {
+									id
+									email
+									role
+									createdAt
+									updatedAt
+								}
+							}`,
+							variables: {},
+						};
+
+						const response = await request(app.getHttpServer())
+							.post('/graphql')
+							.send(currentUserQuery);
+
+						const errors = response.body.errors;
+						const unauthorizedError = errors[0];
+
+						expect(unauthorizedError.message).toEqual(
+							ErrorMessage.UNAUTHORIZED,
+						);
+
+						expect(unauthorizedError.extensions.code).toEqual(
+							ExtensionCode.UNAUTHENTICATED,
+						);
+
+						expect(
+							unauthorizedError.extensions.response.statusCode,
+						).toEqual(HttpStatus.UNAUTHORIZED);
+					});
+				});
+			});
+		});
 	});
 });
