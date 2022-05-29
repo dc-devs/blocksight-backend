@@ -1,20 +1,13 @@
+import Cookie from '../../../src/server/enums/cookie.enum';
+
 const getCookieFromResponse = (response: any) => {
-	let cookieId;
 	const { rawHeaders } = response.res;
-	
-	console.log(rawHeaders);
 
-	rawHeaders.forEach((header: string) => {
-		const cookieIdRegex = /connect.sid=(?<cookieId>.+);\sPath/;
-		const matches = header.match(cookieIdRegex);
-
-		if (matches) {
-			const { groups } = matches;
-			cookieId = groups.cookieId;
-		}
+	const cookie = rawHeaders.find((header: string) => {
+		return header.match(Cookie.NAME);
 	});
 
-	return cookieId;
+	return cookie;
 };
 
 export default getCookieFromResponse;

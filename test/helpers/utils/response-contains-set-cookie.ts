@@ -7,8 +7,6 @@ const responseContainsSetCookie = (response: any) => {
 		return header.match(Cookie.SET_COOKIE) || header.match(Cookie.NAME);
 	});
 
-	console.log(cookieHeaders);
-
 	return cookieHeaders.length === 2;
 };
 

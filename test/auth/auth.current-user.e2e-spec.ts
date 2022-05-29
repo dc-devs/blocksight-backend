@@ -66,7 +66,7 @@ describe('Auth', () => {
 						.set('x-forwarded-proto', 'https')
 						.send(loginQuery)) as any;
 
-					const cookieId = getCookieFromResponse(loginResponse);
+					const cookie = getCookieFromResponse(loginResponse);
 
 					const currentUserQuery = {
 						operationName: 'Query',
@@ -85,18 +85,12 @@ describe('Auth', () => {
 						},
 					};
 
-					console.log('');
-					console.log('Cookie:', `_bb_session=${cookieId}`);
-					console.log('');
-
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
-						.set('Cookie', [`_bb_session=${cookieId}`])
+						.set('Cookie', [cookie])
 						.send(currentUserQuery);
 
-					const user = response.body;
-
-					console.log(user);
+					const user = response.body.data.currentUser;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
 					expect(user).toEqual(expectedUserResponse);

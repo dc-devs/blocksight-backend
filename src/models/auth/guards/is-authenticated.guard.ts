@@ -11,13 +11,8 @@ export class IsAuthenticated implements CanActivate {
 		try {
 			const ctx = GqlExecutionContext.create(context);
 			const request = ctx.getContext().req;
-			// console.log(request);
 
 			const id = request.session.userId;
-
-			// console.log('');
-			// console.log('USER ID', id);
-			// console.log('');
 
 			const user = await this.usersService.findOne({ id });
 
