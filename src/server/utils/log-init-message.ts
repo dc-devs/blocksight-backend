@@ -6,6 +6,8 @@ const logInitMessage = () => {
 	Logger.debug('');
 	Logger.debug('Port:', port);
 	Logger.debug('Environment:', environment);
+	Logger.debug('Redis:', process.env.REDIS_URL);
+	Logger.debug('Database:', process.env.DATABASE_URL);
 	Logger.debug('');
 };
 

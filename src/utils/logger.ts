@@ -20,7 +20,7 @@ class Logger {
 			return message;
 		});
 
-		if (isDevelopmentEnv) {
+		if (isDevelopmentEnv || process.env.LOGGER_DEBUG) {
 			log.apply(console, [
 				colors.cyan('[Nest-Debug]'),
 				colors.cyan(title),

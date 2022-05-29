@@ -5,6 +5,8 @@ import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
 import ErrorMessage from '../../src/graphql/errors/error-message.enum';
 import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
+import { redisClient } from '../../src/server/initialize/initialize-redis';
+import responseContainsSetCookie from '../helpers/utils/response-contains-set-cookie';
 
 describe('Auth', () => {
 	let app: INestApplication;
@@ -14,6 +16,7 @@ describe('Auth', () => {
 	});
 
 	afterAll(async () => {
+		await redisClient.disconnect();
 		await app.close();
 	});
 
@@ -57,15 +60,17 @@ describe('Auth', () => {
 						sessionInput,
 					},
 				};
-				const response = await request(app.getHttpServer())
+				const response = (await request(app.getHttpServer())
 					.post('/graphql')
-					.send(query);
+					.set('x-forwarded-proto', 'https')
+					.send(query)) as any;
 
 				const user = response.body.data.login.user;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(user).toEqual(expectedUserResponse);
 				expect(user).not.toHaveProperty(UserProperty.PASSWORD);
+				expect(responseContainsSetCookie(response)).toEqual(true);
 			});
 		});
 

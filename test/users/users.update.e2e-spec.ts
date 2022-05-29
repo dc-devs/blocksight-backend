@@ -6,6 +6,7 @@ import ErrorMessage from './enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
 import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
+import { redisClient } from '../../src/server/initialize/initialize-redis';
 import UserValidationError from '../../src/models/users/validation-errors/user-validation-error.enum';
 
 describe('Users', () => {
@@ -16,6 +17,7 @@ describe('Users', () => {
 	});
 
 	afterAll(async () => {
+		await redisClient.disconnect();
 		await app.close();
 	});
 

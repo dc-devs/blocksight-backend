@@ -4,6 +4,7 @@ import UserProperty from './enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
 import expectedUserObject from './expected-objects/expected-user-object';
+import { redisClient } from '../../src/server/initialize/initialize-redis';
 
 describe('Users', () => {
 	let app: INestApplication;
@@ -13,6 +14,7 @@ describe('Users', () => {
 	});
 
 	afterAll(async () => {
+		await redisClient.disconnect();
 		await app.close();
 	});
 

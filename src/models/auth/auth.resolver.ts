@@ -1,8 +1,8 @@
 import { UseGuards } from '@nestjs/common';
-import { User } from '../users/models/user.model';
 import { AuthService } from './auth.service';
-import { UsersService } from '../users/users.service';
+import { User } from '../users/models/user.model';
 import { SessionInput, SessionResponse } from './dto';
+import { UsersService } from '../users/users.service';
 import { CreateUserInput } from '../users/dto/create-user.input';
 import { LogInUser, IsValidUser, IsAuthenticated } from './guards';
 import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
@@ -22,7 +22,6 @@ export class AuthResolver {
 		@Args('sessionInput') sessionInput: SessionInput,
 	) {
 		const { user } = request;
-
 		return { user };
 	}
 
@@ -49,7 +48,6 @@ export class AuthResolver {
 	@UseGuards(IsAuthenticated)
 	async currentUser(@Context('req') request) {
 		const { user } = request;
-
 		return user;
 	}
 }

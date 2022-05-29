@@ -6,6 +6,7 @@ import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
 import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
 import expectedUserObject from './expected-objects/expected-user-object';
+import { redisClient } from '../../src/server/initialize/initialize-redis';
 import {
 	allUsersCount,
 	thirdUser as thirdUserAdmin,
@@ -21,6 +22,7 @@ describe('Users', () => {
 	});
 
 	afterAll(async () => {
+		await redisClient.disconnect();
 		await app.close();
 	});
 

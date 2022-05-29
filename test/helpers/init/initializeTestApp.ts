@@ -1,8 +1,11 @@
-import * as session from 'express-session';
+import App from '../../../src/common/enums/app';
+import { INestApplication } from '@nestjs/common';
 import { AppModule } from '../../../src/app.module';
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { SessionConstants } from '../../../src/models/auth/constants/session.constants';
+import { initializeSession } from '../../../src/server/initialize';
+import logInitMessage from '../../../src/server/utils/log-init-message';
+import { validationPipe, corsOptions } from '../../../src/server/config';
+import { isProductionEnv } from '../../../src/common/constants/environment';
 
 const initializeTestApp = async () => {
 	let app: INestApplication;
@@ -13,30 +16,23 @@ const initializeTestApp = async () => {
 
 	app = moduleFixture.createNestApplication();
 
-	app.enableCors();
-
 	app.useLogger([]);
 
-	app.use(
-		session({
-			resave: false,
-			saveUninitialized: false,
-			secret: SessionConstants.SECRET,
-		}),
-	);
+	const session = await initializeSession();
 
-	app.useGlobalPipes(
-		new ValidationPipe({
-			whitelist: true,
-			transform: true,
-			forbidNonWhitelisted: true,
-			transformOptions: {
-				enableImplicitConversion: true,
-			},
-		})
-	);
+	app.use(session);
+
+	app.enableCors(corsOptions);
+
+	app.useGlobalPipes(validationPipe);
+
+	const httpAdapter = app.getHttpAdapter();
+	const instance = httpAdapter.getInstance();
+	instance.set(App.TRUST_PROXY, !isProductionEnv);
 
 	await app.init();
+
+	logInitMessage();
 
 	return app;
 };
