@@ -7,7 +7,9 @@ const responseContainsSetCookie = (response: any) => {
 		return header.match(Cookie.SET_COOKIE) || header.match(Cookie.NAME);
 	});
 
-	return cookieHeaders.length === 2;
+	const dedupedCookieHeaders = [...new Set(cookieHeaders)];
+
+	return dedupedCookieHeaders.length === 2;
 };
 
 export default responseContainsSetCookie;
