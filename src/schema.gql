@@ -74,7 +74,7 @@ type Mutation {
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
   deleteUser(id: Int!): User!
   login(sessionInput: SessionInput!): SessionResponse!
-  signup(createUserInput: CreateUserInput!): SessionResponse!
+  signUp(createUserInput: CreateUserInput!): SessionResponse!
 }
 
 input UpdateUserInput {

@@ -9,7 +9,6 @@ import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
 import { redisClient } from '../../src/server/initialize/initialize-redis';
 import UserValidationError from '../../src/models/users/validation-errors/user-validation-error.enum';
 
-
 describe('Auth', () => {
 	let app: INestApplication;
 
@@ -49,7 +48,7 @@ describe('Auth', () => {
 					operationName: 'Mutation',
 					query: `
 						mutation Mutation($createUserInput: CreateUserInput!) {
-							signup(createUserInput: $createUserInput) {
+							signUp(createUserInput: $createUserInput) {
 								user {
 								id
 								email
@@ -67,7 +66,7 @@ describe('Auth', () => {
 					.post('/graphql')
 					.send(query);
 
-				const user = response.body.data.signup.user;
+				const user = response.body.data.signUp.user;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(user).toEqual(expectedUserResponse);
@@ -88,7 +87,7 @@ describe('Auth', () => {
 						operationName: 'Mutation',
 						query: `
 							mutation Mutation($createUserInput: CreateUserInput!) {
-								signup(createUserInput: $createUserInput) {
+								signUp(createUserInput: $createUserInput) {
 									user {
 									id
 									email
@@ -145,7 +144,7 @@ describe('Auth', () => {
 							operationName: 'Mutation',
 							query: `
 								mutation Mutation($createUserInput: CreateUserInput!) {
-									signup(createUserInput: $createUserInput) {
+									signUp(createUserInput: $createUserInput) {
 										user {
 										id
 										email
@@ -197,7 +196,7 @@ describe('Auth', () => {
 							operationName: 'Mutation',
 							query: `
 								mutation Mutation($createUserInput: CreateUserInput!) {
-									signup(createUserInput: $createUserInput) {
+									signUp(createUserInput: $createUserInput) {
 										user {
 										id
 										email
@@ -248,7 +247,7 @@ describe('Auth', () => {
 							operationName: 'Mutation',
 							query: `
 								mutation Mutation($createUserInput: CreateUserInput!) {
-									signup(createUserInput: $createUserInput) {
+									signUp(createUserInput: $createUserInput) {
 										user {
 										id
 										email
@@ -300,7 +299,7 @@ describe('Auth', () => {
 							operationName: 'Mutation',
 							query: `
 								mutation Mutation($createUserInput: CreateUserInput!) {
-									signup(createUserInput: $createUserInput) {
+									signUp(createUserInput: $createUserInput) {
 										user {
 										id
 										email
@@ -352,7 +351,7 @@ describe('Auth', () => {
 							operationName: 'Mutation',
 							query: `
 								mutation Mutation($createUserInput: CreateUserInput!) {
-									signup(createUserInput: $createUserInput) {
+									signUp(createUserInput: $createUserInput) {
 										user {
 										id
 										email

@@ -26,18 +26,20 @@ export class AuthResolver {
 	}
 
 	@Mutation(() => SessionResponse)
-	async signup(
+	async signUp(
 		@Context('req') request,
 		@Args('createUserInput') createUserInput: CreateUserInput,
 	) {
 		try {
-			const newUser = await this.usersService.create({ ...createUserInput });
-	
+			const newUser = await this.usersService.create({
+				...createUserInput,
+			});
+
 			const loggedInUser = await this.authService.login({
 				...request,
 				user: { ...newUser },
 			});
-	
+
 			return { user: loggedInUser };
 		} catch (error) {
 			generateGraphQLError(error);
