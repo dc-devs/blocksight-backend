@@ -17,12 +17,13 @@ scalar DateTime
 
 type SessionResponse {
   user: User!
+  isAuthenticated: Boolean!
 }
 
 type Query {
   findOneUser(findOneUserInput: FindOneUserInput!): User
   findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
-  currentUser: User!
+  currentUser: SessionResponse!
 }
 
 input FindOneUserInput {
@@ -75,6 +76,7 @@ type Mutation {
   deleteUser(id: Int!): User!
   login(sessionInput: SessionInput!): SessionResponse!
   signUp(createUserInput: CreateUserInput!): SessionResponse!
+  logOut(user: UserInput!): SessionResponse!
 }
 
 input UpdateUserInput {

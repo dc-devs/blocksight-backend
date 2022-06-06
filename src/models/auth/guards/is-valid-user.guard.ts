@@ -15,7 +15,7 @@ export class IsValidUser implements CanActivate {
 			const { sessionInput } = ctx.getArgs();
 
 			const user = await this.authService.validateUser(sessionInput);
-			
+
 			if (!user) {
 				throw new UnauthorizedException();
 			}

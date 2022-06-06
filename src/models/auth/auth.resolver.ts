@@ -1,8 +1,8 @@
 import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { User } from '../users/models/user.model';
-import { SessionInput, SessionResponse } from './dto';
+import { UserInput } from '../users/dto/user.input';
 import { UsersService } from '../users/users.service';
+import { SessionInput, SessionResponse } from './dto';
 import { CreateUserInput } from '../users/dto/create-user.input';
 import { LogInUser, IsValidUser, IsAuthenticated } from './guards';
 import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
@@ -22,7 +22,8 @@ export class AuthResolver {
 		@Args('sessionInput') sessionInput: SessionInput,
 	) {
 		const { user } = request;
-		return { user };
+
+		return { isAuthenticated: true, user };
 	}
 
 	@Mutation(() => SessionResponse)
@@ -40,16 +41,39 @@ export class AuthResolver {
 				user: { ...newUser },
 			});
 
-			return { user: loggedInUser };
+			return { isAuthenticated: true, user: loggedInUser };
 		} catch (error) {
 			generateGraphQLError(error);
 		}
 	}
 
-	@Query(() => User)
+	@Query(() => SessionResponse)
 	@UseGuards(IsAuthenticated)
 	async currentUser(@Context('req') request) {
 		const { user } = request;
-		return user;
+
+		return { isAuthenticated: true, user };
+	}
+
+	@Mutation(() => SessionResponse)
+	logOut(
+		@Context('res') response,
+		@Context('req') request,
+		@Args('user') user: UserInput,
+	) {
+		try {
+			console.log('Response', response);
+
+			// const response = {
+			// 	cookie: true,
+			// };
+
+			// https://stackoverflow.com/questions/64064611/express-session-cookie-connect-sid-not-being-deleted-from-browser-after-destro
+			this.authService.logOut({ request, response, user });
+
+			return { isAuthenticated: false, user };
+		} catch (error) {
+			generateGraphQLError(error);
+		}
 	}
 }

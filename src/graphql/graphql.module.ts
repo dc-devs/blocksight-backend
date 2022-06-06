@@ -17,6 +17,7 @@ const GraphqlModule = GraphQLModule.forRoot<ApolloDriverConfig>({
 	playground: false,
 	cors: corsOptions,
 	driver: ApolloDriver,
+	context: ({ req, res }) => ({ req, res }),
 	autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
 	formatError: (error: GraphQLError) => {
 		const graphQLFormattedError: GraphQLFormattedError = {

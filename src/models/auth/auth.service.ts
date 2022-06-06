@@ -4,10 +4,22 @@ import { User } from '../users/models/user.model';
 import { SessionInput } from './dto/session.input';
 import { UsersService } from '../users/users.service';
 import { UnauthorizedException } from '@nestjs/common';
+import Cookie from '../..//server/enums/cookie.enum';
 
-interface LoginRequest {
+interface ILoginRequest {
 	user?: User;
 	session?: any;
+	sessionStore?: any;
+}
+
+interface ILoginResponse {
+	cookie?: any;
+}
+
+interface ILogOutProps {
+	user: User;
+	request: ILoginRequest;
+	response: ILoginResponse;
 }
 
 @Injectable()
@@ -34,7 +46,7 @@ export class AuthService {
 		}
 	}
 
-	async login(request: LoginRequest) {
+	async login(request: ILoginRequest) {
 		const { user } = request;
 
 		if (user && request.session) {
@@ -44,5 +56,23 @@ export class AuthService {
 		}
 
 		return user;
+	}
+
+	logOut({ request, response, user }: ILogOutProps) {
+		const { id } = user;
+
+		request.session.userId = undefined;
+
+		response.cookie(Cookie.NAME, null, {
+			httpOnly: true,
+			secure: true,
+			sameSite: 'none',
+			expires: new Date('Thu, 01 Jan 1970 00:00:00 UTC'),
+		});
+
+		request.session.destroy();
+		request.sessionStore.destroy(id);
+
+		return true;
 	}
 }

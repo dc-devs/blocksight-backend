@@ -5,4 +5,7 @@ import { User } from '../../users/models/user.model';
 export class SessionResponse {
 	@Field()
 	user: User;
+
+	@Field()
+	isAuthenticated?: boolean;
 }
