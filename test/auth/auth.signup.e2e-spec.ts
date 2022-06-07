@@ -50,12 +50,13 @@ describe('Auth', () => {
 						mutation Mutation($createUserInput: CreateUserInput!) {
 							signUp(createUserInput: $createUserInput) {
 								user {
-								id
-								email
-								role
-								createdAt
-								updatedAt
+									id
+									email
+									role
+									createdAt
+									updatedAt
 								}
+								isAuthenticated
 							}
 						}`,
 					variables: {
@@ -66,9 +67,12 @@ describe('Auth', () => {
 					.post('/graphql')
 					.send(query);
 
-				const user = response.body.data.signUp.user;
+				const { signUp } = response.body.data;
+				const { isAuthenticated } = signUp;
+				const { user } = signUp;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
+				expect(isAuthenticated).toEqual(true);
 				expect(user).toEqual(expectedUserResponse);
 				expect(user).not.toHaveProperty(UserProperty.PASSWORD);
 			});
@@ -89,12 +93,13 @@ describe('Auth', () => {
 							mutation Mutation($createUserInput: CreateUserInput!) {
 								signUp(createUserInput: $createUserInput) {
 									user {
-									id
-									email
-									role
-									createdAt
-									updatedAt
+										id
+										email
+										role
+										createdAt
+										updatedAt
 									}
+									isAuthenticated
 								}
 							}`,
 						variables: {
@@ -146,12 +151,13 @@ describe('Auth', () => {
 								mutation Mutation($createUserInput: CreateUserInput!) {
 									signUp(createUserInput: $createUserInput) {
 										user {
-										id
-										email
-										role
-										createdAt
-										updatedAt
+											id
+											email
+											role
+											createdAt
+											updatedAt
 										}
+										isAuthenticated
 									}
 								}`,
 							variables: {
@@ -198,12 +204,13 @@ describe('Auth', () => {
 								mutation Mutation($createUserInput: CreateUserInput!) {
 									signUp(createUserInput: $createUserInput) {
 										user {
-										id
-										email
-										role
-										createdAt
-										updatedAt
+											id
+											email
+											role
+											createdAt
+											updatedAt
 										}
+										isAuthenticated
 									}
 								}`,
 							variables: {
@@ -249,12 +256,13 @@ describe('Auth', () => {
 								mutation Mutation($createUserInput: CreateUserInput!) {
 									signUp(createUserInput: $createUserInput) {
 										user {
-										id
-										email
-										role
-										createdAt
-										updatedAt
+											id
+											email
+											role
+											createdAt
+											updatedAt
 										}
+										isAuthenticated
 									}
 								}`,
 							variables: {
@@ -301,12 +309,13 @@ describe('Auth', () => {
 								mutation Mutation($createUserInput: CreateUserInput!) {
 									signUp(createUserInput: $createUserInput) {
 										user {
-										id
-										email
-										role
-										createdAt
-										updatedAt
+											id
+											email
+											role
+											createdAt
+											updatedAt
 										}
+										isAuthenticated
 									}
 								}`,
 							variables: {
@@ -353,12 +362,13 @@ describe('Auth', () => {
 								mutation Mutation($createUserInput: CreateUserInput!) {
 									signUp(createUserInput: $createUserInput) {
 										user {
-										id
-										email
-										role
-										createdAt
-										updatedAt
+											id
+											email
+											role
+											createdAt
+											updatedAt
 										}
+										isAuthenticated
 									}
 								}`,
 							variables: {

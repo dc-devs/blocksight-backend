@@ -1,10 +1,9 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { User } from '../../users/models/user.model';
 
 @ObjectType()
-export class SessionResponse {
+export class LogOutResponse {
 	@Field()
-	user: User;
+	userId: number;
 
 	@Field()
 	isAuthenticated: boolean;

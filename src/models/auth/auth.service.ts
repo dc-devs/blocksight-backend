@@ -2,9 +2,9 @@ import { compareSync } from 'bcrypt';
 import { Injectable } from '@nestjs/common';
 import { User } from '../users/models/user.model';
 import { SessionInput } from './dto/session.input';
+import Cookie from '../../server/enums/cookie.enum';
 import { UsersService } from '../users/users.service';
 import { UnauthorizedException } from '@nestjs/common';
-import Cookie from '../..//server/enums/cookie.enum';
 
 interface ILoginRequest {
 	user?: User;
@@ -17,7 +17,7 @@ interface ILoginResponse {
 }
 
 interface ILogOutProps {
-	user: User;
+	userId: number;
 	request: ILoginRequest;
 	response: ILoginResponse;
 }
@@ -58,8 +58,7 @@ export class AuthService {
 		return user;
 	}
 
-	logOut({ request, response, user }: ILogOutProps) {
-		const { id } = user;
+	logOut({ request, response, userId }: ILogOutProps) {
 
 		request.session.userId = undefined;
 
@@ -67,11 +66,11 @@ export class AuthService {
 			httpOnly: true,
 			secure: true,
 			sameSite: 'none',
-			expires: new Date('Thu, 01 Jan 1970 00:00:00 UTC'),
+			expires: new Date(Cookie.EXPIRED_DATE),
 		});
 
 		request.session.destroy();
-		request.sessionStore.destroy(id);
+		request.sessionStore.destroy(userId);
 
 		return true;
 	}

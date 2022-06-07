@@ -49,11 +49,11 @@ describe('Auth', () => {
 						mutation Mutation($sessionInput: SessionInput!) {
 							login(sessionInput: $sessionInput) {
 								user {
-								createdAt
-								updatedAt
-								role
-								email
-								id
+									createdAt
+									updatedAt
+									role
+									email
+									id
 								}
 							}
 						}`,
@@ -73,11 +73,14 @@ describe('Auth', () => {
 						query: `
 							query Query {
 								currentUser {
-									id
-									email
-									role
-									createdAt
-									updatedAt
+									user {
+										id
+										email
+										role
+										createdAt
+										updatedAt
+									}
+									isAuthenticated
 								}
 							}`,
 						variables: {
@@ -90,14 +93,18 @@ describe('Auth', () => {
 						.set('Cookie', [cookie])
 						.send(currentUserQuery);
 
-					const user = response.body.data.currentUser;
+					const { currentUser } = response.body.data;
+					const { isAuthenticated } = currentUser;
+					const { user } = currentUser;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
+					expect(isAuthenticated).toEqual(true);
 					expect(user).toEqual(expectedUserResponse);
 					expect(user).not.toHaveProperty(UserProperty.PASSWORD);
 				});
 			});
 		});
+
 		describe('validation', () => {
 			describe('when not logged in', () => {
 				describe('and fetching current user', () => {
@@ -107,11 +114,14 @@ describe('Auth', () => {
 							query: `
 							query Query {
 								currentUser {
-									id
-									email
-									role
-									createdAt
-									updatedAt
+									user {
+										id
+										email
+										role
+										createdAt
+										updatedAt
+									}
+									isAuthenticated
 								}
 							}`,
 							variables: {},

@@ -1,10 +1,9 @@
 import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UserInput } from '../users/dto/user.input';
 import { UsersService } from '../users/users.service';
-import { SessionInput, SessionResponse } from './dto';
 import { CreateUserInput } from '../users/dto/create-user.input';
 import { LogInUser, IsValidUser, IsAuthenticated } from './guards';
+import { SessionInput, SessionResponse, LogOutResponse } from './dto';
 import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
 import generateGraphQLError from '../../graphql/errors/generate-graphql-error';
 
@@ -55,23 +54,16 @@ export class AuthResolver {
 		return { isAuthenticated: true, user };
 	}
 
-	@Mutation(() => SessionResponse)
+	@Mutation(() => LogOutResponse)
 	logOut(
 		@Context('res') response,
 		@Context('req') request,
-		@Args('user') user: UserInput,
+		@Args('userId') userId: number,
 	) {
 		try {
-			console.log('Response', response);
+			this.authService.logOut({ request, response, userId });
 
-			// const response = {
-			// 	cookie: true,
-			// };
-
-			// https://stackoverflow.com/questions/64064611/express-session-cookie-connect-sid-not-being-deleted-from-browser-after-destro
-			this.authService.logOut({ request, response, user });
-
-			return { isAuthenticated: false, user };
+			return { isAuthenticated: false, userId };
 		} catch (error) {
 			generateGraphQLError(error);
 		}

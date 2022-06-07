@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type LogOutResponse {
+  userId: Float!
+  isAuthenticated: Boolean!
+}
+
 type User {
   id: Float
   email: String
@@ -76,7 +81,7 @@ type Mutation {
   deleteUser(id: Int!): User!
   login(sessionInput: SessionInput!): SessionResponse!
   signUp(createUserInput: CreateUserInput!): SessionResponse!
-  logOut(user: UserInput!): SessionResponse!
+  logOut(userId: Float!): LogOutResponse!
 }
 
 input UpdateUserInput {

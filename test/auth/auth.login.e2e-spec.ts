@@ -48,12 +48,13 @@ describe('Auth', () => {
 						mutation Mutation($sessionInput: SessionInput!) {
 							login(sessionInput: $sessionInput) {
 								user {
-								createdAt
-								updatedAt
-								role
-								email
-								id
+									createdAt
+									updatedAt
+									role
+									email
+									id
 								}
+								isAuthenticated
 							}
 						}`,
 					variables: {
@@ -65,9 +66,12 @@ describe('Auth', () => {
 					.set('x-forwarded-proto', 'https')
 					.send(query)) as any;
 
-				const user = response.body.data.login.user;
+				const { login } = response.body.data;
+				const { isAuthenticated } = login;
+				const { user } = login;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
+				expect(isAuthenticated).toEqual(true);
 				expect(user).toEqual(expectedUserResponse);
 				expect(user).not.toHaveProperty(UserProperty.PASSWORD);
 				expect(responseContainsSetCookie(response)).toEqual(true);
@@ -92,12 +96,13 @@ describe('Auth', () => {
 							mutation Mutation($sessionInput: SessionInput!) {
 								login(sessionInput: $sessionInput) {
 									user {
-									createdAt
-									updatedAt
-									role
-									email
-									id
+										createdAt
+										updatedAt
+										role
+										email
+										id
 									}
+									isAuthenticated
 								}
 							}`,
 						variables: {
@@ -142,12 +147,13 @@ describe('Auth', () => {
 							mutation Mutation($sessionInput: SessionInput!) {
 								login(sessionInput: $sessionInput) {
 									user {
-									createdAt
-									updatedAt
-									role
-									email
-									id
+										createdAt
+										updatedAt
+										role
+										email
+										id
 									}
+									isAuthenticated
 								}
 							}`,
 						variables: {
@@ -191,12 +197,13 @@ describe('Auth', () => {
 							mutation Mutation($sessionInput: SessionInput!) {
 								login(sessionInput: $sessionInput) {
 									user {
-									createdAt
-									updatedAt
-									role
-									email
-									id
+										createdAt
+										updatedAt
+										role
+										email
+										id
 									}
+									isAuthenticated
 								}
 							}`,
 						variables: {
