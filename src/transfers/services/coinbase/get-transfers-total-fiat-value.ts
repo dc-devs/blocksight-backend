@@ -1,4 +1,4 @@
-import * as numeral from 'numeral';
+import numeral from 'numeral';
 import { BigNumber } from 'bignumber.js';
 
 const getTransfersTotalFiatValue = (transfers: any) => {

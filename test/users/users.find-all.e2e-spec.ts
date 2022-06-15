@@ -1,4 +1,4 @@
-import * as request from 'supertest';
+import request from 'supertest';
 import { UserRole } from '@prisma/client';
 import ErrorMessage from './enums/error-message.enum';
 import UserProperty from './enums/user-property.enum';
@@ -98,7 +98,7 @@ describe('Users', () => {
 						users.forEach((user) => {
 							expect(user).toEqual(expectedUserObject);
 							expect(user).not.toHaveProperty(
-								UserProperty.PASSWORD
+								UserProperty.PASSWORD,
 							);
 							expect(user.role).toEqual(UserRole.SUPER_ADMIN);
 						});
@@ -228,23 +228,23 @@ describe('Users', () => {
 						expect(users).toHaveLength(3);
 
 						expect(firstSelectedUser.role).toEqual(
-							firstUserSuperAdmin.role
+							firstUserSuperAdmin.role,
 						);
 						expect(firstSelectedUser.email).toEqual(
-							firstUserSuperAdmin.email
+							firstUserSuperAdmin.email,
 						);
 
 						expect(thirdSelectedUser.role).toEqual(
-							thirdUserAdmin.role
+							thirdUserAdmin.role,
 						);
 						expect(thirdSelectedUser.email).toEqual(
-							thirdUserAdmin.email
+							thirdUserAdmin.email,
 						);
 
 						users.forEach((user) => {
 							expect(user).toEqual(expectedUserObject);
 							expect(user).not.toHaveProperty(
-								UserProperty.PASSWORD
+								UserProperty.PASSWORD,
 							);
 						});
 					});
@@ -288,7 +288,7 @@ describe('Users', () => {
 							users.forEach((user) => {
 								expect(user).toEqual(expectedUserObject);
 								expect(user).not.toHaveProperty(
-									UserProperty.PASSWORD
+									UserProperty.PASSWORD,
 								);
 							});
 
@@ -336,7 +336,7 @@ describe('Users', () => {
 							users.forEach((user) => {
 								expect(user).toEqual(expectedUserObject);
 								expect(user).not.toHaveProperty(
-									UserProperty.PASSWORD
+									UserProperty.PASSWORD,
 								);
 							});
 
@@ -379,10 +379,10 @@ describe('Users', () => {
 					expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
 					expect(errors.length).toEqual(1);
 					expect(message).toEqual(
-						ErrorMessage.EXTRA_PARAM_SHOULD_NOT_EXIST
+						ErrorMessage.EXTRA_PARAM_SHOULD_NOT_EXIST,
 					);
 					expect(extensions.code).toEqual(
-						ExtensionCode.GRAPHQL_VALIDATION_FAILED
+						ExtensionCode.GRAPHQL_VALIDATION_FAILED,
 					);
 				});
 			});

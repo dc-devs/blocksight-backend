@@ -1,4 +1,4 @@
-import * as request from 'supertest';
+import request from 'supertest';
 import UserProperty from '../users/enums/user-property.enum';
 import { firstUser, password } from '../../prisma/users.seed';
 import { INestApplication, HttpStatus } from '@nestjs/common';

@@ -1,6 +1,6 @@
 import Cookie from '../enums/cookie.enum';
-import * as session from 'express-session';
-import * as connectRedis from 'connect-redis';
+import session from 'express-session';
+import connectRedis from 'connect-redis';
 import initializeRedis from './initialize-redis';
 import { SessionConstants } from '../../models/auth/constants/session.constants';
 

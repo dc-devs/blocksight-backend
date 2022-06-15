@@ -1,5 +1,5 @@
-import * as request from 'supertest';
-import Cookie from '../../src/server/enums/cookie.enum'
+import request from 'supertest';
+import Cookie from '../../src/server/enums/cookie.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
 import { redisClient } from '../../src/server/initialize/initialize-redis';
@@ -49,9 +49,7 @@ describe('Auth', () => {
 				expect(userId).toEqual(testUserId);
 				expect(isAuthenticated).toEqual(false);
 				expect(cookie.includes(Cookie.NAME)).toEqual(true);
-				expect(cookie.includes(Cookie.EXPIRED_DATE)).toEqual(
-					true,
-				);
+				expect(cookie.includes(Cookie.EXPIRED_DATE)).toEqual(true);
 			});
 		});
 	});

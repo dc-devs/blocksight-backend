@@ -1,4 +1,4 @@
-import * as request from 'supertest';
+import request from 'supertest';
 import ErrorMessage from './enums/error-message.enum';
 import UserProperty from './enums/user-property.enum';
 import ErrorCode from '../../src/prisma/error-code.enum';
@@ -84,13 +84,13 @@ describe('Users', () => {
 					expect(errors.length).toEqual(1);
 
 					expect(prismaError.message).toContain(
-						GraphQLErrorMessage.DATABASE_ERROR
+						GraphQLErrorMessage.DATABASE_ERROR,
 					);
 
 					expect(exception.code).toEqual(ErrorCode.RECORD_NOT_FOUND);
 
 					expect(exception.meta.cause).toContain(
-						ErrorMessage.DELETE_RECORD_NOT_FOUND
+						ErrorMessage.DELETE_RECORD_NOT_FOUND,
 					);
 				});
 			});

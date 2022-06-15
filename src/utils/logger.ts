@@ -1,4 +1,4 @@
-import * as colors from 'colors';
+import colors from 'colors';
 import { isDevelopmentEnv } from '../common/constants/environment';
 
 class Logger {

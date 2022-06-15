@@ -1,4 +1,4 @@
-import * as request from 'supertest';
+import request from 'supertest';
 import { UserRole } from '@prisma/client';
 import { firstUser } from '../../prisma/users.seed';
 import UserProperty from './enums/user-property.enum';
@@ -112,11 +112,11 @@ describe('Users', () => {
 						expect(errors.length).toEqual(1);
 
 						expect(extensions.code).toEqual(
-							ExtensionCode.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT,
 						);
 
 						expect(extensions.response.message).toContain(
-							ErrorMessage.EMAIL_IS_EMAIL
+							ErrorMessage.EMAIL_IS_EMAIL,
 						);
 					});
 				});
@@ -162,11 +162,11 @@ describe('Users', () => {
 						expect(errors.length).toEqual(1);
 
 						expect(emailError.type).toEqual(
-							ExtensionCode.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT,
 						);
 
 						expect(emailError.message).toEqual(
-							UserValidationError.EMAIL_IS_TAKEN
+							UserValidationError.EMAIL_IS_TAKEN,
 						);
 					});
 				});
@@ -215,16 +215,16 @@ describe('Users', () => {
 
 						errors.forEach((error) => {
 							expect(error.extensions.code).toEqual(
-								ExtensionCode.BAD_USER_INPUT
+								ExtensionCode.BAD_USER_INPUT,
 							);
 						});
 
 						expect(roleError.message).toContain(
-							ErrorMessage.ROLE_FIELD_NOT_DEFINED
+							ErrorMessage.ROLE_FIELD_NOT_DEFINED,
 						);
 
 						expect(passwordError.message).toContain(
-							ErrorMessage.PASSWORD_FIELD_NOT_DEFINED
+							ErrorMessage.PASSWORD_FIELD_NOT_DEFINED,
 						);
 					});
 				});
@@ -268,11 +268,11 @@ describe('Users', () => {
 						expect(errors.length).toEqual(1);
 
 						expect(extensions.errors.cause.type).toEqual(
-							ExtensionCode.BAD_USER_INPUT
+							ExtensionCode.BAD_USER_INPUT,
 						);
 
 						expect(extensions.errors.cause.message).toEqual(
-							ErrorMessage.UPDATE_RECORD_NOT_FOUND
+							ErrorMessage.UPDATE_RECORD_NOT_FOUND,
 						);
 					});
 				});

@@ -1,4 +1,4 @@
-import * as request from 'supertest';
+import request from 'supertest';
 import { UserRole } from '@prisma/client';
 import { firstUser } from '../../prisma/users.seed';
 import ErrorMessage from '../users/enums/error-message.enum';
