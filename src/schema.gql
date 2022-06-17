@@ -10,6 +10,7 @@ type LogOutResponse {
 type User {
   id: Float
   email: String
+  primaryWalletAddress: String
   role: String
   createdAt: DateTime
   updatedAt: DateTime
@@ -33,6 +34,7 @@ type Query {
 
 input FindOneUserInput {
   email: String
+  primaryWalletAddress: String
   id: Float
 }
 
@@ -47,11 +49,13 @@ input FindAllUsersInput {
 input Cursor {
   id: Float
   email: String
+  primaryWalletAddress: String
 }
 
 input UserWhereInput {
   id: Float
   email: String
+  primaryWalletAddress: String
   role: String
   createdAt: DateTime
   updatedAt: DateTime
@@ -63,6 +67,7 @@ input UserWhereInput {
 input UserInput {
   id: Float
   email: String
+  primaryWalletAddress: String
   role: String
   createdAt: DateTime
   updatedAt: DateTime
@@ -71,6 +76,7 @@ input UserInput {
 input UserOrderByInput {
   id: String
   email: String
+  primaryWalletAddress: String
   role: String
   createdAt: String
   updatedAt: String
@@ -81,12 +87,13 @@ type Mutation {
   deleteUser(id: Int!): User!
   login(sessionInput: SessionInput!): SessionResponse!
   signInMetaMask(signInMetaMaskInput: SignInMetaMaskInput!): SessionResponse!
-  signUp(createUserInput: CreateUserInput!): SessionResponse!
+  signUp(createUserInput: CreateUserEmailInput!): SessionResponse!
   logOut(userId: Float!): LogOutResponse!
 }
 
 input UpdateUserInput {
   email: String
+  primaryWalletAddress: String
 }
 
 input SessionInput {
@@ -100,7 +107,7 @@ input SignInMetaMaskInput {
   message: String!
 }
 
-input CreateUserInput {
+input CreateUserEmailInput {
   email: String!
   password: String!
   passwordConfirmation: String

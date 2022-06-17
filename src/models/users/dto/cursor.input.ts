@@ -12,4 +12,9 @@ export class Cursor {
 	@IsOptional()
 	@Field({ nullable: true })
 	email?: string;
+
+	@IsString()
+	@IsOptional()
+	@Field({ nullable: true })
+	primaryWalletAddress?: string;
 }

@@ -40,6 +40,13 @@ const thirdUser = {
 };
 users.push(thirdUser);
 
+const fourthUser = {
+	primaryWalletAddress: generateWalletAddess(),
+	password: encodePassword(password),
+	role: UserRole.ADMIN,
+};
+users.push(fourthUser);
+
 let count = 1;
 let userCount = 53;
 
@@ -56,4 +63,4 @@ while (count <= userCount) {
 
 const allUsersCount = users.length;
 
-export { firstUser, secondUser, thirdUser, users, allUsersCount };
+export { firstUser, secondUser, thirdUser, fourthUser, users, allUsersCount };

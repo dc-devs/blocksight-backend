@@ -14,6 +14,10 @@ export class User {
 
 	@IsString()
 	@Field({ nullable: true })
+	primaryWalletAddress?: string;
+
+	@IsString()
+	@Field({ nullable: true })
 	role?: UserRole;
 
 	@IsDate()

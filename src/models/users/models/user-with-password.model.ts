@@ -1,30 +1,10 @@
-import { UserRole, User as PrismaUser } from '@prisma/client';
+import { User } from './user.model';
+import { IsString } from 'class-validator';
 import { Field, ObjectType } from '@nestjs/graphql';
-import { IsNumber, IsString, IsEmail, IsDate } from 'class-validator';
 
 @ObjectType()
-export class UserWithPassword {
-	@Field()
-	@IsNumber()
-	id: number;
-
-	@Field()
-	@IsEmail()
-	email: string;
-
-	@Field()
+export class UserWithPassword extends User {
 	@IsString()
-	role: UserRole;
-
-	@Field()
-	@IsString()
+	@Field({ nullable: true })
 	password: string;
-
-	@Field()
-	@IsDate()
-	createdAt: Date;
-
-	@Field()
-	@IsDate()
-	updatedAt: Date;
 }

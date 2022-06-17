@@ -15,6 +15,10 @@ export class UserOrderByInput {
 
 	@IsOptional()
 	@Field({ nullable: true })
+	primaryWalletAddress?: Prisma.SortOrder;
+
+	@IsOptional()
+	@Field({ nullable: true })
 	role?: Prisma.SortOrder;
 
 	@IsOptional()

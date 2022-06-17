@@ -1,10 +1,10 @@
 import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
-import { CreateUserInput } from '../users/dto/create-user.input';
 import { SignInMetaMaskInput } from './dto/sign-in-metamask.input';
 import { SessionInput, SessionResponse, LogOutResponse } from './dto';
 import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
+import { CreateUserEmailInput } from '../users/dto/create-user-email.input';
 import generateGraphQLError from '../../graphql/errors/generate-graphql-error';
 import {
 	LogInUser,
@@ -38,22 +38,18 @@ export class AuthResolver {
 		@Args('signInMetaMaskInput') signInMetaMaskInput: SignInMetaMaskInput,
 	) {
 		try {
-			const user = {
-				id: 1,
-				email: 'email',
-				role: 'USER',
-			};
+			const { address } = signInMetaMaskInput;
 
-			return { isAuthenticated: true, user };
+			const newUser = await this.usersService.createOrGetFromAddress({
+				primaryWalletAddress: address,
+			});
 
-			// const newUser = await this.usersService.create({
-			// 	...createUserInput,
-			// });
-			// const loggedInUser = await this.authService.login({
-			// 	...request,
-			// 	user: { ...newUser },
-			// });
-			// return { isAuthenticated: true, user: loggedInUser };
+			const loggedInUser = await this.authService.login({
+				...request,
+				user: { ...newUser },
+			});
+
+			return { isAuthenticated: true, user: loggedInUser };
 		} catch (error) {
 			console.error('ERROR', error);
 			// generateGraphQLError(error);
@@ -63,7 +59,7 @@ export class AuthResolver {
 	@Mutation(() => SessionResponse)
 	async signUp(
 		@Context('req') request,
-		@Args('createUserInput') createUserInput: CreateUserInput,
+		@Args('createUserInput') createUserInput: CreateUserEmailInput,
 	) {
 		try {
 			const newUser = await this.usersService.create({

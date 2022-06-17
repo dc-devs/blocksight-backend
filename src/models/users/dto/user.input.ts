@@ -23,6 +23,11 @@ export class UserInput {
 	@IsString()
 	@IsOptional()
 	@Field({ nullable: true })
+	primaryWalletAddress?: string;
+
+	@IsString()
+	@IsOptional()
+	@Field({ nullable: true })
 	role?: UserRole;
 
 	@IsDate()

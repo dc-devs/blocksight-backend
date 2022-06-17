@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsNumber, IsOptional, IsEmail } from 'class-validator';
+import { IsNumber, IsString, IsOptional, IsEmail } from 'class-validator';
 
 @InputType()
 export class FindOneUserInput {
@@ -7,6 +7,11 @@ export class FindOneUserInput {
 	@IsOptional()
 	@Field({ nullable: true })
 	email?: string;
+
+	@IsString()
+	@IsOptional()
+	@Field({ nullable: true })
+	primaryWalletAddress?: string;
 
 	@IsNumber()
 	@IsOptional()
