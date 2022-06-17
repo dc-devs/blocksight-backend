@@ -80,8 +80,8 @@ type Mutation {
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
   deleteUser(id: Int!): User!
   login(sessionInput: SessionInput!): SessionResponse!
-  signUp(createUserInput: CreateUserInput!): SessionResponse!
   signInMetaMask(signInMetaMaskInput: SignInMetaMaskInput!): SessionResponse!
+  signUp(createUserInput: CreateUserInput!): SessionResponse!
   logOut(userId: Float!): LogOutResponse!
 }
 
@@ -94,14 +94,14 @@ input SessionInput {
   password: String!
 }
 
-input CreateUserInput {
-  email: String!
-  password: String!
-  passwordConfirmation: String
-}
-
 input SignInMetaMaskInput {
   address: String!
   signature: String!
   message: String!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  passwordConfirmation: String
 }

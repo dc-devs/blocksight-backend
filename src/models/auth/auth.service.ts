@@ -1,3 +1,4 @@
+import Web3 from 'web3';
 import { compareSync } from 'bcrypt';
 import { Injectable } from '@nestjs/common';
 import { User } from '../users/models/user.model';
@@ -5,6 +6,11 @@ import { SessionInput } from './dto/session.input';
 import Cookie from '../../server/enums/cookie.enum';
 import { UsersService } from '../users/users.service';
 import { UnauthorizedException } from '@nestjs/common';
+import { SignInMetaMaskInput } from './dto/sign-in-metamask.input';
+import {
+	SignTypedDataVersion,
+	recoverTypedSignature,
+} from '@metamask/eth-sig-util';
 
 interface ILoginRequest {
 	user?: User;
@@ -46,6 +52,37 @@ export class AuthService {
 		}
 	}
 
+	async validateSignedDataMetamask({
+		message,
+		signature,
+		address,
+	}: SignInMetaMaskInput) {
+		try {
+			const recoveredAddress = recoverTypedSignature({
+				data: JSON.parse(message),
+				signature,
+				version: SignTypedDataVersion.V4,
+			});
+
+			const adressIsAddress = Web3.utils.isAddress(address);
+			const recoveredAddressIsAddress = Web3.utils.isAddress(
+				recoveredAddress,
+				1,
+			);
+
+			const isSignedMessage =
+				adressIsAddress === recoveredAddressIsAddress;
+
+			if (!isSignedMessage) {
+				throw new UnauthorizedException();
+			}
+
+			return isSignedMessage;
+		} catch (e) {
+			throw new UnauthorizedException();
+		}
+	}
+
 	async login(request: ILoginRequest) {
 		const { user } = request;
 
@@ -59,7 +96,6 @@ export class AuthService {
 	}
 
 	logOut({ request, response, userId }: ILogOutProps) {
-
 		request.session.userId = undefined;
 
 		response.cookie(Cookie.NAME, null, {
