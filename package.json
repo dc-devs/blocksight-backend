@@ -25,7 +25,7 @@
 		"docker:bash": "docker exec -it node bash",
 		"prisma:studio": "yarn prisma studio",
 		"prisma:generate": "yarn prisma generate --watch",
-		"prisma:migrate": "dotenv -e .env.development -- yarn prisma migrate dev --name",
+		"prisma:migrate:dev": "dotenv -e .env.development -- yarn prisma migrate dev --name",
 		"prisma:reset:dev": "dotenv -e .env.development -- yarn prisma migrate reset --force",
 		"prisma:seed:dev": "dotenv -e .env.development yarn prisma db seed",
 		"mk:start": "minikube start",

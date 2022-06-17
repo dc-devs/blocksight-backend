@@ -8,14 +8,15 @@ datasource db {
 }
 
 model User {
-  id                Int         @default(autoincrement()) @id
-  email             String      @unique
-  password          String
-  role              UserRole    @default(USER)
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
+  id                      Int         @default(autoincrement()) @id
+  email                   String      @unique
+  primaryWalletAddress    String      @unique
+  password                String
+  role                    UserRole    @default(USER)
+  createdAt               DateTime    @default(now())
+  updatedAt               DateTime    @updatedAt
 
-  @@index([id, email])
+  @@index([id, email, primaryWalletAddress])
 }
 
 enum UserRole {
