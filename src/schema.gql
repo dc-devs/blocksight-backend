@@ -87,7 +87,7 @@ type Mutation {
   deleteUser(id: Int!): User!
   login(sessionInput: SessionInput!): SessionResponse!
   signInMetaMask(signInMetaMaskInput: SignInMetaMaskInput!): SessionResponse!
-  signUp(createUserInput: CreateUserEmailInput!): SessionResponse!
+  signUp(createUserEmailInput: CreateUserEmailInput!): SessionResponse!
   logOut(userId: Float!): LogOutResponse!
 }
 

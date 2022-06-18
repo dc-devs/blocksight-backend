@@ -59,11 +59,12 @@ export class AuthResolver {
 	@Mutation(() => SessionResponse)
 	async signUp(
 		@Context('req') request,
-		@Args('createUserInput') createUserInput: CreateUserEmailInput,
+		@Args('createUserEmailInput')
+		createUserEmailInput: CreateUserEmailInput,
 	) {
 		try {
 			const newUser = await this.usersService.create({
-				...createUserInput,
+				...createUserEmailInput,
 			});
 
 			const loggedInUser = await this.authService.login({

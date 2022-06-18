@@ -31,6 +31,7 @@ describe('Users', () => {
 									id
 									role
 									email
+									primaryWalletAddress
 									updatedAt
 									createdAt
 								}
@@ -67,6 +68,7 @@ describe('Users', () => {
 										id
 										role
 										email
+										primaryWalletAddress
 										updatedAt
 										createdAt
 									}
@@ -103,6 +105,7 @@ describe('Users', () => {
 									id
 									role
 									email
+									primaryWalletAddress
 									createdAt
 									updatedAt
 								}
@@ -137,6 +140,7 @@ describe('Users', () => {
 										id
 										role
 										email
+										primaryWalletAddress
 										createdAt
 										updatedAt
 									}
@@ -172,6 +176,7 @@ describe('Users', () => {
 									id
 									role
 									email
+									primaryWalletAddress
 									createdAt
 									updatedAt
 								}

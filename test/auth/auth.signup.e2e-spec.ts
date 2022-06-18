@@ -24,13 +24,13 @@ describe('Auth', () => {
 	describe('Signup', () => {
 		describe('when signing up with a valid email and a password', () => {
 			let email;
-			let createUserInput;
+			let createUserEmailInput;
 			let expectedUserResponse;
 
 			beforeEach(() => {
 				email = 'test-1@gmail.com';
 
-				createUserInput = {
+				createUserEmailInput = {
 					email,
 					password: '12345678',
 				};
@@ -47,11 +47,12 @@ describe('Auth', () => {
 				const query = {
 					operationName: 'Mutation',
 					query: `
-						mutation Mutation($createUserInput: CreateUserInput!) {
-							signUp(createUserInput: $createUserInput) {
+						mutation Mutation($createUserEmailInput: CreateUserEmailInput!) {
+							signUp(createUserEmailInput: $createUserEmailInput) {
 								user {
 									id
 									email
+									primaryWalletAddress
 									role
 									createdAt
 									updatedAt
@@ -60,12 +61,14 @@ describe('Auth', () => {
 							}
 						}`,
 					variables: {
-						createUserInput,
+						createUserEmailInput,
 					},
 				};
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
 					.send(query);
+
+				console.log(response.body);
 
 				const { signUp } = response.body.data;
 				const { isAuthenticated } = signUp;
@@ -80,21 +83,22 @@ describe('Auth', () => {
 
 		describe('validation', () => {
 			describe('when sending no data', () => {
-				let createUserInput;
+				let createUserEmailInput;
 
 				beforeEach(() => {
-					createUserInput = {};
+					createUserEmailInput = {};
 				});
 
 				it('should return an error', async () => {
 					const query = {
 						operationName: 'Mutation',
 						query: `
-							mutation Mutation($createUserInput: CreateUserInput!) {
-								signUp(createUserInput: $createUserInput) {
+							mutation Mutation($createUserEmailInput: CreateUserEmailInput!) {
+								signUp(createUserEmailInput: $createUserEmailInput) {
 									user {
 										id
 										email
+										primaryWalletAddress
 										role
 										createdAt
 										updatedAt
@@ -103,7 +107,7 @@ describe('Auth', () => {
 								}
 							}`,
 						variables: {
-							createUserInput,
+							createUserEmailInput,
 						},
 					};
 
@@ -136,10 +140,10 @@ describe('Auth', () => {
 
 			describe('email', () => {
 				describe('when missing email', () => {
-					let createUserInput;
+					let createUserEmailInput;
 
 					beforeEach(() => {
-						createUserInput = {
+						createUserEmailInput = {
 							password: '123456789',
 						};
 					});
@@ -148,11 +152,12 @@ describe('Auth', () => {
 						const query = {
 							operationName: 'Mutation',
 							query: `
-								mutation Mutation($createUserInput: CreateUserInput!) {
-									signUp(createUserInput: $createUserInput) {
+								mutation Mutation($createUserEmailInput: CreateUserEmailInput!) {
+									signUp(createUserEmailInput: $createUserEmailInput) {
 										user {
 											id
 											email
+											primaryWalletAddress
 											role
 											createdAt
 											updatedAt
@@ -161,7 +166,7 @@ describe('Auth', () => {
 									}
 								}`,
 							variables: {
-								createUserInput,
+								createUserEmailInput,
 							},
 						};
 						const response = await request(app.getHttpServer())
@@ -188,10 +193,10 @@ describe('Auth', () => {
 				});
 
 				describe('when sending an email that is not an email', () => {
-					let createUserInput;
+					let createUserEmailInput;
 
 					beforeEach(() => {
-						createUserInput = {
+						createUserEmailInput = {
 							email: 'david-test-2',
 							password: '123456789',
 						};
@@ -201,11 +206,12 @@ describe('Auth', () => {
 						const query = {
 							operationName: 'Mutation',
 							query: `
-								mutation Mutation($createUserInput: CreateUserInput!) {
-									signUp(createUserInput: $createUserInput) {
+								mutation Mutation($createUserEmailInput: CreateUserEmailInput!) {
+									signUp(createUserEmailInput: $createUserEmailInput) {
 										user {
 											id
 											email
+											primaryWalletAddress
 											role
 											createdAt
 											updatedAt
@@ -214,7 +220,7 @@ describe('Auth', () => {
 									}
 								}`,
 							variables: {
-								createUserInput,
+								createUserEmailInput,
 							},
 						};
 						const response = await request(app.getHttpServer())
@@ -240,10 +246,10 @@ describe('Auth', () => {
 				});
 
 				describe('when sending an email that already exists', () => {
-					let createUserInput;
+					let createUserEmailInput;
 
 					beforeEach(() => {
-						createUserInput = {
+						createUserEmailInput = {
 							email: firstUser.email,
 							password: '123456789',
 						};
@@ -253,11 +259,12 @@ describe('Auth', () => {
 						const query = {
 							operationName: 'Mutation',
 							query: `
-								mutation Mutation($createUserInput: CreateUserInput!) {
-									signUp(createUserInput: $createUserInput) {
+								mutation Mutation($createUserEmailInput: CreateUserEmailInput!) {
+									signUp(createUserEmailInput: $createUserEmailInput) {
 										user {
 											id
 											email
+											primaryWalletAddress
 											role
 											createdAt
 											updatedAt
@@ -266,7 +273,7 @@ describe('Auth', () => {
 									}
 								}`,
 							variables: {
-								createUserInput,
+								createUserEmailInput,
 							},
 						};
 						const response = await request(app.getHttpServer())
@@ -294,10 +301,10 @@ describe('Auth', () => {
 
 			describe('password', () => {
 				describe('when missing password', () => {
-					let createUserInput;
+					let createUserEmailInput;
 
 					beforeEach(() => {
-						createUserInput = {
+						createUserEmailInput = {
 							email: 'david-test-2@gmail.com',
 						};
 					});
@@ -306,11 +313,12 @@ describe('Auth', () => {
 						const query = {
 							operationName: 'Mutation',
 							query: `
-								mutation Mutation($createUserInput: CreateUserInput!) {
-									signUp(createUserInput: $createUserInput) {
+								mutation Mutation($createUserEmailInput: CreateUserEmailInput!) {
+									signUp(createUserEmailInput: $createUserEmailInput) {
 										user {
 											id
 											email
+											primaryWalletAddress
 											role
 											createdAt
 											updatedAt
@@ -319,7 +327,7 @@ describe('Auth', () => {
 									}
 								}`,
 							variables: {
-								createUserInput,
+								createUserEmailInput,
 							},
 						};
 						const response = await request(app.getHttpServer())
@@ -346,10 +354,10 @@ describe('Auth', () => {
 				});
 
 				describe('when sending a password that is not long enough', () => {
-					let createUserInput;
+					let createUserEmailInput;
 
 					beforeEach(() => {
-						createUserInput = {
+						createUserEmailInput = {
 							email: 'david-test-2@gmail.com',
 							password: '1234567',
 						};
@@ -359,11 +367,12 @@ describe('Auth', () => {
 						const query = {
 							operationName: 'Mutation',
 							query: `
-								mutation Mutation($createUserInput: CreateUserInput!) {
-									signUp(createUserInput: $createUserInput) {
+								mutation Mutation($createUserEmailInput: CreateUserEmailInput!) {
+									signUp(createUserEmailInput: $createUserEmailInput) {
 										user {
 											id
 											email
+											primaryWalletAddress
 											role
 											createdAt
 											updatedAt
@@ -372,7 +381,7 @@ describe('Auth', () => {
 									}
 								}`,
 							variables: {
-								createUserInput,
+								createUserEmailInput,
 							},
 						};
 						const response = await request(app.getHttpServer())

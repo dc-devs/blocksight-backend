@@ -49,11 +49,12 @@ describe('Auth', () => {
 						mutation Mutation($sessionInput: SessionInput!) {
 							login(sessionInput: $sessionInput) {
 								user {
+									id
+									email
+									primaryWalletAddress
+									role
 									createdAt
 									updatedAt
-									role
-									email
-									id
 								}
 							}
 						}`,
@@ -76,6 +77,7 @@ describe('Auth', () => {
 									user {
 										id
 										email
+										primaryWalletAddress
 										role
 										createdAt
 										updatedAt
@@ -117,6 +119,7 @@ describe('Auth', () => {
 									user {
 										id
 										email
+										primaryWalletAddress
 										role
 										createdAt
 										updatedAt

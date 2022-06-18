@@ -55,8 +55,8 @@ export class UsersService {
 		});
 	}
 
-	create(createUserInput: CreateUserEmailInput): Promise<User> {
-		const { email, password } = createUserInput;
+	create(createUserEmailInput: CreateUserEmailInput): Promise<User> {
+		const { email, password } = createUserEmailInput;
 		const encodedPassword = encodePassword(password);
 		const emailLowerCase = email.toLowerCase();
 
@@ -70,9 +70,9 @@ export class UsersService {
 	}
 
 	async createOrGetFromAddress(
-		createUserInput: CreateUserAddressInput,
+		createUserEmailInput: CreateUserAddressInput,
 	): Promise<User> {
-		const { primaryWalletAddress } = createUserInput;
+		const { primaryWalletAddress } = createUserEmailInput;
 		let user;
 
 		user = await this.findOne({ primaryWalletAddress });

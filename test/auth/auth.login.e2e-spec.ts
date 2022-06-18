@@ -48,11 +48,12 @@ describe('Auth', () => {
 						mutation Mutation($sessionInput: SessionInput!) {
 							login(sessionInput: $sessionInput) {
 								user {
+									id
+									email
+									primaryWalletAddress
+									role
 									createdAt
 									updatedAt
-									role
-									email
-									id
 								}
 								isAuthenticated
 							}
@@ -96,11 +97,12 @@ describe('Auth', () => {
 							mutation Mutation($sessionInput: SessionInput!) {
 								login(sessionInput: $sessionInput) {
 									user {
-										createdAt
-										updatedAt
-										role
-										email
 										id
+										email
+										primaryWalletAddress
+										role
+										updatedAt
+										createdAt
 									}
 									isAuthenticated
 								}
@@ -147,11 +149,12 @@ describe('Auth', () => {
 							mutation Mutation($sessionInput: SessionInput!) {
 								login(sessionInput: $sessionInput) {
 									user {
-										createdAt
-										updatedAt
-										role
-										email
 										id
+										email
+										primaryWalletAddress
+										role
+										updatedAt
+										createdAt
 									}
 									isAuthenticated
 								}
@@ -197,11 +200,12 @@ describe('Auth', () => {
 							mutation Mutation($sessionInput: SessionInput!) {
 								login(sessionInput: $sessionInput) {
 									user {
-										createdAt
-										updatedAt
-										role
-										email
 										id
+										email
+										primaryWalletAddress
+										role
+										updatedAt
+										createdAt
 									}
 									isAuthenticated
 								}

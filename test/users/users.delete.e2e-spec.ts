@@ -32,6 +32,7 @@ describe('Users', () => {
 							deleteUser(id: $id) {
 								id
 								email
+								primaryWalletAddress
 								role
 								createdAt
 								updatedAt
@@ -64,6 +65,7 @@ describe('Users', () => {
 								deleteUser(id: $id) {
 									id
 									email
+									primaryWalletAddress
 									role
 									createdAt
 									updatedAt

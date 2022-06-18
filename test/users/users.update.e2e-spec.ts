@@ -47,6 +47,7 @@ describe('Users', () => {
 							updateUser(id: $id, updateUserInput: $data) {
 								id
 								email
+								primaryWalletAddress
 								role
 								createdAt
 								updatedAt
@@ -89,6 +90,7 @@ describe('Users', () => {
 									updateUser(id: $id, updateUserInput: $data) {
 										id
 										email
+										primaryWalletAddress
 										role
 										createdAt
 										updatedAt
@@ -139,6 +141,7 @@ describe('Users', () => {
 							updateUser(id: $id, updateUserInput: $data) {
 								id
 								email
+								primaryWalletAddress
 								role
 								createdAt
 								updatedAt
@@ -193,6 +196,7 @@ describe('Users', () => {
 									updateUser(id: $id, updateUserInput: $data) {
 										id
 										email
+										primaryWalletAddress
 										role
 										createdAt
 										updatedAt
@@ -247,6 +251,7 @@ describe('Users', () => {
 									updateUser(id: $id, updateUserInput: $data) {
 										id
 										email
+										primaryWalletAddress
 										role
 										createdAt
 										updatedAt
