@@ -1,48 +1,47 @@
-import crypto from 'crypto';
-import { ethers } from 'ethers';
 import { faker } from '@faker-js/faker';
 import { UserRole } from '@prisma/client';
+import generateWallet from '../src/utils/generate-wallet';
 import { encodePassword } from '../src/models/users/utils/bcrypt';
-
-const generateWalletAddess = () => {
-	const id = crypto.randomBytes(32).toString('hex');
-	const privateKey = `0x${id}`;
-	const wallet = new ethers.Wallet(privateKey);
-
-	return wallet.address;
-};
 
 const users = [];
 
 export const password = '12345678';
 
+const firstUserWallet = generateWallet();
+
 const firstUser = {
 	email: 'davidc@prisma.io',
-	primaryWalletAddress: generateWalletAddess(),
+	primaryWalletAddress: firstUserWallet.address,
 	password: encodePassword(password),
 	role: UserRole.SUPER_ADMIN,
 };
 users.push(firstUser);
 
+const secondUserWallet = generateWallet();
+
 const secondUser = {
 	email: 'david@prisma.io',
-	primaryWalletAddress: generateWalletAddess(),
+	primaryWalletAddress: secondUserWallet.address,
 	password: encodePassword(password),
 	role: UserRole.ADMIN,
 };
 users.push(secondUser);
 
+const thirdUserWallet = generateWallet();
+
 const thirdUser = {
 	email: 'dave@prisma.io',
-	primaryWalletAddress: generateWalletAddess(),
+	primaryWalletAddress: thirdUserWallet.address,
 	password: encodePassword(password),
 	role: UserRole.ADMIN,
 };
 users.push(thirdUser);
 
+const fourthUserWallet = generateWallet();
+
 const fourthUser = {
 	email: 'davidcMeta@prisma.io',
-	primaryWalletAddress: '0xc6c3d6a35592657c7350c84b508844910b2e28df',
+	primaryWalletAddress: fourthUserWallet.address,
 	password: encodePassword(password),
 	role: UserRole.ADMIN,
 };
@@ -54,7 +53,7 @@ let userCount = 53;
 while (count <= userCount) {
 	const user = {
 		email: faker.internet.email(),
-		primaryWalletAddress: generateWalletAddess(),
+		primaryWalletAddress: generateWallet().address,
 		password: encodePassword(faker.internet.password()),
 	};
 
@@ -64,4 +63,12 @@ while (count <= userCount) {
 
 const allUsersCount = users.length;
 
-export { firstUser, secondUser, thirdUser, fourthUser, users, allUsersCount };
+export {
+	users,
+	firstUser,
+	secondUser,
+	thirdUser,
+	fourthUser,
+	allUsersCount,
+	fourthUserWallet,
+};
