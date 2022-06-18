@@ -40,8 +40,6 @@ export class AuthResolver {
 		try {
 			const { address } = signInMetaMaskInput;
 
-			console.log('signInMetaMaskInput', address);
-
 			const user = await this.usersService.createOrGetFromAddress({
 				primaryWalletAddress: address,
 			});
@@ -53,7 +51,6 @@ export class AuthResolver {
 
 			return { isAuthenticated: true, user: loggedInUser };
 		} catch (error) {
-			console.error('ERROR', error);
 			generateGraphQLError(error);
 		}
 	}

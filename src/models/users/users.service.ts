@@ -77,8 +77,6 @@ export class UsersService {
 
 		user = await this.findOne({ primaryWalletAddress });
 
-		console.log('Found User', user, primaryWalletAddress);
-
 		if (!user) {
 			const password = uuidv4();
 			const encodedPassword = encodePassword(password);

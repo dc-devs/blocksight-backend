@@ -1,4 +1,6 @@
 import request from 'supertest';
+import { UserRole } from '@prisma/client';
+import generateWallet from '../../src/utils/generate-wallet';
 import UserProperty from '../users/enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../helpers/init/initializeTestApp';
@@ -88,23 +90,91 @@ describe('Auth', () => {
 					expect(responseContainsSetCookie(response)).toEqual(true);
 				});
 			});
+		});
 
-			describe('validation', () => {
-				describe('when sending no data', () => {
-					let signInMetaMaskInput;
+		describe('and the user does not already exists', () => {
+			describe('when signing in with a valid MetaMask signature', () => {
+				let signInMetaMaskInput;
+				let expectedUserResponse;
+				const { address, privateKey } = generateWallet();
+				const signature = signTypedDataMetaMask({
+					privateKey,
+					data: SignInMetaMaskData.MESSAGE,
+				});
 
-					beforeEach(() => {
-						signInMetaMaskInput = {
-							address: '',
-							signature: '',
-							message: '',
-						};
+				beforeEach(() => {
+					signInMetaMaskInput = {
+						address,
+						signature,
+						message: SignInMetaMaskData.MESSAGE,
+					};
+
+					expectedUserResponse = expect.objectContaining({
+						id: expect.any(Number),
+						role: UserRole.USER,
+						email: null,
+						primaryWalletAddress: address,
+						createdAt: expect.any(String),
+						updatedAt: expect.any(String),
 					});
+				});
 
-					it("should respond with 'Unauthorized'", async () => {
-						const query = {
-							operationName: 'Mutation',
-							query: `
+				it('should create and login the new user', async () => {
+					const query = {
+						operationName: 'Mutation',
+						query: `
+							mutation Mutation($signInMetaMaskInput: SignInMetaMaskInput!) {
+								signInMetaMask(signInMetaMaskInput: $signInMetaMaskInput) {
+									user {
+										id
+										email
+										primaryWalletAddress
+										role
+										createdAt
+										updatedAt
+									}
+									isAuthenticated
+								}
+							}`,
+						variables: {
+							signInMetaMaskInput,
+						},
+					};
+
+					const response = (await request(app.getHttpServer())
+						.post('/graphql')
+						.set('x-forwarded-proto', 'https')
+						.send(query)) as any;
+
+					const { signInMetaMask } = response.body.data;
+					const { isAuthenticated } = signInMetaMask;
+					const { user } = signInMetaMask;
+
+					expect(response.statusCode).toEqual(HttpStatus.OK);
+					expect(isAuthenticated).toEqual(true);
+					expect(user).toEqual(expectedUserResponse);
+					expect(user).not.toHaveProperty(UserProperty.PASSWORD);
+					expect(responseContainsSetCookie(response)).toEqual(true);
+				});
+			});
+		});
+
+		describe('validation', () => {
+			describe('when sending no data', () => {
+				let signInMetaMaskInput;
+
+				beforeEach(() => {
+					signInMetaMaskInput = {
+						address: '',
+						signature: '',
+						message: '',
+					};
+				});
+
+				it("should respond with 'Unauthorized'", async () => {
+					const query = {
+						operationName: 'Mutation',
+						query: `
 								mutation Mutation($signInMetaMaskInput: SignInMetaMaskInput!) {
 									signInMetaMask(signInMetaMaskInput: $signInMetaMaskInput) {
 										user {
@@ -118,51 +188,51 @@ describe('Auth', () => {
 										isAuthenticated
 									}
 							}`,
-							variables: {
-								signInMetaMaskInput,
-							},
-						};
+						variables: {
+							signInMetaMaskInput,
+						},
+					};
 
-						const response = await request(app.getHttpServer())
-							.post('/graphql')
-							.send(query);
-						const errors = response.body.errors;
-						const unauthorizedError = errors[0];
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(query);
+					const errors = response.body.errors;
+					const unauthorizedError = errors[0];
 
-						expect(unauthorizedError.message).toEqual(
-							ErrorMessage.UNAUTHORIZED,
-						);
-						expect(unauthorizedError.extensions.code).toEqual(
-							ExtensionCode.UNAUTHENTICATED,
-						);
-						expect(
-							unauthorizedError.extensions.response.statusCode,
-						).toEqual(HttpStatus.UNAUTHORIZED);
+					expect(unauthorizedError.message).toEqual(
+						ErrorMessage.UNAUTHORIZED,
+					);
+					expect(unauthorizedError.extensions.code).toEqual(
+						ExtensionCode.UNAUTHENTICATED,
+					);
+					expect(
+						unauthorizedError.extensions.response.statusCode,
+					).toEqual(HttpStatus.UNAUTHORIZED);
+				});
+			});
+
+			describe('when sending a valid address but invalid signature', () => {
+				let signInMetaMaskInput;
+
+				beforeEach(() => {
+					const { privateKey } = fourthUserWallet;
+					const { primaryWalletAddress } = fourthUser;
+					const signature = signTypedDataMetaMask({
+						privateKey,
+						data: SignInMetaMaskData.MESSAGE,
 					});
+
+					signInMetaMaskInput = {
+						address: primaryWalletAddress,
+						signature: `${signature}-1234`,
+						message: SignInMetaMaskData.MESSAGE,
+					};
 				});
 
-				describe('when sending a valid address but invalid signature', () => {
-					let signInMetaMaskInput;
-
-					beforeEach(() => {
-						const { privateKey } = fourthUserWallet;
-						const { primaryWalletAddress } = fourthUser;
-						const signature = signTypedDataMetaMask({
-							privateKey,
-							data: SignInMetaMaskData.MESSAGE,
-						});
-
-						signInMetaMaskInput = {
-							address: primaryWalletAddress,
-							signature: `${signature}-1234`,
-							message: SignInMetaMaskData.MESSAGE,
-						};
-					});
-
-					it("should respond with 'Unauthorized'", async () => {
-						const query = {
-							operationName: 'Mutation',
-							query: `
+				it("should respond with 'Unauthorized'", async () => {
+					const query = {
+						operationName: 'Mutation',
+						query: `
 								mutation Mutation($signInMetaMaskInput: SignInMetaMaskInput!) {
 									signInMetaMask(signInMetaMaskInput: $signInMetaMaskInput) {
 										user {
@@ -176,49 +246,49 @@ describe('Auth', () => {
 										isAuthenticated
 									}
 							}`,
-							variables: {
-								signInMetaMaskInput,
-							},
-						};
-						const response = await request(app.getHttpServer())
-							.post('/graphql')
-							.send(query);
-						const errors = response.body.errors;
-						const unauthorizedError = errors[0];
-						expect(unauthorizedError.message).toEqual(
-							ErrorMessage.UNAUTHORIZED,
-						);
-						expect(unauthorizedError.extensions.code).toEqual(
-							ExtensionCode.UNAUTHENTICATED,
-						);
-						expect(
-							unauthorizedError.extensions.response.statusCode,
-						).toEqual(HttpStatus.UNAUTHORIZED);
+						variables: {
+							signInMetaMaskInput,
+						},
+					};
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(query);
+					const errors = response.body.errors;
+					const unauthorizedError = errors[0];
+					expect(unauthorizedError.message).toEqual(
+						ErrorMessage.UNAUTHORIZED,
+					);
+					expect(unauthorizedError.extensions.code).toEqual(
+						ExtensionCode.UNAUTHENTICATED,
+					);
+					expect(
+						unauthorizedError.extensions.response.statusCode,
+					).toEqual(HttpStatus.UNAUTHORIZED);
+				});
+			});
+
+			describe('when sending a valid address but invalid message', () => {
+				let signInMetaMaskInput;
+
+				beforeEach(() => {
+					const { privateKey } = fourthUserWallet;
+					const { primaryWalletAddress } = fourthUser;
+					const signature = signTypedDataMetaMask({
+						privateKey,
+						data: SignInMetaMaskData.MESSAGE,
 					});
+
+					signInMetaMaskInput = {
+						signature,
+						address: primaryWalletAddress,
+						message: `${SignInMetaMaskData.MESSAGE}-1234`,
+					};
 				});
 
-				describe('when sending a valid address but invalid message', () => {
-					let signInMetaMaskInput;
-
-					beforeEach(() => {
-						const { privateKey } = fourthUserWallet;
-						const { primaryWalletAddress } = fourthUser;
-						const signature = signTypedDataMetaMask({
-							privateKey,
-							data: SignInMetaMaskData.MESSAGE,
-						});
-
-						signInMetaMaskInput = {
-							signature,
-							address: primaryWalletAddress,
-							message: `${SignInMetaMaskData.MESSAGE}-1234`,
-						};
-					});
-
-					it("should respond with 'Unauthorized'", async () => {
-						const query = {
-							operationName: 'Mutation',
-							query: `
+				it("should respond with 'Unauthorized'", async () => {
+					const query = {
+						operationName: 'Mutation',
+						query: `
 									mutation Mutation($signInMetaMaskInput: SignInMetaMaskInput!) {
 										signInMetaMask(signInMetaMaskInput: $signInMetaMaskInput) {
 											user {
@@ -232,93 +302,26 @@ describe('Auth', () => {
 											isAuthenticated
 										}
 								}`,
-							variables: {
-								signInMetaMaskInput,
-							},
-						};
-						const response = await request(app.getHttpServer())
-							.post('/graphql')
-							.send(query);
-						const errors = response.body.errors;
-						const unauthorizedError = errors[0];
-						expect(unauthorizedError.message).toEqual(
-							ErrorMessage.UNAUTHORIZED,
-						);
-						expect(unauthorizedError.extensions.code).toEqual(
-							ExtensionCode.UNAUTHENTICATED,
-						);
-						expect(
-							unauthorizedError.extensions.response.statusCode,
-						).toEqual(HttpStatus.UNAUTHORIZED);
-					});
+						variables: {
+							signInMetaMaskInput,
+						},
+					};
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(query);
+					const errors = response.body.errors;
+					const unauthorizedError = errors[0];
+					expect(unauthorizedError.message).toEqual(
+						ErrorMessage.UNAUTHORIZED,
+					);
+					expect(unauthorizedError.extensions.code).toEqual(
+						ExtensionCode.UNAUTHENTICATED,
+					);
+					expect(
+						unauthorizedError.extensions.response.statusCode,
+					).toEqual(HttpStatus.UNAUTHORIZED);
 				});
 			});
 		});
-
-		// describe('and the user does not already exists', () => {
-		// 	describe('when signing in with a valid MetaMask signature', () => {
-		// 		let signInMetaMaskInput;
-		// 		let expectedUserResponse;
-		// 		const { email, role, primaryWalletAddress } = fourthUser;
-
-		// 		beforeEach(() => {
-		// 			signInMetaMaskInput = {
-		// 				address: '0xc6c3d6a35592657c7350c84b508844910b2e28df',
-		// 				signature:
-		// 					'0x94a68d760fc56af3524502d111142bda3cb2394b080d0c9c963a223613d8bdf1511c4eac9a7a4e7dc30d15facc5e30b7366ada0020fced12f3b17b71437d08bb1b',
-		// 				message: SignInMetaMaskData.MESSAGE,
-		// 			};
-
-		// 			expectedUserResponse = expect.objectContaining({
-		// 				id: expect.any(Number),
-		// 				role,
-		// 				email,
-		// 				primaryWalletAddress,
-		// 				createdAt: expect.any(String),
-		// 				updatedAt: expect.any(String),
-		// 			});
-		// 		});
-
-		// 		it('should crreate and login the new user', async () => {
-		// 			const query = {
-		// 				operationName: 'Mutation',
-		// 				query: `
-		// 					mutation Mutation($signInMetaMaskInput: SignInMetaMaskInput!) {
-		// 						signInMetaMask(signInMetaMaskInput: $signInMetaMaskInput) {
-		// 							user {
-		// 								id
-		// 								email
-		// 								primaryWalletAddress
-		// 								role
-		// 								createdAt
-		// 								updatedAt
-		// 							}
-		// 							isAuthenticated
-		// 						}
-		// 					}`,
-		// 				variables: {
-		// 					signInMetaMaskInput,
-		// 				},
-		// 			};
-
-		// 			const response = (await request(app.getHttpServer())
-		// 				.post('/graphql')
-		// 				.set('x-forwarded-proto', 'https')
-		// 				.send(query)) as any;
-
-		// 			const { signInMetaMask } = response.body.data;
-		// 			const { isAuthenticated } = signInMetaMask;
-		// 			const { user } = signInMetaMask;
-
-		// 			expect(response.statusCode).toEqual(HttpStatus.OK);
-		// 			expect(isAuthenticated).toEqual(true);
-		// 			expect(user).toEqual(expectedUserResponse);
-		// 			expect(user).not.toHaveProperty(UserProperty.PASSWORD);
-		// 			expect(responseContainsSetCookie(response)).toEqual(true);
-		// 		});
-		// 	});
-
-		// 	describe('validation', () => {});
-		// });
 	});
 });

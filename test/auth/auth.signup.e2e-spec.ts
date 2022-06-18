@@ -43,6 +43,8 @@ describe('Auth', () => {
 				});
 			});
 
+			afterEach(() => {});
+
 			it('should create a new user', async () => {
 				const query = {
 					operationName: 'Mutation',
@@ -67,8 +69,6 @@ describe('Auth', () => {
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
 					.send(query);
-
-				console.log(response.body);
 
 				const { signUp } = response.body.data;
 				const { isAuthenticated } = signUp;
