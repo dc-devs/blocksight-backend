@@ -1,4 +1,4 @@
-import generateWallet from './generate-wallet';
+import generateWallet from '../generate-wallet';
 import signTypedDataMetaMask from './sign-typed-data-metamask';
 
 describe('signTypedDataMetaMask', () => {

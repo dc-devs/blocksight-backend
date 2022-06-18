@@ -8,6 +8,13 @@ const users = [];
 export const password = '12345678';
 
 const firstUserWallet = generateWallet();
+const secondUserWallet = generateWallet();
+const thirdUserWallet = generateWallet();
+const fourthUserWallet = {
+	privateKey:
+		'0x809697b4a23d2f5c22ceaaabc06b409d0a7837269d8547bac42bc0475ea2f0f1',
+	address: '0x0e9e6a79679b477f5c97710372aa846ec16ba67d',
+};
 
 const firstUser = {
 	email: 'davidc@prisma.io',
@@ -17,8 +24,6 @@ const firstUser = {
 };
 users.push(firstUser);
 
-const secondUserWallet = generateWallet();
-
 const secondUser = {
 	email: 'david@prisma.io',
 	primaryWalletAddress: secondUserWallet.address,
@@ -26,8 +31,6 @@ const secondUser = {
 	role: UserRole.ADMIN,
 };
 users.push(secondUser);
-
-const thirdUserWallet = generateWallet();
 
 const thirdUser = {
 	email: 'dave@prisma.io',
@@ -37,14 +40,13 @@ const thirdUser = {
 };
 users.push(thirdUser);
 
-const fourthUserWallet = generateWallet();
-
 const fourthUser = {
 	email: 'davidcMeta@prisma.io',
 	primaryWalletAddress: fourthUserWallet.address,
 	password: encodePassword(password),
 	role: UserRole.ADMIN,
 };
+
 users.push(fourthUser);
 
 let count = 1;

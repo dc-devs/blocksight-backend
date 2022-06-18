@@ -40,13 +40,15 @@ export class AuthResolver {
 		try {
 			const { address } = signInMetaMaskInput;
 
-			const newUser = await this.usersService.createOrGetFromAddress({
+			console.log('signInMetaMaskInput', address);
+
+			const user = await this.usersService.createOrGetFromAddress({
 				primaryWalletAddress: address,
 			});
 
 			const loggedInUser = await this.authService.login({
 				...request,
-				user: { ...newUser },
+				user: { ...user },
 			});
 
 			return { isAuthenticated: true, user: loggedInUser };

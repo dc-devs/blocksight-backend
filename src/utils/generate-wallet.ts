@@ -8,7 +8,7 @@ const generateWallet = () => {
 
 	return {
 		privateKey,
-		address: wallet.address,
+		address: wallet.address.toLowerCase(),
 	};
 };
 

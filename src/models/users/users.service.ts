@@ -70,12 +70,14 @@ export class UsersService {
 	}
 
 	async createOrGetFromAddress(
-		createUserEmailInput: CreateUserAddressInput,
+		createUserAddressInput: CreateUserAddressInput,
 	): Promise<User> {
-		const { primaryWalletAddress } = createUserEmailInput;
+		const { primaryWalletAddress } = createUserAddressInput;
 		let user;
 
 		user = await this.findOne({ primaryWalletAddress });
+
+		console.log('Found User', user, primaryWalletAddress);
 
 		if (!user) {
 			const password = uuidv4();

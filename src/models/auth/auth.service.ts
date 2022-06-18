@@ -12,6 +12,8 @@ import {
 	recoverTypedSignature,
 } from '@metamask/eth-sig-util';
 
+import isSignedTypedDataMetaMask from '../../utils/metaMask/is-signed-typed-data-metamask';
+
 interface ILoginRequest {
 	user?: User;
 	session?: any;
@@ -58,20 +60,11 @@ export class AuthService {
 		address,
 	}: SignInMetaMaskInput) {
 		try {
-			const recoveredAddress = recoverTypedSignature({
-				data: JSON.parse(message),
+			const isSignedMessage = isSignedTypedDataMetaMask({
+				data: message,
 				signature,
-				version: SignTypedDataVersion.V4,
+				address,
 			});
-
-			const adressIsAddress = Web3.utils.isAddress(address);
-			const recoveredAddressIsAddress = Web3.utils.isAddress(
-				recoveredAddress,
-				1,
-			);
-
-			const isSignedMessage =
-				adressIsAddress === recoveredAddressIsAddress;
 
 			if (!isSignedMessage) {
 				throw new UnauthorizedException();
