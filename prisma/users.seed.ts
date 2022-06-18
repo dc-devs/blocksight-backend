@@ -42,7 +42,7 @@ users.push(thirdUser);
 
 const fourthUser = {
 	email: 'davidcMeta@prisma.io',
-	primaryWalletAddress: generateWalletAddess(),
+	primaryWalletAddress: '0xc6c3d6a35592657c7350c84b508844910b2e28df',
 	password: encodePassword(password),
 	role: UserRole.ADMIN,
 };

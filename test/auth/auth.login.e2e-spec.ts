@@ -183,6 +183,7 @@ describe('Auth', () => {
 					).toEqual(HttpStatus.UNAUTHORIZED);
 				});
 			});
+
 			describe('when sending an invalid email and correct password', () => {
 				let sessionInput;
 

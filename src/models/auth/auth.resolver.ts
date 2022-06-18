@@ -52,7 +52,7 @@ export class AuthResolver {
 			return { isAuthenticated: true, user: loggedInUser };
 		} catch (error) {
 			console.error('ERROR', error);
-			// generateGraphQLError(error);
+			generateGraphQLError(error);
 		}
 	}
 
