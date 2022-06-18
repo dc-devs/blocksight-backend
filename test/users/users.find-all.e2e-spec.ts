@@ -37,6 +37,7 @@ describe('Users', () => {
 								id
 								role
 								email
+								primaryWalletAddress
 								createdAt
 								updatedAt
 							}
@@ -73,6 +74,7 @@ describe('Users', () => {
 									id
 									role
 									email
+									primaryWalletAddress
 									createdAt
 									updatedAt
 								}
@@ -115,6 +117,7 @@ describe('Users', () => {
 									id
 									role
 									email
+									primaryWalletAddress
 									createdAt
 									updatedAt
 								}
@@ -157,6 +160,7 @@ describe('Users', () => {
 									id
 									role
 									email
+									primaryWalletAddress
 									createdAt
 									updatedAt
 								}
@@ -180,7 +184,7 @@ describe('Users', () => {
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 
-						expect(users).toHaveLength(1);
+						expect(users).toHaveLength(2);
 
 						expect(user.role).toEqual(UserRole.ADMIN);
 						expect(user.email).toEqual(secondUserAdmin.email);
@@ -199,6 +203,7 @@ describe('Users', () => {
 									id
 									role
 									email
+									primaryWalletAddress
 									createdAt
 									updatedAt
 								}
@@ -225,7 +230,7 @@ describe('Users', () => {
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
 
-						expect(users).toHaveLength(3);
+						expect(users).toHaveLength(4);
 
 						expect(firstSelectedUser.role).toEqual(
 							firstUserSuperAdmin.role,
@@ -265,6 +270,7 @@ describe('Users', () => {
 											id
 											role
 											email
+											primaryWalletAddress
 											createdAt
 											updatedAt
 										}
@@ -312,6 +318,7 @@ describe('Users', () => {
 											id
 											role
 											email
+											primaryWalletAddress
 											createdAt
 											updatedAt
 										}
@@ -361,6 +368,7 @@ describe('Users', () => {
 									id
 									role
 									email
+									primaryWalletAddress
 									createdAt
 									updatedAt
 									${extraParam}
