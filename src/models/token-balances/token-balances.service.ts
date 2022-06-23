@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import getTokenBalances from '../../services/covelant/get-token-balances';
-import TokenBalancesQueryInput from './interfaces/token-balances-query-params-interface';
-import getTokenBalancesFormatted from './utils/get-token-balances-formatted';
-import getTotalAssetValue from './utils/get-total-asset-value';
+import { scamTokens } from './constants';
 import formatBnToFiat from '../../utils/format-bn-to-fiat';
+import getTotalAssetValue from './utils/get-total-asset-value';
+import getTokenBalances from '../../services/covelant/get-token-balances';
+import getTokenBalancesFormatted from './utils/get-token-balances-formatted';
+import TokenBalancesQueryInput from './interfaces/token-balances-query-params-interface';
 
 @Injectable()
 export class TokenBalancesService {
@@ -12,10 +13,16 @@ export class TokenBalancesService {
 		address,
 		currency,
 	}: TokenBalancesQueryInput) {
-		const tokenBalances = await getTokenBalances({
+		let tokenBalances = await getTokenBalances({
 			address,
 			currency,
 			filter,
+		});
+
+		tokenBalances = tokenBalances.filter((tokenBalance) => {
+			const {contract_address} = tokenBalance;
+			
+			return !scamTokens[contract_address];
 		});
 
 		const tokenBalancesFormatted = getTokenBalancesFormatted({

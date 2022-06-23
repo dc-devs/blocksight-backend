@@ -1,12 +1,12 @@
 import axios from 'axios';
+import CovalentTokenBalance from '../../interfaces/covalent-token-balance-interface';
 import TokenBalancesQueryParams from '../../models/token-balances/interfaces/token-balances-query-params-interface';
-import CovalentTokenBalances from '../../interfaces/covalent-token-balance-interface';
 
 const getTokenBalances = async ({
 	filter,
 	address,
 	currency = 'usd',
-}: TokenBalancesQueryParams): Promise<CovalentTokenBalances[]> => {
+}: TokenBalancesQueryParams): Promise<CovalentTokenBalance[]> => {
 	const chainId = process.env.ETHEREUM_CHAIN_ID;
 	const convalentApiKey = process.env.COVALENT_API_KEY;
 	let url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/balances_v2/?key=${convalentApiKey}&nft=true&no-nft-fetch=false&quote-currency=${currency}`;
