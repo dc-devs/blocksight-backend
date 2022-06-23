@@ -26,9 +26,30 @@ type SessionResponse {
   isAuthenticated: Boolean!
 }
 
+type Value {
+  number: String
+  formatted: String
+}
+
+type TokenBalance {
+  name: String
+  symbol: String
+  logoUrl: String
+  contractAddress: String
+  balance: String
+  totalValue: Value
+  price: Value
+}
+
+type TokenBalances {
+  totalValue: Value
+  balances: [TokenBalance!]
+}
+
 type Query {
   findOneUser(findOneUserInput: FindOneUserInput!): User
   findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
+  getTokenBalances(getTokenBalancesInput: GetTokenBalancesInput!): TokenBalances
   currentUser: SessionResponse!
 }
 
@@ -80,6 +101,12 @@ input UserOrderByInput {
   role: String
   createdAt: String
   updatedAt: String
+}
+
+input GetTokenBalancesInput {
+  filter: String
+  address: String
+  currency: String
 }
 
 type Mutation {

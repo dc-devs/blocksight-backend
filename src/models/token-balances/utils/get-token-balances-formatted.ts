@@ -1,16 +1,17 @@
 import numeral from 'numeral';
+import BigNumber from 'bignumber.js';
 import getFormattedTokenBalances from './get-formatted-token-balance';
 import TokenDisplayData from '../interfaces/token-balance-interface';
-import CovalentTokenBalances from '../../interfaces/covalent-token-balance-interface';
+import CovalentTokenBalances from '../../../interfaces/covalent-token-balance-interface';
 
-interface TokenBalancess {
-	TokenBalancess: CovalentTokenBalances[];
+interface TokenBalances {
+	tokenBalances: CovalentTokenBalances[];
 }
 
 const getTokenBalancesFormatted = ({
-	TokenBalancess,
-}: TokenBalancess): TokenDisplayData[] => {
-	return TokenBalancess.map((TokenBalances) => {
+	tokenBalances,
+}: TokenBalances): TokenDisplayData[] => {
+	return tokenBalances.map((tokenBalances) => {
 		const {
 			quote,
 			balance,
@@ -20,17 +21,25 @@ const getTokenBalancesFormatted = ({
 			contract_address,
 			contract_decimals,
 			contract_ticker_symbol,
-		} = TokenBalances;
+		} = tokenBalances;
 		const tokenLogoUrl = logo_url;
 		const tokenName = contract_name;
 		const tokenSymbol = contract_ticker_symbol.toUpperCase();
 
-		const TokenBalancesAmountFormatted = getFormattedTokenBalances({
+		const tokenBalancesAmountFormatted = getFormattedTokenBalances({
 			balance,
 			contractDecimals: contract_decimals,
 		});
 
-		const tokenPrice = quote_rate || 0;
+		let quoteRate;
+
+		if (!quote_rate) {
+			quoteRate = 0;
+		} else {
+			quoteRate = quote_rate.toString().includes('e') ? 0 : quote_rate;
+		}
+
+		const tokenPrice = quoteRate || 0;
 		const tokenPriceFormatted = numeral(tokenPrice).format('$0,000.000');
 		const totalValueFormatted = numeral(quote).format('$0,000.00');
 
@@ -39,7 +48,7 @@ const getTokenBalancesFormatted = ({
 			symbol: tokenSymbol,
 			logoUrl: tokenLogoUrl,
 			contractAddress: contract_address,
-			balance: TokenBalancesAmountFormatted,
+			balance: tokenBalancesAmountFormatted,
 			price: {
 				number: tokenPrice,
 				formatted: tokenPriceFormatted,

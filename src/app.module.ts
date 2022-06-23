@@ -8,7 +8,7 @@ import { TransfersModule } from './transfers/transfers.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { TokenBalancesModule } from './token-balances/token-balances.module';
+import { TokenBalancesModule } from './models/token-balances/token-balances.module';
 
 @Module({
 	imports: [
