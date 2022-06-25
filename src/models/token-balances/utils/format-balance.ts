@@ -11,20 +11,21 @@ const format = {
 	suffix: '',
 };
 
-interface Props {
+interface IFormatBalanceProps {
 	balance: string;
 	contractDecimals: number;
 }
 
-const getFormattedTokenBalances = ({ balance, contractDecimals }: Props) => {
+const formatBalance = ({ balance, contractDecimals }: IFormatBalanceProps) => {
 	BigNumber.config({ FORMAT: format });
 
 	const balanceBN = new BigNumber(balance);
-	const TokenBalancesAmount = balanceBN
+	const tokenBalanceAmount = balanceBN
 		.shiftedBy(-contractDecimals)
 		.toFormat(4);
+	const formattedBalance = tokenBalanceAmount.toString();
 
-	return TokenBalancesAmount.toString();
+	return formattedBalance;
 };
 
-export default getFormattedTokenBalances;
+export default formatBalance;

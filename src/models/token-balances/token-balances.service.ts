@@ -1,37 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { scamTokens } from './constants';
+import getTokenBalances from './utils/get-token-balances';
 import formatBnToFiat from '../../utils/format-bn-to-fiat';
-import getTotalAssetValue from './utils/get-total-asset-value';
-import getTokenBalances from '../../services/covelant/get-token-balances';
-import getTokenBalancesFormatted from './utils/get-token-balances-formatted';
-import TokenBalancesQueryInput from './interfaces/token-balances-query-params-interface';
+import getTotalTokenBalanceValue from './utils/get-total-token-balance-value';
+
+interface ITokenBalancesInput {
+	address: string;
+	currency: string;
+	filter: string;
+}
 
 @Injectable()
 export class TokenBalancesService {
-	async getTokenBalances({
-		filter,
-		address,
-		currency,
-	}: TokenBalancesQueryInput) {
+	async getTokenBalances({ filter, address, currency }: ITokenBalancesInput) {
 		let tokenBalances = await getTokenBalances({
 			address,
 			currency,
 			filter,
+			chainId: process.env.ETHEREUM_CHAIN_ID,
 		});
 
-		tokenBalances = tokenBalances.filter((tokenBalance) => {
-			const {contract_address} = tokenBalance;
-			
-			return !scamTokens[contract_address];
-		});
-
-		const tokenBalancesFormatted = getTokenBalancesFormatted({
+		const totalValue = getTotalTokenBalanceValue({
 			tokenBalances,
 		});
 
-		const totalValue = getTotalAssetValue({ tokenBalances });
+		const totalValueString = totalValue.toString();
 
-		const totalValueFormatted = formatBnToFiat({
+		const formattedTotalValue = formatBnToFiat({
 			currency,
 			format: '0,0.00',
 			bigNumber: totalValue,
@@ -39,10 +33,10 @@ export class TokenBalancesService {
 
 		return {
 			totalValue: {
-				number: totalValue.toString(),
-				formatted: totalValueFormatted,
+				value: totalValueString,
+				formatted: formattedTotalValue,
 			},
-			balances: tokenBalancesFormatted,
+			balances: tokenBalances,
 		};
 	}
 }

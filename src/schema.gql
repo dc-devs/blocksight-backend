@@ -27,7 +27,7 @@ type SessionResponse {
 }
 
 type Value {
-  number: String
+  value: String
   formatted: String
 }
 

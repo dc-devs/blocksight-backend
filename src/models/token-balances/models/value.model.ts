@@ -1,13 +1,9 @@
-import BigNumber from 'bignumber.js';
-import { UserRole, User as PrismaUser } from '@prisma/client';
-import { Field, ObjectType, Int } from '@nestjs/graphql';
-import { IsNumber, IsString, IsEmail, IsDate } from 'class-validator';
-import TokenBalance from '../interfaces/token-balance-interface';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class Value {
 	@Field({ nullable: true })
-	number?: string;
+	value?: string;
 
 	@Field({ nullable: true })
 	formatted?: string;

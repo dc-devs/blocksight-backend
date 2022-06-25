@@ -1,21 +1,16 @@
-interface Price {
-	number: number;
-	formatted: string;
-}
+import IValue from './value-interface';
 
-interface TotalValue {
-	number: number;
-	formatted: string;
-}
-
-interface TokenBalance {
+interface ITokenBalance {
+	type: string;
 	name: string;
-	price: Price;
+	price: IValue;
 	symbol: string;
 	balance: string;
 	logoUrl: string;
-	totalValue: TotalValue;
+	decimals: number;
+	totalValue: IValue;
+	supportsErc?: string[];
 	contractAddress: string;
 }
 
-export default TokenBalance;
+export default ITokenBalance;
