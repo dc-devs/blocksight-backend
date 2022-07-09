@@ -3,7 +3,6 @@ import { INestApplication } from '@nestjs/common';
 import { AppModule } from '../../../src/app.module';
 import { Test, TestingModule } from '@nestjs/testing';
 import { initializeSession } from '../../../src/server/initialize';
-import logInitMessage from '../../../src/server/utils/log-init-message';
 import { validationPipe, corsOptions } from '../../../src/server/config';
 import { isProductionEnv } from '../../../src/common/constants/environment';
 
