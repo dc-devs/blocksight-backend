@@ -1,4 +1,5 @@
 import request from 'supertest';
+import query from './queries/find-one-query';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import { ExchangeName } from '../../../src/models/exchanges/enums';
 import initializeTestApp from '../../helpers/init/initializeTestApp';
@@ -22,30 +23,9 @@ describe('Exchanges', () => {
 			describe('when sending a query with an id for an exchange that does exist', () => {
 				it('should return exchange', async () => {
 					const id = 1;
-					const query = {
+					const graphQlquery = {
 						operationName: 'Query',
-						query: `
-							query Query($findOneExchangeInput: FindOneExchangeInput!) {
-								findOneExchange(findOneExchangeInput: $findOneExchangeInput) {
-									id
-									name
-									websiteUrl
-									logoUrl
-									companyLogoUrl
-									hasApi
-									hasCsv
-									createdAt
-									updatedAt
-									users {
-										id
-										email
-										primaryWalletAddress
-										role
-										createdAt
-										updatedAt
-									}
-								}
-							}`,
+						query,
 						variables: {
 							findOneExchangeInput: {
 								id,
@@ -55,7 +35,7 @@ describe('Exchanges', () => {
 
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
-						.send(query);
+						.send(graphQlquery);
 
 					const exchange = response.body.data.findOneExchange;
 
@@ -69,28 +49,9 @@ describe('Exchanges', () => {
 				describe('when sending a query with an id for exchange that does not exist', () => {
 					it('should return null', async () => {
 						const id = 100;
-						const query = {
+						const graphQlquery = {
 							operationName: 'Query',
-							query: `
-									query Query($findOneExchangeInput: FindOneExchangeInput!) {
-										findOneExchange(findOneExchangeInput: $findOneExchangeInput) {
-											id
-											name
-											websiteUrl
-											logoUrl
-											companyLogoUrl
-											createdAt
-											updatedAt
-											users {
-											id
-											email
-											primaryWalletAddress
-											role
-											createdAt
-											updatedAt
-											}
-										}
-									}`,
+							query,
 							variables: {
 								findOneExchangeInput: {
 									id,
@@ -100,7 +61,7 @@ describe('Exchanges', () => {
 
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const exchange = response.body.data.findOneExchange;
 
@@ -115,30 +76,9 @@ describe('Exchanges', () => {
 			describe('when sending a query with an name for an exchange that does exist', () => {
 				it('should return exchange', async () => {
 					const name = ExchangeName.COINBASE;
-					const query = {
+					const graphQlquery = {
 						operationName: 'Query',
-						query: `
-							query Query($findOneExchangeInput: FindOneExchangeInput!) {
-								findOneExchange(findOneExchangeInput: $findOneExchangeInput) {
-									id
-									name
-									websiteUrl
-									logoUrl
-									companyLogoUrl
-									hasApi
-									hasCsv
-									createdAt
-									updatedAt
-									users {
-										id
-										email
-										primaryWalletAddress
-										role
-										createdAt
-										updatedAt
-									}
-								}
-							}`,
+						query,
 						variables: {
 							findOneExchangeInput: {
 								name,
@@ -148,7 +88,7 @@ describe('Exchanges', () => {
 
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
-						.send(query);
+						.send(graphQlquery);
 
 					const exchange = response.body.data.findOneExchange;
 
@@ -162,30 +102,9 @@ describe('Exchanges', () => {
 				describe('when sending a query with an id for exchange that does not exist', () => {
 					it('should return null', async () => {
 						const name = 'non-existent-company';
-						const query = {
+						const graphQlquery = {
 							operationName: 'Query',
-							query: `
-								query Query($findOneExchangeInput: FindOneExchangeInput!) {
-									findOneExchange(findOneExchangeInput: $findOneExchangeInput) {
-										id
-										name
-										websiteUrl
-										logoUrl
-										companyLogoUrl
-										hasApi
-										hasCsv
-										createdAt
-										updatedAt
-										users {
-											id
-											email
-											primaryWalletAddress
-											role
-											createdAt
-											updatedAt
-										}
-									}
-								}`,
+							query,
 							variables: {
 								findOneExchangeInput: {
 									name,
@@ -195,7 +114,7 @@ describe('Exchanges', () => {
 
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const exchange = response.body.data.findOneExchange;
 
@@ -209,30 +128,9 @@ describe('Exchanges', () => {
 		describe('validation', () => {
 			describe('when sending a query with no data', () => {
 				it('should return null', async () => {
-					const query = {
+					const graphQlquery = {
 						operationName: 'Query',
-						query: `
-							query Query($findOneExchangeInput: FindOneExchangeInput!) {
-								findOneExchange(findOneExchangeInput: $findOneExchangeInput) {
-									id
-									name
-									websiteUrl
-									logoUrl
-									companyLogoUrl
-									hasApi
-									hasCsv
-									createdAt
-									updatedAt
-									users {
-										id
-										email
-										primaryWalletAddress
-										role
-										createdAt
-										updatedAt
-									}
-								}
-							}`,
+						query,
 						variables: {
 							findOneExchangeInput: {},
 						},
@@ -240,7 +138,7 @@ describe('Exchanges', () => {
 
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
-						.send(query);
+						.send(graphQlquery);
 
 					const exchange = response.body.data.findOneExchange;
 

@@ -289,7 +289,7 @@ describe('Users', () => {
 							const users = response.body.data.findAllUsers;
 
 							expect(response.statusCode).toEqual(HttpStatus.OK);
-							expect(users).toHaveLength(10);
+							expect(users).toHaveLength(take);
 
 							users.forEach((user) => {
 								expect(user).toEqual(expectedUserObject);
@@ -338,7 +338,7 @@ describe('Users', () => {
 							const users = response.body.data.findAllUsers;
 
 							expect(response.statusCode).toEqual(HttpStatus.OK);
-							expect(users).toHaveLength(10);
+							expect(users).toHaveLength(take);
 
 							users.forEach((user) => {
 								expect(user).toEqual(expectedUserObject);
