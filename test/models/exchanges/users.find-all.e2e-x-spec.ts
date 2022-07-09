@@ -1,11 +1,11 @@
 import request from 'supertest';
 import { UserRole } from '@prisma/client';
 import ErrorMessage from './enums/error-message.enum';
-import UserProperty from './enums/user-property.enum';
+import UserProperty from './enums/exchange-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../helpers/init/initializeTestApp';
 import ExtensionCode from '../../../src/graphql/errors/extension-code.enum';
-import expectedUserObject from './expected-objects/expected-user-object';
+import expectedUserObject from './expected-objects/expected-exchange-object';
 import { redisClient } from '../../../src/server/initialize/initialize-redis';
 import {
 	allUsersCount,

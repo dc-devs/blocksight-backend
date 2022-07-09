@@ -1,113 +1,105 @@
-import { v4 as uuidv4 } from 'uuid';
 import { Injectable } from '@nestjs/common';
-import { encodePassword } from './utils/bcrypt';
 import { Exchange } from './models/exchange.model';
-import { UpdateUserInput } from './dto/update-user.input';
+// import { UpdateUserInput } from './dto/update-user.input';
 import { PrismaService } from '../../prisma/prisma.service';
-import { FindOneUserInput } from './dto/find-one-user.input';
-import { FindAllUsersInput } from './dto/find-all-users.input';
-import { UserWithPassword } from './models/user-with-password.model';
-import { CreateUserEmailInput } from './dto/create-user-email.input';
-import { CreateUserAddressInput } from './dto/create-user-address.input';
+import { FindOneExchangeInput } from './dto/find-one-exchange.input';
+// import { FindAllUsersInput } from './dto/find-all-users.input';
+// import { UserWithPassword } from './models/user-with-password.model';
+// import { CreateUserEmailInput } from './dto/create-user-email.input';
+// import { CreateUserAddressInput } from './dto/create-user-address.input';
 
 const select = {
 	id: true,
-	email: true,
-	primaryWalletAddress: true,
-	role: true,
+	name: true,
+	websiteUrl: true,
+	logoUrl: true,
+	companyLogoUrl: true,
+	// TODO: FIX
+	// users: true,
 	createdAt: true,
 	updatedAt: true,
 };
 
 @Injectable()
-export class UsersService {
+export class ExchangesService {
 	constructor(private prisma: PrismaService) {}
 
-	findAll(findAllUsersInput: FindAllUsersInput): Promise<User[]> {
-		const { skip, cursor, take, orderBy, where } = findAllUsersInput;
-		return this.prisma.user.findMany({
-			skip,
-			take,
-			cursor,
-			where,
-			orderBy,
+	// findAll(findAllUsersInput: FindAllUsersInput): Promise<User[]> {
+	// 	const { skip, cursor, take, orderBy, where } = findAllUsersInput;
+	// 	return this.prisma.exchange.findMany({
+	// 		skip,
+	// 		take,
+	// 		cursor,
+	// 		where,
+	// 		orderBy,
+	// 		select,
+	// 	});
+	// }
+
+	async findOne(
+		findOneExchangeInput: FindOneExchangeInput,
+	): Promise<Exchange | null> {
+		const { id, name } = findOneExchangeInput;
+
+		return this.prisma.exchange.findUnique({
+			where: { id, name },
 			select,
 		});
 	}
 
-	async findOne(findOneUserInput: FindOneUserInput): Promise<User | null> {
-		const { id, email, primaryWalletAddress } = findOneUserInput;
+	// create(createUserEmailInput: CreateUserEmailInput): Promise<User> {
+	// 	const { email, password } = createUserEmailInput;
+	// 	const encodedPassword = encodePassword(password);
+	// 	const emailLowerCase = email.toLowerCase();
 
-		return this.prisma.user.findUnique({
-			where: { id, email, primaryWalletAddress },
-			select,
-		});
-	}
+	// 	return this.prisma.exchange.create({
+	// 		data: {
+	// 			email: emailLowerCase,
+	// 			password: encodedPassword,
+	// 		},
+	// 		select,
+	// 	});
+	// }
 
-	async _findOne(
-		findOneUserInput: FindOneUserInput,
-	): Promise<UserWithPassword | null> {
-		const { id, email, primaryWalletAddress } = findOneUserInput;
+	// async createOrGetFromAddress(
+	// 	createUserAddressInput: CreateUserAddressInput,
+	// ): Promise<User> {
+	// 	const { primaryWalletAddress } = createUserAddressInput;
+	// 	let user;
 
-		return this.prisma.user.findUnique({
-			where: { id, email, primaryWalletAddress },
-			select: { ...select, password: true },
-		});
-	}
+	// 	user = await this.findOne({ primaryWalletAddress });
 
-	create(createUserEmailInput: CreateUserEmailInput): Promise<User> {
-		const { email, password } = createUserEmailInput;
-		const encodedPassword = encodePassword(password);
-		const emailLowerCase = email.toLowerCase();
+	// 	if (!user) {
+	// 		const password = uuidv4();
+	// 		const encodedPassword = encodePassword(password);
+	// 		user = this.prisma.exchange.create({
+	// 			data: {
+	// 				primaryWalletAddress,
+	// 				password: encodedPassword,
+	// 			},
+	// 			select,
+	// 		});
+	// 	}
 
-		return this.prisma.user.create({
-			data: {
-				email: emailLowerCase,
-				password: encodedPassword,
-			},
-			select,
-		});
-	}
+	// 	return user;
+	// }
 
-	async createOrGetFromAddress(
-		createUserAddressInput: CreateUserAddressInput,
-	): Promise<User> {
-		const { primaryWalletAddress } = createUserAddressInput;
-		let user;
+	// update(id: number, data: UpdateUserInput): Promise<User> {
+	// 	return this.prisma.exchange.update({
+	// 		where: {
+	// 			id,
+	// 		},
+	// 		data,
+	// 		select,
+	// 	});
+	// }
 
-		user = await this.findOne({ primaryWalletAddress });
-
-		if (!user) {
-			const password = uuidv4();
-			const encodedPassword = encodePassword(password);
-			user = this.prisma.user.create({
-				data: {
-					primaryWalletAddress,
-					password: encodedPassword,
-				},
-				select,
-			});
-		}
-
-		return user;
-	}
-
-	update(id: number, data: UpdateUserInput): Promise<User> {
-		return this.prisma.user.update({
-			where: {
-				id,
-			},
-			data,
-			select,
-		});
-	}
-
-	delete(id: number): Promise<User> {
-		return this.prisma.user.delete({
-			where: {
-				id,
-			},
-			select,
-		});
-	}
+	// delete(id: number): Promise<User> {
+	// 	return this.prisma.exchange.delete({
+	// 		where: {
+	// 			id,
+	// 		},
+	// 		select,
+	// 	});
+	// }
 }

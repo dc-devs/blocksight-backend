@@ -26,6 +26,17 @@ type SessionResponse {
   isAuthenticated: Boolean!
 }
 
+type Exchange {
+  id: Float
+  name: String
+  websiteUrl: String
+  logoUrl: String
+  companyLogoUrl: String
+  users: [User!]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 type Value {
   value: String
   formatted: String
@@ -75,6 +86,7 @@ type Query {
   findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
   getTokenBalances(getTokenBalancesInput: GetTokenBalancesInput!): TokenBalances
   currentUser: SessionResponse!
+  findOneExchange(findOneExchangeInput: FindOneExchangeInput!): Exchange
 }
 
 input FindOneUserInput {
@@ -131,6 +143,11 @@ input GetTokenBalancesInput {
   filter: String
   address: String
   currency: String
+}
+
+input FindOneExchangeInput {
+  id: Float
+  name: String
 }
 
 type Mutation {

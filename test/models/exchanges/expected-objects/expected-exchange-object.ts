@@ -1,8 +1,9 @@
 const expectedUserObject = expect.objectContaining({
 	id: expect.any(Number),
-	email: expect.any(String),
-	primaryWalletAddress: expect.any(String),
-	role: expect.any(String),
+	name: expect.any(String),
+	websiteUrl: expect.any(String),
+	logoUrl: expect.any(String),
+	companyLogoUrl: expect.any(String),
 	createdAt: expect.any(String),
 	updatedAt: expect.any(String),
 });

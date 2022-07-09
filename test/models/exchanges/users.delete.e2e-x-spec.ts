@@ -1,10 +1,10 @@
 import request from 'supertest';
 import ErrorMessage from './enums/error-message.enum';
-import UserProperty from './enums/user-property.enum';
+import UserProperty from './enums/exchange-property.enum';
 import ErrorCode from '../../../src/prisma/error-code.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../helpers/init/initializeTestApp';
-import expectedUserObject from './expected-objects/expected-user-object';
+import expectedUserObject from './expected-objects/expected-exchange-object';
 import { redisClient } from '../../../src/server/initialize/initialize-redis';
 import GraphQLErrorMessage from '../../../src/graphql/errors/error-message.enum';
 

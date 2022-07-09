@@ -5,12 +5,11 @@ import { PrismaService } from './prisma/prisma.service';
 import environment from './common/constants/environment';
 import { GraphqlModule } from './graphql/graphql.module';
 import { TransfersModule } from './transfers/transfers.module';
+import { ExchangesModule } from './models/exchanges/exchanges.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TokenBalancesModule } from './models/token-balances/token-balances.module';
-import { ExchangesModule } from './models/exchanges/exchanges.module';
-import { ExchangesResolver } from './exchanges/exchanges.resolver';
 
 @Module({
 	imports: [
@@ -26,7 +25,7 @@ import { ExchangesResolver } from './exchanges/exchanges.resolver';
 		AuthModule,
 		ExchangesModule,
 	],
-	providers: [PrismaService, ExchangesResolver],
+	providers: [PrismaService],
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {

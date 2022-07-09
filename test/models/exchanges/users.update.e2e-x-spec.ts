@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { UserRole } from '@prisma/client';
 import { firstUser } from '../../../prisma/seeds/users.seed';
-import UserProperty from './enums/user-property.enum';
+import UserProperty from './enums/exchange-property.enum';
 import ErrorMessage from './enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../helpers/init/initializeTestApp';
