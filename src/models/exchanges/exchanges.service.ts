@@ -3,7 +3,7 @@ import { Exchange } from './models/exchange.model';
 // import { UpdateUserInput } from './dto/update-user.input';
 import { PrismaService } from '../../prisma/prisma.service';
 import { FindOneExchangeInput } from './dto/find-one-exchange.input';
-// import { FindAllUsersInput } from './dto/find-all-users.input';
+import { FindAllExchangesInput } from './dto/find-all-exchanges.input';
 // import { UserWithPassword } from './models/user-with-password.model';
 // import { CreateUserEmailInput } from './dto/create-user-email.input';
 // import { CreateUserAddressInput } from './dto/create-user-address.input';
@@ -14,6 +14,8 @@ const select = {
 	websiteUrl: true,
 	logoUrl: true,
 	companyLogoUrl: true,
+	hasApi: true,
+	hasCsv: true,
 	// TODO: FIX
 	// users: true,
 	createdAt: true,
@@ -24,17 +26,17 @@ const select = {
 export class ExchangesService {
 	constructor(private prisma: PrismaService) {}
 
-	// findAll(findAllUsersInput: FindAllUsersInput): Promise<User[]> {
-	// 	const { skip, cursor, take, orderBy, where } = findAllUsersInput;
-	// 	return this.prisma.exchange.findMany({
-	// 		skip,
-	// 		take,
-	// 		cursor,
-	// 		where,
-	// 		orderBy,
-	// 		select,
-	// 	});
-	// }
+	findAll(findAllExchangesInput: FindAllExchangesInput): Promise<Exchange[]> {
+		const { skip, cursor, take, orderBy, where } = findAllExchangesInput;
+		return this.prisma.exchange.findMany({
+			skip,
+			take,
+			cursor,
+			where,
+			orderBy,
+			select,
+		});
+	}
 
 	async findOne(
 		findOneExchangeInput: FindOneExchangeInput,

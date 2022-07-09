@@ -10,6 +10,14 @@ import generateGraphQLError from '../../graphql/errors/generate-graphql-error';
 export class ExchangesResolver {
 	constructor(private readonly exchangesService: ExchangesService) {}
 
+	@Query(() => [Exchange])
+	findAllExchanges(
+		@Args('findAllExchangesInput')
+		findAllExchangesInput: FindAllExchangesInput,
+	): Promise<Exchange[]> {
+		return this.exchangesService.findAll(findAllExchangesInput);
+	}
+
 	@Query(() => Exchange, { nullable: true })
 	findOneExchange(
 		@Args('findOneExchangeInput')
@@ -17,14 +25,6 @@ export class ExchangesResolver {
 	): Promise<Exchange | null> {
 		return this.exchangesService.findOne(findOneExchangeInput);
 	}
-
-	// @Query(() => [Exchange])
-	// findAllExchanges(
-	// 	@Args('findAllExchangesInput')
-	// 	findAllExchangesInput: FindAllExchangesInput,
-	// ): Promise<Exchange[]> {
-	// 	return this.exchangesService.findAll(findAllExchangesInput);
-	// }
 
 	// @Mutation(() => Exchange)
 	// async updateExchange(

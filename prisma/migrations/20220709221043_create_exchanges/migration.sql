@@ -5,6 +5,8 @@ CREATE TABLE "Exchange" (
     "websiteUrl" TEXT NOT NULL,
     "logoUrl" TEXT NOT NULL,
     "companyLogoUrl" TEXT NOT NULL,
+    "hasApi" BOOLEAN NOT NULL,
+    "hasCsv" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

@@ -32,6 +32,8 @@ model Exchange {
   websiteUrl              String
   logoUrl                 String
   companyLogoUrl          String
+  hasApi                  Boolean
+  hasCsv                  Boolean
   users                   UsersExchanges[]
   createdAt               DateTime      @default(now())
   updatedAt               DateTime      @updatedAt

@@ -33,6 +33,8 @@ type Exchange {
   logoUrl: String
   companyLogoUrl: String
   users: [User!]
+  hasApi: Boolean
+  hasCsv: Boolean
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -86,6 +88,7 @@ type Query {
   findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
   getTokenBalances(getTokenBalancesInput: GetTokenBalancesInput!): TokenBalances
   currentUser: SessionResponse!
+  findAllExchanges(findAllExchangesInput: FindAllExchangesInput!): [Exchange!]!
   findOneExchange(findOneExchangeInput: FindOneExchangeInput!): Exchange
 }
 
@@ -143,6 +146,58 @@ input GetTokenBalancesInput {
   filter: String
   address: String
   currency: String
+}
+
+input FindAllExchangesInput {
+  skip: Float
+  take: Float
+  cursor: ExchangeCursor
+  where: ExchangeWhereInput
+  orderBy: ExchangeOrderByInput
+}
+
+input ExchangeCursor {
+  id: Float
+  name: String
+}
+
+input ExchangeWhereInput {
+  id: Float
+  name: String
+  websiteUrl: String
+  logoUrl: String
+  companyLogoUrl: String
+  hasApi: Boolean
+  hasCsv: Boolean
+  createdAt: DateTime
+  updatedAt: DateTime
+  AND: [ExchangeInput!]
+  OR: [ExchangeInput!]
+  NOT: [ExchangeInput!]
+}
+
+input ExchangeInput {
+  id: Float
+  name: String
+  websiteUrl: String
+  logoUrl: String
+  companyLogoUrl: String
+  hasApi: Boolean
+  hasCsv: Boolean
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input ExchangeOrderByInput {
+  id: String
+  name: String
+  websiteUrl: String
+  logoUrl: String
+  companyLogoUrl: String
+  hasApi: String
+  hasCsv: String
+  createdAt: String
+  updatedAt: String
 }
 
 input FindOneExchangeInput {

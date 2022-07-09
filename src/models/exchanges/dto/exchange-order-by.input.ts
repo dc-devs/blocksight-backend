@@ -23,6 +23,14 @@ export class ExchangeOrderByInput {
 	@IsOptional()
 	@Field({ nullable: true })
 	companyLogoUrl?: Prisma.SortOrder;
+	
+	@IsOptional()
+	@Field({ nullable: true })
+	hasApi?: Prisma.SortOrder;
+	
+	@IsOptional()
+	@Field({ nullable: true })
+	hasCsv?: Prisma.SortOrder;
 
 	@IsOptional()
 	@Field({ nullable: true })

@@ -1,5 +1,4 @@
 import request from 'supertest';
-// import { firstUser } from '../../../prisma/seeds/exchanges.seed';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import { ExchangeName } from '../../../src/models/exchanges/enums';
 import initializeTestApp from '../../helpers/init/initializeTestApp';
@@ -33,15 +32,17 @@ describe('Exchanges', () => {
 									websiteUrl
 									logoUrl
 									companyLogoUrl
+									hasApi
+									hasCsv
 									createdAt
 									updatedAt
 									users {
-									id
-									email
-									primaryWalletAddress
-									role
-									createdAt
-									updatedAt
+										id
+										email
+										primaryWalletAddress
+										role
+										createdAt
+										updatedAt
 									}
 								}
 							}`,
@@ -124,15 +125,17 @@ describe('Exchanges', () => {
 									websiteUrl
 									logoUrl
 									companyLogoUrl
+									hasApi
+									hasCsv
 									createdAt
 									updatedAt
 									users {
-									id
-									email
-									primaryWalletAddress
-									role
-									createdAt
-									updatedAt
+										id
+										email
+										primaryWalletAddress
+										role
+										createdAt
+										updatedAt
 									}
 								}
 							}`,
@@ -169,15 +172,17 @@ describe('Exchanges', () => {
 										websiteUrl
 										logoUrl
 										companyLogoUrl
+										hasApi
+										hasCsv
 										createdAt
 										updatedAt
 										users {
-										id
-										email
-										primaryWalletAddress
-										role
-										createdAt
-										updatedAt
+											id
+											email
+											primaryWalletAddress
+											role
+											createdAt
+											updatedAt
 										}
 									}
 								}`,
@@ -214,15 +219,17 @@ describe('Exchanges', () => {
 									websiteUrl
 									logoUrl
 									companyLogoUrl
+									hasApi
+									hasCsv
 									createdAt
 									updatedAt
 									users {
-									id
-									email
-									primaryWalletAddress
-									role
-									createdAt
-									updatedAt
+										id
+										email
+										primaryWalletAddress
+										role
+										createdAt
+										updatedAt
 									}
 								}
 							}`,
