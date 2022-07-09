@@ -31,19 +31,43 @@ type Value {
   formatted: String
 }
 
-type TokenBalance {
+type Network {
+  chainId: String
+  chainName: String
   name: String
+  rpcUrl: String
   symbol: String
+  blockExplorerUrl: String
   logoUrl: String
-  contractAddress: String
-  balance: String
-  totalValue: Value
+}
+
+type TokenBalance {
+  type: String
+  name: String
   price: Value
+  symbol: String
+  isNft: Boolean
+  chainId: String
+  balance: String
+  logoUrl: String
+  decimals: String
+  totalValue: Value
+  supportsErc: [String!]
+  contractAddress: String
+}
+
+type TokenValueBalances {
+  totalValue: Value
+  balances: [TokenBalance!]
 }
 
 type TokenBalances {
   totalValue: Value
-  balances: [TokenBalance!]
+  networks: [Network!]
+  tokens: TokenValueBalances
+  nfts: TokenValueBalances
+  hidden: TokenValueBalances
+  scam: TokenValueBalances
 }
 
 type Query {

@@ -9,6 +9,8 @@ import { TransactionsModule } from './transactions/transactions.module';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { TokenBalancesModule } from './models/token-balances/token-balances.module';
+import { ExchangesModule } from './models/exchanges/exchanges.module';
+import { ExchangesResolver } from './exchanges/exchanges.resolver';
 
 @Module({
 	imports: [
@@ -22,8 +24,9 @@ import { TokenBalancesModule } from './models/token-balances/token-balances.modu
 			envFilePath: ['.env', `.env.${environment}`],
 		}),
 		AuthModule,
+		ExchangesModule,
 	],
-	providers: [PrismaService],
+	providers: [PrismaService, ExchangesResolver],
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {

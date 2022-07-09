@@ -1,12 +1,12 @@
 import request from 'supertest';
 import UserProperty from '../users/enums/user-property.enum';
-import { firstUser, password } from '../../prisma/users.seed';
+import { firstUser, password } from '../../../prisma/seeds/users.seed';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../helpers/init/initializeTestApp';
-import ErrorMessage from '../../src/graphql/errors/error-message.enum';
-import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../src/server/initialize/initialize-redis';
-import responseContainsSetCookie from '../helpers/utils/response-contains-set-cookie';
+import initializeTestApp from '../../helpers/init/initializeTestApp';
+import ErrorMessage from '../../../src/graphql/errors/error-message.enum';
+import ExtensionCode from '../../../src/graphql/errors/extension-code.enum';
+import { redisClient } from '../../../src/server/initialize/initialize-redis';
+import responseContainsSetCookie from '../../helpers/utils/response-contains-set-cookie';
 
 describe('Auth', () => {
 	let app: INestApplication;

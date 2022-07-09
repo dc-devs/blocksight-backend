@@ -1,5 +1,5 @@
-import { UserRole, User as PrismaUser } from '@prisma/client';
-import { Field, ObjectType, Int } from '@nestjs/graphql';
+import { UserRole } from '@prisma/client';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { IsNumber, IsString, IsEmail, IsDate } from 'class-validator';
 
 @ObjectType()

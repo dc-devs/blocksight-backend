@@ -2,15 +2,20 @@ import TokenDisplayData from '../interfaces/token-balance-interface';
 import CovalentTokenBalance from '../../../interfaces/covalent-token-balance-interface';
 import convertCovalentTokenBalanceToTokenBalance from './convert-covalent-token-balacne-to-token-balance';
 
-interface ITokenBalances {
+interface IProps {
+	chainId: string;
 	tokenBalances: CovalentTokenBalance[];
 }
 
 const convertCovalentTokenBalancesToTokenBalances = ({
+	chainId,
 	tokenBalances,
-}: ITokenBalances): TokenDisplayData[] => {
-	return tokenBalances.map((tokenBalances) => {
-		return convertCovalentTokenBalanceToTokenBalance(tokenBalances);
+}: IProps): TokenDisplayData[] => {
+	return tokenBalances.map((tokenBalance) => {
+		return convertCovalentTokenBalanceToTokenBalance({
+			chainId,
+			tokenBalance,
+		});
 	});
 };
 

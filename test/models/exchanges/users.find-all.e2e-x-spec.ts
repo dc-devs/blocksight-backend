@@ -3,16 +3,16 @@ import { UserRole } from '@prisma/client';
 import ErrorMessage from './enums/error-message.enum';
 import UserProperty from './enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../helpers/init/initializeTestApp';
-import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
+import initializeTestApp from '../../helpers/init/initializeTestApp';
+import ExtensionCode from '../../../src/graphql/errors/extension-code.enum';
 import expectedUserObject from './expected-objects/expected-user-object';
-import { redisClient } from '../../src/server/initialize/initialize-redis';
+import { redisClient } from '../../../src/server/initialize/initialize-redis';
 import {
 	allUsersCount,
 	thirdUser as thirdUserAdmin,
 	secondUser as secondUserAdmin,
 	firstUser as firstUserSuperAdmin,
-} from '../../prisma/users.seed';
+} from '../../../prisma/seeds/users.seed';
 
 describe('Users', () => {
 	let app: INestApplication;

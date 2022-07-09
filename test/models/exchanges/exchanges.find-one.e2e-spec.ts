@@ -1,12 +1,12 @@
 import request from 'supertest';
-import { firstUser } from '../../prisma/users.seed';
-import UserProperty from './enums/user-property.enum';
+import UserProperty from './enums/exchange-property.enum';
+import { firstUser } from '../../../prisma/seeds/exchanges.seed';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../helpers/init/initializeTestApp';
-import expectedUserObject from './expected-objects/expected-user-object';
-import { redisClient } from '../../src/server/initialize/initialize-redis';
+import initializeTestApp from '../../helpers/init/initializeTestApp';
+import expectedUserObject from './expected-objects/expected-exchange-object';
+import { redisClient } from '../../../src/server/initialize/initialize-redis';
 
-describe('Users', () => {
+describe('Exchanges', () => {
 	let app: INestApplication;
 
 	beforeAll(async () => {
@@ -20,8 +20,8 @@ describe('Users', () => {
 
 	describe('Find One', () => {
 		describe('id', () => {
-			describe('when sending a query with an id for user that does exist', () => {
-				it('should return user', async () => {
+			describe('when sending a query with an id for exchange that does exist', () => {
+				it('should return exchange', async () => {
 					const id = 1;
 					const query = {
 						operationName: 'Query',
@@ -47,17 +47,17 @@ describe('Users', () => {
 						.post('/graphql')
 						.send(query);
 
-					const user = response.body.data.findOneUser;
+					const exchange = response.body.data.findOneUser;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
-					expect(user.id).toEqual(id);
-					expect(user).toEqual(expectedUserObject);
-					expect(user).not.toHaveProperty(UserProperty.PASSWORD);
+					expect(exchange.id).toEqual(id);
+					expect(exchange).toEqual(expectedUserObject);
+					expect(exchange).not.toHaveProperty(UserProperty.PASSWORD);
 				});
 			});
 
 			describe('validation', () => {
-				describe('when sending a query with an id for user that does not exist', () => {
+				describe('when sending a query with an id for exchange that does not exist', () => {
 					it('should return null', async () => {
 						const id = 100;
 						const query = {
@@ -84,18 +84,18 @@ describe('Users', () => {
 							.post('/graphql')
 							.send(query);
 
-						const user = response.body.data.findOneUser;
+						const exchange = response.body.data.findOneUser;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
-						expect(user).toBeNull();
+						expect(exchange).toBeNull();
 					});
 				});
 			});
 		});
 
 		describe('email', () => {
-			describe('when sending a query with an email for user that does exist', () => {
-				it('should return user', async () => {
+			describe('when sending a query with an email for exchange that does exist', () => {
+				it('should return exchange', async () => {
 					const email = firstUser.email;
 					const query = {
 						operationName: 'Query',
@@ -120,16 +120,16 @@ describe('Users', () => {
 						.post('/graphql')
 						.send(query);
 
-					const user = response.body.data.findOneUser;
+					const exchange = response.body.data.findOneUser;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
-					expect(user).toEqual(expectedUserObject);
-					expect(user).not.toHaveProperty(UserProperty.PASSWORD);
+					expect(exchange).toEqual(expectedUserObject);
+					expect(exchange).not.toHaveProperty(UserProperty.PASSWORD);
 				});
 			});
 
 			describe('validation', () => {
-				describe('when sending a query with an email for user that does not exist', () => {
+				describe('when sending a query with an email for exchange that does not exist', () => {
 					it('should return null', async () => {
 						const email = 'i-dont-exist@gmail.com';
 						const query = {
@@ -156,10 +156,10 @@ describe('Users', () => {
 							.post('/graphql')
 							.send(query);
 
-						const user = response.body.data.findOneUser;
+						const exchange = response.body.data.findOneUser;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
-						expect(user).toBeNull();
+						expect(exchange).toBeNull();
 					});
 				});
 			});
@@ -190,10 +190,10 @@ describe('Users', () => {
 						.post('/graphql')
 						.send(query);
 
-					const user = response.body.data.findOneUser;
+					const exchange = response.body.data.findOneUser;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
-					expect(user).toBeNull();
+					expect(exchange).toBeNull();
 				});
 			});
 		});

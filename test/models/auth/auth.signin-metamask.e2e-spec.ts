@@ -1,16 +1,16 @@
 import request from 'supertest';
 import { UserRole } from '@prisma/client';
-import generateWallet from '../../src/utils/generate-wallet';
+import generateWallet from '../../../src/utils/generate-wallet';
 import UserProperty from '../users/enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../helpers/init/initializeTestApp';
-import ErrorMessage from '../../src/graphql/errors/error-message.enum';
-import { fourthUser, fourthUserWallet } from '../../prisma/users.seed';
-import SignInMetaMaskData from '../helpers/enums/sign-in-metamask-data';
-import ExtensionCode from '../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../src/server/initialize/initialize-redis';
-import signTypedDataMetaMask from '../../src/utils/metaMask/sign-typed-data-metamask';
-import responseContainsSetCookie from '../helpers/utils/response-contains-set-cookie';
+import initializeTestApp from '../../helpers/init/initializeTestApp';
+import ErrorMessage from '../../../src/graphql/errors/error-message.enum';
+import { fourthUser, fourthUserWallet } from '../../../prisma/seeds/users.seed';
+import SignInMetaMaskData from '../../helpers/enums/sign-in-metamask-data';
+import ExtensionCode from '../../../src/graphql/errors/extension-code.enum';
+import { redisClient } from '../../../src/server/initialize/initialize-redis';
+import signTypedDataMetaMask from '../../../src/utils/metaMask/sign-typed-data-metamask';
+import responseContainsSetCookie from '../../helpers/utils/response-contains-set-cookie';
 
 describe('Auth', () => {
 	let app: INestApplication;

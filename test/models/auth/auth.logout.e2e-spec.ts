@@ -1,9 +1,9 @@
 import request from 'supertest';
-import Cookie from '../../src/server/enums/cookie.enum';
+import Cookie from '../../../src/server/enums/cookie.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../helpers/init/initializeTestApp';
-import { redisClient } from '../../src/server/initialize/initialize-redis';
-import getCookieFromResponse from '../helpers/utils/get-cookie-from-response';
+import initializeTestApp from '../../helpers/init/initializeTestApp';
+import { redisClient } from '../../../src/server/initialize/initialize-redis';
+import getCookieFromResponse from '../../helpers/utils/get-cookie-from-response';
 
 describe('Auth', () => {
 	let app: INestApplication;

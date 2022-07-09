@@ -4,9 +4,15 @@ import formatToCurrency from './format-to-currency';
 import ITokenBalance from '../interfaces/token-balance-interface';
 import CovalentTokenBalance from '../../../interfaces/covalent-token-balance-interface';
 
-const convertCovalentTokenBalanceToTokenBalance = (
-	tokenBalance: CovalentTokenBalance,
-): ITokenBalance => {
+interface IProps {
+	chainId: string;
+	tokenBalance: CovalentTokenBalance;
+}
+
+const convertCovalentTokenBalanceToTokenBalance = ({
+	chainId,
+	tokenBalance,
+}: IProps): ITokenBalance => {
 	const {
 		type,
 		quote,
@@ -20,8 +26,10 @@ const convertCovalentTokenBalanceToTokenBalance = (
 		balance: covalentBalance,
 	} = tokenBalance;
 	const totalValue = quote;
+	const totalValueString = String(quote);
 	const logoUrl = logo_url;
 	const name = contract_name;
+	const isNft = type === 'nft';
 	const supportsErc = supports_erc;
 	const decimals = contract_decimals;
 	const price = getPrice(quote_rate);
@@ -38,7 +46,9 @@ const convertCovalentTokenBalanceToTokenBalance = (
 	return {
 		type,
 		name,
+		isNft,
 		symbol,
+		chainId,
 		logoUrl,
 		balance,
 		decimals,
@@ -49,7 +59,7 @@ const convertCovalentTokenBalanceToTokenBalance = (
 			formatted: formattedPrice,
 		},
 		totalValue: {
-			value: totalValue,
+			value: totalValueString,
 			formatted: formattedTotalValue,
 		},
 	};

@@ -1,5 +1,4 @@
-import getScamTokensMap from './get-scam-tokens-map';
-import ITokenBalance from '../interfaces/token-balance-interface'
+import ITokenBalance from '../interfaces/token-balance-interface';
 import getCovalentTokenBalances from '../../../services/covelant/get-covalent-token-balances';
 import convertCovalentTokenBalancesToTokenBalances from './convert-covalent-token-balances-to-token-balances';
 
@@ -16,7 +15,6 @@ const getTokenBalances = async ({
 	chainId,
 	currency = 'usd',
 }: ITokenBalancesInput): Promise<ITokenBalance[]> => {
-	const scamTokensMap = await getScamTokensMap();
 	const covalentTokenBalances = await getCovalentTokenBalances({
 		filter,
 		address,
@@ -24,15 +22,9 @@ const getTokenBalances = async ({
 		currency,
 	});
 
-	const filteredTokenBalances = covalentTokenBalances.filter((tokenBalance) => {
-		const { contract_address } = tokenBalance;
-		const scamTokensMapEth = scamTokensMap[chainId];
-
-		return !scamTokensMapEth[contract_address];
-	});
-
 	const tokenBalances = convertCovalentTokenBalancesToTokenBalances({
-		tokenBalances: filteredTokenBalances,
+		chainId,
+		tokenBalances: covalentTokenBalances,
 	});
 
 	return tokenBalances;

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
-import { User } from './models/user.model';
 import { Injectable } from '@nestjs/common';
 import { encodePassword } from './utils/bcrypt';
+import { Exchange } from './models/exchange.model';
 import { UpdateUserInput } from './dto/update-user.input';
 import { PrismaService } from '../../prisma/prisma.service';
 import { FindOneUserInput } from './dto/find-one-user.input';
