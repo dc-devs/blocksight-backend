@@ -212,6 +212,7 @@ type Mutation {
   signInMetaMask(signInMetaMaskInput: SignInMetaMaskInput!): SessionResponse!
   signUp(createUserEmailInput: CreateUserEmailInput!): SessionResponse!
   logOut(userId: Float!): LogOutResponse!
+  updateExchange(id: Int!, updateExchangeInput: UpdateExchangeInput!): Exchange!
 }
 
 input UpdateUserInput {
@@ -234,4 +235,13 @@ input CreateUserEmailInput {
   email: String!
   password: String!
   passwordConfirmation: String
+}
+
+input UpdateExchangeInput {
+  name: String
+  websiteUrl: String
+  logoUrl: String
+  companyLogoUrl: String
+  hasApi: Boolean
+  hasCsv: Boolean
 }

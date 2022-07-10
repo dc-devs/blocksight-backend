@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Exchange } from './models/exchange.model';
-// import { UpdateUserInput } from './dto/update-user.input';
+import { UpdateExchangeInput } from './dto/update-exchange.input';
 import { PrismaService } from '../../prisma/prisma.service';
 import { FindOneExchangeInput } from './dto/find-one-exchange.input';
 import { FindAllExchangesInput } from './dto/find-all-exchanges.input';
@@ -86,15 +86,15 @@ export class ExchangesService {
 	// 	return user;
 	// }
 
-	// update(id: number, data: UpdateUserInput): Promise<User> {
-	// 	return this.prisma.exchange.update({
-	// 		where: {
-	// 			id,
-	// 		},
-	// 		data,
-	// 		select,
-	// 	});
-	// }
+	update(id: number, data: UpdateExchangeInput): Promise<Exchange> {
+		return this.prisma.exchange.update({
+			where: {
+				id,
+			},
+			data,
+			select,
+		});
+	}
 
 	// delete(id: number): Promise<User> {
 	// 	return this.prisma.exchange.delete({

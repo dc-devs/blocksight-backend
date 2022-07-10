@@ -1,7 +1,8 @@
 import ExtensionCode from './extension-code.enum';
 import ErrorCode from '../../prisma/error-code.enum';
 import { UserInputError } from 'apollo-server-express';
-import UserValidationError from '../../models/users/validation-errors/user-validation-error.enum';
+import { UserValidationError } from '../../models/users/enums';
+import { ExchangeValidationError } from '../../models/exchanges/enums';
 
 const userErrors = {
 	[ErrorCode.UNIQUE_CONSTRAINT]: {
@@ -15,6 +16,16 @@ const userErrors = {
 				},
 			});
 		},
+		name: () => {
+			throw new UserInputError(ExtensionCode.BAD_USER_INPUT, {
+				errors: {
+					name: {
+						type: ExtensionCode.BAD_USER_INPUT,
+						message: ExchangeValidationError.NAME_IS_TAKEN,
+					},
+				},
+			});
+		},
 	},
 	[ErrorCode.RECORD_NOT_FOUND]: {
 		cause: (message: string) => {
@@ -22,7 +33,7 @@ const userErrors = {
 				errors: {
 					cause: {
 						type: ExtensionCode.BAD_USER_INPUT,
-						message
+						message,
 					},
 				},
 			});

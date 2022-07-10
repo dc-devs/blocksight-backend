@@ -26,17 +26,17 @@ export class ExchangesResolver {
 		return this.exchangesService.findOne(findOneExchangeInput);
 	}
 
-	// @Mutation(() => Exchange)
-	// async updateExchange(
-	// 	@Args('id', { type: () => Int }) id: number,
-	// 	@Args('updateExchangeInput') updateExchangeInput: UpdateExchangeInput,
-	// ): Promise<Exchange> {
-	// 	try {
-	// 		return await this.exchangesService.update(id, updateExchangeInput);
-	// 	} catch (error) {
-	// 		generateGraphQLError(error);
-	// 	}
-	// }
+	@Mutation(() => Exchange)
+	async updateExchange(
+		@Args('id', { type: () => Int }) id: number,
+		@Args('updateExchangeInput') updateExchangeInput: UpdateExchangeInput,
+	): Promise<Exchange> {
+		try {
+			return await this.exchangesService.update(id, updateExchangeInput);
+		} catch (error) {
+			generateGraphQLError(error);
+		}
+	}
 
 	// @Mutation(() => Exchange)
 	// deleteExchange(
