@@ -8,31 +8,31 @@ import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import getCookieFromResponse from '../../../helpers/utils/get-cookie-from-response';
 
-const runAllCurrentUserTests = () => {
+const runCurrentUserTests = () => {
 	describe('Current User', () => {
 		let app: INestApplication;
-	
+
 		beforeAll(async () => {
 			app = await initializeTestApp();
 		});
-	
+
 		afterAll(async () => {
 			await redisClient.disconnect();
 			await app.close();
 		});
-	
+
 		describe('when logging in with a valid email and a password', () => {
 			describe('and fetching current user', () => {
 				let sessionInput;
 				let expectedUserResponse;
 				const { email, role } = firstUser;
-	
+
 				beforeEach(() => {
 					sessionInput = {
 						email,
 						password,
 					};
-	
+
 					expectedUserResponse = expect.objectContaining({
 						id: expect.any(Number),
 						role,
@@ -41,7 +41,7 @@ const runAllCurrentUserTests = () => {
 						updatedAt: expect.any(String),
 					});
 				});
-	
+
 				it('should return current user', async () => {
 					const loginQuery = {
 						operationName: 'Mutation',
@@ -66,9 +66,9 @@ const runAllCurrentUserTests = () => {
 						.post('/graphql')
 						.set('x-forwarded-proto', 'https')
 						.send(loginQuery)) as any;
-	
+
 					const cookie = getCookieFromResponse(loginResponse);
-	
+
 					const currentUserQuery = {
 						operationName: 'Query',
 						query: `
@@ -89,16 +89,16 @@ const runAllCurrentUserTests = () => {
 							sessionInput,
 						},
 					};
-	
+
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
 						.set('Cookie', [cookie])
 						.send(currentUserQuery);
-	
+
 					const { currentUser } = response.body.data;
 					const { isAuthenticated } = currentUser;
 					const { user } = currentUser;
-	
+
 					expect(response.statusCode).toEqual(HttpStatus.OK);
 					expect(isAuthenticated).toEqual(true);
 					expect(user).toEqual(expectedUserResponse);
@@ -106,7 +106,7 @@ const runAllCurrentUserTests = () => {
 				});
 			});
 		});
-	
+
 		describe('validation', () => {
 			describe('when not logged in', () => {
 				describe('and fetching current user', () => {
@@ -129,22 +129,22 @@ const runAllCurrentUserTests = () => {
 								}`,
 							variables: {},
 						};
-	
+
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
 							.send(currentUserQuery);
-	
+
 						const errors = response.body.errors;
 						const unauthorizedError = errors[0];
-	
+
 						expect(unauthorizedError.message).toEqual(
 							ErrorMessage.UNAUTHORIZED,
 						);
-	
+
 						expect(unauthorizedError.extensions.code).toEqual(
 							ExtensionCode.UNAUTHENTICATED,
 						);
-	
+
 						expect(
 							unauthorizedError.extensions.response.statusCode,
 						).toEqual(HttpStatus.UNAUTHORIZED);
@@ -153,6 +153,6 @@ const runAllCurrentUserTests = () => {
 			});
 		});
 	});
-}
+};
 
-export default runAllCurrentUserTests;
+export default runCurrentUserTests;

@@ -1,17 +1,10 @@
+import { runSignUpTests, runSignInMetaMaskTests } from '../auth/tests';
 import {
 	runUpdateTests,
 	runDeleteTests,
 	runFindAllTests,
 	runFindOneTests,
 } from './tests';
-
-import {
-	runLoginTests,
-	runSignUpTests,
-	runLogOutTests,
-	runAllCurrentUserTests,
-	runSignInMetaMaskTests,
-} from '../auth/tests';
 
 describe('Users', () => {
 	runFindAllTests();
@@ -21,9 +14,6 @@ describe('Users', () => {
 });
 
 describe('Auth', () => {
-	runLoginTests();
 	runSignUpTests();
-	runLogOutTests();
-	runAllCurrentUserTests();
 	runSignInMetaMaskTests();
 });
