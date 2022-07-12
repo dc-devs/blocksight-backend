@@ -7,7 +7,7 @@ import { redisClient } from '../../../../src/server/initialize/initialize-redis'
 import expectedExchangeObject from '../expected-objects/expected-exchange-object';
 
 const runFindOneTests = () => {
-	describe('findOne', () => {
+	describe('Find One', () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
@@ -19,11 +19,36 @@ const runFindOneTests = () => {
 			await app.close();
 		});
 
-		describe('Find One', () => {
-			describe('id', () => {
-				describe('when sending a query with an id for an exchange that does exist', () => {
-					it('should return exchange', async () => {
-						const id = 1;
+		describe('id', () => {
+			describe('when sending a query with an id for an exchange that does exist', () => {
+				it('should return exchange', async () => {
+					const id = 1;
+					const graphQlquery = {
+						operationName: 'Query',
+						query,
+						variables: {
+							findOneExchangeInput: {
+								id,
+							},
+						},
+					};
+
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(graphQlquery);
+
+					const exchange = response.body.data.findOneExchange;
+
+					expect(response.statusCode).toEqual(HttpStatus.OK);
+					expect(exchange.id).toEqual(id);
+					expect(exchange).toEqual(expectedExchangeObject);
+				});
+			});
+
+			describe('validation', () => {
+				describe('when sending a query with an id for exchange that does not exist', () => {
+					it('should return null', async () => {
+						const id = 100;
 						const graphQlquery = {
 							operationName: 'Query',
 							query,
@@ -41,42 +66,42 @@ const runFindOneTests = () => {
 						const exchange = response.body.data.findOneExchange;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
-						expect(exchange.id).toEqual(id);
-						expect(exchange).toEqual(expectedExchangeObject);
-					});
-				});
-
-				describe('validation', () => {
-					describe('when sending a query with an id for exchange that does not exist', () => {
-						it('should return null', async () => {
-							const id = 100;
-							const graphQlquery = {
-								operationName: 'Query',
-								query,
-								variables: {
-									findOneExchangeInput: {
-										id,
-									},
-								},
-							};
-
-							const response = await request(app.getHttpServer())
-								.post('/graphql')
-								.send(graphQlquery);
-
-							const exchange = response.body.data.findOneExchange;
-
-							expect(response.statusCode).toEqual(HttpStatus.OK);
-							expect(exchange).toBeNull();
-						});
+						expect(exchange).toBeNull();
 					});
 				});
 			});
+		});
 
-			describe('name', () => {
-				describe('when sending a query with an name for an exchange that does exist', () => {
-					it('should return exchange', async () => {
-						const name = ExchangeName.COINBASE;
+		describe('name', () => {
+			describe('when sending a query with an name for an exchange that does exist', () => {
+				it('should return exchange', async () => {
+					const name = ExchangeName.COINBASE;
+					const graphQlquery = {
+						operationName: 'Query',
+						query,
+						variables: {
+							findOneExchangeInput: {
+								name,
+							},
+						},
+					};
+
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(graphQlquery);
+
+					const exchange = response.body.data.findOneExchange;
+
+					expect(response.statusCode).toEqual(HttpStatus.OK);
+					expect(exchange.name).toEqual(name);
+					expect(exchange).toEqual(expectedExchangeObject);
+				});
+			});
+
+			describe('validation', () => {
+				describe('when sending a query with an id for exchange that does not exist', () => {
+					it('should return null', async () => {
+						const name = 'non-existent-company';
 						const graphQlquery = {
 							operationName: 'Query',
 							query,
@@ -94,58 +119,31 @@ const runFindOneTests = () => {
 						const exchange = response.body.data.findOneExchange;
 
 						expect(response.statusCode).toEqual(HttpStatus.OK);
-						expect(exchange.name).toEqual(name);
-						expect(exchange).toEqual(expectedExchangeObject);
-					});
-				});
-
-				describe('validation', () => {
-					describe('when sending a query with an id for exchange that does not exist', () => {
-						it('should return null', async () => {
-							const name = 'non-existent-company';
-							const graphQlquery = {
-								operationName: 'Query',
-								query,
-								variables: {
-									findOneExchangeInput: {
-										name,
-									},
-								},
-							};
-
-							const response = await request(app.getHttpServer())
-								.post('/graphql')
-								.send(graphQlquery);
-
-							const exchange = response.body.data.findOneExchange;
-
-							expect(response.statusCode).toEqual(HttpStatus.OK);
-							expect(exchange).toBeNull();
-						});
+						expect(exchange).toBeNull();
 					});
 				});
 			});
+		});
 
-			describe('validation', () => {
-				describe('when sending a query with no data', () => {
-					it('should return null', async () => {
-						const graphQlquery = {
-							operationName: 'Query',
-							query,
-							variables: {
-								findOneExchangeInput: {},
-							},
-						};
+		describe('validation', () => {
+			describe('when sending a query with no data', () => {
+				it('should return null', async () => {
+					const graphQlquery = {
+						operationName: 'Query',
+						query,
+						variables: {
+							findOneExchangeInput: {},
+						},
+					};
 
-						const response = await request(app.getHttpServer())
-							.post('/graphql')
-							.send(graphQlquery);
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(graphQlquery);
 
-						const exchange = response.body.data.findOneExchange;
+					const exchange = response.body.data.findOneExchange;
 
-						expect(response.statusCode).toEqual(HttpStatus.OK);
-						expect(exchange).toBeNull();
-					});
+					expect(response.statusCode).toEqual(HttpStatus.OK);
+					expect(exchange).toBeNull();
 				});
 			});
 		});

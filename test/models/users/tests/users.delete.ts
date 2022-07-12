@@ -1,14 +1,15 @@
 import request from 'supertest';
-import ErrorMessage from './enums/error-message.enum';
-import UserProperty from './enums/user-property.enum';
-import ErrorCode from '../../../src/prisma/error-code.enum';
+import ErrorMessage from '../enums/error-message.enum';
+import UserProperty from '../enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../helpers/init/initializeTestApp';
-import expectedUserObject from './expected-objects/expected-user-object';
-import { redisClient } from '../../../src/server/initialize/initialize-redis';
-import GraphQLErrorMessage from '../../../src/graphql/errors/error-message.enum';
+import ErrorCode from '../../../../src/prisma/error-code.enum';
+import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import expectedUserObject from '../expected-objects/expected-user-object';
+import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import GraphQLErrorMessage from '../../../../src/graphql/errors/error-message.enum';
 
-describe('Users', () => {
+const runDeleteTests = () => {
+	describe('Delete One', () => {
 	let app: INestApplication;
 
 	beforeAll(async () => {
@@ -20,7 +21,6 @@ describe('Users', () => {
 		await app.close();
 	});
 
-	describe('Delete one', () => {
 		describe('when sending a valid user id', () => {
 			it('should delete that user', async () => {
 				const id = 55;
@@ -97,4 +97,6 @@ describe('Users', () => {
 			});
 		});
 	});
-});
+};
+
+export default runDeleteTests;

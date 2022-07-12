@@ -1,27 +1,27 @@
 import request from 'supertest';
 import { UserRole } from '@prisma/client';
-import { firstUser } from '../../../prisma/seeds/users.seed';
-import ErrorMessage from '../users/enums/error-message.enum';
-import UserProperty from '../users/enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../helpers/init/initializeTestApp';
-import ExtensionCode from '../../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../../src/server/initialize/initialize-redis';
-import UserValidationError from '../../../src/models/users/enums/user-validation-error.enum';
+import ErrorMessage from '../../users/enums/error-message.enum';
+import UserProperty from '../../users/enums/user-property.enum';
+import { firstUser } from '../../../../prisma/seeds/users.seed';
+import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
+import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import UserValidationError from '../../../../src/models/users/enums/user-validation-error.enum';
 
-describe('Auth', () => {
-	let app: INestApplication;
-
-	beforeAll(async () => {
-		app = await initializeTestApp();
-	});
-
-	afterAll(async () => {
-		await redisClient.disconnect();
-		await app.close();
-	});
-
+const runSignUpTests = () => {
 	describe('Signup', () => {
+		let app: INestApplication;
+
+		beforeAll(async () => {
+			app = await initializeTestApp();
+		});
+
+		afterAll(async () => {
+			await redisClient.disconnect();
+			await app.close();
+		});
+
 		describe('when signing up with a valid email and a password', () => {
 			let email;
 			let createUserEmailInput;
@@ -408,4 +408,6 @@ describe('Auth', () => {
 			});
 		});
 	});
-});
+};
+
+export default runSignUpTests;

@@ -10,7 +10,7 @@ import { redisClient } from '../../../../src/server/initialize/initialize-redis'
 import GraphQLErrorMessage from '../../../../src/graphql/errors/error-message.enum';
 
 const runDeleteTests = () => {
-	describe('delete', () => {
+	describe('Delete One', () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
@@ -22,10 +22,31 @@ const runDeleteTests = () => {
 			await app.close();
 		});
 
-		describe('Delete one', () => {
-			describe('when sending a valid exchnage id', () => {
+		describe('when sending a valid exchnage id', () => {
+			it('should delete that exchnage', async () => {
+				const id = allExchangesCount;
+				const graphqlQuery = {
+					operationName: 'Mutation',
+					query,
+					variables: {
+						id,
+					},
+				};
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(graphqlQuery);
+
+				const exchnage = response.body.data.deleteExchange;
+
+				expect(response.statusCode).toEqual(HttpStatus.OK);
+				expect(exchnage).toEqual(expectedUserObject);
+			});
+		});
+
+		describe('validation', () => {
+			describe('when sending an invalid exchnage id', () => {
 				it('should delete that exchnage', async () => {
-					const id = allExchangesCount;
+					const id = 100;
 					const graphqlQuery = {
 						operationName: 'Mutation',
 						query,
@@ -37,46 +58,21 @@ const runDeleteTests = () => {
 						.post('/graphql')
 						.send(graphqlQuery);
 
-					const exchnage = response.body.data.deleteExchange;
+					const errors = response.body.errors;
+					const prismaError = errors[0];
+					const exception = prismaError.extensions.exception;
 
-					expect(response.statusCode).toEqual(HttpStatus.OK);
-					expect(exchnage).toEqual(expectedUserObject);
-				});
-			});
+					expect(errors.length).toEqual(1);
 
-			describe('validation', () => {
-				describe('when sending an invalid exchnage id', () => {
-					it('should delete that exchnage', async () => {
-						const id = 100;
-						const graphqlQuery = {
-							operationName: 'Mutation',
-							query,
-							variables: {
-								id,
-							},
-						};
-						const response = await request(app.getHttpServer())
-							.post('/graphql')
-							.send(graphqlQuery);
+					expect(prismaError.message).toContain(
+						GraphQLErrorMessage.DATABASE_ERROR,
+					);
 
-						const errors = response.body.errors;
-						const prismaError = errors[0];
-						const exception = prismaError.extensions.exception;
+					expect(exception.code).toEqual(ErrorCode.RECORD_NOT_FOUND);
 
-						expect(errors.length).toEqual(1);
-
-						expect(prismaError.message).toContain(
-							GraphQLErrorMessage.DATABASE_ERROR,
-						);
-
-						expect(exception.code).toEqual(
-							ErrorCode.RECORD_NOT_FOUND,
-						);
-
-						expect(exception.meta.cause).toContain(
-							ErrorMessage.DELETE_RECORD_NOT_FOUND,
-						);
-					});
+					expect(exception.meta.cause).toContain(
+						ErrorMessage.DELETE_RECORD_NOT_FOUND,
+					);
 				});
 			});
 		});

@@ -1,24 +1,24 @@
 import request from 'supertest';
-import { firstUser } from '../../../prisma/seeds/users.seed';
-import UserProperty from './enums/user-property.enum';
+import UserProperty from '../enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../helpers/init/initializeTestApp';
-import expectedUserObject from './expected-objects/expected-user-object';
-import { redisClient } from '../../../src/server/initialize/initialize-redis';
+import { firstUser } from '../../../../prisma/seeds/users.seed';
+import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import expectedUserObject from '../expected-objects/expected-user-object';
+import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 
-describe('Users', () => {
-	let app: INestApplication;
-
-	beforeAll(async () => {
-		app = await initializeTestApp();
-	});
-
-	afterAll(async () => {
-		await redisClient.disconnect();
-		await app.close();
-	});
-
+const runFindOneTests = () => {
 	describe('Find One', () => {
+		let app: INestApplication;
+
+		beforeAll(async () => {
+			app = await initializeTestApp();
+		});
+
+		afterAll(async () => {
+			await redisClient.disconnect();
+			await app.close();
+		});
+
 		describe('id', () => {
 			describe('when sending a query with an id for user that does exist', () => {
 				it('should return user', async () => {
@@ -198,4 +198,6 @@ describe('Users', () => {
 			});
 		});
 	});
-});
+};
+
+export default runFindOneTests;

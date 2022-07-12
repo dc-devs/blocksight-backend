@@ -1,32 +1,32 @@
 import request from 'supertest';
 import { UserRole } from '@prisma/client';
-import ErrorMessage from './enums/error-message.enum';
-import UserProperty from './enums/user-property.enum';
+import ErrorMessage from '../enums/error-message.enum';
+import UserProperty from '../enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../helpers/init/initializeTestApp';
-import ExtensionCode from '../../../src/graphql/errors/extension-code.enum';
-import expectedUserObject from './expected-objects/expected-user-object';
-import { redisClient } from '../../../src/server/initialize/initialize-redis';
+import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import expectedUserObject from '../expected-objects/expected-user-object';
+import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
+import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import {
 	allUsersCount,
 	thirdUser as thirdUserAdmin,
 	secondUser as secondUserAdmin,
 	firstUser as firstUserSuperAdmin,
-} from '../../../prisma/seeds/users.seed';
+} from '../../../../prisma/seeds/users.seed';
 
-describe('Users', () => {
-	let app: INestApplication;
+const runFindAllTests = () => {
+	describe('Find All', () => {
+		let app: INestApplication;
 
-	beforeAll(async () => {
-		app = await initializeTestApp();
-	});
+		beforeAll(async () => {
+			app = await initializeTestApp();
+		});
 
-	afterAll(async () => {
-		await redisClient.disconnect();
-		await app.close();
-	});
+		afterAll(async () => {
+			await redisClient.disconnect();
+			await app.close();
+		});
 
-	describe('Find all', () => {
 		describe('when sending a query to get all users', () => {
 			it('should return all users', async () => {
 				const query = {
@@ -53,7 +53,7 @@ describe('Users', () => {
 				const users = response.body.data.findAllUsers;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(users.length <= allUsersCount).toBe(true);
+				expect(users.length).toEqual(allUsersCount);
 
 				users.forEach((user) => {
 					expect(user).toEqual(expectedUserObject);
@@ -396,4 +396,6 @@ describe('Users', () => {
 			});
 		});
 	});
-});
+};
+
+export default runFindAllTests;

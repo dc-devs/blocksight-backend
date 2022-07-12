@@ -1,27 +1,27 @@
 import request from 'supertest';
 import { UserRole } from '@prisma/client';
-import { firstUser } from '../../../prisma/seeds/users.seed';
-import UserProperty from './enums/user-property.enum';
-import ErrorMessage from './enums/error-message.enum';
+import UserProperty from '../enums/user-property.enum';
+import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../helpers/init/initializeTestApp';
-import ExtensionCode from '../../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../../src/server/initialize/initialize-redis';
-import UserValidationError from '../../../src/models/users/enums/user-validation-error.enum';
+import { firstUser } from '../../../../prisma/seeds/users.seed';
+import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
+import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import UserValidationError from '../../../../src/models/users/enums/user-validation-error.enum';
 
-describe('Users', () => {
-	let app: INestApplication;
-
-	beforeAll(async () => {
-		app = await initializeTestApp();
-	});
-
-	afterAll(async () => {
-		await redisClient.disconnect();
-		await app.close();
-	});
-
+const runUpdateTests = () => {
 	describe('Update', () => {
+		let app: INestApplication;
+
+		beforeAll(async () => {
+			app = await initializeTestApp();
+		});
+
+		afterAll(async () => {
+			await redisClient.disconnect();
+			await app.close();
+		});
+
 		describe('when sending a valid user id and udpate data', () => {
 			let updateUserInput;
 
@@ -284,4 +284,6 @@ describe('Users', () => {
 			});
 		});
 	});
-});
+};
+
+export default runUpdateTests;
