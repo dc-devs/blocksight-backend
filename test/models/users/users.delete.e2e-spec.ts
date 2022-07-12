@@ -20,7 +20,6 @@ describe('Users', () => {
 		await app.close();
 	});
 
-	// Add Tests to create user for unique email constraint
 	describe('Delete one', () => {
 		describe('when sending a valid user id', () => {
 			it('should delete that user', async () => {

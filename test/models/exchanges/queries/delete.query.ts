@@ -1,6 +1,5 @@
-const update = `
-mutation Mutation($id: Int!, $updateExchangeInput: UpdateExchangeInput!) {
-  updateExchange(id: $id, updateExchangeInput: $updateExchangeInput) {
+const deleteQuery = `mutation Mutation($id: Int!) {
+  deleteExchange(id: $id) {
     id
     name
     websiteUrl
@@ -21,4 +20,4 @@ mutation Mutation($id: Int!, $updateExchangeInput: UpdateExchangeInput!) {
   }
 }`;
 
-export default update;
+export default deleteQuery;

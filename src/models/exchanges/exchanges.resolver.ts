@@ -38,10 +38,10 @@ export class ExchangesResolver {
 		}
 	}
 
-	// @Mutation(() => Exchange)
-	// deleteExchange(
-	// 	@Args('id', { type: () => Int }) id: number,
-	// ): Promise<Exchange> {
-	// 	return this.exchangesService.delete(id);
-	// }
+	@Mutation(() => Exchange)
+	deleteExchange(
+		@Args('id', { type: () => Int }) id: number,
+	): Promise<Exchange> {
+		return this.exchangesService.delete(id);
+	}
 }

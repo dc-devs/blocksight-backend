@@ -213,6 +213,7 @@ type Mutation {
   signUp(createUserEmailInput: CreateUserEmailInput!): SessionResponse!
   logOut(userId: Float!): LogOutResponse!
   updateExchange(id: Int!, updateExchangeInput: UpdateExchangeInput!): Exchange!
+  deleteExchange(id: Int!): Exchange!
 }
 
 input UpdateUserInput {

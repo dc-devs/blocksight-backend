@@ -4,7 +4,7 @@ import { UserInputError } from 'apollo-server-express';
 import { UserValidationError } from '../../models/users/enums';
 import { ExchangeValidationError } from '../../models/exchanges/enums';
 
-const userErrors = {
+const customErrors = {
 	[ErrorCode.UNIQUE_CONSTRAINT]: {
 		email: () => {
 			throw new UserInputError(ExtensionCode.BAD_USER_INPUT, {
@@ -41,4 +41,4 @@ const userErrors = {
 	},
 };
 
-export default userErrors;
+export default customErrors;

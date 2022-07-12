@@ -96,12 +96,12 @@ export class ExchangesService {
 		});
 	}
 
-	// delete(id: number): Promise<User> {
-	// 	return this.prisma.exchange.delete({
-	// 		where: {
-	// 			id,
-	// 		},
-	// 		select,
-	// 	});
-	// }
+	delete(id: number): Promise<Exchange> {
+		return this.prisma.exchange.delete({
+			where: {
+				id,
+			},
+			select,
+		});
+	}
 }
