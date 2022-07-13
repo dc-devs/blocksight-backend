@@ -163,7 +163,7 @@ const runSignInMetaMaskTests = () => {
 		});
 
 		describe('validation', () => {
-			describe('when sending no data', () => {
+			describe('when signing in with no data', () => {
 				let signInMetaMaskInput;
 
 				beforeEach(() => {
@@ -214,7 +214,7 @@ const runSignInMetaMaskTests = () => {
 				});
 			});
 
-			describe('when sending a valid address but invalid signature', () => {
+			describe('when signing in with a valid address but invalid signature', () => {
 				let signInMetaMaskInput;
 
 				beforeEach(() => {
@@ -270,7 +270,7 @@ const runSignInMetaMaskTests = () => {
 				});
 			});
 
-			describe('when sending a valid address but invalid message', () => {
+			describe('when signing in with a valid address but invalid message', () => {
 				let signInMetaMaskInput;
 
 				beforeEach(() => {

@@ -27,7 +27,7 @@ const runFindAllTests = () => {
 			await app.close();
 		});
 
-		describe('when sending a query to get all users', () => {
+		describe('when querying to get all users', () => {
 			it('should return all users', async () => {
 				const query = {
 					operationName: 'Query',
@@ -62,7 +62,7 @@ const runFindAllTests = () => {
 			});
 		});
 
-		describe('when sending a query with arguments', () => {
+		describe('when querying with arguments', () => {
 			describe('where', () => {
 				describe("and the where argument aims to fetch users with 'role: SUPER_ADMIN'", () => {
 					it('should return all users with that role', async () => {
@@ -357,7 +357,7 @@ const runFindAllTests = () => {
 		});
 
 		describe('validation', () => {
-			describe('when sending a query with an unexpected user field', () => {
+			describe('when querying with an unexpected user field', () => {
 				it('should return with an unexpected field error', async () => {
 					const extraParam = 'extraParam';
 					const query = {

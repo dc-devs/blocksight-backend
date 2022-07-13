@@ -80,7 +80,7 @@ const runLoginTests = () => {
 		});
 
 		describe('validation', () => {
-			describe('when sending no data', () => {
+			describe('when logging in with no data', () => {
 				let sessionInput;
 
 				beforeEach(() => {
@@ -131,7 +131,7 @@ const runLoginTests = () => {
 					).toEqual(HttpStatus.UNAUTHORIZED);
 				});
 			});
-			describe('when sending a valid email but incorrect password', () => {
+			describe('when logging in with a valid email but incorrect password', () => {
 				let sessionInput;
 				const { email } = firstUser;
 
@@ -184,7 +184,7 @@ const runLoginTests = () => {
 				});
 			});
 
-			describe('when sending an invalid email and correct password', () => {
+			describe('when logging in with an invalid email and correct password', () => {
 				let sessionInput;
 
 				beforeEach(() => {

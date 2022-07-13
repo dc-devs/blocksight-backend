@@ -25,7 +25,7 @@ const runFindAllTests = () => {
 			await app.close();
 		});
 
-		describe('when sending a query to get all exchanges', () => {
+		describe('when querying to get all exchanges', () => {
 			it('should return all exchanges', async () => {
 				const graphQlquery = {
 					operationName: 'Query',
@@ -49,7 +49,7 @@ const runFindAllTests = () => {
 			});
 		});
 
-		describe('when sending a query with arguments', () => {
+		describe('when querying with arguments', () => {
 			describe('where', () => {
 				describe(`and the where argument aims to fetch exchanges with 'name: ${ExchangeName.COINBASE}'`, () => {
 					it('should return all exchanges with that name', async () => {
@@ -270,7 +270,7 @@ const runFindAllTests = () => {
 		});
 
 		describe('validation', () => {
-			describe('when sending a query with an unexpected exchange field', () => {
+			describe('when querying with an unexpected exchange field', () => {
 				it('should return with an unexpected field error', async () => {
 					const extraParam = 'extraParam';
 					const query = {

@@ -1,5 +1,7 @@
 import {
-	runUpdateTests, runDeleteTests,
+	runCreateTests,
+	runUpdateTests,
+	runDeleteTests,
 	runFindAllTests,
 	runFindOneTests,
 } from './tests';
@@ -9,4 +11,5 @@ describe('Exchanges', () => {
 	runFindOneTests();
 	runDeleteTests();
 	runUpdateTests();
+	runCreateTests();
 });

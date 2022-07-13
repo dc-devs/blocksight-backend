@@ -20,7 +20,7 @@ const runFindOneTests = () => {
 		});
 
 		describe('id', () => {
-			describe('when sending a query with an id for an exchange that does exist', () => {
+			describe('when querying with an id for an exchange that does exist', () => {
 				it('should return exchange', async () => {
 					const id = 1;
 					const graphQlquery = {
@@ -46,7 +46,7 @@ const runFindOneTests = () => {
 			});
 
 			describe('validation', () => {
-				describe('when sending a query with an id for exchange that does not exist', () => {
+				describe('when querying with an id for exchange that does not exist', () => {
 					it('should return null', async () => {
 						const id = 100;
 						const graphQlquery = {
@@ -73,7 +73,7 @@ const runFindOneTests = () => {
 		});
 
 		describe('name', () => {
-			describe('when sending a query with an name for an exchange that does exist', () => {
+			describe('when querying with an name for an exchange that does exist', () => {
 				it('should return exchange', async () => {
 					const name = ExchangeName.COINBASE;
 					const graphQlquery = {
@@ -99,7 +99,7 @@ const runFindOneTests = () => {
 			});
 
 			describe('validation', () => {
-				describe('when sending a query with an id for exchange that does not exist', () => {
+				describe('when querying with an id for exchange that does not exist', () => {
 					it('should return null', async () => {
 						const name = 'non-existent-company';
 						const graphQlquery = {
@@ -126,7 +126,7 @@ const runFindOneTests = () => {
 		});
 
 		describe('validation', () => {
-			describe('when sending a query with no data', () => {
+			describe('when querying with no data', () => {
 				it('should return null', async () => {
 					const graphQlquery = {
 						operationName: 'Query',

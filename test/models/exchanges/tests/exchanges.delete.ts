@@ -10,7 +10,7 @@ import { redisClient } from '../../../../src/server/initialize/initialize-redis'
 import GraphQLErrorMessage from '../../../../src/graphql/errors/error-message.enum';
 
 const runDeleteTests = () => {
-	describe('Delete One', () => {
+	describe('Delete', () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
@@ -22,8 +22,8 @@ const runDeleteTests = () => {
 			await app.close();
 		});
 
-		describe('when sending a valid exchnage id', () => {
-			it('should delete that exchnage', async () => {
+		describe('when deleting with a valid exchange id', () => {
+			it('should delete that exchange', async () => {
 				const id = allExchangesCount;
 				const graphqlQuery = {
 					operationName: 'Mutation',
@@ -36,16 +36,16 @@ const runDeleteTests = () => {
 					.post('/graphql')
 					.send(graphqlQuery);
 
-				const exchnage = response.body.data.deleteExchange;
+				const exchange = response.body.data.deleteExchange;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(exchnage).toEqual(expectedUserObject);
+				expect(exchange).toEqual(expectedUserObject);
 			});
 		});
 
 		describe('validation', () => {
-			describe('when sending an invalid exchnage id', () => {
-				it('should delete that exchnage', async () => {
+			describe('when deleting with an invalid exchange id', () => {
+				it('should delete that exchange', async () => {
 					const id = 100;
 					const graphqlQuery = {
 						operationName: 'Mutation',

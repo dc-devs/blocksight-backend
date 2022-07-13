@@ -23,7 +23,7 @@ const runUpdateTests = () => {
 
 		const updateName = 'test-company-name';
 
-		describe('when sending a valid exchange id and udpate data', () => {
+		describe('when updating with a valid exchange id and udpate data', () => {
 			let updateExchangeInput;
 
 			beforeEach(() => {
@@ -109,7 +109,7 @@ const runUpdateTests = () => {
 			});
 
 			describe('invalid params', () => {
-				describe('when sending a valid exchange id and invalid udpate data', () => {
+				describe('when updating with a valid exchange id and invalid udpate data', () => {
 					let updateExchangeInput;
 
 					beforeEach(() => {
@@ -144,7 +144,7 @@ const runUpdateTests = () => {
 					});
 				});
 
-				describe('when sending an invalid exchange id and valid udpate data', () => {
+				describe('when updating with an invalid exchange id and valid udpate data', () => {
 					let updateExchangeInput;
 
 					beforeEach(() => {

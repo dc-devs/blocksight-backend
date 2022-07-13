@@ -82,7 +82,7 @@ const runSignUpTests = () => {
 		});
 
 		describe('validation', () => {
-			describe('when sending no data', () => {
+			describe('when signing up with no data', () => {
 				let createUserEmailInput;
 
 				beforeEach(() => {
@@ -192,7 +192,7 @@ const runSignUpTests = () => {
 					});
 				});
 
-				describe('when sending an email that is not an email', () => {
+				describe('when signing up with an email that is not an email', () => {
 					let createUserEmailInput;
 
 					beforeEach(() => {
@@ -245,7 +245,7 @@ const runSignUpTests = () => {
 					});
 				});
 
-				describe('when sending an email that already exists', () => {
+				describe('when signing up with an email that already exists', () => {
 					let createUserEmailInput;
 
 					beforeEach(() => {
@@ -353,7 +353,7 @@ const runSignUpTests = () => {
 					});
 				});
 
-				describe('when sending a password that is not long enough', () => {
+				describe('when signing up with a password that is not long enough', () => {
 					let createUserEmailInput;
 
 					beforeEach(() => {

@@ -20,7 +20,7 @@ const runFindOneTests = () => {
 		});
 
 		describe('id', () => {
-			describe('when sending a query with an id for user that does exist', () => {
+			describe('when querying with an id for user that does exist', () => {
 				it('should return user', async () => {
 					const id = 1;
 					const query = {
@@ -57,7 +57,7 @@ const runFindOneTests = () => {
 			});
 
 			describe('validation', () => {
-				describe('when sending a query with an id for user that does not exist', () => {
+				describe('when querying with an id for user that does not exist', () => {
 					it('should return null', async () => {
 						const id = 100;
 						const query = {
@@ -94,7 +94,7 @@ const runFindOneTests = () => {
 		});
 
 		describe('email', () => {
-			describe('when sending a query with an email for user that does exist', () => {
+			describe('when querying with an email for user that does exist', () => {
 				it('should return user', async () => {
 					const email = firstUser.email;
 					const query = {
@@ -129,7 +129,7 @@ const runFindOneTests = () => {
 			});
 
 			describe('validation', () => {
-				describe('when sending a query with an email for user that does not exist', () => {
+				describe('when querying with an email for user that does not exist', () => {
 					it('should return null', async () => {
 						const email = 'i-dont-exist@gmail.com';
 						const query = {
@@ -166,7 +166,7 @@ const runFindOneTests = () => {
 		});
 
 		describe('validation', () => {
-			describe('when sending a query with no data', () => {
+			describe('when querying with no data', () => {
 				it('should return null', async () => {
 					const query = {
 						operationName: 'Query',

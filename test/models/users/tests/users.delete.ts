@@ -9,19 +9,19 @@ import { redisClient } from '../../../../src/server/initialize/initialize-redis'
 import GraphQLErrorMessage from '../../../../src/graphql/errors/error-message.enum';
 
 const runDeleteTests = () => {
-	describe('Delete One', () => {
-	let app: INestApplication;
+	describe('Delete', () => {
+		let app: INestApplication;
 
-	beforeAll(async () => {
-		app = await initializeTestApp();
-	});
+		beforeAll(async () => {
+			app = await initializeTestApp();
+		});
 
-	afterAll(async () => {
-		await redisClient.disconnect();
-		await app.close();
-	});
+		afterAll(async () => {
+			await redisClient.disconnect();
+			await app.close();
+		});
 
-		describe('when sending a valid user id', () => {
+		describe('when deleting with a valid user id', () => {
 			it('should delete that user', async () => {
 				const id = 55;
 				const query = {
@@ -54,7 +54,7 @@ const runDeleteTests = () => {
 		});
 
 		describe('validation', () => {
-			describe('when sending an invalid user id', () => {
+			describe('when deleting with an invalid user id', () => {
 				it('should delete that user', async () => {
 					const id = 100;
 					const query = {

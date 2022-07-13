@@ -22,7 +22,7 @@ const runUpdateTests = () => {
 			await app.close();
 		});
 
-		describe('when sending a valid user id and udpate data', () => {
+		describe('when updating with a valid user id and udpate data', () => {
 			let updateUserInput;
 
 			beforeEach(() => {
@@ -72,7 +72,7 @@ const runUpdateTests = () => {
 
 		describe('validation', () => {
 			describe('email', () => {
-				describe('when sending an email that is not an email', () => {
+				describe('when updating with an email that is not an email', () => {
 					let id = 20;
 					let updateUserInput;
 
@@ -123,7 +123,7 @@ const runUpdateTests = () => {
 					});
 				});
 
-				describe('when sending an email that already exists', () => {
+				describe('when updating with an email that already exists', () => {
 					let updateUserInput;
 
 					beforeEach(() => {
@@ -176,7 +176,7 @@ const runUpdateTests = () => {
 			});
 
 			describe('invalid params', () => {
-				describe('when sending a valid user id and invalid udpate data', () => {
+				describe('when updating with a valid user id and invalid udpate data', () => {
 					let updateUserInput;
 
 					beforeEach(() => {
@@ -233,7 +233,7 @@ const runUpdateTests = () => {
 					});
 				});
 
-				describe('when sending an invalid user id and valid udpate data', () => {
+				describe('when updating with an invalid user id and valid udpate data', () => {
 					let updateUserInput;
 
 					beforeEach(() => {
