@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { User } from '../../users/models/user.model';
+import { User } from '../../../users/dto/models/user.model';
 import { IsNumber, IsString, IsDate, IsBoolean } from 'class-validator';
 
 @ObjectType()

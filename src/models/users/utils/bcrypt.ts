@@ -7,4 +7,4 @@ const encodePassword = (password: string): string => {
 	return hashSync(password, salt);
 };
 
-export { encodePassword };
+export default encodePassword;

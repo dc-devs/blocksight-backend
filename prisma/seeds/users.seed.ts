@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { UserRole } from '@prisma/client';
 import generateWallet from '../../src/utils/generate-wallet';
-import { encodePassword } from '../../src/models/users/utils/bcrypt';
+import { encodePassword } from '../../src/models/users/utils';
 
 const users = [];
 

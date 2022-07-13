@@ -1,17 +1,10 @@
-import Web3 from 'web3';
 import { compareSync } from 'bcrypt';
 import { Injectable } from '@nestjs/common';
-import { User } from '../users/models/user.model';
-import { SessionInput } from './dto/session.input';
 import Cookie from '../../server/enums/cookie.enum';
+import { User } from '../users/dto/models/user.model';
 import { UsersService } from '../users/users.service';
 import { UnauthorizedException } from '@nestjs/common';
-import { SignInMetaMaskInput } from './dto/sign-in-metamask.input';
-import {
-	SignTypedDataVersion,
-	recoverTypedSignature,
-} from '@metamask/eth-sig-util';
-
+import { SessionInput, SignInMetaMaskInput } from './dto/inputs';
 import isSignedTypedDataMetaMask from '../../utils/metaMask/is-signed-typed-data-metamask';
 
 interface ILoginRequest {

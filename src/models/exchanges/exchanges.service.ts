@@ -1,12 +1,13 @@
+import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
-import { Exchange } from './models/exchange.model';
-import { UpdateExchangeInput } from './dto/update-exchange.input';
+import { Exchange } from './dto/models/exchange.model';
 import { PrismaService } from '../../prisma/prisma.service';
-import { FindOneExchangeInput } from './dto/find-one-exchange.input';
-import { FindAllExchangesInput } from './dto/find-all-exchanges.input';
-// import { UserWithPassword } from './models/user-with-password.model';
-// import { CreateUserEmailInput } from './dto/create-user-email.input';
-// import { CreateUserAddressInput } from './dto/create-user-address.input';
+import {
+	UpdateExchangeInput,
+	CreateExchangeInput,
+	FindOneExchangeInput,
+	FindAllExchangesInput,
+} from './dto/inputs';
 
 const select = {
 	id: true,
@@ -49,42 +50,14 @@ export class ExchangesService {
 		});
 	}
 
-	// create(createUserEmailInput: CreateUserEmailInput): Promise<User> {
-	// 	const { email, password } = createUserEmailInput;
-	// 	const encodedPassword = encodePassword(password);
-	// 	const emailLowerCase = email.toLowerCase();
+	create(createExchangeInput: CreateExchangeInput): Promise<Exchange> {
+		const data = createExchangeInput as Prisma.ExchangeCreateInput;
 
-	// 	return this.prisma.exchange.create({
-	// 		data: {
-	// 			email: emailLowerCase,
-	// 			password: encodedPassword,
-	// 		},
-	// 		select,
-	// 	});
-	// }
-
-	// async createOrGetFromAddress(
-	// 	createUserAddressInput: CreateUserAddressInput,
-	// ): Promise<User> {
-	// 	const { primaryWalletAddress } = createUserAddressInput;
-	// 	let user;
-
-	// 	user = await this.findOne({ primaryWalletAddress });
-
-	// 	if (!user) {
-	// 		const password = uuidv4();
-	// 		const encodedPassword = encodePassword(password);
-	// 		user = this.prisma.exchange.create({
-	// 			data: {
-	// 				primaryWalletAddress,
-	// 				password: encodedPassword,
-	// 			},
-	// 			select,
-	// 		});
-	// 	}
-
-	// 	return user;
-	// }
+		return this.prisma.exchange.create({
+			data,
+			select,
+		});
+	}
 
 	update(id: number, data: UpdateExchangeInput): Promise<Exchange> {
 		return this.prisma.exchange.update({

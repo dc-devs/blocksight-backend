@@ -101,12 +101,12 @@ input FindOneUserInput {
 input FindAllUsersInput {
   skip: Float
   take: Float
-  cursor: Cursor
+  cursor: UserCursor
   where: UserWhereInput
   orderBy: UserOrderByInput
 }
 
-input Cursor {
+input UserCursor {
   id: Float
   email: String
   primaryWalletAddress: String
@@ -151,12 +151,12 @@ input GetTokenBalancesInput {
 input FindAllExchangesInput {
   skip: Float
   take: Float
-  cursor: ExchangeCursor
+  cursor: ExchangeCursorInput
   where: ExchangeWhereInput
   orderBy: ExchangeOrderByInput
 }
 
-input ExchangeCursor {
+input ExchangeCursorInput {
   id: Float
   name: String
 }
@@ -212,6 +212,7 @@ type Mutation {
   signInMetaMask(signInMetaMaskInput: SignInMetaMaskInput!): SessionResponse!
   signUp(createUserEmailInput: CreateUserEmailInput!): SessionResponse!
   logOut(userId: Float!): LogOutResponse!
+  createExchange(createExchangeInput: CreateExchangeInput!): Exchange!
   updateExchange(id: Int!, updateExchangeInput: UpdateExchangeInput!): Exchange!
   deleteExchange(id: Int!): Exchange!
 }
@@ -236,6 +237,15 @@ input CreateUserEmailInput {
   email: String!
   password: String!
   passwordConfirmation: String
+}
+
+input CreateExchangeInput {
+  name: String
+  websiteUrl: String
+  logoUrl: String
+  companyLogoUrl: String
+  hasApi: Boolean
+  hasCsv: Boolean
 }
 
 input UpdateExchangeInput {

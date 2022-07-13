@@ -1,8 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsNumber, IsOptional } from 'class-validator';
-import { ExchangeCursor } from './exchange-cursor.input';
-import { ExchangeWhereInput } from './exchange-where.input';
-import { ExchangeOrderByInput } from './exchange-order-by.input';
+import { ExchangeWhereInput, ExchangeOrderByInput } from '../prisma';
+import { ExchangeCursorInput } from '../prisma/exchange-cursor.input';
 
 @InputType()
 export class FindAllExchangesInput {
@@ -18,7 +17,7 @@ export class FindAllExchangesInput {
 
 	@IsOptional()
 	@Field({ nullable: true })
-	cursor?: ExchangeCursor;
+	cursor?: ExchangeCursorInput;
 
 	@IsOptional()
 	@Field({ nullable: true })

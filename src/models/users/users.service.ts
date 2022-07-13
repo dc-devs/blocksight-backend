@@ -1,14 +1,15 @@
 import { v4 as uuidv4 } from 'uuid';
-import { User } from './models/user.model';
+import { encodePassword } from './utils';
 import { Injectable } from '@nestjs/common';
-import { encodePassword } from './utils/bcrypt';
-import { UpdateUserInput } from './dto/update-user.input';
+import { User, UserWithPassword } from './dto/models';
 import { PrismaService } from '../../prisma/prisma.service';
-import { FindOneUserInput } from './dto/find-one-user.input';
-import { FindAllUsersInput } from './dto/find-all-users.input';
-import { UserWithPassword } from './models/user-with-password.model';
-import { CreateUserEmailInput } from './dto/create-user-email.input';
-import { CreateUserAddressInput } from './dto/create-user-address.input';
+import {
+	UpdateUserInput,
+	FindOneUserInput,
+	FindAllUsersInput,
+	CreateUserEmailInput,
+	CreateUserAddressInput,
+} from './dto/inputs';
 
 const select = {
 	id: true,

@@ -1,10 +1,13 @@
-import { Exchange } from './models/exchange.model';
+import { Exchange } from './dto/models/exchange.model';
 import { ExchangesService } from './exchanges.service';
-import { UpdateExchangeInput } from './dto/update-exchange.input';
-import { FindOneExchangeInput } from './dto/find-one-exchange.input';
-import { FindAllExchangesInput } from './dto/find-all-exchanges.input';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import generateGraphQLError from '../../graphql/errors/generate-graphql-error';
+import {
+	UpdateExchangeInput,
+	CreateExchangeInput,
+	FindOneExchangeInput,
+	FindAllExchangesInput,
+} from './dto/inputs';
 
 @Resolver(() => Exchange)
 export class ExchangesResolver {
@@ -24,6 +27,20 @@ export class ExchangesResolver {
 		findOneExchangeInput: FindOneExchangeInput,
 	): Promise<Exchange | null> {
 		return this.exchangesService.findOne(findOneExchangeInput);
+	}
+
+	@Mutation(() => Exchange)
+	async createExchange(
+		@Args('createExchangeInput')
+		createExchangeInput: CreateExchangeInput,
+	) {
+		try {
+			return await this.exchangesService.create({
+				...createExchangeInput,
+			});
+		} catch (error) {
+			generateGraphQLError(error);
+		}
 	}
 
 	@Mutation(() => Exchange)

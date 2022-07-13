@@ -1,11 +1,11 @@
 import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
-import { SignInMetaMaskInput } from './dto/sign-in-metamask.input';
-import { SessionInput, SessionResponse, LogOutResponse } from './dto';
+import { SessionResponse, LogOutResponse } from './dto/models';
+import { SessionInput, SignInMetaMaskInput } from './dto/inputs';
 import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
-import { CreateUserEmailInput } from '../users/dto/create-user-email.input';
 import generateGraphQLError from '../../graphql/errors/generate-graphql-error';
+import { CreateUserEmailInput } from '../users/dto/inputs/create-user-email.input';
 import {
 	LogInUser,
 	IsValidUser,

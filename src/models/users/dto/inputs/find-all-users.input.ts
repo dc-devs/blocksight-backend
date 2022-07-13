@@ -1,8 +1,6 @@
-import { Cursor } from './cursor.input';
 import { Field, InputType } from '@nestjs/graphql';
-import { UserWhereInput } from './user-where.input';
 import { IsNumber, IsOptional } from 'class-validator';
-import { UserOrderByInput } from './user-order-by.input';
+import { UserCursor, UserWhereInput, UserOrderByInput } from '../prisma';
 
 @InputType()
 export class FindAllUsersInput {
@@ -18,7 +16,7 @@ export class FindAllUsersInput {
 
 	@IsOptional()
 	@Field({ nullable: true })
-	cursor?: Cursor;
+	cursor?: UserCursor;
 
 	@IsOptional()
 	@Field({ nullable: true })

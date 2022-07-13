@@ -2,7 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 @InputType()
-export class Cursor {
+export class UserCursor {
 	@IsNumber()
 	@IsOptional()
 	@Field({ nullable: true })
