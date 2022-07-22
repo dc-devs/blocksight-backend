@@ -8,6 +8,7 @@ import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import getCookieFromResponse from '../../../helpers/utils/get-cookie-from-response';
 
+// TODO Refactor out queries
 const runCurrentUserTests = () => {
 	describe('Current User', () => {
 		let app: INestApplication;
