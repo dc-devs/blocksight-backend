@@ -1,12 +1,16 @@
 import { createFile } from '../utils';
-import { IFilePaths } from '../../../interfaces';
+import { IFilePaths, IModelName } from '../../../interfaces';
 
 interface IProps {
 	filePaths: IFilePaths;
+	modelName: IModelName;
 }
 
-const createModuleFile = ({ filePaths }: IProps) => {
+const createModuleFile = ({ modelName, filePaths }: IProps) => {
+	const data = ``;
+
 	createFile({
+		data,
 		file: filePaths.root.module.path,
 	});
 };

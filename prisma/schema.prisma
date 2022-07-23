@@ -42,12 +42,12 @@ model Exchange {
 }
 
 model UsersExchanges {
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int // relation scalar field (used in the `@relation` attribute above)
-  exchange   Exchange @relation(fields: [exchangeId], references: [id])
-  exchangeId Int // relation scalar field (used in the `@relation` attribute above)
-  assignedAt DateTime @default(now())
-  assignedBy String
+  user                    User     @relation(fields: [userId], references: [id])
+  userId                  Int // relation scalar field (used in the `@relation` attribute above)
+  exchange                Exchange @relation(fields: [exchangeId], references: [id])
+  exchangeId              Int // relation scalar field (used in the `@relation` attribute above)
+  createdAt               DateTime      @default(now())
+  updatedAt               DateTime      @updatedAt
 
   @@id([userId, exchangeId])
 }

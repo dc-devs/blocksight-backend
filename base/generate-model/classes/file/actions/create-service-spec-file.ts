@@ -1,11 +1,12 @@
 import { createFile } from '../utils';
-import { IFilePaths } from '../../../interfaces';
+import { IFilePaths, IModelName } from '../../../interfaces';
 
 interface IProps {
 	filePaths: IFilePaths;
+	modelName: IModelName;
 }
 
-const createServiceSpecFile = ({ filePaths }: IProps) => {
+const createServiceSpecFile = ({ filePaths, modelName }: IProps) => {
 	createFile({
 		file: filePaths.root.serviceSpec.path,
 	});

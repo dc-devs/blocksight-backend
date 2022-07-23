@@ -17,8 +17,8 @@ CREATE TABLE "Exchange" (
 CREATE TABLE "UsersExchanges" (
     "userId" INTEGER NOT NULL,
     "exchangeId" INTEGER NOT NULL,
-    "assignedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "assignedBy" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "UsersExchanges_pkey" PRIMARY KEY ("userId","exchangeId")
 );

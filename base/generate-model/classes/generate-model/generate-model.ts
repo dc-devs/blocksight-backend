@@ -1,12 +1,14 @@
 import File from '../file';
-import rimraf from 'rimraf';
 import Folder from '../Folder';
-import { paramCase } from 'change-case';
+import { clean } from './actions';
+import ModelName from '../model-name';
 import FolderPaths from '../folder-paths';
-import { IFolderPaths } from '../../interfaces';
+import { IFolderPaths, IModelAttributes } from '../../interfaces';
 
 interface IConstructorProps {
-	modelName: string;
+	isManyToMany?: boolean;
+	attributes: IModelAttributes;
+	modelNamePluralPascalCase: string;
 }
 
 class GenerateModel {
@@ -14,19 +16,27 @@ class GenerateModel {
 	generateNewModelFiles: CallableFunction;
 	generateNewModelFolders: CallableFunction;
 
-	constructor({ modelName }: IConstructorProps) {
-		const modelNameParamCase = paramCase(modelName);
+	constructor({
+		attributes,
+		isManyToMany = false,
+		modelNamePluralPascalCase,
+	}: IConstructorProps) {
+		const modelName = new ModelName({
+			isManyToMany,
+			modelNamePluralPascalCase,
+		});
 
 		const { folderPaths } = new FolderPaths({
-			modelName: modelNameParamCase,
+			modelName: modelName.plural.paramCase,
 		});
 
 		const { generateNewModelFolders } = new Folder({
-			modelName: modelNameParamCase,
+			modelName: modelName.plural.paramCase,
 		});
 
 		const { generateNewModelFiles } = new File({
-			modelName: modelNameParamCase,
+			modelName,
+			attributes,
 			rootPath: folderPaths.root.path,
 		});
 
@@ -36,7 +46,7 @@ class GenerateModel {
 	}
 
 	clean = () => {
-		rimraf(this.folderPaths.root.path, () => {});
+		clean({ rootPath: this.folderPaths.root.path });
 	};
 
 	start = () => {
