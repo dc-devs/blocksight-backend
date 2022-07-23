@@ -1,52 +1,46 @@
 import File from '../file';
+import rimraf from 'rimraf';
+import Folder from '../Folder';
 import { paramCase } from 'change-case';
 import FolderPaths from '../folder-paths';
 import { IFolderPaths } from '../../interfaces';
-import {
-	createEnumsFolder,
-	createModelRootFolder,
-	createDtoAndSubFolders,
-} from './actions';
+
+interface IConstructorProps {
+	modelName: string;
+}
 
 class GenerateModel {
 	folderPaths: IFolderPaths;
 	generateNewModelFiles: CallableFunction;
+	generateNewModelFolders: CallableFunction;
 
-	constructor(modelName: string) {
+	constructor({ modelName }: IConstructorProps) {
 		const modelNameParamCase = paramCase(modelName);
+
 		const { folderPaths } = new FolderPaths({
-			rootPath: modelNameParamCase,
+			modelName: modelNameParamCase,
 		});
 
-		const file = new File({
+		const { generateNewModelFolders } = new Folder({
+			modelName: modelNameParamCase,
+		});
+
+		const { generateNewModelFiles } = new File({
 			modelName: modelNameParamCase,
 			rootPath: folderPaths.root.path,
 		});
 
 		this.folderPaths = folderPaths;
-		this.generateNewModelFiles = file.generateNewModelFiles;
+		this.generateNewModelFiles = generateNewModelFiles;
+		this.generateNewModelFolders = generateNewModelFolders;
 	}
 
-	createModelRootFolder = () => {
-		createModelRootFolder(this.folderPaths.root);
-	};
-
-	createDtoAndSubFolders = () => {
-		createDtoAndSubFolders(this.folderPaths.root);
-	};
-
-	createEnumsFolder = () => {
-		createEnumsFolder(this.folderPaths.root);
-	};
-
-	createNewModelFolders = () => {
-		this.createModelRootFolder();
-		this.createDtoAndSubFolders();
-		this.createEnumsFolder();
+	clean = () => {
+		rimraf(this.folderPaths.root.path, () => {});
 	};
 
 	start = () => {
-		this.createNewModelFolders();
+		this.generateNewModelFolders();
 		this.generateNewModelFiles();
 	};
 }

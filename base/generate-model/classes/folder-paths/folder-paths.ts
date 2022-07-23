@@ -2,14 +2,14 @@ import { generateFolderPaths } from './utils';
 import { IFolderPaths } from '../../interfaces';
 
 interface IConstructorProps {
-	rootPath: string;
+	modelName: string;
 }
 
 class FolderPaths {
 	folderPaths: IFolderPaths;
 
-	constructor({ rootPath }: IConstructorProps) {
-		const folderPaths = generateFolderPaths(rootPath);
+	constructor({ modelName }: IConstructorProps) {
+		const folderPaths = generateFolderPaths(modelName);
 
 		this.folderPaths = folderPaths;
 	}

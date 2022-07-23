@@ -3,8 +3,8 @@ import { FolderName } from '../enums';
 import { generateRootFolderPath } from '../utils';
 import { IFolderPaths } from '../../../interfaces';
 
-const generateFolderPaths = (rootPath: string) => {
-	const rootFolderPath = generateRootFolderPath(rootPath);
+const generateFolderPaths = (modelName: string) => {
+	const rootFolderPath = generateRootFolderPath(modelName);
 	const enumsFolderPath = join(rootFolderPath, FolderName.ENUMS);
 	const dtoFolderPath = join(rootFolderPath, FolderName.DTO);
 
