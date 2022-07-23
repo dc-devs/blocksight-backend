@@ -1,21 +1,16 @@
-import FilePaths from '../file-paths';
+import File from '../file';
 import { paramCase } from 'change-case';
 import FolderPaths from '../folder-paths';
-import { IFolderRoot, IFilePaths, IFolderPaths } from '../../interfaces';
+import { IFolderPaths } from '../../interfaces';
 import {
-	createModuleFile,
-	createServiceFile,
 	createEnumsFolder,
-	createResolverFile,
-	createServiceSpecFile,
 	createModelRootFolder,
-	createResolverSpecFile,
 	createDtoAndSubFolders,
 } from './actions';
 
 class GenerateModel {
-	filePaths: IFilePaths;
 	folderPaths: IFolderPaths;
+	generateNewModelFiles: CallableFunction;
 
 	constructor(modelName: string) {
 		const modelNameParamCase = paramCase(modelName);
@@ -23,56 +18,25 @@ class GenerateModel {
 			rootPath: modelNameParamCase,
 		});
 
-		const { filePaths } = new FilePaths({
-			rootPath: folderPaths.modelRoot.path,
+		const file = new File({
 			modelName: modelNameParamCase,
+			rootPath: folderPaths.root.path,
 		});
 
 		this.folderPaths = folderPaths;
-		this.folderPaths = folderPaths;
-		this.filePaths = filePaths;
+		this.generateNewModelFiles = file.generateNewModelFiles;
 	}
 
 	createModelRootFolder = () => {
-		createModelRootFolder(this.folderPaths.modelRoot);
+		createModelRootFolder(this.folderPaths.root);
 	};
 
 	createDtoAndSubFolders = () => {
-		createDtoAndSubFolders(this.folderPaths.modelRoot);
+		createDtoAndSubFolders(this.folderPaths.root);
 	};
 
 	createEnumsFolder = () => {
-		createEnumsFolder(this.folderPaths.modelRoot);
-	};
-
-	createModuleFile = () => {
-		createModuleFile({
-			filePaths: this.filePaths,
-		});
-	};
-
-	createResolverFile = () => {
-		createResolverFile({
-			filePaths: this.filePaths,
-		});
-	};
-
-	createResolverSpecFile = () => {
-		createResolverSpecFile({
-			filePaths: this.filePaths,
-		});
-	};
-
-	createServiceFile = () => {
-		createServiceFile({
-			filePaths: this.filePaths,
-		});
-	};
-
-	createServiceSpecFile = () => {
-		createServiceSpecFile({
-			filePaths: this.filePaths,
-		});
+		createEnumsFolder(this.folderPaths.root);
 	};
 
 	createNewModelFolders = () => {
@@ -81,17 +45,9 @@ class GenerateModel {
 		this.createEnumsFolder();
 	};
 
-	createNewModelFiles = () => {
-		this.createModuleFile();
-		this.createResolverFile();
-		this.createResolverSpecFile();
-		this.createServiceFile();
-		this.createServiceSpecFile();
-	};
-
 	start = () => {
 		this.createNewModelFolders();
-		this.createNewModelFiles();
+		this.generateNewModelFiles();
 	};
 }
 

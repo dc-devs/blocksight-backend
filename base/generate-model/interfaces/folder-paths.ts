@@ -1,7 +1,7 @@
 import IFolderRoot from './folder-root';
 
 interface IFolderPaths {
-	modelRoot: IFolderRoot;
+	root: IFolderRoot;
 }
 
 export default IFolderPaths;

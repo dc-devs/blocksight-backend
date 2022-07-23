@@ -13,7 +13,7 @@ const generateFolderPaths = (rootPath: string) => {
 	const prismaFolderPath = join(dtoFolderPath, FolderName.PRISMA);
 
 	const paths: IFolderPaths = {
-		modelRoot: {
+		root: {
 			path: rootFolderPath,
 			dto: {
 				path: dtoFolderPath,

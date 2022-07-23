@@ -3,6 +3,6 @@ import GenerateModel from './classes/generate-model';
 
 const modelName = 'UsersExchanges';
 const { folderPaths } = new GenerateModel(modelName);
-const { modelRoot } = folderPaths;
+const { root } = folderPaths;
 
-rimraf(modelRoot.path, () => {});
+rimraf(root.path, () => {});
