@@ -1,37 +1,31 @@
+import { join } from 'path';
 import { FileName } from '../enums';
-import { IFilePaths } from '../../../interfaces';
-import generateFilePath from './generate-file-path';
+import { IFilePaths, IModelName } from '../../../interfaces';
+import { generateRootLevelFilePaths, generateDtoInputsLevelFilePaths } from '.';
 
 interface IProps {
 	rootPath: string;
-	modelName: string;
+	modelName: IModelName;
 }
 
 const generateFilePaths = ({ rootPath, modelName }: IProps) => {
-	const moduleFilePath = generateFilePath({
-		rootPath,
+	const {
+		moduleFilePath,
+		serviceFilePath,
+		resolverFilePath,
+		serviceSpecFilePath,
+		resolverSpecFilePath,
+	} = generateRootLevelFilePaths({ rootPath, modelName });
+
+	const {
+		indexFilePath,
+		updateFilePath,
+		createFilePath,
+		findOneFilePath,
+		findAllFilePath,
+	} = generateDtoInputsLevelFilePaths({
+		rootPath: join(rootPath, FileName.DTO, FileName.INPUTS),
 		modelName,
-		fileName: FileName.MODULE,
-	});
-	const resolverFilePath = generateFilePath({
-		rootPath,
-		modelName,
-		fileName: FileName.RESOLVER,
-	});
-	const resolverSpecFilePath = generateFilePath({
-		rootPath,
-		modelName,
-		fileName: `${FileName.RESOLVER}.${FileName.SPEC}`,
-	});
-	const serviceFilePath = generateFilePath({
-		rootPath,
-		modelName,
-		fileName: FileName.SERVICE,
-	});
-	const serviceSpecFilePath = generateFilePath({
-		rootPath,
-		modelName,
-		fileName: `${FileName.SERVICE}.${FileName.SPEC}`,
 	});
 
 	const paths: IFilePaths = {
@@ -50,6 +44,25 @@ const generateFilePaths = ({ rootPath, modelName }: IProps) => {
 			},
 			serviceSpec: {
 				path: serviceSpecFilePath,
+			},
+			dto: {
+				inputs: {
+					index: {
+						path: indexFilePath,
+					},
+					update: {
+						path: updateFilePath,
+					},
+					create: {
+						path: createFilePath,
+					},
+					findAll: {
+						path: findAllFilePath,
+					},
+					findOne: {
+						path: findOneFilePath,
+					},
+				},
 			},
 		},
 	};

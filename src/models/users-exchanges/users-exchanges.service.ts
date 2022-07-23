@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
-import { UsersExchanges } from './dto/models/usersExchanges.model';
+import { UsersExchanges } from './dto/models/users-exchanges.model';
 import { PrismaService } from '../../prisma/prisma.service';
 import {
 	UpdateUsersExchangesInput,

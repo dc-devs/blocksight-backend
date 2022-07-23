@@ -10,7 +10,7 @@ const generateServiceFileData = ({ modelName, attributes }: IProps) => {
 	const select = generateSelectAttributes({ attributes });
 	const data = `import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
-import { ${modelName.singular.pascalCase} } from './dto/models/${modelName.singular.camelCase}.model';
+import { ${modelName.singular.pascalCase} } from './dto/models/${modelName.singular.paramCase}.model';
 import { PrismaService } from '../../prisma/prisma.service';
 import {
 	Update${modelName.singular.pascalCase}Input,

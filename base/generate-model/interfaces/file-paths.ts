@@ -1,7 +1,7 @@
-import IFileRoot from './file-root';
+import IFilePathsRoot from './file-paths-root';
 
 interface IFilePaths {
-	root: IFileRoot;
+	root: IFilePathsRoot;
 }
 
 export default IFilePaths;

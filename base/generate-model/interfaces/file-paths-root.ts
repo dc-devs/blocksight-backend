@@ -1,6 +1,8 @@
 import IPath from './path';
+import IFilePathsDto from './file-paths-dto';
 
-interface IFileRoot {
+interface IFilePathsRoot {
+	dto: IFilePathsDto;
 	module: IPath;
 	resolver: IPath;
 	resolverSpec: IPath;
@@ -8,4 +10,4 @@ interface IFileRoot {
 	serviceSpec: IPath;
 }
 
-export default IFileRoot;
+export default IFilePathsRoot;

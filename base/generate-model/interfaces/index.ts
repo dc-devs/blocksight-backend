@@ -1,6 +1,6 @@
 import IPath from './path';
 import IData from './data';
-import IFileRoot from './file-root';
+import IFilePathsRoot from './file-paths-root';
 import IFilePaths from './file-paths';
 import IFileData from './file-data';
 import IModelName from './model-name';
@@ -13,7 +13,7 @@ import IModelNameOptions from './model-name-options';
 export {
 	IPath,
 	IData,
-	IFileRoot,
+	IFilePathsRoot,
 	IFilePaths,
 	IFileData,
 	IModelName,
