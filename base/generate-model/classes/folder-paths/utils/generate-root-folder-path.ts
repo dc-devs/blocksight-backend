@@ -1,7 +1,11 @@
 import { join } from 'path';
 import { FolderName } from '../enums';
 
-const generateRootFolderPath = (modelName: string) => {
+interface IProps {
+	modelName: string;
+}
+
+const generateRootFolderPath = ({ modelName }: IProps) => {
 	const modelRootFolderPath = join(
 		__dirname,
 		'..',

@@ -1,8 +1,14 @@
 import { createFolder } from '../utils';
 import { IFolderRoot } from '../../../interfaces';
 
-const createModelRootFolder = (modelRoot: IFolderRoot) => {
-	createFolder(modelRoot.path);
+interface IProps {
+	root: IFolderRoot;
+}
+
+const createModelRootFolder = ({ root }: IProps) => {
+	createFolder({
+		directory: root.path,
+	});
 };
 
 export default createModelRootFolder;

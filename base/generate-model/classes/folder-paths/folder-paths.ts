@@ -9,7 +9,7 @@ class FolderPaths {
 	folderPaths: IFolderPaths;
 
 	constructor({ modelName }: IConstructorProps) {
-		const folderPaths = generateFolderPaths(modelName);
+		const folderPaths = generateFolderPaths({ modelName });
 
 		this.folderPaths = folderPaths;
 	}

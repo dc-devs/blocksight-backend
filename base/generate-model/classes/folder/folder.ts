@@ -22,15 +22,21 @@ class Folder {
 	}
 
 	createModelRootFolder = () => {
-		createModelRootFolder(this.folderPaths.root);
+		createModelRootFolder({
+			root: this.folderPaths.root
+		});
 	};
 
 	createDtoAndSubFolders = () => {
-		createDtoAndSubFolders(this.folderPaths.root);
+		createDtoAndSubFolders({
+			root: this.folderPaths.root
+		});
 	};
 
 	createEnumsFolder = () => {
-		createEnumsFolder(this.folderPaths.root);
+		createEnumsFolder({
+			root: this.folderPaths.root
+		});
 	};
 
 	generateNewModelFolders = () => {

@@ -1,6 +1,10 @@
 import fs from 'fs';
 
-const createFolder = (directory) => {
+interface IProps {
+	directory: string;
+}
+
+const createFolder = ({ directory }: IProps) => {
 	const { existsSync, mkdirSync } = fs;
 
 	if (!existsSync(directory)) {

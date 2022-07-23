@@ -1,10 +1,16 @@
 import { createFolder } from '../utils';
 import { IFolderRoot } from '../../../interfaces';
 
-const createEnumsFolder = (modelRoot: IFolderRoot) => {
-	const { enums } = modelRoot;
+interface IProps {
+	root: IFolderRoot;
+}
 
-	createFolder(enums.path);
+const createEnumsFolder = ({ root }: IProps) => {
+	const { enums } = root;
+
+	createFolder({
+		directory: enums.path,
+	});
 };
 
 export default createEnumsFolder;
