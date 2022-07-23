@@ -5,7 +5,17 @@ interface IProps {
 }
 
 const generateModuleFileData = ({ modelName }: IProps) => {
-	const data = `${modelName}`;
+	const data = `import { Module } from '@nestjs/common';
+import { PrismaService } from '../../prisma/prisma.service';
+import { ${modelName.plural.pascalCase}Service } from './${modelName.plural.paramCase}.service';
+import { ${modelName.plural.pascalCase}Resolver } from './${modelName.plural.paramCase}.resolver';
+
+@Module({
+	providers: [${modelName.plural.pascalCase}Resolver, ${modelName.plural.pascalCase}Service, PrismaService],
+	exports: [${modelName.plural.pascalCase}Service],
+})
+export class ${modelName.plural.pascalCase}Module {}
+`;
 
 	return data;
 };
