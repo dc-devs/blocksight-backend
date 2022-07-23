@@ -1,4 +1,4 @@
-import { ModelRoot } from './interfaces';
+import { ModelRoot } from '../../interfaces';
 import { generateFolderPaths } from './utils';
 
 class FolderPaths {

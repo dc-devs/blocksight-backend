@@ -1,7 +1,12 @@
 import { paramCase } from 'change-case';
 import FolderPaths from '../folder-paths';
-import { createFile, createFolder } from './utils';
-import { ModelRoot } from '../folder-paths/interfaces';
+import { ModelRoot } from '../../interfaces';
+import { createFile } from './utils';
+import {
+	createEnumsFolder,
+	createModelRootFolder,
+	createDtoAndSubFolders,
+} from './actions';
 
 class GenerateModel {
 	modelRoot: ModelRoot;
@@ -21,23 +26,15 @@ class GenerateModel {
 	}
 
 	createModelRootFolder = () => {
-		createFolder(this.modelRoot.path);
+		createModelRootFolder(this.modelRoot);
 	};
 
 	createDtoAndSubFolders = () => {
-		const { dto } = this.modelRoot;
-		const { inputs, prisma, models } = dto;
-
-		createFolder(dto.path);
-		createFolder(inputs.path);
-		createFolder(prisma.path);
-		createFolder(models.path);
+		createDtoAndSubFolders(this.modelRoot);
 	};
 
 	createEnumsFolder = () => {
-		const { enums } = this.modelRoot;
-
-		createFolder(enums.path);
+		createEnumsFolder(this.modelRoot);
 	};
 
 	createNewModelFolders = () => {
