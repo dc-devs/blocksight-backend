@@ -1,34 +1,53 @@
-import rimraf from 'rimraf';
-import { join } from 'path';
-import { FilePath } from 'base/enums';
-import { paramCase, pascalCase } from 'change-case';
-import { createFile, createFolder } from '../utils';
+import { GenerateModel } from './classes';
 
 const modelName = 'UsersExchanges';
-const modelNamePascalCase = modelName;
-const modelNameSnakeCase = paramCase(modelName);
+const generateModel = new GenerateModel(modelName);
 
-const config = {
-	modelNameSnakeCase,
-	modelNamePascalCase,
-};
+generateModel.createNewModelFolders();
 
-const baseFolderPath = join(
-	__dirname,
-	'..',
-	'..',
-	'..',
-	FilePath.MODELS,
-	modelNameSnakeCase,
-);
+// const moduleFilePath = join(baseFolderPath, `${modelNameSnakeCase}.module.ts`);
+// createFile({
+// 	file: moduleFilePath,
+// });
 
-const dtoFolderPath = join(baseFolderPath, 'dto');
-const enumsFolderPath = join(baseFolderPath, 'enums');
+// const modelResolverFilePath = join(
+// 	baseFolderPath,
+// 	`${modelNameSnakeCase}.resolver.ts`,
+// );
+// createFile({
+// 	file: modelResolverFilePath,
+// });
 
-rimraf(baseFolderPath, () => {});
+// const modelResolverSpecFilePath = join(
+// 	baseFolderPath,
+// 	`${modelNameSnakeCase}.resolver.spec.ts`,
+// );
+// createFile({
+// 	file: modelResolverSpecFilePath,
+// });
 
-createFolder(baseFolderPath);
-createFolder(dtoFolderPath);
-createFolder(enumsFolderPath);
+// const modelServiceFilePath = join(
+// 	baseFolderPath,
+// 	`${modelNameSnakeCase}.service.ts`,
+// );
+// createFile({
+// 	file: modelServiceFilePath,
+// });
 
-console.log(baseFolderPath);
+// const modelServiceSpecFilePath = join(
+// 	baseFolderPath,
+// 	`${modelNameSnakeCase}.service.spec.ts`,
+// );
+// createFile({
+// 	file: modelServiceSpecFilePath,
+// });
+
+// // Create dto folder and files
+// createFolder(dtoFolderPath);
+
+// createFolder(inputsFolderPath);
+// createFolder(modelsFolderPath);
+// createFolder(prismaFolderPath);
+
+// // Create enums folder structure
+// createFolder(enumsFolderPath);

@@ -1,6 +1,5 @@
 import fs from 'fs';
 
-
 const createFolder = (directory) => {
 	const { existsSync, mkdirSync } = fs;
 
