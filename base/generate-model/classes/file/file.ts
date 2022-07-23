@@ -1,5 +1,11 @@
+import FileData from '../file-data';
 import FilePaths from '../file-paths';
-import { IFilePaths, IModelName, IModelAttributes } from '../../interfaces';
+import {
+	IFileData,
+	IFilePaths,
+	IModelName,
+	IModelAttributes,
+} from '../../interfaces';
 import {
 	createModuleFile,
 	createServiceFile,
@@ -15,53 +21,51 @@ interface IConstructorProps {
 }
 
 class File {
-	modelName: IModelName;
+	fileData: IFileData;
 	filePaths: IFilePaths;
-	attributes: IModelAttributes;
 
 	constructor({ rootPath, modelName, attributes }: IConstructorProps) {
 		const { filePaths } = new FilePaths({
 			rootPath,
 			modelName: modelName.plural.paramCase,
 		});
+		const { fileData } = new FileData({ modelName, attributes });
 
-		this.modelName = modelName;
+		this.fileData = fileData;
 		this.filePaths = filePaths;
-		this.attributes = attributes;
 	}
 
 	createModuleFile = () => {
-		createModuleFile({
-			modelName: this.modelName,
-			filePaths: this.filePaths,
+		createModuleFile({ 
+			fileData: this.fileData,
+			filePaths: this.filePaths, 
 		});
 	};
 
 	createResolverFile = () => {
 		createResolverFile({
-			modelName: this.modelName,
+			fileData: this.fileData,
 			filePaths: this.filePaths,
 		});
 	};
 
 	createResolverSpecFile = () => {
 		createResolverSpecFile({
-			modelName: this.modelName,
+			fileData: this.fileData,
 			filePaths: this.filePaths,
 		});
 	};
 
 	createServiceFile = () => {
 		createServiceFile({
-			modelName: this.modelName,
+			fileData: this.fileData,
 			filePaths: this.filePaths,
-			attributes: this.attributes,
 		});
 	};
 
 	createServiceSpecFile = () => {
 		createServiceSpecFile({
-			modelName: this.modelName,
+			fileData: this.fileData,
 			filePaths: this.filePaths,
 		});
 	};

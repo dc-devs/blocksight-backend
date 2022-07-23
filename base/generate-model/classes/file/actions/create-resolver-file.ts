@@ -1,19 +1,14 @@
 import { createFile } from '../utils';
-import { IFilePaths, IModelName } from '../../../interfaces';
+import { IFilePaths, IFileData } from '../../../interfaces';
 
 interface IProps {
+	fileData: IFileData;
 	filePaths: IFilePaths;
-	modelName: IModelName;
 }
 
-// modelClass?
-// Need to add CamelCase
-// Handle case when name is single or plural
-
-const createResolverFile = ({ filePaths, modelName }: IProps) => {
-	const data = ``;
+const createResolverFile = ({ filePaths, fileData }: IProps) => {
 	createFile({
-		data,
+		data: fileData.root.resolver.data,
 		file: filePaths.root.resolver.path,
 	});
 };

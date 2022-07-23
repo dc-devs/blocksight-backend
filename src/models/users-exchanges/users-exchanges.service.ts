@@ -9,7 +9,14 @@ import {
 	FindAllUsersExchangesInput,
 } from './dto/inputs';
 
-const select = {"user":true,"userId":true,"exchange":true,"exchangeId":true,"createdAt":true,"updatedAt":true};
+const select = {
+	user: true,
+	userId: true,
+	exchange: true,
+	exchangeId: true,
+	createdAt: true,
+	updatedAt: true,
+};
 
 @Injectable()
 export class UsersExchangesService {

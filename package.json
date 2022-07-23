@@ -34,7 +34,7 @@
 		"deploy:delete": "helm uninstall blocksight-development",
 		"install:psql:dev": "helm install postgresql-development bitnami/postgresql --set global.postgresql.auth.username=node_api --set global.postgresql.auth.password=node_api_password --set global.postgresql.auth.database=node_api",
 		"install:blocksight:dev": "helm package . && helm install blocksight-chart-1.0.0.tgz",
-		"gen:model": "node dist/base/generate-model/clean && node dist/base/generate-model/start && yarn lint"
+		"gen:model": "node dist/base/generate-model/clean && node dist/base/generate-model/start"
 	},
 	"dependencies": {
 		"@apollo/gateway": "^2.0.2",
