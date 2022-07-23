@@ -1,5 +1,11 @@
 import { IFileData, IModelAttributes, IModelName } from '../../../interfaces';
-import generateServiceFileData from './generate-service-file-data';
+import {
+	generateModuleFileData,
+	generateServiceFileData,
+	generateResolverFileData,
+	generateServiceSpecFileData,
+	generateResolverSpecFileData,
+} from '.';
 
 interface IProps {
 	modelName: IModelName;
@@ -7,24 +13,28 @@ interface IProps {
 }
 
 const generateFileData = ({ modelName, attributes }: IProps) => {
+	const moduleFileData = generateModuleFileData({ modelName });
+	const resolverFileData = generateResolverFileData({ modelName });
+	const serviceSpecFileData = generateServiceSpecFileData({ modelName });
+	const resolverSpecFileData = generateResolverSpecFileData({ modelName });
 	const serviceFileData = generateServiceFileData({ modelName, attributes });
 
 	const paths: IFileData = {
 		root: {
 			module: {
-				data: '',
+				data: moduleFileData,
 			},
 			resolver: {
-				data: '',
+				data: resolverFileData,
 			},
 			resolverSpec: {
-				data: '',
+				data: resolverSpecFileData,
 			},
 			service: {
 				data: serviceFileData,
 			},
 			serviceSpec: {
-				data: '',
+				data: serviceSpecFileData,
 			},
 		},
 	};
