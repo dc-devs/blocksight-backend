@@ -1,46 +1,97 @@
+import FilePaths from '../file-paths';
 import { paramCase } from 'change-case';
 import FolderPaths from '../folder-paths';
-import { ModelRoot } from '../../interfaces';
-import { createFile } from './utils';
+import { IFolderRoot, IFilePaths, IFolderPaths } from '../../interfaces';
 import {
+	createModuleFile,
+	createServiceFile,
 	createEnumsFolder,
+	createResolverFile,
+	createServiceSpecFile,
 	createModelRootFolder,
+	createResolverSpecFile,
 	createDtoAndSubFolders,
 } from './actions';
 
 class GenerateModel {
-	modelRoot: ModelRoot;
-	folderPaths: FolderPaths;
-	modelNameSnakeCase: string;
-	modelNamePascalCase: string;
+	filePaths: IFilePaths;
+	folderPaths: IFolderPaths;
 
 	constructor(modelName: string) {
-		const modelNameSnakeCase = paramCase(modelName);
-		const folderPaths = new FolderPaths(modelNameSnakeCase);
-		const { modelRoot } = folderPaths;
+		const modelNameParamCase = paramCase(modelName);
+		const { folderPaths } = new FolderPaths({
+			rootPath: modelNameParamCase,
+		});
 
-		this.modelRoot = modelRoot;
+		const { filePaths } = new FilePaths({
+			rootPath: folderPaths.modelRoot.path,
+			modelName: modelNameParamCase,
+		});
+
 		this.folderPaths = folderPaths;
-		this.modelNamePascalCase = modelName;
-		this.modelNameSnakeCase = modelNameSnakeCase;
+		this.folderPaths = folderPaths;
+		this.filePaths = filePaths;
 	}
 
 	createModelRootFolder = () => {
-		createModelRootFolder(this.modelRoot);
+		createModelRootFolder(this.folderPaths.modelRoot);
 	};
 
 	createDtoAndSubFolders = () => {
-		createDtoAndSubFolders(this.modelRoot);
+		createDtoAndSubFolders(this.folderPaths.modelRoot);
 	};
 
 	createEnumsFolder = () => {
-		createEnumsFolder(this.modelRoot);
+		createEnumsFolder(this.folderPaths.modelRoot);
+	};
+
+	createModuleFile = () => {
+		createModuleFile({
+			filePaths: this.filePaths,
+		});
+	};
+
+	createResolverFile = () => {
+		createResolverFile({
+			filePaths: this.filePaths,
+		});
+	};
+
+	createResolverSpecFile = () => {
+		createResolverSpecFile({
+			filePaths: this.filePaths,
+		});
+	};
+
+	createServiceFile = () => {
+		createServiceFile({
+			filePaths: this.filePaths,
+		});
+	};
+
+	createServiceSpecFile = () => {
+		createServiceSpecFile({
+			filePaths: this.filePaths,
+		});
 	};
 
 	createNewModelFolders = () => {
 		this.createModelRootFolder();
 		this.createDtoAndSubFolders();
 		this.createEnumsFolder();
+	};
+
+	createNewModelFiles = () => {
+		this.createModuleFile();
+		this.createResolverFile();
+		this.createResolverSpecFile();
+		this.createServiceFile();
+		this.createServiceSpecFile();
+	};
+
+	start = () => {
+		this.createNewModelFolders();
+		this.createNewModelFiles();
 	};
 }
 

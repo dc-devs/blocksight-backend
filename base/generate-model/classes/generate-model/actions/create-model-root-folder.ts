@@ -1,7 +1,7 @@
 import { createFolder } from '../utils';
-import { ModelRoot } from 'base/generate-model/interfaces';
+import { IFolderRoot } from '../../../interfaces';
 
-const createModelRootFolder = (modelRoot: ModelRoot) => {
+const createModelRootFolder = (modelRoot: IFolderRoot) => {
 	createFolder(modelRoot.path);
 };
 

@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { FolderName } from '../enums';
 
-const generateRootFolderPath = (modelNameSnakeCase: string) => {
+const generateRootFolderPath = (modelNameParamCase: string) => {
 	const modelRootFolderPath = join(
 		__dirname,
 		'..',
@@ -12,7 +12,7 @@ const generateRootFolderPath = (modelNameSnakeCase: string) => {
 		'..',
 		FolderName.SRC,
 		FolderName.MODELS,
-		modelNameSnakeCase,
+		modelNameParamCase,
 	);
 
 	return modelRootFolderPath;

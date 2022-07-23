@@ -1,7 +1,7 @@
 import { createFolder } from '../utils';
-import { ModelRoot } from 'base/generate-model/interfaces';
+import { IFolderRoot } from '../../../interfaces';
 
-const createDtoAndSubFolders = (modelRoot: ModelRoot) => {
+const createDtoAndSubFolders = (modelRoot: IFolderRoot) => {
 	const { dto } = modelRoot;
 	const { inputs, prisma, models } = dto;
 

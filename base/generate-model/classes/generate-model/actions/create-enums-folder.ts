@@ -1,7 +1,7 @@
 import { createFolder } from '../utils';
-import { ModelRoot } from 'base/generate-model/interfaces';
+import { IFolderRoot } from '../../../interfaces';
 
-const createEnumsFolder = (modelRoot: ModelRoot) => {
+const createEnumsFolder = (modelRoot: IFolderRoot) => {
 	const { enums } = modelRoot;
 
 	createFolder(enums.path);

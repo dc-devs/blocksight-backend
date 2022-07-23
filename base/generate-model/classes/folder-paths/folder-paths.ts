@@ -1,14 +1,17 @@
-import { ModelRoot } from '../../interfaces';
 import { generateFolderPaths } from './utils';
+import { IFolderPaths } from '../../interfaces';
+
+interface IConstructorProps {
+	rootPath: string;
+}
 
 class FolderPaths {
-	modelRoot: ModelRoot;
+	folderPaths: IFolderPaths;
 
-	constructor(modelNameSnakeCase: string) {
-		const paths = generateFolderPaths(modelNameSnakeCase);
-		const { modelRoot } = paths;
+	constructor({ rootPath }: IConstructorProps) {
+		const folderPaths = generateFolderPaths(rootPath);
 
-		this.modelRoot = modelRoot;
+		this.folderPaths = folderPaths;
 	}
 }
 
