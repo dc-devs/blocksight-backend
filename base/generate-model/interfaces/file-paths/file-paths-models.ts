@@ -1,4 +1,4 @@
-import IPath from './path';
+import IPath from '../path';
 
 interface IFilePathsModels {
 	model: IPath;

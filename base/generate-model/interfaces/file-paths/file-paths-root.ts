@@ -1,4 +1,4 @@
-import IPath from './path';
+import IPath from '../path';
 import IFilePathsDto from './file-paths-dto';
 
 interface IFilePathsRoot {

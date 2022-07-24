@@ -1,4 +1,4 @@
-import IFolderRoot from './folder-root';
+import IFolderRoot from './folder-paths-root';
 
 interface IFolderPaths {
 	root: IFolderRoot;

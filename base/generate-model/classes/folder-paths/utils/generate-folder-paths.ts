@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { FolderName } from '../enums';
 import { generateRootFolderPath } from '../utils';
-import { IFolderPaths } from '../../../interfaces';
+import { IFolderPaths } from '../../../interfaces/folder-paths';
 
 interface IProps {
 	modelName: string;

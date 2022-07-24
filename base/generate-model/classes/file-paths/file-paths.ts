@@ -1,5 +1,6 @@
 import { generateFilePaths } from './utils';
-import { IFilePaths, IModelName } from '../../interfaces';
+import { IModelName } from '../../interfaces';
+import { IFilePaths } from '../../interfaces/file-paths';
 
 interface IConstructorProps {
 	rootPath: string;

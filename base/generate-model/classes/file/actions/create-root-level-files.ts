@@ -1,8 +1,6 @@
 import { createFile } from '../utils';
-import {
-	IFileData,
-	IFilePaths,
-} from '../../../interfaces';
+import { IFileData } from '../../../interfaces';
+import { IFilePaths } from '../../../interfaces/file-paths';
 
 interface IProps {
 	fileData: IFileData;

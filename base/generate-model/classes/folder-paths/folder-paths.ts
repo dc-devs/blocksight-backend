@@ -1,5 +1,5 @@
 import { generateFolderPaths } from './utils';
-import { IFolderPaths } from '../../interfaces';
+import { IFolderPaths } from '../../interfaces/folder-paths';
 
 interface IConstructorProps {
 	modelName: string;

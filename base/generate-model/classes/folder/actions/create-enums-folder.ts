@@ -1,8 +1,8 @@
 import { createFolder } from '../utils';
-import { IFolderRoot } from '../../../interfaces';
+import { IFolderPathRoot } from '../../../interfaces/folder-paths';
 
 interface IProps {
-	root: IFolderRoot;
+	root: IFolderPathRoot;
 }
 
 const createEnumsFolder = ({ root }: IProps) => {

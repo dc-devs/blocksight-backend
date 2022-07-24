@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { FileName } from '../enums';
-import { IFilePaths, IModelName } from '../../../interfaces';
+import { IModelName } from '../../../interfaces';
+import { IFilePaths } from '../../../interfaces/file-paths';
 import generateRootLevelFilePaths from './generate-root-level-file-paths';
 import generateDtoInputsLevelFilePaths from './generate-dto-inputs-level-file-paths';
 import generateDtoModelsLevelFilePaths from './generate-dto-models-level-file-paths';
@@ -29,9 +30,7 @@ const generateFilePaths = ({ rootPath, modelName }: IProps) => {
 		rootPath: join(rootPath, FileName.DTO, FileName.INPUTS),
 		modelName,
 	});
-	const {
-		modelFilePath,
-	} = generateDtoModelsLevelFilePaths({
+	const { modelFilePath } = generateDtoModelsLevelFilePaths({
 		rootPath: join(rootPath, FileName.DTO, FileName.MODELS),
 		modelName,
 	});

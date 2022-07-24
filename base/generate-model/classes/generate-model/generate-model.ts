@@ -4,7 +4,8 @@ import { clean } from './actions';
 import ModelName from '../model-name';
 import FolderPaths from '../folder-paths';
 import ModelAttributes from '../model-attributes';
-import { IFolderPaths, IModelAttributesInput } from '../../interfaces';
+import { IModelAttributesInput } from '../../interfaces';
+import { IFolderPaths } from '../../interfaces/folder-paths';
 
 interface IConstructorProps {
 	isManyToMany?: boolean;

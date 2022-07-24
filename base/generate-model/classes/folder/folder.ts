@@ -1,5 +1,5 @@
 import FolderPaths from '../folder-paths';
-import { IFolderPaths } from '../../interfaces';
+import { IFolderPaths } from '../../interfaces/folder-paths';
 import {
 	createEnumsFolder,
 	createModelRootFolder,

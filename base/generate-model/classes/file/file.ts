@@ -5,9 +5,9 @@ import {
 	createDtoModelsLevelFiles,
 	createDtoInputsLevelFiles,
 } from './actions';
+import { IFilePaths } from '../../interfaces/file-paths';
 import {
 	IFileData,
-	IFilePaths,
 	IModelName,
 	IModelAttributes,
 } from '../../interfaces';
