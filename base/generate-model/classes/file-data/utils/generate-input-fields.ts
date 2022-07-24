@@ -1,5 +1,5 @@
 import generateInputField from './generate-input-field';
-import { IAttributes } from '../../../interfaces';
+import { IAttributes } from '../../../interfaces/model-attribute';
 
 interface IProps {
 	attributes: IAttributes;

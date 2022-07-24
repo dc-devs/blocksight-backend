@@ -1,4 +1,4 @@
-import { IModelAttributesInput } from '../../../interfaces';
+import { IModelAttributesInput } from '../../../interfaces/config';
 
 interface IProps {
 	attributes: IModelAttributesInput;

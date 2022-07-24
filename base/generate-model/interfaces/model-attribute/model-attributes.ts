@@ -1,4 +1,4 @@
-import IModelAttributeProps from './model-attribute-props';
+import IModelAttributeProps from './model-attribute-data';
 
 interface IModelAttributes {
 	unique: IModelAttributeProps;

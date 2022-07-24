@@ -1,5 +1,5 @@
 import { Character, InputType } from '../enums';
-import { IModelName } from '../../../interfaces';
+import { IModelName } from '../../../interfaces/model-name';
 
 interface IProps {
 	modelName: IModelName;

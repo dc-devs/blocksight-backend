@@ -1,4 +1,4 @@
-import { IModelAttributesInput } from '../../../interfaces';
+import { IModelAttributesInput } from '../../../interfaces/config';
 import { deduplicateArray, flattenArrayOfArrays } from '../../../utils';
 
 interface IProps {

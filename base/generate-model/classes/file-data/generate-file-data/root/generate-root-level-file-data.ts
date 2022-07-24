@@ -1,4 +1,5 @@
-import { IModelName, IModelAttributes } from '../../../../interfaces';
+import { IModelName } from '../../../../interfaces/model-name';
+import { IModelAttributes } from '../../../../interfaces/model-attribute';
 import {
 	generateModuleFileData,
 	generateServiceFileData,

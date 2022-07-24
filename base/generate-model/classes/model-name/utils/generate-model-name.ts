@@ -1,5 +1,5 @@
-import { IModelName } from '../../../interfaces';
 import { paramCase, camelCase } from 'change-case';
+import { IModelName } from '../../../interfaces/model-name';
 import getSingularNameFromString from './get-singular-name-from-string';
 
 interface IProps {

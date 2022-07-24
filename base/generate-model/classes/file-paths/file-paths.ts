@@ -1,5 +1,5 @@
 import { generateFilePaths } from './utils';
-import { IModelName } from '../../interfaces';
+import { IModelName } from '../../interfaces/model-name';
 import { IFilePaths } from '../../interfaces/file-paths';
 
 interface IConstructorProps {

@@ -2,7 +2,8 @@ import FileData from '../file-data';
 import FilePaths from '../file-paths';
 import { IFileData } from '../../interfaces/file-data';
 import { IFilePaths } from '../../interfaces/file-paths';
-import { IModelName, IModelAttributes } from '../../interfaces';
+import { IModelName } from '../../interfaces/model-name';
+import { IModelAttributes } from '../../interfaces/model-attribute';
 import {
 	createRootLevelFiles,
 	createDtoModelsLevelFiles,

@@ -1,6 +1,7 @@
 import filterAttributes from './filter-attributes';
 import getClassValidators from './get-class-validators';
-import { IModelAttributesInput, IModelAttributes } from '../../../interfaces';
+import { IModelAttributesInput } from '../../../interfaces/config';
+import { IModelAttributes } from '../../../interfaces/model-attribute';
 
 interface IProps {
 	attributes: IModelAttributesInput;

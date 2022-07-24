@@ -1,4 +1,4 @@
-import IData from '../data';
+import IData from './data';
 
 interface IFileDataInputs {
 	index: IData;

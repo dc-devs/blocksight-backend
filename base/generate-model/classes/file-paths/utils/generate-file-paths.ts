@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { FileName } from '../enums';
-import { IModelName } from '../../../interfaces';
+import { IModelName } from '../../../interfaces/model-name';
 import { IFilePaths } from '../../../interfaces/file-paths';
 import generateRootLevelFilePaths from './generate-root-level-file-paths';
 import generateDtoInputsLevelFilePaths from './generate-dto-inputs-level-file-paths';

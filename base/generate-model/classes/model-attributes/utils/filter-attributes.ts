@@ -1,5 +1,5 @@
 import { Attribute } from 'base/generate-model/enums';
-import { IModelAttributesInput } from '../../../interfaces';
+import { IModelAttributesInput } from '../../../interfaces/config';
 
 interface IProps {
 	filterUnique?: boolean;

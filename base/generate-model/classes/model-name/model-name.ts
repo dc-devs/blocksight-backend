@@ -1,5 +1,5 @@
 import { generateModelName } from './utils';
-import { IModelName, IModelNameOptions } from '../../interfaces';
+import { IModelName, IModelNameOptions } from '../../interfaces/model-name';
 
 interface IConstructorProps {
 	isManyToMany: boolean;

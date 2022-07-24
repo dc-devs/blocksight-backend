@@ -1,4 +1,4 @@
-import IData from '../data';
+import IData from './data';
 import IFileDataDto from './file-data-dto';
 
 interface IFileDataRoot {

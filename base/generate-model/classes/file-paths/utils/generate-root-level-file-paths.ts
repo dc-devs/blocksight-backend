@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { FileName } from '../enums';
-import { IModelName } from '../../../interfaces';
+import { IModelName } from '../../../interfaces/model-name';
 
 interface IProps {
 	rootPath: string;
@@ -8,7 +8,10 @@ interface IProps {
 }
 
 const generateRootLevelFilePaths = ({ rootPath, modelName }: IProps) => {
-	const moduleFilePath = join(rootPath, `${modelName.plural.paramCase}.${FileName.MODULE}.ts`);
+	const moduleFilePath = join(
+		rootPath,
+		`${modelName.plural.paramCase}.${FileName.MODULE}.ts`,
+	);
 
 	const resolverFilePath = join(
 		rootPath,

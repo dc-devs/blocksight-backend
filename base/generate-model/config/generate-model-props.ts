@@ -1,4 +1,4 @@
-import { IGenerateModelConstructorProps } from '../interfaces';
+import { IGenerateModelConstructorProps } from '../interfaces/config';
 
 const modelNamePluralPascalCase = 'UsersExchanges';
 

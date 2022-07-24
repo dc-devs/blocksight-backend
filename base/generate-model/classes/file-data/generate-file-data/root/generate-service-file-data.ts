@@ -1,4 +1,5 @@
-import { IModelName, IModelAttributesInput } from '../../../../interfaces';
+import { IModelName } from '../../../../interfaces/model-name';
+import { IModelAttributesInput } from '../../../../interfaces/config';
 import generateSelectAttributes from '../../utils/generate-select-attributes';
 
 interface IProps {
