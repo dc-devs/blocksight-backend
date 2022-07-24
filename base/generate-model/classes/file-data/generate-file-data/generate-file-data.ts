@@ -1,24 +1,28 @@
 import { generateDtoLevelFileData } from '../generate-file-data/dto';
 import { generateRootLevelFileData } from '../generate-file-data/root';
-import { IFileData, IModelAttributes, IModelName } from '../../../interfaces';
+import {
+	IFileData,
+	IModelAttributesInput,
+	IModelName,
+} from '../../../interfaces';
 
 interface IProps {
 	modelName: IModelName;
-	attributes: IModelAttributes;
+	modelAttributes: any;
 }
 
-const generateFileData = ({ modelName, attributes }: IProps) => {
+const generateFileData = ({ modelName, modelAttributes }: IProps) => {
 	const {
 		moduleFileData,
 		serviceFileData,
 		resolverFileData,
 		serviceSpecFileData,
 		resolverSpecFileData,
-	} = generateRootLevelFileData({ modelName, attributes });
+	} = generateRootLevelFileData({ modelName, modelAttributes });
 
 	const dto = generateDtoLevelFileData({
 		modelName,
-		attributes,
+		modelAttributes,
 	});
 
 	const paths: IFileData = {

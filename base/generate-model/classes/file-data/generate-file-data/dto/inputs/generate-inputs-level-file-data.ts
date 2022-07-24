@@ -1,22 +1,21 @@
 import { generateInputsCreateFileData } from '.';
 import {
 	IModelName,
-	IModelAttributes,
 	IFileDataInputs,
 } from '../../../../../interfaces';
 
 interface IProps {
 	modelName: IModelName;
-	attributes: IModelAttributes;
+	modelAttributes: any;
 }
 
 const generateInputsLevelFileData = ({
 	modelName,
-	attributes,
+	modelAttributes,
 }: IProps): IFileDataInputs => {
 	const createFileData = generateInputsCreateFileData({
 		modelName,
-		attributes,
+		modelAttributes,
 	});
 
 	return {

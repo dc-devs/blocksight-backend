@@ -10,9 +10,7 @@ import {
 } from './dto/inputs';
 
 const select = {
-	user: true,
 	userId: true,
-	exchange: true,
 	exchangeId: true,
 	createdAt: true,
 	updatedAt: true,

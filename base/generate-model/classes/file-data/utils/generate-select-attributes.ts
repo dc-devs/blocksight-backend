@@ -1,7 +1,7 @@
-import { IModelAttributes } from '../../../interfaces';
+import { IModelAttributesInput } from '../../../interfaces';
 
 interface IProps {
-	attributes: IModelAttributes;
+	attributes: IModelAttributesInput;
 }
 
 const generateSelectAttributes = ({ attributes }: IProps) => {

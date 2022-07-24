@@ -3,11 +3,12 @@ import Folder from '../Folder';
 import { clean } from './actions';
 import ModelName from '../model-name';
 import FolderPaths from '../folder-paths';
-import { IFolderPaths, IModelAttributes } from '../../interfaces';
+import ModelAttributes from '../model-attributes';
+import { IFolderPaths, IModelAttributesInput } from '../../interfaces';
 
 interface IConstructorProps {
 	isManyToMany?: boolean;
-	attributes: IModelAttributes;
+	attributes: IModelAttributesInput;
 	modelNamePluralPascalCase: string;
 }
 
@@ -26,6 +27,10 @@ class GenerateModel {
 			modelNamePluralPascalCase,
 		});
 
+		const { modelAttributes } = new ModelAttributes({
+			attributes,
+		});
+
 		const { folderPaths } = new FolderPaths({
 			modelName: modelName.plural.paramCase,
 		});
@@ -36,7 +41,7 @@ class GenerateModel {
 
 		const { generateNewModelFiles } = new File({
 			modelName,
-			attributes,
+			modelAttributes,
 			rootPath: folderPaths.root.path,
 		});
 

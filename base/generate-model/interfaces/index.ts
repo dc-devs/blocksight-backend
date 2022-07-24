@@ -8,9 +8,11 @@ import IFolderPaths from './folder-paths';
 import IFileDataDto from './file-data-dto';
 import IFileDataRoot from './file-data-root';
 import IFilePathsRoot from './file-paths-root';
+import IModelAttribute from './model-attribute';
 import IFileDataInputs from './file-data-inputs';
-import IModelAttributes from './model-attributes';
 import IModelNameOptions from './model-name-options';
+import IModelAttributesInput from './model-attributes-input';
+import IGenerateModelConstructorProps from './generate-model-constructor-props';
 
 export {
 	IPath,
@@ -23,7 +25,9 @@ export {
 	IFileDataDto,
 	IFileDataRoot,
 	IFilePathsRoot,
+	IModelAttribute,
 	IFileDataInputs,
-	IModelAttributes,
 	IModelNameOptions,
+	IModelAttributesInput,
+	IGenerateModelConstructorProps,
 };

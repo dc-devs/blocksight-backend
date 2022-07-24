@@ -1,16 +1,16 @@
 import generateFileData from './generate-file-data';
-import { IModelName, IModelAttributes, IFileData } from '../../interfaces';
+import { IModelName, IFileData } from '../../interfaces';
 
 interface IConstructorProps {
 	modelName: IModelName;
-	attributes: IModelAttributes;
+	modelAttributes: any;
 }
 
 class FileData {
 	fileData: IFileData;
 
-	constructor({ modelName, attributes }: IConstructorProps) {
-		const fileData = generateFileData({ modelName, attributes });
+	constructor({ modelName, modelAttributes }: IConstructorProps) {
+		const fileData = generateFileData({ modelName, modelAttributes });
 
 		this.fileData = fileData;
 	}

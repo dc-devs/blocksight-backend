@@ -1,18 +1,5 @@
 import GenerateModel from './classes/generate-model';
-
-const modelNamePluralPascalCase = 'UsersExchanges';
-
-const generateModel = new GenerateModel({
-	modelNamePluralPascalCase,
-	isManyToMany: true,
-	attributes: {
-		user: true,
-		userId: true,
-		exchange: true,
-		exchangeId: true,
-		createdAt: true,
-		updatedAt: true,
-	},
-});
+import generateModelProps from './config/generate-model-props'
+const generateModel = new GenerateModel(generateModelProps);
 
 generateModel.clean();

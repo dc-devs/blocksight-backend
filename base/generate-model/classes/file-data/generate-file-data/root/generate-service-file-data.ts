@@ -1,9 +1,9 @@
-import { IModelName, IModelAttributes } from '../../../../interfaces';
+import { IModelName, IModelAttributesInput } from '../../../../interfaces';
 import generateSelectAttributes from '../../utils/generate-select-attributes';
 
 interface IProps {
 	modelName: IModelName;
-	attributes: IModelAttributes;
+	attributes: IModelAttributesInput;
 }
 
 const generateServiceFileData = ({ modelName, attributes }: IProps) => {

@@ -5,25 +5,24 @@ import {
 	IFileData,
 	IFilePaths,
 	IModelName,
-	IModelAttributes,
 } from '../../interfaces';
 
 interface IConstructorProps {
 	rootPath: string;
 	modelName: IModelName;
-	attributes: IModelAttributes;
+	modelAttributes: any;
 }
 
 class File {
 	fileData: IFileData;
 	filePaths: IFilePaths;
 
-	constructor({ rootPath, modelName, attributes }: IConstructorProps) {
+	constructor({ rootPath, modelName, modelAttributes }: IConstructorProps) {
 		const { filePaths } = new FilePaths({
 			rootPath,
 			modelName,
 		});
-		const { fileData } = new FileData({ modelName, attributes });
+		const { fileData } = new FileData({ modelName, modelAttributes });
 
 		this.fileData = fileData;
 		this.filePaths = filePaths;
