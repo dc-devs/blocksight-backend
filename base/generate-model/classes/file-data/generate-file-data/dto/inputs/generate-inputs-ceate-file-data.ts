@@ -1,9 +1,9 @@
 import { generateClassValidatorImport } from '../../../utils';
-import { IModelName } from '../../../../../interfaces';
+import { IModelName, IModelAttributes } from '../../../../../interfaces';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: any;
+	modelAttributes: IModelAttributes;
 }
 
 const generateClassValidatorDecorators = (classValidators: string[]) => {

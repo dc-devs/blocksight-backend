@@ -1,9 +1,9 @@
 import generateFileData from './generate-file-data';
-import { IModelName, IFileData } from '../../interfaces';
+import { IModelName, IFileData, IModelAttributes } from '../../interfaces';
 
 interface IConstructorProps {
 	modelName: IModelName;
-	modelAttributes: any;
+	modelAttributes: IModelAttributes;
 }
 
 class FileData {

@@ -1,4 +1,4 @@
-import { IModelName } from '../../../../interfaces';
+import { IModelName, IModelAttributes } from '../../../../interfaces';
 import {
 	generateModuleFileData,
 	generateServiceFileData,
@@ -9,7 +9,7 @@ import {
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: any;
+	modelAttributes: IModelAttributes;
 }
 
 const generateRootLevelFileData = ({ modelName, modelAttributes }: IProps) => {

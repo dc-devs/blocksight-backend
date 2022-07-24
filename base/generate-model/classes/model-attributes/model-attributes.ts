@@ -1,12 +1,12 @@
 import { generateModelAttributes } from './utils';
-import { IModelAttributesInput } from '../../interfaces';
+import { IModelAttributesInput, IModelAttributes } from '../../interfaces';
 
 interface IConstructorProps {
 	attributes: IModelAttributesInput;
 }
 
 class ModelAttributes {
-	modelAttributes;
+	modelAttributes: IModelAttributes;
 
 	constructor({ attributes }: IConstructorProps) {
 		const modelAttributes = generateModelAttributes({ attributes });

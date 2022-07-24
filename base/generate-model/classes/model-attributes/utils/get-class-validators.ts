@@ -1,5 +1,6 @@
 import { IModelAttributesInput } from '../../../interfaces';
 import { deduplicateArray, flattenArrayOfArrays } from '../../../utils';
+import { Attribute } from '../../../enums';
 
 interface IProps {
 	filterTimeStamps?: boolean;
@@ -15,7 +16,8 @@ const getClassValidators = ({
 
 		if (filterTimeStamps) {
 			filterCriteria =
-				attribute !== 'createdAt' && attribute !== 'updatedAt';
+				attribute !== Attribute.CERATED_AT &&
+				attribute !== Attribute.UPDATED_AT;
 		} else {
 			filterCriteria = true;
 		}

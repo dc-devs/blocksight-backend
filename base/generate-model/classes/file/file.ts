@@ -5,12 +5,13 @@ import {
 	IFileData,
 	IFilePaths,
 	IModelName,
+	IModelAttributes,
 } from '../../interfaces';
 
 interface IConstructorProps {
 	rootPath: string;
 	modelName: IModelName;
-	modelAttributes: any;
+	modelAttributes: IModelAttributes;
 }
 
 class File {
