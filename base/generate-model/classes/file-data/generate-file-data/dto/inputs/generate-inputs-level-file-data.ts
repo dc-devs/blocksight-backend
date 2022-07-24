@@ -1,4 +1,5 @@
-import { generateInputsCreateFileData } from '.';
+import generateInputsCreateFileData from './generate-inputs-ceate-file-data';
+import generateInputsUpdateFileData from './generate-inputs-update-file-data';
 import {
 	IModelName,
 	IFileDataInputs,
@@ -18,6 +19,10 @@ const generateInputsLevelFileData = ({
 		modelName,
 		modelAttributes,
 	});
+	const updateFileData = generateInputsUpdateFileData({
+		modelName,
+		modelAttributes,
+	});
 
 	return {
 		index: {
@@ -27,7 +32,7 @@ const generateInputsLevelFileData = ({
 			data: createFileData,
 		},
 		update: {
-			data: '',
+			data: updateFileData,
 		},
 		findAll: {
 			data: '',

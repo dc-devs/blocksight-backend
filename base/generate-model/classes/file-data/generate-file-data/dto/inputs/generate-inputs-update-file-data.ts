@@ -13,7 +13,7 @@ interface IProps {
 	modelAttributes: IModelAttributes;
 }
 
-const generateInputsCreateFileData = ({
+const generateInputsUpdateFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
@@ -25,7 +25,7 @@ const generateInputsCreateFileData = ({
 	const importNestJsGraphQl = generateImportNestJsGraphQl();
 	const topInputClassFragment = generateTopInputClassFragment({
 		modelName,
-		inputType: InputType.CREATE,
+		inputType: InputType.UPDATE,
 	});
 	const inputFields = generateInputFields({ attributes });
 	const bottomClassFragment = generateBottomClassFragment();
@@ -41,4 +41,4 @@ const generateInputsCreateFileData = ({
 	return data;
 };
 
-export default generateInputsCreateFileData;
+export default generateInputsUpdateFileData;

@@ -1,8 +1,10 @@
+import { Character } from '../enums';
+
 interface IProps {
 	classValidators: string[];
 }
 
-const generateClassValidatorImport = ({ classValidators }: IProps) => {
+const generateImportClassValidator = ({ classValidators }: IProps) => {
 	let classValidatorImport = ``;
 
 	classValidatorImport += 'import { ';
@@ -18,8 +20,9 @@ const generateClassValidatorImport = ({ classValidators }: IProps) => {
 	});
 
 	classValidatorImport += ` } from 'class-validator';`;
+	classValidatorImport += Character.LINE_BREAK;
 
 	return classValidatorImport;
 };
 
-export default generateClassValidatorImport;
+export default generateImportClassValidator;

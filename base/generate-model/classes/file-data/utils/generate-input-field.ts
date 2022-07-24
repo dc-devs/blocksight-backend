@@ -1,7 +1,18 @@
 import { Character } from '../enums';
+import { IAttributes } from '../../../interfaces';
 import generateClassValidatorDecorators from './generate-class-validator-decorators';
 
-const generateInputField = ({ attribute, attributes, isLastInputField }) => {
+interface IProps {
+	attribute: string;
+	attributes: IAttributes;
+	isLastInputField: boolean;
+}
+
+const generateInputField = ({
+	attribute,
+	attributes,
+	isLastInputField,
+}: IProps) => {
 	let data = '';
 	const attributeProps = attributes[attribute];
 	const { typeScriptType, classValidators } = attributeProps;

@@ -22,12 +22,12 @@ export class UpdateExchangeInput {
 	@IsOptional()
 	@Field({ nullable: true })
 	companyLogoUrl?: string;
-	
+
 	@IsBoolean()
 	@IsOptional()
 	@Field({ nullable: true })
 	hasApi?: boolean;
-	
+
 	@IsBoolean()
 	@IsOptional()
 	@Field({ nullable: true })

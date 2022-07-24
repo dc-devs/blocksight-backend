@@ -3,6 +3,7 @@ import IData from './data';
 import IFileData from './file-data';
 import IFilePaths from './file-paths';
 import IModelName from './model-name';
+import IAttributes from './attributes';
 import IFolderRoot from './folder-root';
 import IFolderPaths from './folder-paths';
 import IFileDataDto from './file-data-dto';
@@ -12,6 +13,7 @@ import IModelAttribute from './model-attribute';
 import IFileDataInputs from './file-data-inputs';
 import IModelAttributes from './model-attributes';
 import IModelNameOptions from './model-name-options';
+import IModelAttributeProps from './model-attribute-props';
 import IModelAttributesInput from './model-attributes-input';
 import IGenerateModelConstructorProps from './generate-model-constructor-props';
 
@@ -21,6 +23,7 @@ export {
 	IFilePaths,
 	IFileData,
 	IModelName,
+	IAttributes,
 	IFolderRoot,
 	IFolderPaths,
 	IFileDataDto,
@@ -30,6 +33,7 @@ export {
 	IFileDataInputs,
 	IModelAttributes,
 	IModelNameOptions,
+	IModelAttributeProps,
 	IModelAttributesInput,
 	IGenerateModelConstructorProps,
 };

@@ -1,13 +1,4 @@
-import IModelAttribute from './model-attribute';
-
-interface IAttributes {
-	[key: string]: IModelAttribute;
-}
-
-interface IModelAttributeProps {
-	attributes: IAttributes;
-	classValidators: string[];
-}
+import IModelAttributeProps from './model-attribute-props';
 
 interface IModelAttributes {
 	withTimeStamps: IModelAttributeProps;
