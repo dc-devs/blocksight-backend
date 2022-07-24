@@ -1,4 +1,4 @@
-import { IFileData, IModelAttributes, IModelName } from '../../../interfaces';
+import { IModelAttributes, IModelName } from '../../../../interfaces';
 import {
 	generateModuleFileData,
 	generateServiceFileData,
@@ -12,34 +12,20 @@ interface IProps {
 	attributes: IModelAttributes;
 }
 
-const generateFileData = ({ modelName, attributes }: IProps) => {
+const generateRootLevelFileData = ({ modelName, attributes }: IProps) => {
 	const moduleFileData = generateModuleFileData({ modelName });
 	const resolverFileData = generateResolverFileData({ modelName });
 	const serviceSpecFileData = generateServiceSpecFileData({ modelName });
 	const resolverSpecFileData = generateResolverSpecFileData({ modelName });
 	const serviceFileData = generateServiceFileData({ modelName, attributes });
 
-	const paths: IFileData = {
-		root: {
-			module: {
-				data: moduleFileData,
-			},
-			resolver: {
-				data: resolverFileData,
-			},
-			resolverSpec: {
-				data: resolverSpecFileData,
-			},
-			service: {
-				data: serviceFileData,
-			},
-			serviceSpec: {
-				data: serviceSpecFileData,
-			},
-		},
-	};
-
-	return paths;
+	return {
+		moduleFileData,
+		serviceFileData,
+		resolverFileData,
+		serviceSpecFileData,
+		resolverSpecFileData,
+	}
 };
 
-export default generateFileData;
+export default generateRootLevelFileData;

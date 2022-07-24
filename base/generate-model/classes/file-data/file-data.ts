@@ -1,4 +1,4 @@
-import { generateFileData } from './utils';
+import generateFileData from './generate-file-data';
 import { IModelName, IModelAttributes, IFileData } from '../../interfaces';
 
 interface IConstructorProps {

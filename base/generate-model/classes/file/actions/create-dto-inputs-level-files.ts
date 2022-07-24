@@ -11,9 +11,9 @@ const createDtoInputsLevelFiles = ({ fileData, filePaths }: IProps) => {
 		data: '',
 		file: filePaths.root.dto.inputs.index.path,
 	});
-	
+
 	createFile({
-		data: '',
+		data: fileData.root.dto.inputs.create.data,
 		file: filePaths.root.dto.inputs.create.path,
 	});
 
