@@ -4,6 +4,7 @@ import generateClassValidatorDecorators from './generate-class-validator-decorat
 
 interface IProps {
 	attribute: string;
+	isOptional: boolean;
 	attributes: IAttributes;
 	isLastInputField: boolean;
 }
@@ -11,7 +12,8 @@ interface IProps {
 const generateInputField = ({
 	attribute,
 	attributes,
-	isLastInputField,
+	isOptional = false,
+	isLastInputField = false,
 }: IProps) => {
 	let data = '';
 	const attributeProps = attributes[attribute];
@@ -20,7 +22,13 @@ const generateInputField = ({
 		generateClassValidatorDecorators(classValidators);
 
 	data += `${classValidatorDecorators}`;
+
+	if (isOptional) {
+		data += Character.TAB + '@IsOptional()' + Character.LINE_BREAK;
+	}
+
 	data += Character.TAB + `@Field({ nullable: true })` + Character.LINE_BREAK;
+
 	data +=
 		Character.TAB +
 		`${attribute}?: ${typeScriptType};` +

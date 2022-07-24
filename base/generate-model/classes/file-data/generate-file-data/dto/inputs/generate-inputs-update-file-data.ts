@@ -20,6 +20,7 @@ const generateInputsUpdateFileData = ({
 	let data = '';
 	const { classValidators, attributes } = modelAttributes.withoutTimeStamps;
 	const importClassValidator = generateImportClassValidator({
+		addIsOptional: true,
 		classValidators: classValidators,
 	});
 	const importNestJsGraphQl = generateImportNestJsGraphQl();
@@ -27,7 +28,10 @@ const generateInputsUpdateFileData = ({
 		modelName,
 		inputType: InputType.UPDATE,
 	});
-	const inputFields = generateInputFields({ attributes });
+	const inputFields = generateInputFields({
+		attributes,
+		setAllFieldsOpional: true,
+	});
 	const bottomClassFragment = generateBottomClassFragment();
 
 	data += importNestJsGraphQl;

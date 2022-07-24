@@ -3,9 +3,13 @@ import { IAttributes } from '../../../interfaces';
 
 interface IProps {
 	attributes: IAttributes;
+	setAllFieldsOpional?: boolean;
 }
 
-const generateInputFields = ({ attributes }: IProps) => {
+const generateInputFields = ({
+	attributes,
+	setAllFieldsOpional = false,
+}: IProps) => {
 	let data = '';
 	const attributeKeys = Object.keys(attributes);
 
@@ -16,6 +20,7 @@ const generateInputFields = ({ attributes }: IProps) => {
 			attribute,
 			attributes,
 			isLastInputField,
+			isOptional: setAllFieldsOpional,
 		});
 	});
 
