@@ -1,4 +1,5 @@
+import filterAttributes from './filter-attributes';
 import getClassValidators from './get-class-validators';
 import generateModelAttributes from './generate-model-attributes';
 
-export { getClassValidators, generateModelAttributes };
+export { filterAttributes, getClassValidators, generateModelAttributes };

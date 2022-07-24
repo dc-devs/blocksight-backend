@@ -1,73 +1,48 @@
-import { generateClassValidatorImport } from '../../../utils';
+import { Character } from '../../../enums';
 import { IModelName, IModelAttributes } from '../../../../../interfaces';
+import {
+	generateInputField,
+	generateClassValidatorImport,
+} from '../../../utils';
 
 interface IProps {
 	modelName: IModelName;
 	modelAttributes: IModelAttributes;
 }
 
-const generateClassValidatorDecorators = (classValidators: string[]) => {
-	let classValidatorDecorators = ``;
-
-	classValidators.forEach((classValidator) => {
-		classValidatorDecorators += `\t@${classValidator}()` + '\n';
-	});
-
-	return classValidatorDecorators;
-};
-
-const generateInputField = ({
-	index,
-	attribute,
-	attributes,
-	filteredAttributes,
-}) => {
-	let data = '';
-	const attributeProps = attributes[attribute];
-	const { typeScriptType, classValidators } = attributeProps;
-	const classValidatorDecorators =
-		generateClassValidatorDecorators(classValidators);
-
-	data += `${classValidatorDecorators}`;
-	data += `\t@Field({ nullable: true })\n`;
-	data += `\t${attribute}?: ${typeScriptType};\n`;
-
-	if (index !== filteredAttributes.length - 1) {
-		data += `\n`;
-	}
-
-	return data;
-};
-
 const generateInputsCreateFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
-	const { classValidatorsForAttrs, attributes } = modelAttributes;
-	const filteredAttributes = Object.keys(attributes).filter((attribute) => {
-		return attribute !== 'createdAt' && attribute !== 'updatedAt';
-	});
+	const { classValidators, attributes } = modelAttributes.withoutTimeStamps;
+	const attributeKeys = Object.keys(attributes);
 	const importClassValidators = generateClassValidatorImport({
-		classValidators: classValidatorsForAttrs,
+		classValidators: classValidators,
 	});
 
-	let data = `import { Field, InputType } from '@nestjs/graphql';` + '\n';
+	let data =
+		`import { Field, InputType } from '@nestjs/graphql';` +
+		Character.LINE_BREAK;
 
-	data += `${importClassValidators}` + '\n';
-	data += `\n`;
-	data += `@InputType()` + '\n';
-	data += `export class Create${modelName.singular.pascalCase}Input {` + '\n';
+	data += `${importClassValidators}` + Character.LINE_BREAK;
+	data += Character.LINE_BREAK;
+	data += `@InputType()` + Character.LINE_BREAK;
+	data +=
+		`export class Create${modelName.singular.pascalCase}Input {` +
+		Character.LINE_BREAK;
 
-	filteredAttributes.forEach((attribute, index) => {
+	attributeKeys.forEach((attribute, index) => {
+		const isLastInputField = index !== attributeKeys.length - 1;
+
 		data += generateInputField({
-			index,
 			attribute,
 			attributes,
-			filteredAttributes,
+			isLastInputField,
 		});
 	});
 
-	data += `};\n`;
+	data += `};`;
+	data += Character.LINE_BREAK;
 
 	return data;
 };

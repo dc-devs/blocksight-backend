@@ -10,6 +10,8 @@ interface ITokenBalancesInput {
 }
 
 // Design: https://www.lambdatest.com/
+// Turn NFT Query to False and this is a much faster response..
+// Can we use this each time w/out saving to db? What is faster?
 @Injectable()
 export class TokenBalancesService {
 	async getTokenBalances({ filter, address, currency }: ITokenBalancesInput) {

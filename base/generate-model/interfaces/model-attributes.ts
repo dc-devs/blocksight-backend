@@ -4,10 +4,14 @@ interface IAttributes {
 	[key: string]: IModelAttribute;
 }
 
-interface IModelAttributes {
+interface IModelAttributeProps {
 	attributes: IAttributes;
 	classValidators: string[];
-	classValidatorsForAttrs: string[];
+}
+
+interface IModelAttributes {
+	withTimeStamps: IModelAttributeProps;
+	withoutTimeStamps: IModelAttributeProps;
 }
 
 export default IModelAttributes;
