@@ -1,6 +1,7 @@
+import { IFileData } from '../../../interfaces/file-data';
+import { IModelName, IModelAttributes } from '../../../interfaces';
 import { generateDtoLevelFileData } from '../generate-file-data/dto';
 import { generateRootLevelFileData } from '../generate-file-data/root';
-import { IFileData, IModelName, IModelAttributes } from '../../../interfaces';
 
 interface IProps {
 	modelName: IModelName;

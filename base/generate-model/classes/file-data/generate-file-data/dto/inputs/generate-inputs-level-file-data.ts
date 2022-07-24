@@ -1,13 +1,10 @@
+import { IFileDataInputs } from '../../../../../interfaces/file-data';
+import { IModelName, IModelAttributes } from '../../../../../interfaces';
 import generateInputsIndexFileData from './generate-inputs-index-file-data';
 import generateInputsCreateFileData from './generate-inputs-ceate-file-data';
 import generateInputsUpdateFileData from './generate-inputs-update-file-data';
 import generateInputsFindAllFileData from './generate-inputs-find-all-file-data';
 import generateInputsFindOneFileData from './generate-inputs-find-one-file-data';
-import {
-	IModelName,
-	IFileDataInputs,
-	IModelAttributes,
-} from '../../../../../interfaces';
 
 interface IProps {
 	modelName: IModelName;

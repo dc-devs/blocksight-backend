@@ -1,10 +1,7 @@
 import { generateModelsLevelFileData } from './models';
 import { generateInputsLevelFileData } from './inputs';
-import {
-	IModelName,
-	IFileDataDto,
-	IModelAttributes,
-} from '../../../../interfaces';
+import { IFileDataDto } from '../../../../interfaces/file-data';
+import { IModelName, IModelAttributes } from '../../../../interfaces';
 
 interface IProps {
 	modelName: IModelName;

@@ -1,9 +1,6 @@
+import { IFileDataModels } from '../../../../../interfaces/file-data';
+import { IModelName, IModelAttributes } from '../../../../../interfaces';
 import generateModelsModelFileData from './generate-models-model-file-data';
-import {
-	IModelName,
-	IFileDataModels,
-	IModelAttributes,
-} from '../../../../../interfaces';
 
 interface IProps {
 	modelName: IModelName;
