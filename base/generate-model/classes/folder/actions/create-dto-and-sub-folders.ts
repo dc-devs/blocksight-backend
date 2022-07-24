@@ -20,7 +20,7 @@ const createDtoAndSubFolders = ({ root }: IProps) => {
 	createFolder({
 		directory: prisma.path,
 	});
-
+	
 	createFolder({
 		directory: models.path,
 	});

@@ -6,27 +6,39 @@ interface IProps {
 	attributes: IModelAttributesInput;
 }
 
-
 const generateModelAttributes = ({ attributes }: IProps): IModelAttributes => {
-	const classValidators = getClassValidators({ attributes });
+	const attributesUnique = filterAttributes({
+		attributes,
+		filterUnique: true,
+	});
 
-	const attribuesWithoutTimeStamps = filterAttributes({
+	const attributesWithoutTimeStamps = filterAttributes({
 		attributes,
 		filterTimeStampAttrs: true,
 	});
 
-	const classValidatorsWithoutTimeStamps = getClassValidators({
-		attributes: attribuesWithoutTimeStamps,
+	const classValidators = getClassValidators({ attributes });
+
+	const classValidatorsForUniqueAttrs = getClassValidators({
+		attributes: attributesWithoutTimeStamps,
+	});
+
+	const classValidatorsForAttrsWithoutTimeStamps = getClassValidators({
+		attributes: attributesWithoutTimeStamps,
 	});
 
 	return {
+		unique: {
+			attributes: attributesUnique,
+			classValidators: classValidatorsForUniqueAttrs,
+		},
 		withTimeStamps: {
 			attributes,
 			classValidators,
 		},
 		withoutTimeStamps: {
-			attributes: attribuesWithoutTimeStamps,
-			classValidators: classValidatorsWithoutTimeStamps,
+			attributes: attributesWithoutTimeStamps,
+			classValidators: classValidatorsForAttrsWithoutTimeStamps,
 		},
 	};
 };

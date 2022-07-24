@@ -3,6 +3,8 @@ enum FielName {
 	SPEC = 'spec',
 	INDEX = 'index',
 	INPUT = 'input',
+	MODEL = 'model',
+	MODELS = 'models',
 	INPUTS = 'inputs',
 	UPDATE = 'update',
 	CREATE = 'create',

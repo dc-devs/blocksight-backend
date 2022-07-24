@@ -1,6 +1,10 @@
 import FileData from '../file-data';
 import FilePaths from '../file-paths';
-import { createRootLevelFiles, createDtoInputsLevelFiles } from './actions';
+import {
+	createRootLevelFiles,
+	createDtoModelsLevelFiles,
+	createDtoInputsLevelFiles,
+} from './actions';
 import {
 	IFileData,
 	IFilePaths,
@@ -36,6 +40,11 @@ class File {
 		});
 
 		createDtoInputsLevelFiles({
+			fileData: this.fileData,
+			filePaths: this.filePaths,
+		});
+		
+		createDtoModelsLevelFiles({
 			fileData: this.fileData,
 			filePaths: this.filePaths,
 		});

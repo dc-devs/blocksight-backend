@@ -1,6 +1,8 @@
 import generateInputsIndexFileData from './generate-inputs-index-file-data';
 import generateInputsCreateFileData from './generate-inputs-ceate-file-data';
 import generateInputsUpdateFileData from './generate-inputs-update-file-data';
+import generateInputsFindAllFileData from './generate-inputs-find-all-file-data';
+import generateInputsFindOneFileData from './generate-inputs-find-one-file-data';
 import {
 	IModelName,
 	IFileDataInputs,
@@ -27,6 +29,13 @@ const generateInputsLevelFileData = ({
 	const indexFileData = generateInputsIndexFileData({
 		modelName,
 	});
+	const findAllFileData = generateInputsFindAllFileData({
+		modelName,
+	});
+	const findOneFileData = generateInputsFindOneFileData({
+		modelName,
+		modelAttributes,
+	});
 
 	return {
 		index: {
@@ -39,10 +48,10 @@ const generateInputsLevelFileData = ({
 			data: updateFileData,
 		},
 		findAll: {
-			data: '',
+			data: findAllFileData,
 		},
 		findOne: {
-			data: '',
+			data: findOneFileData,
 		},
 	};
 };

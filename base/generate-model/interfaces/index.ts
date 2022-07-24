@@ -10,8 +10,10 @@ import IFileDataDto from './file-data-dto';
 import IFileDataRoot from './file-data-root';
 import IFilePathsRoot from './file-paths-root';
 import IModelAttribute from './model-attribute';
+import IFileDataModels from './file-data-models';
 import IFileDataInputs from './file-data-inputs';
 import IModelAttributes from './model-attributes';
+import IFilePathsModels from './file-paths-models';
 import IModelNameOptions from './model-name-options';
 import IModelAttributeProps from './model-attribute-props';
 import IModelAttributesInput from './model-attributes-input';
@@ -30,7 +32,9 @@ export {
 	IFileDataRoot,
 	IFilePathsRoot,
 	IModelAttribute,
+	IFileDataModels,
 	IFileDataInputs,
+	IFilePathsModels,
 	IModelAttributes,
 	IModelNameOptions,
 	IModelAttributeProps,

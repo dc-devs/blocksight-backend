@@ -1,3 +1,4 @@
+import { generateModelsLevelFileData } from './models';
 import { generateInputsLevelFileData } from './inputs';
 import {
 	IModelName,
@@ -18,9 +19,14 @@ const generateDtoLevelFileData = ({
 		modelName,
 		modelAttributes,
 	});
+	const models = generateModelsLevelFileData({
+		modelName,
+		modelAttributes,
+	});
 
 	return {
 		inputs,
+		models,
 	};
 };
 
