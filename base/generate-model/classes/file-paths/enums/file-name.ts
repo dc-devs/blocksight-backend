@@ -1,18 +1,26 @@
 enum FielName {
 	DTO = 'dto',
+	ENUM = 'enum',
+	NAME = 'name',
 	SPEC = 'spec',
+	WHERE = 'where',
 	INDEX = 'index',
+	ENUMS = 'enums',
 	INPUT = 'input',
 	MODEL = 'model',
+	PRISMA = 'prisma',
 	MODELS = 'models',
 	INPUTS = 'inputs',
 	UPDATE = 'update',
+	CURSOR = 'cursor',
 	CREATE = 'create',
 	MODULE = 'module',
 	SERVICE = 'service',
+	ORDER_BY = 'order-by',
 	RESOLVER = 'resolver',
 	FIND_ONE = 'find-one',
 	FIND_ALL = 'find-all',
+	VALIDATION_ERROR = 'validation-error',
 }
 
 export default FielName;

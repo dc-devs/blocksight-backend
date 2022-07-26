@@ -1,13 +1,17 @@
 import { join } from 'path';
-import { FileName } from '../enums';
-import { IModelName } from '../../../interfaces/model-name';
+import { FileName } from '../../../enums';
+import { IModelName } from '../../../../../interfaces/model-name';
+import { IFilePathsInputs } from '../../../../../interfaces/file-paths';
 
 interface IProps {
 	rootPath: string;
 	modelName: IModelName;
 }
 
-const generateDtoInputsLevelFilePaths = ({ rootPath, modelName }: IProps) => {
+const generateInputLevelFilePaths = ({
+	rootPath,
+	modelName,
+}: IProps): IFilePathsInputs => {
 	const indexFilePath = join(rootPath, `${FileName.INDEX}.ts`);
 
 	const createFilePath = join(
@@ -31,12 +35,22 @@ const generateDtoInputsLevelFilePaths = ({ rootPath, modelName }: IProps) => {
 	);
 
 	return {
-		indexFilePath,
-		createFilePath,
-		updateFilePath,
-		findOneFilePath,
-		findAllFilePath,
+		index: {
+			path: indexFilePath,
+		},
+		update: {
+			path: updateFilePath,
+		},
+		create: {
+			path: createFilePath,
+		},
+		findAll: {
+			path: findAllFilePath,
+		},
+		findOne: {
+			path: findOneFilePath,
+		},
 	};
 };
 
-export default generateDtoInputsLevelFilePaths;
+export default generateInputLevelFilePaths;

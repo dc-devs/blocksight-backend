@@ -1,4 +1,4 @@
-import { generateFilePaths } from './utils';
+import { generateAllFilePaths } from './actions';
 import { IModelName } from '../../interfaces/model-name';
 import { IFilePaths } from '../../interfaces/file-paths';
 
@@ -11,7 +11,7 @@ class FilePaths {
 	filePaths: IFilePaths;
 
 	constructor({ rootPath, modelName }: IConstructorProps) {
-		const filePaths = generateFilePaths({
+		const filePaths = generateAllFilePaths({
 			rootPath,
 			modelName,
 		});

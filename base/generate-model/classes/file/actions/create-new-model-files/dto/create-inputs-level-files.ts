@@ -1,13 +1,13 @@
-import { createFile } from '../utils';
-import { IFileData } from '../../../interfaces/file-data';
-import { IFilePaths } from '../../../interfaces/file-paths';
+import { createFile } from '../../../utils';
+import { IFileData } from '../../../../../interfaces/file-data';
+import { IFilePaths } from '../../../../../interfaces/file-paths';
 
 interface IProps {
 	fileData: IFileData;
 	filePaths: IFilePaths;
 }
 
-const createDtoInputsLevelFiles = ({ fileData, filePaths }: IProps) => {
+const createInputsLevelFiles = ({ fileData, filePaths }: IProps) => {
 	createFile({
 		data: fileData.root.dto.inputs.index.data,
 		file: filePaths.root.dto.inputs.index.path,
@@ -34,4 +34,4 @@ const createDtoInputsLevelFiles = ({ fileData, filePaths }: IProps) => {
 	});
 };
 
-export default createDtoInputsLevelFiles;
+export default createInputsLevelFiles;

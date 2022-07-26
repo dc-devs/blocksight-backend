@@ -1,6 +1,6 @@
 import { join } from 'path';
-import { FileName } from '../enums';
-import { IModelName } from '../../../interfaces/model-name';
+import { FileName } from '../../../enums';
+import { IModelName } from '../../../../../interfaces/model-name';
 
 interface IProps {
 	rootPath: string;

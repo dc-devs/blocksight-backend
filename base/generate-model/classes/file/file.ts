@@ -4,11 +4,7 @@ import { IFileData } from '../../interfaces/file-data';
 import { IFilePaths } from '../../interfaces/file-paths';
 import { IModelName } from '../../interfaces/model-name';
 import { IModelAttributes } from '../../interfaces/model-attribute';
-import {
-	createRootLevelFiles,
-	createDtoModelsLevelFiles,
-	createDtoInputsLevelFiles,
-} from './actions';
+import { createAllNewModelFiles } from './actions';
 
 interface IConstructorProps {
 	rootPath: string;
@@ -32,17 +28,7 @@ class File {
 	}
 
 	generateNewModelFiles = () => {
-		createRootLevelFiles({
-			fileData: this.fileData,
-			filePaths: this.filePaths,
-		});
-
-		createDtoInputsLevelFiles({
-			fileData: this.fileData,
-			filePaths: this.filePaths,
-		});
-
-		createDtoModelsLevelFiles({
+		createAllNewModelFiles({
 			fileData: this.fileData,
 			filePaths: this.filePaths,
 		});
