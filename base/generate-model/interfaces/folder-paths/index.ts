@@ -1,5 +1,15 @@
 import IFolderPaths from './folder-paths';
-import IFolderPathDto from './folder-paths-dto';
-import IFolderPathRoot from './folder-paths-root';
+import IFolderPathDto from './src/folder-paths-dto';
+import IFolderPathsSrc from './src/folder-paths-src';
+import IFolderPathsTest from './test/folder-paths-test';
+import IFolderPathsSrcRoot from './src/folder-paths-src-root';
+import IFolderPathsTestRoot from './test/folder-paths-test-root';
 
-export { IFolderPathRoot, IFolderPathDto, IFolderPaths };
+export {
+	IFolderPaths,
+	IFolderPathDto,
+	IFolderPathsSrc,
+	IFolderPathsTest,
+	IFolderPathsSrcRoot,
+	IFolderPathsTestRoot,
+};

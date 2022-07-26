@@ -1,7 +1,9 @@
-import IFolderRoot from './folder-paths-root';
+import IFolderPathsSrc from './src/folder-paths-src';
+import IFolderPathsTest from './test/folder-paths-test';
 
 interface IFolderPaths {
-	root: IFolderRoot;
+	src: IFolderPathsSrc;
+	test: IFolderPathsTest;
 }
 
 export default IFolderPaths;

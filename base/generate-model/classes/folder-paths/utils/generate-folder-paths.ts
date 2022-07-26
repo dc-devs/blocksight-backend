@@ -17,18 +17,23 @@ const generateFolderPaths = ({ modelName }: IProps) => {
 	const prismaFolderPath = join(dtoFolderPath, FolderName.PRISMA);
 
 	const paths: IFolderPaths = {
-		root: {
-			path: rootFolderPath,
-			dto: {
-				path: dtoFolderPath,
-				inputs: { path: inputsFolderPath },
-				models: { path: modelsFolderPath },
-				prisma: { path: prismaFolderPath },
-			},
-			enums: {
-				path: enumsFolderPath,
+		src: {
+			root: {
+				path: rootFolderPath,
+				dto: {
+					path: dtoFolderPath,
+					inputs: { path: inputsFolderPath },
+					models: { path: modelsFolderPath },
+					prisma: { path: prismaFolderPath },
+				},
+				enums: {
+					path: enumsFolderPath,
+				},
 			},
 		},
+		test: {},
+		// TODO: Refactor src files into its own folder,
+		// Finish creating test Fodlers / update interfaces as they root migh tbe off..
 	};
 
 	return paths;
