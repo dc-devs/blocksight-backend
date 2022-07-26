@@ -6,6 +6,7 @@ import generateImportNestJsGraphQl from './generate-import-nestjs-graphql';
 import generateBottomClassFragment from './generate-bottom-class-fragement';
 import generateImportClassValidator from './generate-import-class-validator';
 import generateClassValidatorDecorators from './generate-class-validator-decorators';
+import generateImportsAndTopClassFragment from './generate-imports-and-top-class-fragment';
 
 export {
 	generateInputField,
@@ -16,4 +17,5 @@ export {
 	generateBottomClassFragment,
 	generateImportClassValidator,
 	generateClassValidatorDecorators,
+	generateImportsAndTopClassFragment,
 };

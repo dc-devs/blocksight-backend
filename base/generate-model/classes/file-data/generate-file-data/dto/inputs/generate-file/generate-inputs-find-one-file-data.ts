@@ -2,16 +2,13 @@ import { IModelName } from '../../../../../../interfaces/model-name';
 import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
 import {
 	DtoType,
-	Character,
 	InputType,
 	GraphqlModule,
 } from '../../../../enums';
 import {
 	generateInputFields,
-	generateTopClassFragment,
-	generateImportNestJsGraphQl,
 	generateBottomClassFragment,
-	generateImportClassValidator,
+	generateImportsAndTopClassFragment,
 } from '../../../../utils';
 
 interface IProps {
@@ -29,17 +26,12 @@ const generateInputsFindOneFileData = ({
 }: IProps) => {
 	let data = '';
 	const { classValidators, attributes } = modelAttributes.unique;
-	const importClassValidator = generateImportClassValidator({
-		classValidators: classValidators,
-		addIsOptional: true,
-	});
-	const importNestJsGraphQl = generateImportNestJsGraphQl({
-		modules: [GraphqlModule.INPUT_TYPE],
-	});
 	const className = `${InputType.FIND_ONE}${modelName.singular.pascalCase}${DtoType.INPUT}`;
-	const topInputClassFragment = generateTopClassFragment({
+	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,
-		decorator: GraphqlModule.INPUT_TYPE,
+		classValidators,
+		classValidatorsIsOptional: true,
+		graphqlType: GraphqlModule.INPUT_TYPE,
 	});
 	const inputFields = generateInputFields({
 		attributes,
@@ -47,11 +39,7 @@ const generateInputsFindOneFileData = ({
 	});
 	const bottomClassFragment = generateBottomClassFragment();
 
-	data += importNestJsGraphQl;
-	data += importClassValidator;
-	data += Character.LINE_BREAK;
-
-	data += topInputClassFragment;
+	data += importsAndTopClassFragment;
 	data += inputFields;
 	data += bottomClassFragment;
 

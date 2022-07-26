@@ -1,42 +1,33 @@
-import { Character, GraphqlModule } from '../../../../enums';
+import { GraphqlModule } from '../../../../enums';
 import { IModelName } from '../../../../../../interfaces/model-name';
 import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
 import {
 	generateInputFields,
-	generateTopClassFragment,
-	generateImportNestJsGraphQl,
 	generateBottomClassFragment,
-	generateImportClassValidator,
+	generateImportsAndTopClassFragment,
 } from '../../../../utils';
 
 interface IProps {
 	modelName: IModelName;
 	modelAttributes: IModelAttributes;
 }
+
 const generateModelsModelFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
 	let data = '';
 	const { classValidators, attributes } = modelAttributes.all;
-	const importClassValidator = generateImportClassValidator({
-		classValidators: classValidators,
-	});
-	const importNestJsGraphQl = generateImportNestJsGraphQl({
-		modules: [GraphqlModule.OBJECT_TYPE],
-	});
-	const topInputClassFragment = generateTopClassFragment({
-		className: `${modelName.singular.pascalCase}`,
-		decorator: GraphqlModule.OBJECT_TYPE,
+	const className = `${modelName.singular.pascalCase}`;
+	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
+		className,
+		classValidators,
+		graphqlType: GraphqlModule.OBJECT_TYPE,
 	});
 	const inputFields = generateInputFields({ attributes });
 	const bottomClassFragment = generateBottomClassFragment();
 
-	data += importNestJsGraphQl;
-	data += importClassValidator;
-	data += Character.LINE_BREAK;
-
-	data += topInputClassFragment;
+	data += importsAndTopClassFragment;
 	data += inputFields;
 	data += bottomClassFragment;
 
