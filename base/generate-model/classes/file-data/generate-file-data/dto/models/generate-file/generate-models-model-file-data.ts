@@ -1,32 +1,33 @@
-import { Character, InputType } from '../../../enums';
-import { IModelName } from '../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../interfaces/model-attribute';
+import { Character, GraphqlModule } from '../../../../enums';
+import { IModelName } from '../../../../../../interfaces/model-name';
+import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
 import {
 	generateInputFields,
+	generateTopClassFragment,
 	generateImportNestJsGraphQl,
 	generateBottomClassFragment,
 	generateImportClassValidator,
-	generateTopInputClassFragment,
-} from '../../../utils';
+} from '../../../../utils';
 
 interface IProps {
 	modelName: IModelName;
 	modelAttributes: IModelAttributes;
 }
-
-const generateInputsCreateFileData = ({
+const generateModelsModelFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
 	let data = '';
-	const { classValidators, attributes } = modelAttributes.withoutTimeStamps;
+	const { classValidators, attributes } = modelAttributes.all;
 	const importClassValidator = generateImportClassValidator({
 		classValidators: classValidators,
 	});
-	const importNestJsGraphQl = generateImportNestJsGraphQl();
-	const topInputClassFragment = generateTopInputClassFragment({
-		modelName,
-		inputType: InputType.CREATE,
+	const importNestJsGraphQl = generateImportNestJsGraphQl({
+		modules: [GraphqlModule.OBJECT_TYPE],
+	});
+	const topInputClassFragment = generateTopClassFragment({
+		className: `${modelName.singular.pascalCase}`,
+		decorator: GraphqlModule.OBJECT_TYPE,
 	});
 	const inputFields = generateInputFields({ attributes });
 	const bottomClassFragment = generateBottomClassFragment();
@@ -42,4 +43,4 @@ const generateInputsCreateFileData = ({
 	return data;
 };
 
-export default generateInputsCreateFileData;
+export default generateModelsModelFileData;

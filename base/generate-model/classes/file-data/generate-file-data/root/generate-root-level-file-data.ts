@@ -14,7 +14,7 @@ interface IProps {
 }
 
 const generateRootLevelFileData = ({ modelName, modelAttributes }: IProps) => {
-	const { attributes } = modelAttributes.withTimeStamps;
+	const { attributes } = modelAttributes.all;
 	const moduleFileData = generateModuleFileData({ modelName });
 	const resolverFileData = generateResolverFileData({ modelName });
 	const serviceSpecFileData = generateServiceSpecFileData({ modelName });

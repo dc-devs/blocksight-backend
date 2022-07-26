@@ -1,13 +1,18 @@
-import { Character, InputType } from '../../../enums';
-import { IModelName } from '../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../interfaces/model-attribute';
+import { IModelName } from '../../../../../../interfaces/model-name';
+import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
+import {
+	DtoType,
+	Character,
+	InputType,
+	GraphqlModule,
+} from '../../../../enums';
 import {
 	generateInputFields,
+	generateTopClassFragment,
 	generateImportNestJsGraphQl,
 	generateBottomClassFragment,
 	generateImportClassValidator,
-	generateTopInputClassFragment,
-} from '../../../utils';
+} from '../../../../utils';
 
 interface IProps {
 	modelName: IModelName;
@@ -28,10 +33,13 @@ const generateInputsFindOneFileData = ({
 		classValidators: classValidators,
 		addIsOptional: true,
 	});
-	const importNestJsGraphQl = generateImportNestJsGraphQl();
-	const topInputClassFragment = generateTopInputClassFragment({
-		modelName,
-		inputType: InputType.FIND_ONE,
+	const importNestJsGraphQl = generateImportNestJsGraphQl({
+		modules: [GraphqlModule.INPUT_TYPE],
+	});
+	const className = `${InputType.FIND_ONE}${modelName.singular.pascalCase}${DtoType.INPUT}`;
+	const topInputClassFragment = generateTopClassFragment({
+		className,
+		decorator: GraphqlModule.INPUT_TYPE,
 	});
 	const inputFields = generateInputFields({
 		attributes,

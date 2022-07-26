@@ -29,13 +29,13 @@ const generateModelAttributes = ({ attributes }: IProps): IModelAttributes => {
 	});
 
 	return {
+		all: {
+			attributes,
+			classValidators,
+		},
 		unique: {
 			attributes: attributesUnique,
 			classValidators: classValidatorsForUniqueAttrs,
-		},
-		withTimeStamps: {
-			attributes,
-			classValidators,
 		},
 		withoutTimeStamps: {
 			attributes: attributesWithoutTimeStamps,
