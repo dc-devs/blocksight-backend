@@ -5,7 +5,7 @@ interface IFolderPathsTestRoot {
 	enums: IPath;
 	queries: IPath;
 	tests: IPath;
-	'expected-objects': IPath;
+	expectedObjects: IPath;
 }
 
 export default IFolderPathsTestRoot;

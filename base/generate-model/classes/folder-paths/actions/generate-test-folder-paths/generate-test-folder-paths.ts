@@ -26,7 +26,7 @@ const generateTestFolderPaths = ({ modelName }: IProps): IFolderPathsTest => {
 			tests: {
 				path: testsFolderPath,
 			},
-			'expected-objects': {
+			expectedObjects: {
 				path: expectedObjectsFolderPath,
 			},
 		},

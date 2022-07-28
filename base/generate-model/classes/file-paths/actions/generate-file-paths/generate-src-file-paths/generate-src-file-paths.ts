@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { FileName } from '../../../enums';
 import { IModelName } from '../../../../../interfaces/model-name';
-import { IFilePaths } from '../../../../../interfaces/file-paths';
+import { IFilePathsSrc } from '../../../../../interfaces/file-paths';
 import generateDtoLevelFilePaths from './dto/generate-dto-level-file-paths';
 import generateRootLevelFilePaths from './root/generate-root-level-file-paths';
 import generateEnumsLevelFilePaths from './enums/generate-enums-level-file-paths';
@@ -11,7 +11,10 @@ interface IProps {
 	modelName: IModelName;
 }
 
-const generateAllFilePaths = ({ rootPath, modelName }: IProps) => {
+const generateSrcFilePaths = ({
+	rootPath,
+	modelName,
+}: IProps): IFilePathsSrc => {
 	const {
 		moduleFilePath,
 		serviceFilePath,
@@ -30,7 +33,7 @@ const generateAllFilePaths = ({ rootPath, modelName }: IProps) => {
 		modelName,
 	});
 
-	const paths: IFilePaths = {
+	const paths = {
 		root: {
 			dto,
 			enums,
@@ -55,4 +58,4 @@ const generateAllFilePaths = ({ rootPath, modelName }: IProps) => {
 	return paths;
 };
 
-export default generateAllFilePaths;
+export default generateSrcFilePaths;

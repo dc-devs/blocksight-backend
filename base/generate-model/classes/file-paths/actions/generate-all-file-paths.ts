@@ -1,8 +1,7 @@
-import { join } from 'path';
-import { FileName } from '../enums';
 import { IModelName } from '../../../interfaces/model-name';
 import { IFilePaths } from '../../../interfaces/file-paths';
 import { generateSrcFilePaths } from './generate-file-paths/generate-src-file-paths';
+import { generateTestFilePaths } from './generate-file-paths/generate-test-file-paths';
 
 interface IProps {
 	rootPath: string;
@@ -10,9 +9,13 @@ interface IProps {
 }
 
 const generateAllFilePaths = ({ rootPath, modelName }: IProps) => {
-	const filePaths = generateSrcFilePaths({ rootPath, modelName });
+	const srcFilePaths = generateSrcFilePaths({ rootPath, modelName });
+	const testFilePaths = generateTestFilePaths({ rootPath, modelName });
 
-	const paths: IFilePaths = filePaths;
+	const paths: IFilePaths = {
+		src: srcFilePaths,
+		test: testFilePaths,
+	}
 
 	return paths;
 };

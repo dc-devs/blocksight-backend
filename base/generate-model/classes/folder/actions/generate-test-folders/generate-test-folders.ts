@@ -15,15 +15,15 @@ const generateSrcFolders = ({ root }: IProps) => {
 	});
 
 	createFolder({
-		directory: root['expected-objects'].path,
+		directory: root.expectedObjects.path,
 	});
-	
+
 	createFolder({
-		directory: root.queries.path
+		directory: root.queries.path,
 	});
-	
+
 	createFolder({
-		directory: root.tests.path
+		directory: root.tests.path,
 	});
 };
 
