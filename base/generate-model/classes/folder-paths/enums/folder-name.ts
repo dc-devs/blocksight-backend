@@ -1,10 +1,14 @@
 enum FolderName {
 	DTO = 'dto',
-	INPUTS = 'inputs',
+	SRC = 'src',
+	TEST = 'test',
+	TESTS = 'tests',
+	ENUMS = 'enums',
 	MODELS = 'models',
 	PRISMA = 'prisma',
-	ENUMS = 'enums',
-	SRC = 'src',
+	INPUTS = 'inputs',
+	QUERIES = 'queries',
+	EXPECTED_OBJECTS = 'expected-objects',
 }
 
 export default FolderName;

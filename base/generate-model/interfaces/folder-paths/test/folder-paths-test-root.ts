@@ -1,7 +1,11 @@
 import IPath from '../../path';
 
 interface IFolderPathsTestRoot {
-	models: IPath;
+	path: string;
+	enums: IPath;
+	queries: IPath;
+	tests: IPath;
+	'expected-objects': IPath;
 }
 
 export default IFolderPathsTestRoot;

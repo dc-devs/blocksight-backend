@@ -1,10 +1,6 @@
 import FolderPaths from '../folder-paths';
 import { IFolderPaths } from '../../interfaces/folder-paths';
-import {
-	createEnumsFolder,
-	createModelRootFolder,
-	createDtoAndSubFolders,
-} from './actions';
+import generateAllFolders from './actions/generate-all-folders';
 
 interface IConstructorProps {
 	modelName: string;
@@ -21,28 +17,10 @@ class Folder {
 		this.folderPaths = folderPaths;
 	}
 
-	createModelRootFolder = () => {
-		createModelRootFolder({
-			root: this.folderPaths.root
+	generateAllFolders = () => {
+		generateAllFolders({
+			folderPaths: this.folderPaths,
 		});
-	};
-
-	createDtoAndSubFolders = () => {
-		createDtoAndSubFolders({
-			root: this.folderPaths.root
-		});
-	};
-
-	createEnumsFolder = () => {
-		createEnumsFolder({
-			root: this.folderPaths.root
-		});
-	};
-
-	generateNewModelFolders = () => {
-		this.createModelRootFolder();
-		this.createDtoAndSubFolders();
-		this.createEnumsFolder();
 	};
 }
 

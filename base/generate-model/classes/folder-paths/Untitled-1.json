@@ -1,0 +1,39 @@
+{
+	"src": {
+		"root": {
+			"path": "/Users/davidchristian/code/blocksight/blocksight-backend/dist/src/models/users-exchanges",
+			"dto": {
+				"path": "/Users/davidchristian/code/blocksight/blocksight-backend/dist/src/models/users-exchanges/dto",
+				"inputs": {
+					"path": "/Users/davidchristian/code/blocksight/blocksight-backend/dist/src/models/users-exchanges/dto/inputs"
+				},
+				"models": {
+					"path": "/Users/davidchristian/code/blocksight/blocksight-backend/dist/src/models/users-exchanges/dto/models"
+				},
+				"prisma": {
+					"path": "/Users/davidchristian/code/blocksight/blocksight-backend/dist/src/models/users-exchanges/dto/prisma"
+				}
+			},
+			"enums": {
+				"path": "/Users/davidchristian/code/blocksight/blocksight-backend/dist/src/models/users-exchanges/enums"
+			}
+		}
+	},
+	"test": {
+		"root": {
+			"path": "/Users/davidchristian/code/blocksight/blocksight-backend/dist/test/models/users-exchanges",
+			"enums": {
+				"path": "/Users/davidchristian/code/blocksight/blocksight-backend/dist/test/models/users-exchanges/enums"
+			},
+			"queries": {
+				"path": "/Users/davidchristian/code/blocksight/blocksight-backend/dist/test/models/users-exchanges/queries"
+			},
+			"tests": {
+				"path": "/Users/davidchristian/code/blocksight/blocksight-backend/dist/test/models/users-exchanges/tests"
+			},
+			"expected-objects": {
+				"path": "/Users/davidchristian/code/blocksight/blocksight-backend/dist/test/models/users-exchanges/expected-objects"
+			}
+		}
+	}
+}

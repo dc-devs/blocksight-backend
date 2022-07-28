@@ -15,8 +15,8 @@ interface IConstructorProps {
 
 class GenerateModel {
 	folderPaths: IFolderPaths;
-	generateNewModelFiles: CallableFunction;
-	generateNewModelFolders: CallableFunction;
+	generateAllFiles: CallableFunction;
+	generateAllFolders: CallableFunction;
 
 	constructor({
 		attributes,
@@ -36,28 +36,29 @@ class GenerateModel {
 			modelName: modelName.plural.paramCase,
 		});
 
-		const { generateNewModelFolders } = new Folder({
+		const { generateAllFolders } = new Folder({
 			modelName: modelName.plural.paramCase,
 		});
 
-		const { generateNewModelFiles } = new File({
+		const { generateAllFiles } = new File({
 			modelName,
 			modelAttributes,
-			rootPath: folderPaths.root.path,
+			rootPath: folderPaths.src.root.path,
 		});
 
 		this.folderPaths = folderPaths;
-		this.generateNewModelFiles = generateNewModelFiles;
-		this.generateNewModelFolders = generateNewModelFolders;
+		this.generateAllFiles = generateAllFiles;
+		this.generateAllFolders = generateAllFolders;
 	}
 
 	clean = () => {
-		clean({ rootPath: this.folderPaths.root.path });
+		clean({ rootPath: this.folderPaths.src.root.path });
+		clean({ rootPath: this.folderPaths.test.root.path });
 	};
 
 	start = () => {
-		this.generateNewModelFolders();
-		this.generateNewModelFiles();
+		this.generateAllFolders();
+		this.generateAllFiles();
 	};
 }
 

@@ -27,7 +27,7 @@ class File {
 		this.filePaths = filePaths;
 	}
 
-	generateNewModelFiles = () => {
+	generateAllFiles = () => {
 		createAllNewModelFiles({
 			fileData: this.fileData,
 			filePaths: this.filePaths,
