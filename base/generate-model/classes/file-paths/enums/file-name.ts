@@ -7,7 +7,10 @@ enum FielName {
 	INDEX = 'index',
 	ENUMS = 'enums',
 	INPUT = 'input',
+	TESTS = 'tests',
 	MODEL = 'model',
+	QUERY = 'query',
+	DELETE = 'delete',
 	PRISMA = 'prisma',
 	MODELS = 'models',
 	INPUTS = 'inputs',
@@ -16,10 +19,12 @@ enum FielName {
 	CREATE = 'create',
 	MODULE = 'module',
 	SERVICE = 'service',
+	QUERIES = 'queries',
 	ORDER_BY = 'order-by',
 	RESOLVER = 'resolver',
 	FIND_ONE = 'find-one',
 	FIND_ALL = 'find-all',
+	ERROR_MESSAGE = 'error-message',
 	VALIDATION_ERROR = 'validation-error',
 }
 

@@ -10,29 +10,28 @@ interface IProps {
 const createRootLevelFiles = ({ fileData, filePaths }: IProps) => {
 	createFile({
 		data: fileData.root.module.data,
-		file: filePaths.root.module.path,
+		file: filePaths.src.root.module.path,
 	});
 
 	createFile({
 		data: fileData.root.resolver.data,
-		file: filePaths.root.resolver.path,
+		file: filePaths.src.root.resolver.path,
 	});
 
 	createFile({
 		data: fileData.root.resolverSpec.data,
-		file: filePaths.root.resolverSpec.path,
+		file: filePaths.src.root.resolverSpec.path,
 	});
 
 	createFile({
 		data: fileData.root.service.data,
-		file: filePaths.root.service.path,
+		file: filePaths.src.root.service.path,
 	});
 
 	createFile({
 		data: fileData.root.serviceSpec.data,
-		file: filePaths.root.serviceSpec.path,
+		file: filePaths.src.root.serviceSpec.path,
 	});
 };
-
 
 export default createRootLevelFiles;

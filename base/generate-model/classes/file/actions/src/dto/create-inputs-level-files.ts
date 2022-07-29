@@ -10,27 +10,27 @@ interface IProps {
 const createInputsLevelFiles = ({ fileData, filePaths }: IProps) => {
 	createFile({
 		data: fileData.root.dto.inputs.index.data,
-		file: filePaths.root.dto.inputs.index.path,
+		file: filePaths.src.root.dto.inputs.index.path,
 	});
 
 	createFile({
 		data: fileData.root.dto.inputs.create.data,
-		file: filePaths.root.dto.inputs.create.path,
+		file: filePaths.src.root.dto.inputs.create.path,
 	});
 
 	createFile({
 		data: fileData.root.dto.inputs.update.data,
-		file: filePaths.root.dto.inputs.update.path,
+		file: filePaths.src.root.dto.inputs.update.path,
 	});
 
 	createFile({
 		data: fileData.root.dto.inputs.findOne.data,
-		file: filePaths.root.dto.inputs.findOne.path,
+		file: filePaths.src.root.dto.inputs.findOne.path,
 	});
 
 	createFile({
 		data: fileData.root.dto.inputs.findAll.data,
-		file: filePaths.root.dto.inputs.findAll.path,
+		file: filePaths.src.root.dto.inputs.findAll.path,
 	});
 };
 

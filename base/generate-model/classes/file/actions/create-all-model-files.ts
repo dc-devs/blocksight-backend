@@ -1,10 +1,6 @@
 import { IFileData } from '../../../interfaces/file-data';
 import { IFilePaths } from '../../../interfaces/file-paths';
-import {
-	createDtoLevelFiles,
-	createRootLevelFiles,
-	createEnumLevelFiles,
-} from './create-new-model-files';
+import createAllSrcModelFiles from './src/create-all-src-model-files';
 
 interface IProps {
 	fileData: IFileData;
@@ -12,9 +8,7 @@ interface IProps {
 }
 
 const createAllNewModelFiles = ({ fileData, filePaths }: IProps) => {
-	createRootLevelFiles({ fileData, filePaths });
-	createDtoLevelFiles({ fileData, filePaths });
-	createEnumLevelFiles({ fileData, filePaths });
+	createAllSrcModelFiles({ fileData, filePaths });
 };
 
 export default createAllNewModelFiles;

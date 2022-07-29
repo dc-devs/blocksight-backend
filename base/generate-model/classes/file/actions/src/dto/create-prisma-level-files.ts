@@ -10,27 +10,27 @@ interface IProps {
 const createPrismaLevelFiles = ({ fileData, filePaths }: IProps) => {
 	createFile({
 		data: '',
-		file: filePaths.root.dto.prisma.index.path,
+		file: filePaths.src.root.dto.prisma.index.path,
 	});
 	
 	createFile({
 		data: '',
-		file: filePaths.root.dto.prisma.cursor.path,
+		file: filePaths.src.root.dto.prisma.cursor.path,
 	});
 	
 	createFile({
 		data: '',
-		file: filePaths.root.dto.prisma.order.path,
+		file: filePaths.src.root.dto.prisma.order.path,
 	});
 	
 	createFile({
 		data: '',
-		file: filePaths.root.dto.prisma.where.path,
+		file: filePaths.src.root.dto.prisma.where.path,
 	});
 	
 	createFile({
 		data: '',
-		file: filePaths.root.dto.prisma.model.path,
+		file: filePaths.src.root.dto.prisma.model.path,
 	});
 };
 

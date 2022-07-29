@@ -41,9 +41,9 @@ class GenerateModel {
 		});
 
 		const { generateAllFiles } = new File({
+			folderPaths,
 			modelName,
 			modelAttributes,
-			rootPath: folderPaths.src.root.path,
 		});
 
 		this.folderPaths = folderPaths;

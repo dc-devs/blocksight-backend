@@ -10,17 +10,17 @@ interface IProps {
 const createEnumLevelFiles = ({ fileData, filePaths }: IProps) => {
 	createFile({
 		data: '',
-		file: filePaths.root.enums.index.path,
+		file: filePaths.src.root.enums.index.path,
 	});
-	
+
 	createFile({
 		data: '',
-		file: filePaths.root.enums.name.path,
+		file: filePaths.src.root.enums.name.path,
 	});
-	
+
 	createFile({
 		data: '',
-		file: filePaths.root.enums.validationError.path,
+		file: filePaths.src.root.enums.validationError.path,
 	});
 };
 
