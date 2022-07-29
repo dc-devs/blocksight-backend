@@ -4,8 +4,8 @@ import { IFileData } from '../../interfaces/file-data';
 import { IFilePaths } from '../../interfaces/file-paths';
 import { IModelName } from '../../interfaces/model-name';
 import { IFolderPaths } from '../../interfaces/folder-paths';
+import createAllModelFiles from './actions/create-all-model-files';
 import { IModelAttributes } from '../../interfaces/model-attribute';
-import createAllNewModelFiles from './actions/create-all-model-files';
 
 interface IConstructorProps {
 	folderPaths: IFolderPaths;
@@ -33,7 +33,7 @@ class File {
 	}
 
 	generateAllFiles = () => {
-		createAllNewModelFiles({
+		createAllModelFiles({
 			fileData: this.fileData,
 			filePaths: this.filePaths,
 		});

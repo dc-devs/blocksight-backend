@@ -32,7 +32,7 @@ const generateTestFilePaths = ({
 	});
 	
 	const expectedObjects = generateExpectedObjectsLevelFilePaths({
-		rootPath: join(rootPath, FileName.QUERIES),
+		rootPath: join(rootPath, FileName.EXPECTED_OBJECTS),
 		modelName,
 	});
 

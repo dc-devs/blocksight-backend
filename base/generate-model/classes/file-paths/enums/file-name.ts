@@ -25,6 +25,7 @@ enum FielName {
 	FIND_ONE = 'find-one',
 	FIND_ALL = 'find-all',
 	ERROR_MESSAGE = 'error-message',
+	EXPECTED_OBJECTS = 'expected-objects',
 	VALIDATION_ERROR = 'validation-error',
 }
 
