@@ -1,6 +1,6 @@
+import { PrismaType, GraphqlModule } from '../../../../enums';
 import { IModelName } from '../../../../../../interfaces/model-name';
 import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
-import { DtoType, InputType, GraphqlModule } from '../../../../enums';
 import {
 	generateInputFields,
 	generateBottomClassFragment,
@@ -12,23 +12,20 @@ interface IProps {
 	modelAttributes: IModelAttributes;
 }
 
-const generateInputsUpdateFileData = ({
+const generatePrismaModelFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
 	let data = '';
-	const { classValidators, attributes } = modelAttributes.withoutTimeStamps;
-	const className = `${InputType.UPDATE}${modelName.singular.pascalCase}${DtoType.INPUT}`;
+	const { classValidators, attributes } = modelAttributes.all;
+	const className = `${modelName.singular.pascalCase}${PrismaType.INPUT}`;
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,
 		classValidators,
-		classValidatorsIsOptional: true,
 		graphqlType: GraphqlModule.INPUT_TYPE,
 	});
-
 	const inputFields = generateInputFields({
 		attributes,
-		setAllFieldsOpional: true,
 	});
 	const bottomClassFragment = generateBottomClassFragment();
 
@@ -39,4 +36,4 @@ const generateInputsUpdateFileData = ({
 	return data;
 };
 
-export default generateInputsUpdateFileData;
+export default generatePrismaModelFileData;

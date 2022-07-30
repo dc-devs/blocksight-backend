@@ -10,7 +10,7 @@ const generateImportNestJsGraphQl = ({ modules }: IProps) => {
 	data += 'import { Field, ';
 
 	modules.forEach((module, index) => {
-		const isLastItem = modules.length === index;
+		const isLastItem = modules.length - 1 === index;
 
 		data += `${module}`;
 

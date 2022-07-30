@@ -1,7 +1,4 @@
-import {
-	Character,
-	GraphqlModule,
-} from '../enums';
+import { Character, GraphqlModule } from '../enums';
 import {
 	generateTopClassFragment,
 	generateImportNestJsGraphQl,
@@ -44,6 +41,5 @@ const generateImportsAndTopClassFragment = ({
 
 	return data;
 };
-
 
 export default generateImportsAndTopClassFragment;
