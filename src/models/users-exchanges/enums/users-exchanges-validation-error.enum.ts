@@ -1,1 +1,3 @@
-validationError;
+enum UsersExchangesValidationError {}
+
+export default UsersExchangesValidationError;

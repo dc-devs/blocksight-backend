@@ -7,22 +7,18 @@ const config: IGenerateModelConstructorProps = {
 	isManyToMany: true,
 	attributes: {
 		userId: {
-			graphqlType: '',
 			typeScriptType: 'number',
 			classValidators: ['IsNumber'],
 		},
 		exchangeId: {
-			graphqlType: '',
 			typeScriptType: 'number',
 			classValidators: ['IsNumber'],
 		},
 		createdAt: {
-			graphqlType: '',
 			typeScriptType: 'Date',
 			classValidators: ['IsDate'],
 		},
 		updatedAt: {
-			graphqlType: '',
 			typeScriptType: 'Date',
 			classValidators: ['IsDate'],
 		},
