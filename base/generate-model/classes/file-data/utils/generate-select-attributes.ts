@@ -1,16 +1,20 @@
-import { IModelAttributesInput } from '../../../interfaces/config';
+import { Attribute, Character } from '../../../enums';
+import { IAttributes } from '../../../interfaces/model-attribute';
 
 interface IProps {
-	attributes: IModelAttributesInput;
+	attributes: IAttributes;
 }
 
 const generateSelectAttributes = ({ attributes }: IProps) => {
 	let selectAttributes = ``;
 
-	selectAttributes += '{\n';
+	selectAttributes += '{' + Character.LINE_BREAK;
+	selectAttributes +=
+		Character.TAB + `${Attribute.ID}:true,` + Character.LINE_BREAK;
 
 	Object.keys(attributes).forEach((attribute) => {
-		selectAttributes += `\t${attribute}: true,\n`;
+		selectAttributes +=
+			Character.TAB + `${attribute}: true,` + Character.LINE_BREAK;
 	});
 
 	selectAttributes += '};';

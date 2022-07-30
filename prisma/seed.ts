@@ -7,7 +7,7 @@ const main = async () => {
 	await prisma.user.createMany({
 		data: [...users],
 	});
-	
+
 	await prisma.exchange.createMany({
 		data: [...exchanges],
 	});

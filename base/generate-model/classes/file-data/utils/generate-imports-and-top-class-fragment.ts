@@ -1,4 +1,5 @@
-import { Character, GraphqlModule } from '../enums';
+import { GraphqlModule } from '../enums';
+import { Character } from '../../../enums';
 import {
 	generateTopClassFragment,
 	generateImportNestJsGraphQl,

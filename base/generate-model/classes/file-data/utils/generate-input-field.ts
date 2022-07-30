@@ -1,4 +1,4 @@
-import { Character } from '../enums';
+import { Character } from '../../../enums';
 import { IAttributes } from '../../../interfaces/model-attribute';
 import generateClassValidatorDecorators from './generate-class-validator-decorators';
 

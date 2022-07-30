@@ -1,4 +1,4 @@
-import { Character } from '../enums';
+import { Character } from '../../../enums';
 
 interface IProps {
 	modules: string[];

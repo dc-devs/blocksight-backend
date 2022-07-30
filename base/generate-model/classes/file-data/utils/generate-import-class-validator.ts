@@ -1,4 +1,5 @@
-import { Character, ClassValidator } from '../enums';
+import { ClassValidator } from '../enums';
+import { Character } from '../../../enums';
 
 interface IProps {
 	autoImports?: boolean;

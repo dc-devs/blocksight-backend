@@ -5,6 +5,10 @@ import { IsNumber, IsDate } from 'class-validator';
 export class UsersExchanges {
 	@IsNumber()
 	@Field({ nullable: true })
+	id?: number;
+
+	@IsNumber()
+	@Field({ nullable: true })
 	userId?: number;
 
 	@IsNumber()

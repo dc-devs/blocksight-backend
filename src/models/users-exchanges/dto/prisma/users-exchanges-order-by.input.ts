@@ -6,6 +6,10 @@ import { IsOptional } from 'class-validator';
 export class UsersExchangesOrderByInput {
 	@IsOptional()
 	@Field({ nullable: true })
+	id?: Prisma.SortOrder;
+
+	@IsOptional()
+	@Field({ nullable: true })
 	userId?: Prisma.SortOrder;
 
 	@IsOptional()

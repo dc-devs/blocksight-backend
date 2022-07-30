@@ -2,7 +2,12 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsOptional, IsNumber } from 'class-validator';
 
 @InputType()
-export class UsersExchangesCursor {
+export class UsersExchangesCursorInput {
+	@IsOptional()
+	@IsNumber()
+	@Field({ nullable: true })
+	id?: number;
+
 	@IsNumber()
 	@IsOptional()
 	@Field({ nullable: true })

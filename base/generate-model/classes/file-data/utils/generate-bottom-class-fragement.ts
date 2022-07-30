@@ -1,4 +1,4 @@
-import { Character } from '../enums';
+import { Character } from '../../../enums';
 
 const generateBottomClassFragment = () => {
 	let data = '';

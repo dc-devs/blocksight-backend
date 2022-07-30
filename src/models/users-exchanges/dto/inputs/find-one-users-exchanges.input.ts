@@ -3,13 +3,9 @@ import { IsOptional, IsNumber } from 'class-validator';
 
 @InputType()
 export class FindOneUsersExchangesInput {
-	@IsNumber()
 	@IsOptional()
+	@IsNumber()
 	@Field({ nullable: true })
-	userId?: number;
+	id?: number;
 
-	@IsNumber()
-	@IsOptional()
-	@Field({ nullable: true })
-	exchangeId?: number;
 };

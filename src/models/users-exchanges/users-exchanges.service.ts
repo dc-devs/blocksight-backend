@@ -10,6 +10,7 @@ import {
 } from './dto/inputs';
 
 const select = {
+	id:true,
 	userId: true,
 	exchangeId: true,
 	createdAt: true,
@@ -35,10 +36,10 @@ export class UsersExchangesService {
 	async findOne(
 		findOneUsersExchangesInput: FindOneUsersExchangesInput,
 	): Promise<UsersExchanges | null> {
-		const { id, name } = findOneUsersExchangesInput;
+		const { id } = findOneUsersExchangesInput;
 
 		return this.prisma.usersExchanges.findUnique({
-			where: { id, name },
+			where: { id },
 			select,
 		});
 	}

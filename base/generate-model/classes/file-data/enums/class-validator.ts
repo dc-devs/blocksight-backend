@@ -1,5 +1,5 @@
-// TODO add all vals
 enum ClassValidator {
+	IS_NUMBER = 'IsNumber',
 	IS_OPIONAL = 'IsOptional',
 }
 
