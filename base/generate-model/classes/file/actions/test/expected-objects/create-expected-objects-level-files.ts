@@ -9,7 +9,7 @@ interface IProps {
 
 const createExpectedObjectsLevelFiles = ({ fileData, filePaths }: IProps) => {
 	createFile({
-		data: '',
+		data: fileData.test.root.expectedObjects.expectedObject.data,
 		file: filePaths.test.root.expectedObjects.expectedObject.path,
 	});
 };

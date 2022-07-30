@@ -9,32 +9,32 @@ interface IProps {
 
 const createTestsLevelFiles = ({ fileData, filePaths }: IProps) => {
 	createFile({
-		data: '',
+		data: fileData.test.root.tests.create.data,
 		file: filePaths.test.root.tests.create.path,
 	});
 
 	createFile({
-		data: '',
+		data: fileData.test.root.tests.delete.data,
 		file: filePaths.test.root.tests.delete.path,
 	});
 
 	createFile({
-		data: '',
+		data: fileData.test.root.tests.findAll.data,
 		file: filePaths.test.root.tests.findAll.path,
 	});
 
 	createFile({
-		data: '',
+		data: fileData.test.root.tests.findOne.data,
 		file: filePaths.test.root.tests.findOne.path,
 	});
 
 	createFile({
-		data: '',
+		data: fileData.test.root.tests.update.data,
 		file: filePaths.test.root.tests.update.path,
 	});
-	
+
 	createFile({
-		data: '',
+		data: fileData.test.root.tests.index.data,
 		file: filePaths.test.root.tests.index.path,
 	});
 };

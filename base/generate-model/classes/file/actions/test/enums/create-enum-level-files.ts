@@ -9,7 +9,7 @@ interface IProps {
 
 const createEnumLevelFiles = ({ fileData, filePaths }: IProps) => {
 	createFile({
-		data: '',
+		data: fileData.test.root.enums.errorMessage.data,
 		file: filePaths.test.root.enums.errorMessage.path,
 	});
 };
