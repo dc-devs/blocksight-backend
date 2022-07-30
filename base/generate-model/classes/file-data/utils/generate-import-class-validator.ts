@@ -1,12 +1,14 @@
 import { Character, ClassValidator } from '../enums';
 
 interface IProps {
+	autoImports?: boolean;
 	addIsOptional?: boolean;
 	classValidators: string[];
 }
 
 const generateImportClassValidator = ({
 	classValidators,
+	autoImports = true,
 	addIsOptional = false,
 }: IProps) => {
 	let classValidatorImport = ``;
@@ -14,18 +16,24 @@ const generateImportClassValidator = ({
 	classValidatorImport += 'import { ';
 
 	if (addIsOptional) {
-		classValidatorImport += `${ClassValidator.IS_OPIONAL}, `;
+		classValidatorImport += `${ClassValidator.IS_OPIONAL}`;
+
+		if (autoImports) {
+			classValidatorImport += ', ';
+		}
 	}
 
-	classValidators.forEach((classValidator, index) => {
-		const isLastItem = classValidators.length - 1 === index;
+	if (autoImports) {
+		classValidators.forEach((classValidator, index) => {
+			const isLastItem = classValidators.length - 1 === index;
 
-		classValidatorImport += `${classValidator}`;
+			classValidatorImport += `${classValidator}`;
 
-		if (!isLastItem) {
-			classValidatorImport += `, `;
-		}
-	});
+			if (!isLastItem) {
+				classValidatorImport += `, `;
+			}
+		});
+	}
 
 	classValidatorImport += ` } from 'class-validator';`;
 	classValidatorImport += Character.LINE_BREAK;

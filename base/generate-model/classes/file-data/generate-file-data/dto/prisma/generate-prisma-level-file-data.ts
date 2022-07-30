@@ -3,6 +3,7 @@ import { IFileDataPrisma } from '../../../../../interfaces/file-data';
 import { IModelAttributes } from '../../../../../interfaces/model-attribute';
 import generatePrismaIndexFileData from './generate-file-data/generate-prisma-index-file-data';
 import generatePrismaCursorFileData from './generate-file-data/generate-prisma-cursor-file-data';
+import generatePrismaOrderFileData from './generate-file-data/generate-prisma-order-file-data';
 
 interface IProps {
 	modelName: IModelName;
@@ -19,6 +20,11 @@ const generatePrismaLevelFileData = ({
 		modelName,
 		modelAttributes,
 	});
+	
+	const orderFileData = generatePrismaOrderFileData({
+		modelName,
+		modelAttributes,
+	});
 
 	return {
 		index: {
@@ -28,7 +34,7 @@ const generatePrismaLevelFileData = ({
 			data: cursorFileData,
 		},
 		order: {
-			data: 'order',
+			data: orderFileData,
 		},
 		where: {
 			data: 'where',

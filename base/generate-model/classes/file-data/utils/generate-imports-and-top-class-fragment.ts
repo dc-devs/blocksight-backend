@@ -13,6 +13,7 @@ interface IProps {
 	graphqlType: GraphqlModule;
 	classValidators: string[];
 	classValidatorsIsOptional?: boolean;
+	classValidatorsAutoImports?: boolean;
 }
 
 const generateImportsAndTopClassFragment = ({
@@ -20,10 +21,12 @@ const generateImportsAndTopClassFragment = ({
 	graphqlType,
 	classValidators,
 	classValidatorsIsOptional = false,
+	classValidatorsAutoImports = true,
 }: IProps) => {
 	let data = '';
 	const importClassValidator = generateImportClassValidator({
 		classValidators: classValidators,
+		autoImports: classValidatorsAutoImports,
 		addIsOptional: classValidatorsIsOptional,
 	});
 	const importNestJsGraphQl = generateImportNestJsGraphQl({
