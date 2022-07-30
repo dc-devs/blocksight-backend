@@ -1,6 +1,6 @@
-import { IModelName } from '../../../../../../../interfaces/model-name';
-import { IFileDataPrisma } from '../../../../../../../interfaces/file-data';
-import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+import { IModelName } from '../../../../../../interfaces/model-name';
+import { IFileDataPrisma } from '../../../../../../interfaces/file-data';
+import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
 import generatePrismaWhereFileData from './generate-file-data/generate-prisma-where-file-data';
 import generatePrismaIndexFileData from './generate-file-data/generate-prisma-index-file-data';
 import generatePrismaCursorFileData from './generate-file-data/generate-prisma-cursor-file-data';

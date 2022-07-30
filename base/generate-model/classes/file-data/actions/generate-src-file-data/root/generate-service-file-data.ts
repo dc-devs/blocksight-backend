@@ -1,7 +1,7 @@
-import { IModelName } from '../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
-import generateSelectAttributes from '../../../../utils/generate-select-attributes';
-import generateUniqueAttributesObject from '../../../../utils/generate-unique-attributes-object';
+import { IModelName } from '../../../../../interfaces/model-name';
+import { IModelAttributes } from '../../../../../interfaces/model-attribute';
+import generateSelectAttributes from '../../../utils/generate-select-attributes';
+import generateUniqueAttributesObject from '../../../utils/generate-unique-attributes-object';
 
 interface IProps {
 	modelName: IModelName;

@@ -1,5 +1,5 @@
-import { IModelName } from '../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
+import { IModelName } from '../../../../../interfaces/model-name';
+import { IModelAttributes } from '../../../../../interfaces/model-attribute';
 import {
 	generateModuleFileData,
 	generateServiceFileData,

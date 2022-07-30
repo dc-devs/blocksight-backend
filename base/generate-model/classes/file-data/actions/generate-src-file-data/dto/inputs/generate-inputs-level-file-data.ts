@@ -1,6 +1,6 @@
-import { IModelName } from '../../../../../../../interfaces/model-name';
-import { IFileDataInputs } from '../../../../../../../interfaces/file-data';
-import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+import { IModelName } from '../../../../../../interfaces/model-name';
+import { IFileDataInputs } from '../../../../../../interfaces/file-data';
+import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
 import generateInputsIndexFileData from './generate-file-data/generate-inputs-index-file-data';
 import generateInputsCreateFileData from './generate-file-data/generate-inputs-ceate-file-data';
 import generateInputsUpdateFileData from './generate-file-data/generate-inputs-update-file-data';

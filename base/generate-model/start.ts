@@ -9,5 +9,5 @@ const testRootPath = generateModel.folderPaths.test.root.path;
 
 generateModel.start();
 
-execSync(`yarn prettier --write ${srcRootPath}`);
-execSync(`yarn prettier --write ${testRootPath}`);
+execSync(`yarn prettier --write ${srcRootPath}`, { stdio: 'inherit' });
+execSync(`yarn prettier --write ${testRootPath}`, { stdio: 'inherit' });

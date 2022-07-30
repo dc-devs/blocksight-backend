@@ -1,11 +1,11 @@
-import { Character } from '../../../../../../../../enums';
-import { IModelName } from '../../../../../../../../interfaces/model-name';
-import { PrismaType, GraphqlModule } from '../../../../../../enums';
-import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
+import { Character } from '../../../../../../../enums';
+import { IModelName } from '../../../../../../../interfaces/model-name';
+import { PrismaType, GraphqlModule } from '../../../../../enums';
+import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
 import {
 	generateBottomClassFragment,
 	generateImportsAndTopClassFragment,
-} from '../../../../../../utils';
+} from '../../../../../utils';
 
 interface IProps {
 	modelName: IModelName;

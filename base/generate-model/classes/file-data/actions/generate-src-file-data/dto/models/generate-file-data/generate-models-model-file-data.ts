@@ -1,28 +1,28 @@
-import { PrismaType, GraphqlModule } from '../../../../../../enums';
-import { IModelName } from '../../../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
+import { GraphqlModule } from '../../../../../enums';
+import { IModelName } from '../../../../../../../interfaces/model-name';
+import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
 import {
 	generateInputFields,
 	generateBottomClassFragment,
 	generateImportsAndTopClassFragment,
-} from '../../../../../../utils';
+} from '../../../../../utils';
 
 interface IProps {
 	modelName: IModelName;
 	modelAttributes: IModelAttributes;
 }
 
-const generatePrismaModelFileData = ({
+const generateModelsModelFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
 	let data = '';
 	const { classValidators, attributes } = modelAttributes.all;
-	const className = `${modelName.singular.pascalCase}${PrismaType.INPUT}`;
+	const className = `${modelName.singular.pascalCase}`;
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,
 		classValidators,
-		graphqlType: GraphqlModule.INPUT_TYPE,
+		graphqlType: GraphqlModule.OBJECT_TYPE,
 	});
 	const inputFields = generateInputFields({
 		attributes,
@@ -39,4 +39,4 @@ const generatePrismaModelFileData = ({
 	return data;
 };
 
-export default generatePrismaModelFileData;
+export default generateModelsModelFileData;

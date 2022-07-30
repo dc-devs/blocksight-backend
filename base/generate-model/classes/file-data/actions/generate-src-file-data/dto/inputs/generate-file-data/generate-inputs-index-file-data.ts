@@ -1,4 +1,4 @@
-import { IModelName } from '../../../../../../../../interfaces/model-name';
+import { IModelName } from '../../../../../../../interfaces/model-name';
 
 interface IProps {
 	modelName: IModelName;

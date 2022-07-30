@@ -1,35 +1,30 @@
-import { IModelName } from '../../../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
-import { DtoType, InputType, GraphqlModule } from '../../../../../../enums';
+import { IModelName } from '../../../../../../../interfaces/model-name';
+import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+import { DtoType, InputType, GraphqlModule } from '../../../../../enums';
 import {
 	generateInputFields,
 	generateBottomClassFragment,
 	generateImportsAndTopClassFragment,
-} from '../../../../../../utils';
+} from '../../../../../utils';
 
 interface IProps {
 	modelName: IModelName;
 	modelAttributes: IModelAttributes;
 }
 
-const generateInputsUpdateFileData = ({
+const generateInputsCreateFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
 	let data = '';
 	const { classValidators, attributes } = modelAttributes.withoutTimeStamps;
-	const className = `${InputType.UPDATE}${modelName.singular.pascalCase}${DtoType.INPUT}`;
+	const className = `${InputType.CREATE}${modelName.singular.pascalCase}${DtoType.INPUT}`;
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,
 		classValidators,
-		classValidatorsIsOptional: true,
 		graphqlType: GraphqlModule.INPUT_TYPE,
 	});
-
-	const inputFields = generateInputFields({
-		attributes,
-		setAllFieldsOpional: true,
-	});
+	const inputFields = generateInputFields({ attributes });
 	const bottomClassFragment = generateBottomClassFragment();
 
 	data += importsAndTopClassFragment;
@@ -39,4 +34,4 @@ const generateInputsUpdateFileData = ({
 	return data;
 };
 
-export default generateInputsUpdateFileData;
+export default generateInputsCreateFileData;

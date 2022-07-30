@@ -1,4 +1,4 @@
-import generateSrcFileData from './generate-src-file-data';
+import generateSrcFileData from '../generate-src-file-data';
 import { IFileData } from '../../../../interfaces/file-data';
 import { IModelName } from '../../../../interfaces/model-name';
 

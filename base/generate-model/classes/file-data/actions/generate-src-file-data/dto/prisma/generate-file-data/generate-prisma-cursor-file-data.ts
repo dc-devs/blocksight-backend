@@ -1,32 +1,24 @@
-import { IModelName } from '../../../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
-import {
-	DtoType,
-	InputType,
-	GraphqlModule,
-} from '../../../../../../enums';
+import { PrismaType, GraphqlModule } from '../../../../../enums';
+import { IModelName } from '../../../../../../../interfaces/model-name';
+import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
 import {
 	generateInputFields,
 	generateBottomClassFragment,
 	generateImportsAndTopClassFragment,
-} from '../../../../../../utils';
+} from '../../../../../utils';
 
 interface IProps {
 	modelName: IModelName;
 	modelAttributes: IModelAttributes;
 }
-interface IProps {
-	modelName: IModelName;
-	modelAttributes: IModelAttributes;
-}
 
-const generateInputsFindOneFileData = ({
+const generatePrismaCursorFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
 	let data = '';
-	const { classValidators, attributes } = modelAttributes.unique;
-	const className = `${InputType.FIND_ONE}${modelName.singular.pascalCase}${DtoType.INPUT}`;
+	const { classValidators, attributes } = modelAttributes.withoutTimeStamps;
+	const className = `${modelName.singular.pascalCase}${PrismaType.CURSOR}${PrismaType.INPUT}`;
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,
 		classValidators,
@@ -39,7 +31,7 @@ const generateInputsFindOneFileData = ({
 		id: {
 			addIsOptional: true,
 			addClassValidation: true,
-		}
+		},
 	});
 	const bottomClassFragment = generateBottomClassFragment();
 
@@ -50,4 +42,4 @@ const generateInputsFindOneFileData = ({
 	return data;
 };
 
-export default generateInputsFindOneFileData;
+export default generatePrismaCursorFileData;
