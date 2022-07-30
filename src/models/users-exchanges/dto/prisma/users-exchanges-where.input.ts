@@ -15,4 +15,4 @@ export class UsersExchangesWhereInput extends UsersExchangesInput {
 	@IsOptional()
 	@Field(() => [UsersExchangesInput], { nullable: true })
 	NOT?: [UsersExchangesInput];
-};
+}

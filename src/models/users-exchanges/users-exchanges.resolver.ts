@@ -11,7 +11,9 @@ import {
 
 @Resolver(() => UsersExchanges)
 export class UsersExchangesResolver {
-	constructor(private readonly usersExchangesService: UsersExchangesService) {}
+	constructor(
+		private readonly usersExchangesService: UsersExchangesService,
+	) {}
 
 	@Query(() => [UsersExchanges])
 	findAllUsersExchanges(
@@ -46,10 +48,14 @@ export class UsersExchangesResolver {
 	@Mutation(() => UsersExchanges)
 	async updateUsersExchanges(
 		@Args('id', { type: () => Int }) id: number,
-		@Args('updateUsersExchangesInput') updateUsersExchangesInput: UpdateUsersExchangesInput,
+		@Args('updateUsersExchangesInput')
+		updateUsersExchangesInput: UpdateUsersExchangesInput,
 	): Promise<UsersExchanges> {
 		try {
-			return await this.usersExchangesService.update(id, updateUsersExchangesInput);
+			return await this.usersExchangesService.update(
+				id,
+				updateUsersExchangesInput,
+			);
 		} catch (error) {
 			generateGraphQLError(error);
 		}

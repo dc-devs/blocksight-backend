@@ -17,4 +17,4 @@ export class UsersExchangesCursorInput {
 	@IsOptional()
 	@Field({ nullable: true })
 	exchangeId?: number;
-};
+}

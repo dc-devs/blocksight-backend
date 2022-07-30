@@ -23,4 +23,4 @@ export class UsersExchangesOrderByInput {
 	@IsOptional()
 	@Field({ nullable: true })
 	updatedAt?: Prisma.SortOrder;
-};
+}

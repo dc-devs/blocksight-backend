@@ -10,7 +10,7 @@ import {
 } from './dto/inputs';
 
 const select = {
-	id:true,
+	id: true,
 	userId: true,
 	exchangeId: true,
 	createdAt: true,
@@ -21,8 +21,11 @@ const select = {
 export class UsersExchangesService {
 	constructor(private prisma: PrismaService) {}
 
-	findAll(findAllUsersExchangesInput: FindAllUsersExchangesInput): Promise<UsersExchanges[]> {
-		const { skip, cursor, take, orderBy, where } = findAllUsersExchangesInput;
+	findAll(
+		findAllUsersExchangesInput: FindAllUsersExchangesInput,
+	): Promise<UsersExchanges[]> {
+		const { skip, cursor, take, orderBy, where } =
+			findAllUsersExchangesInput;
 		return this.prisma.usersExchanges.findMany({
 			skip,
 			take,
@@ -44,8 +47,11 @@ export class UsersExchangesService {
 		});
 	}
 
-	create(createUsersExchangesInput: CreateUsersExchangesInput): Promise<UsersExchanges> {
-		const data = createUsersExchangesInput as Prisma.UsersExchangesCreateInput;
+	create(
+		createUsersExchangesInput: CreateUsersExchangesInput,
+	): Promise<UsersExchanges> {
+		const data =
+			createUsersExchangesInput as Prisma.UsersExchangesCreateInput;
 
 		return this.prisma.usersExchanges.create({
 			data,
@@ -53,7 +59,10 @@ export class UsersExchangesService {
 		});
 	}
 
-	update(id: number, data: UpdateUsersExchangesInput): Promise<UsersExchanges> {
+	update(
+		id: number,
+		data: UpdateUsersExchangesInput,
+	): Promise<UsersExchanges> {
 		return this.prisma.usersExchanges.update({
 			where: {
 				id,

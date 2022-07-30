@@ -22,4 +22,4 @@ export class UsersExchangesInput {
 	@IsDate()
 	@Field({ nullable: true })
 	updatedAt?: Date;
-};
+}

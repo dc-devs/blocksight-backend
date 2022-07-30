@@ -12,4 +12,4 @@ export class UpdateUsersExchangesInput {
 	@IsOptional()
 	@Field({ nullable: true })
 	exchangeId?: number;
-};
+}

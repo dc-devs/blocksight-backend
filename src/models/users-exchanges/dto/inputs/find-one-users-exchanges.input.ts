@@ -7,5 +7,4 @@ export class FindOneUsersExchangesInput {
 	@IsNumber()
 	@Field({ nullable: true })
 	id?: number;
-
-};
+}

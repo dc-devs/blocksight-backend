@@ -10,4 +10,4 @@ export class CreateUsersExchangesInput {
 	@IsNumber()
 	@Field({ nullable: true })
 	exchangeId?: number;
-};
+}
