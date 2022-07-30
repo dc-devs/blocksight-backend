@@ -9,7 +9,7 @@ interface IProps {
 
 const createModelsLevelFiles = ({ fileData, filePaths }: IProps) => {
 	createFile({
-		data: fileData.root.dto.models.model.data,
+		data: fileData.src.root.dto.models.model.data,
 		file: filePaths.src.root.dto.models.model.path,
 	});
 };

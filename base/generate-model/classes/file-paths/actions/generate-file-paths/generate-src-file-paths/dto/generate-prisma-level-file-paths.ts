@@ -17,6 +17,11 @@ const generatePrismaLevelFilePaths = ({
 		`${modelName.singular.paramCase}-${FileName.CURSOR}.${FileName.INPUT}.ts`,
 	);
 
+	const whereFilePath = join(
+		rootPath,
+		`${modelName.singular.paramCase}-${FileName.WHERE}.${FileName.INPUT}.ts`,
+	);
+	
 	const orderByFilePath = join(
 		rootPath,
 		`${modelName.singular.paramCase}-${FileName.ORDER_BY}.${FileName.INPUT}.ts`,
@@ -37,7 +42,7 @@ const generatePrismaLevelFilePaths = ({
 			path: orderByFilePath,
 		},
 		where: {
-			path: indexFilePath,
+			path: whereFilePath,
 		},
 		model: {
 			path: modelFilePath,

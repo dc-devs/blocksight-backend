@@ -1,7 +1,7 @@
-import IFileDataRoot from './file-data-root';
+import IFileDataSrc from './src/file-data-src';
 
 interface IFileData {
-	root: IFileDataRoot;
+	src: IFileDataSrc;
 }
 
 export default IFileData;

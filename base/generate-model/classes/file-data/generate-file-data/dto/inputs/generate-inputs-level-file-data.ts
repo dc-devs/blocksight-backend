@@ -1,11 +1,11 @@
 import { IModelName } from '../../../../../interfaces/model-name';
 import { IFileDataInputs } from '../../../../../interfaces/file-data';
 import { IModelAttributes } from '../../../../../interfaces/model-attribute';
-import generateInputsIndexFileData from './generate-file/generate-inputs-index-file-data';
-import generateInputsCreateFileData from './generate-file/generate-inputs-ceate-file-data';
-import generateInputsUpdateFileData from './generate-file/generate-inputs-update-file-data';
-import generateInputsFindAllFileData from './generate-file/generate-inputs-find-all-file-data';
-import generateInputsFindOneFileData from './generate-file/generate-inputs-find-one-file-data';
+import generateInputsIndexFileData from './generate-file-data/generate-inputs-index-file-data';
+import generateInputsCreateFileData from './generate-file-data/generate-inputs-ceate-file-data';
+import generateInputsUpdateFileData from './generate-file-data/generate-inputs-update-file-data';
+import generateInputsFindAllFileData from './generate-file-data/generate-inputs-find-all-file-data';
+import generateInputsFindOneFileData from './generate-file-data/generate-inputs-find-one-file-data';
 
 interface IProps {
 	modelName: IModelName;

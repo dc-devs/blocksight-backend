@@ -5,7 +5,7 @@ import {
 	generateInputsUpdateFileData,
 	generateInputsFindOneFileData,
 	generateInputsFindAllFileData,
-} from './generate-file';
+} from './generate-file-data';
 
 export {
 	generateInputsLevelFileData,

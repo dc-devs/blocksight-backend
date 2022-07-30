@@ -24,22 +24,24 @@ const generateFileData = ({ modelName, modelAttributes }: IProps) => {
 	});
 
 	const paths: IFileData = {
-		root: {
-			dto,
-			module: {
-				data: moduleFileData,
-			},
-			resolver: {
-				data: resolverFileData,
-			},
-			resolverSpec: {
-				data: resolverSpecFileData,
-			},
-			service: {
-				data: serviceFileData,
-			},
-			serviceSpec: {
-				data: serviceSpecFileData,
+		src: {
+			root: {
+				dto,
+				module: {
+					data: moduleFileData,
+				},
+				resolver: {
+					data: resolverFileData,
+				},
+				resolverSpec: {
+					data: resolverSpecFileData,
+				},
+				service: {
+					data: serviceFileData,
+				},
+				serviceSpec: {
+					data: serviceSpecFileData,
+				},
 			},
 		},
 	};
