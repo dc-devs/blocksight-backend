@@ -1,5 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { IsNumber, IsDate } from 'class-validator';
+import { User } from '../../../users/dto/models/user.model';
+import { Exchange } from '../../../exchanges/dto/models/exchange.model';
 
 @ObjectType()
 export class UsersExchanges {
@@ -14,6 +16,12 @@ export class UsersExchanges {
 	@IsNumber()
 	@Field({ nullable: true })
 	exchangeId?: number;
+
+	@Field(() => Exchange, { nullable: true })
+	exchange?: Exchange;
+
+	@Field(() => User, { nullable: true })
+	user?: User;
 
 	@IsDate()
 	@Field({ nullable: true })

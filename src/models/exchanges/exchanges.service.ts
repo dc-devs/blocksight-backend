@@ -17,8 +17,11 @@ const select = {
 	companyLogoUrl: true,
 	hasApi: true,
 	hasCsv: true,
-	// TODO: FIX
-	// users: true,
+	users: {
+		include: {
+			user: true,
+		},
+	},
 	createdAt: true,
 	updatedAt: true,
 };

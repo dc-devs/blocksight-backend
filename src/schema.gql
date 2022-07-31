@@ -7,11 +7,15 @@ type LogOutResponse {
   isAuthenticated: Boolean!
 }
 
-type User {
+type Exchange {
   id: Float
-  email: String
-  primaryWalletAddress: String
-  role: String
+  name: String
+  websiteUrl: String
+  logoUrl: String
+  companyLogoUrl: String
+  hasApi: Boolean
+  hasCsv: Boolean
+  users: [UsersExchanges!]
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -21,22 +25,29 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type UsersExchanges {
+  id: Float
+  userId: Float
+  exchangeId: Float
+  exchange: Exchange
+  user: User
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type User {
+  id: Float
+  email: String
+  primaryWalletAddress: String
+  role: String
+  exchanges: [UsersExchanges!]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 type SessionResponse {
   user: User!
   isAuthenticated: Boolean!
-}
-
-type Exchange {
-  id: Float
-  name: String
-  websiteUrl: String
-  logoUrl: String
-  companyLogoUrl: String
-  users: [User!]
-  hasApi: Boolean
-  hasCsv: Boolean
-  createdAt: DateTime
-  updatedAt: DateTime
 }
 
 type Value {
@@ -87,6 +98,8 @@ type Query {
   findOneUser(findOneUserInput: FindOneUserInput!): User
   findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
   getTokenBalances(getTokenBalancesInput: GetTokenBalancesInput!): TokenBalances
+  findAllUsersExchanges(findAllUsersExchangesInput: FindAllUsersExchangesInput!): [UsersExchanges!]!
+  findOneUsersExchanges(findOneUsersExchangesInput: FindOneUsersExchangesInput!): UsersExchanges
   currentUser: SessionResponse!
   findAllExchanges(findAllExchangesInput: FindAllExchangesInput!): [Exchange!]!
   findOneExchange(findOneExchangeInput: FindOneExchangeInput!): Exchange
@@ -146,6 +159,51 @@ input GetTokenBalancesInput {
   filter: String
   address: String
   currency: String
+}
+
+input FindAllUsersExchangesInput {
+  skip: Float
+  take: Float
+  cursor: UsersExchangesCursorInput
+  where: UsersExchangesWhereInput
+  orderBy: UsersExchangesOrderByInput
+}
+
+input UsersExchangesCursorInput {
+  id: Float
+  userId: Float
+  exchangeId: Float
+}
+
+input UsersExchangesWhereInput {
+  id: Float
+  userId: Float
+  exchangeId: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  AND: [UsersExchangesInput!]
+  OR: [UsersExchangesInput!]
+  NOT: [UsersExchangesInput!]
+}
+
+input UsersExchangesInput {
+  id: Float
+  userId: Float
+  exchangeId: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input UsersExchangesOrderByInput {
+  id: String
+  userId: String
+  exchangeId: String
+  createdAt: String
+  updatedAt: String
+}
+
+input FindOneUsersExchangesInput {
+  id: Float
 }
 
 input FindAllExchangesInput {
@@ -208,6 +266,9 @@ input FindOneExchangeInput {
 type Mutation {
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
   deleteUser(id: Int!): User!
+  createUsersExchanges(createUsersExchangesInput: CreateUsersExchangesInput!): UsersExchanges!
+  updateUsersExchanges(id: Int!, updateUsersExchangesInput: UpdateUsersExchangesInput!): UsersExchanges!
+  deleteUsersExchanges(id: Int!): UsersExchanges!
   login(sessionInput: SessionInput!): SessionResponse!
   signInMetaMask(signInMetaMaskInput: SignInMetaMaskInput!): SessionResponse!
   signUp(createUserEmailInput: CreateUserEmailInput!): SessionResponse!
@@ -220,6 +281,16 @@ type Mutation {
 input UpdateUserInput {
   email: String
   primaryWalletAddress: String
+}
+
+input CreateUsersExchangesInput {
+  userId: Float
+  exchangeId: Float
+}
+
+input UpdateUsersExchangesInput {
+  userId: Float
+  exchangeId: Float
 }
 
 input SessionInput {

@@ -9,6 +9,7 @@ import { ExchangesModule } from './models/exchanges/exchanges.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { UsersExchangesModule } from './models/users-exchanges/users-exchanges.module';
 import { TokenBalancesModule } from './models/token-balances/token-balances.module';
 
 @Module({
@@ -18,6 +19,7 @@ import { TokenBalancesModule } from './models/token-balances/token-balances.modu
 		TransfersModule,
 		TransactionsModule,
 		TokenBalancesModule,
+		UsersExchangesModule,
 		ConfigModule.forRoot({
 			isGlobal: true,
 			envFilePath: ['.env', `.env.${environment}`],

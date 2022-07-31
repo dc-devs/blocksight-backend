@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { User } from '../../../users/dto/models/user.model';
+import { UsersExchanges } from '../../../users-exchanges/dto/models/users-exchanges.model';
 import { IsNumber, IsString, IsDate, IsBoolean } from 'class-validator';
 
 @ObjectType()
@@ -24,13 +24,6 @@ export class Exchange {
 	@Field({ nullable: true })
 	companyLogoUrl?: string;
 
-	// TODO: ALso Update same on Users
-	// @IsOptional()
-	// @Field(() => [UserInput], { nullable: true })
-	// OR?: [UserInput];
-	@Field(() => [User], { nullable: true })
-	users?: [User];
-
 	@IsBoolean()
 	@Field({ nullable: true })
 	hasApi?: boolean;
@@ -38,6 +31,9 @@ export class Exchange {
 	@IsBoolean()
 	@Field({ nullable: true })
 	hasCsv?: boolean;
+
+	@Field(() => [UsersExchanges], { nullable: true })
+	users?: UsersExchanges[];
 
 	@IsDate()
 	@Field({ nullable: true })

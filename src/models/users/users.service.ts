@@ -14,8 +14,13 @@ import {
 const select = {
 	id: true,
 	email: true,
-	primaryWalletAddress: true,
 	role: true,
+	primaryWalletAddress: true,
+	exchanges: {
+		include: {
+			exchange: true,
+		},
+	},
 	createdAt: true,
 	updatedAt: true,
 };

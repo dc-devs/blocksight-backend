@@ -14,6 +14,10 @@ const config: IGenerateModelConstructorProps = {
 			typeScriptType: 'number',
 			classValidators: ['IsNumber'],
 		},
+		assignedAt: {
+			typeScriptType: 'Date',
+			classValidators: ['IsDate'],
+		},
 		createdAt: {
 			typeScriptType: 'Date',
 			classValidators: ['IsDate'],
