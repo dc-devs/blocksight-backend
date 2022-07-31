@@ -5,13 +5,7 @@ import ModelName from '../model-name';
 import FolderPaths from '../folder-paths';
 import ModelAttributes from '../model-attributes';
 import { IFolderPaths } from '../../interfaces/folder-paths';
-import { IModelAttributesInput } from '../../interfaces/config';
-
-interface IConstructorProps {
-	isManyToMany?: boolean;
-	attributes: IModelAttributesInput;
-	modelNamePluralPascalCase: string;
-}
+import { IGenerateModelConstructorProps } from '../../interfaces/config';
 
 class GenerateModel {
 	folderPaths: IFolderPaths;
@@ -20,16 +14,19 @@ class GenerateModel {
 
 	constructor({
 		attributes,
-		isManyToMany = false,
+		relatedTo,
+		relationType,
 		modelNamePluralPascalCase,
-	}: IConstructorProps) {
+	}: IGenerateModelConstructorProps) {
 		const modelName = new ModelName({
-			isManyToMany,
+			relationType,
 			modelNamePluralPascalCase,
 		});
 
 		const { modelAttributes } = new ModelAttributes({
+			relatedTo,
 			attributes,
+			relationType,
 		});
 
 		const { folderPaths } = new FolderPaths({

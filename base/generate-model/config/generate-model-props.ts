@@ -1,10 +1,25 @@
+import { RelationType } from '../enums';
 import { IGenerateModelConstructorProps } from '../interfaces/config';
+
+// TODO for many-to-many - relation
+
+//  add to model
+// import { User } from '../../../users/dto/models/user.model';
+// import { Exchange } from '../../../exchanges/dto/models/exchange.model';
+// ...
+// ...
+// @Field(() => Exchange, { nullable: true })
+// exchange?: Exchange;
+
+// @Field(() => User, { nullable: true })
+// user?: User;
 
 const modelNamePluralPascalCase = 'UsersExchanges';
 
 const config: IGenerateModelConstructorProps = {
 	modelNamePluralPascalCase,
-	isManyToMany: true,
+	relationType: RelationType.MANY_TO_MANY,
+	relatedTo: ['User','Exchange'],
 	attributes: {
 		userId: {
 			typeScriptType: 'number',
@@ -13,10 +28,6 @@ const config: IGenerateModelConstructorProps = {
 		exchangeId: {
 			typeScriptType: 'number',
 			classValidators: ['IsNumber'],
-		},
-		assignedAt: {
-			typeScriptType: 'Date',
-			classValidators: ['IsDate'],
 		},
 		createdAt: {
 			typeScriptType: 'Date',

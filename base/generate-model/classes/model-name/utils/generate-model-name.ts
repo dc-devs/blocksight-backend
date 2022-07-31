@@ -1,16 +1,18 @@
+import { RelationType } from '../../../enums';
 import { paramCase, camelCase } from 'change-case';
 import { IModelName } from '../../../interfaces/model-name';
 import getSingularNameFromString from './get-singular-name-from-string';
 
 interface IProps {
-	isManyToMany: boolean;
+	relationType: RelationType;
 	modelNamePluralPascalCase: string;
 }
 
 const generateModelName = ({
-	isManyToMany,
+	relationType,
 	modelNamePluralPascalCase,
 }: IProps): IModelName => {
+	const isManyToMany = relationType === RelationType.MANY_TO_MANY;
 	const modelNameSingularPascalCase = getSingularNameFromString({
 		pluralName: modelNamePluralPascalCase,
 	});

@@ -1,10 +1,6 @@
 import { IModelName } from '../../../../../../../../interfaces/model-name';
 import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
-import {
-	DtoType,
-	InputType,
-	GraphqlModule,
-} from '../../../../../../enums';
+import { DtoType, InputType, GraphqlModule } from '../../../../../../enums';
 import {
 	generateInputFields,
 	generateBottomClassFragment,
@@ -39,7 +35,7 @@ const generateInputsFindOneFileData = ({
 		id: {
 			addIsOptional: true,
 			addClassValidation: true,
-		}
+		},
 	});
 	const bottomClassFragment = generateBottomClassFragment();
 

@@ -1,5 +1,5 @@
 import { ClassValidator } from '../enums';
-import { Character } from '../../../enums';
+import { Character, RelationType } from '../../../enums';
 import generateInputField from './generate-input-field';
 import { IAttributes } from '../../../interfaces/model-attribute';
 
@@ -11,9 +11,12 @@ interface IId {
 
 interface IProps {
 	id?: IId;
+	relatedTo?: string[];
 	setAllValues?: string;
 	attributes: IAttributes;
+	relationType?: RelationType;
 	autoAddValidation?: boolean;
+	addRelationalFields?: boolean;
 	setAllFieldsOpional?: boolean;
 }
 
@@ -51,6 +54,9 @@ const generateInputFields = ({
 	id,
 	attributes,
 	setAllValues,
+	relatedTo,
+	relationType,
+	addRelationalFields = false,
 	autoAddValidation = true,
 	setAllFieldsOpional = false,
 }: IProps) => {
@@ -60,6 +66,18 @@ const generateInputFields = ({
 	if (id) {
 		const idField = generateIdField(id);
 		data += idField;
+	}
+
+	if (addRelationalFields && relationType === RelationType.MANY_TO_MANY) {
+		relatedTo.forEach((modelName) => {
+			const modelNameLower = modelName.toLowerCase();
+
+			data +=
+				`@Field(() => ${modelName}, { nullable: true })` +
+				Character.LINE_BREAK;
+			data += `${modelNameLower}?: ${modelName};` + Character.LINE_BREAK;
+			data += Character.LINE_BREAK;
+		});
 	}
 
 	attributeKeys.forEach((attribute, index) => {

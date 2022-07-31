@@ -27,10 +27,10 @@ scalar DateTime
 
 type UsersExchanges {
   id: Float
+  user: User
+  exchange: Exchange
   userId: Float
   exchangeId: Float
-  exchange: Exchange
-  user: User
   createdAt: DateTime
   updatedAt: DateTime
 }

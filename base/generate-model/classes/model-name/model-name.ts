@@ -1,8 +1,9 @@
+import { RelationType } from '../../enums';
 import { generateModelName } from './utils';
 import { IModelName, IModelNameOptions } from '../../interfaces/model-name';
 
 interface IConstructorProps {
-	isManyToMany: boolean;
+	relationType: RelationType;
 	modelNamePluralPascalCase: string;
 }
 
@@ -11,11 +12,11 @@ class ModelName implements IModelName {
 	singular: IModelNameOptions;
 
 	constructor({
-		isManyToMany,
+		relationType,
 		modelNamePluralPascalCase,
 	}: IConstructorProps) {
 		const { singular, plural } = generateModelName({
-			isManyToMany,
+			relationType,
 			modelNamePluralPascalCase,
 		});
 

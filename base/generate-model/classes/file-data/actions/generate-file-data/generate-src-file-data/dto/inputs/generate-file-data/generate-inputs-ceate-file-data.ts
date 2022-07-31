@@ -17,6 +17,7 @@ const generateInputsCreateFileData = ({
 	modelAttributes,
 }: IProps) => {
 	let data = '';
+	const { relatedTo, relationType } = modelAttributes;
 	const { classValidators, attributes } = modelAttributes.withoutTimeStamps;
 	const className = `${InputType.CREATE}${modelName.singular.pascalCase}${DtoType.INPUT}`;
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
@@ -24,7 +25,11 @@ const generateInputsCreateFileData = ({
 		classValidators,
 		graphqlType: GraphqlModule.INPUT_TYPE,
 	});
-	const inputFields = generateInputFields({ attributes });
+	const inputFields = generateInputFields({
+		relatedTo,
+		attributes,
+		relationType,
+	});
 	const bottomClassFragment = generateBottomClassFragment();
 
 	data += importsAndTopClassFragment;
