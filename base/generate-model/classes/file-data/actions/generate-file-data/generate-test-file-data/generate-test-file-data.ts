@@ -1,8 +1,10 @@
 import { IModelName } from '../../../../../interfaces/model-name';
 import { IFileDataTest } from '../../../../../interfaces/file-data';
 import { IModelAttributes } from '../../../../../interfaces/model-attribute';
+import generateEnumsLevelFileData from './enums/generate-enums-level-file-data';
 import generateTestsLevelFileData from './tests/generate-tests-level-file-data';
 import generateQueriesLevelFileData from './queries/generate-queries-level-file-data';
+import generateExpectedObjectsLevelFileData from './expected-objects/generate-expected-objects-level-file-data';
 
 interface IProps {
 	modelName: IModelName;
@@ -23,20 +25,22 @@ const generateTestFileData = ({
 		modelAttributes,
 	});
 
+	const enums = generateEnumsLevelFileData({
+		modelName,
+		modelAttributes,
+	});
+	
+	const expectedObjects = generateExpectedObjectsLevelFileData({
+		modelName,
+		modelAttributes,
+	});
+
 	const paths = {
 		root: {
-			enums: {
-				errorMessage: {
-					data: 'errorMessage',
-				},
-			},
-			expectedObjects: {
-				expectedObject: {
-					data: 'expectedObject',
-				},
-			},
-			queries,
 			tests,
+			enums,
+			queries,
+			expectedObjects,
 		},
 	};
 

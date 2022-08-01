@@ -24,4 +24,6 @@ const usersExchanges = [
 	userExchanceKuCoin,
 ];
 
-export { usersExchanges };
+const firstRecord = userExchanceCoinbase;
+
+export { usersExchanges, firstRecord };

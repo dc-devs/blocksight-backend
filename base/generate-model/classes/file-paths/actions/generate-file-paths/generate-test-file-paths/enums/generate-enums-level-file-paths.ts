@@ -12,7 +12,10 @@ const generateEnumsLevelFilePaths = ({
 	rootPath,
 	modelName,
 }: IProps): IFilePathsTestEnums => {
-	const errorMessageFilePath = join(rootPath, `${FileName.ERROR_MESSAGE}.ts`);
+	const errorMessageFilePath = join(
+		rootPath,
+		`${FileName.ERROR_MESSAGE}.enum.ts`,
+	);
 
 	return {
 		errorMessage: {

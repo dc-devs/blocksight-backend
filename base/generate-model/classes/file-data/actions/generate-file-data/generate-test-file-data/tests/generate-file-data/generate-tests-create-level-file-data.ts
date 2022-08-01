@@ -15,7 +15,7 @@ const generateTestsCreateFileData = ({
 import query from '../queries/create.query';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import { coinbasePro } from '../../../../prisma/seeds/${modelName.plural.paramCase}.seed';
+import { firstRecord } from '../../../../prisma/seeds/${modelName.plural.paramCase}.seed';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
 import { ${modelName.singular.pascalCase}ValidationError } from '../../../../src/models/${modelName.plural.paramCase}/enums';
@@ -119,7 +119,7 @@ const runCreateTests = () => {
 
 					beforeEach(() => {
 						create${modelName.singular.pascalCase}Input = {
-							name: coinbasePro.name,
+							name: firstRecord.name,
 							websiteUrl: 'https://new-${modelName.singular.pascalCase}.com/',
 							logoUrl: 'https://new-${modelName.singular.pascalCase}.com/logo',
 							companyLogoUrl:

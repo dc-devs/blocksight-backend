@@ -2,7 +2,7 @@ import request from 'supertest';
 import query from '../queries/create.query';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import { coinbasePro } from '../../../../prisma/seeds/users-exchanges.seed';
+import { firstRecord } from '../../../../prisma/seeds/users-exchanges.seed';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
 import { UsersExchangesValidationError } from '../../../../src/models/users-exchanges/enums';
@@ -106,7 +106,7 @@ const runCreateTests = () => {
 
 					beforeEach(() => {
 						createUsersExchangesInput = {
-							name: coinbasePro.name,
+							name: firstRecord.name,
 							websiteUrl: 'https://new-UsersExchanges.com/',
 							logoUrl: 'https://new-UsersExchanges.com/logo',
 							companyLogoUrl:
