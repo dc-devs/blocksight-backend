@@ -18,7 +18,7 @@ const generateTopQueryFragment = ({
 	const crudOperationLowerCased = crudOperation;
 	const crudOperationCapitalized = pascalCase(crudOperation);
 
-	data += `const ${crudOperation} = \`` + Character.LINE_BREAK;
+	data += `const ${crudOperation}Query = \`` + Character.LINE_BREAK;
 	data +=
 		`${queryTypeLowerCased} ${queryTypeCapitalized}($${crudOperationLowerCased}${modelName}Input: ${crudOperationCapitalized}${modelName}Input!) {` +
 		Character.LINE_BREAK;

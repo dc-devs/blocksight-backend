@@ -1,4 +1,9 @@
+import QueryType from './enum/query-type';
+import { Crud } from '../../../../../../../enums';
 import { IModelName } from '../../../../../../../interfaces/model-name';
+import generateQueryAttributes from './utils/generate-query-attributes';
+import generateTopQueryFragment from './utils/generate-top-query-fragment';
+import generateBottomQueryFragment from './utils/generate-bottom-query-fragment';
 import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
 
 interface IProps {
@@ -6,13 +11,28 @@ interface IProps {
 	modelAttributes: IModelAttributes;
 }
 
-const generateTestsFindAllFileData = ({
+const generateFindAllFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
-	let data = ``;
+	let data = '';
+	const topQueryFragment = generateTopQueryFragment({
+		crudOperation: Crud.FIND_ALL,
+		queryType: QueryType.QUERY,
+		modelName: modelName.singular.pascalCase,
+	});
+	const queryAttributes = generateQueryAttributes({
+		modelAttributes,
+	});
+	const bottomQueryFragment = generateBottomQueryFragment({
+		crudOperation: Crud.FIND_ALL,
+	});
+
+	data += topQueryFragment;
+	data += queryAttributes;
+	data += bottomQueryFragment;
 
 	return data;
 };
 
-export default generateTestsFindAllFileData;
+export default generateFindAllFileData;

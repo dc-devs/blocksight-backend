@@ -1,4 +1,4 @@
-const create = `
+const createQuery = `
 mutation Mutation($createUsersExchangesInput: CreateUsersExchangesInput!) {
 	createUsersExchanges(createUsersExchangesInput: $createUsersExchangesInput) {
 		id
@@ -28,4 +28,4 @@ mutation Mutation($createUsersExchangesInput: CreateUsersExchangesInput!) {
 	}
 }`;
 
-export default create;
+export default createQuery;

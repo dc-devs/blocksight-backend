@@ -10,7 +10,7 @@ const generateTopQueryFragment = ({ crudOperation }: IProps) => {
 	data += Character.TAB + `}` + Character.LINE_BREAK;
 	data += `}\`` + Character.LINE_BREAK;
 	data += Character.LINE_BREAK;
-	data += `export default ${crudOperation};` + Character.LINE_BREAK;
+	data += `export default ${crudOperation}Query;` + Character.LINE_BREAK;
 
 	return data;
 };
