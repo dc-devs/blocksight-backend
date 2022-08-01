@@ -2,11 +2,11 @@ import request from 'supertest';
 import query from '../queries/create.query';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import { firstRecord } from '../../../../prisma/seeds/users-exchanges.seed';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import { firstRecord } from '../../../../prisma/seeds/users-exchanges.seed';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import { UsersExchangesValidationError } from '../../../../src/models/users-exchanges/enums';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import { UsersExchangesValidationError } from '../../../../src/models/users-exchanges/enums';
 import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-object';
 
 const runCreateTests = () => {
@@ -24,15 +24,11 @@ const runCreateTests = () => {
 
 		describe('when creating a new UsersExchanges with valid inputs', () => {
 			const createUsersExchangesInput = {
-				name: 'New Exchnage',
-				websiteUrl: 'https://new-UsersExchanges.com/',
-				logoUrl: 'https://new-UsersExchanges.com/logo',
-				companyLogoUrl: 'https://new-UsersExchanges.com/company-logo',
-				hasApi: true,
-				hasCsv: true,
+				userId: 1,
+				exchangeId: 1,
 			};
 
-			it('should create and return that UsersExchanges', async () => {
+			it('should create and return UsersExchanges', async () => {
 				const graphqlQuery = {
 					operationName: 'Mutation',
 					query,

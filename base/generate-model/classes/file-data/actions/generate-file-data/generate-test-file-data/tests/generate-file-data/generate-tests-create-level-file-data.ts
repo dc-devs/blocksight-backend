@@ -1,4 +1,10 @@
+import { pascalCase } from 'change-case';
+import { Character, Crud } from '../../../../../../../enums';
+import generateCreateImports from './utils/generate-create-imports';
 import { IModelName } from '../../../../../../../interfaces/model-name';
+import generateTopTestFragment from './utils/generate-top-test-fragment';
+import generateBottomTestFragment from './utils/generate-bottom-test-fragment';
+import generateCreateNewModelTest from './utils/generate-create-new-model-test';
 import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
 
 interface IProps {
@@ -10,61 +16,27 @@ const generateTestsCreateFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
-	let data = `
-	import request from 'supertest';
-import query from '../queries/create.query';
-import ErrorMessage from '../enums/error-message.enum';
-import { INestApplication, HttpStatus } from '@nestjs/common';
-import { firstRecord } from '../../../../prisma/seeds/${modelName.plural.paramCase}.seed';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
-import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import { ${modelName.singular.pascalCase}ValidationError } from '../../../../src/models/${modelName.plural.paramCase}/enums';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
-import expected${modelName.singular.pascalCase}Object from '../expected-objects/expected-${modelName.singular.paramCase}-object';
+	let data = '';
+	const imports = generateCreateImports({ modelName });
+	const topTestFragment = generateTopTestFragment({
+		testName: pascalCase(Crud.CREATE),
+	});
+	const bottomTestFragment = generateBottomTestFragment({
+		testName: pascalCase(Crud.CREATE),
+	});
+	const newModelTest = generateCreateNewModelTest({
+		modelName,
+		modelAttributes,
+	});
 
-const runCreateTests = () => {
-	describe('Create', () => {
-		let app: INestApplication;
+	data += imports + Character.LINE_BREAK;
+	data += Character.LINE_BREAK;
+	data += topTestFragment + Character.LINE_BREAK;
+	data += Character.LINE_BREAK;
+	data += newModelTest;
+	data += Character.LINE_BREAK;
 
-		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
-		});
-
-		describe('when creating a new ${modelName.singular.pascalCase} with valid inputs', () => {
-			const create${modelName.singular.pascalCase}Input = {
-				name: 'New Exchnage',
-				websiteUrl: 'https://new-${modelName.singular.pascalCase}.com/',
-				logoUrl: 'https://new-${modelName.singular.pascalCase}.com/logo',
-				companyLogoUrl: 'https://new-${modelName.singular.pascalCase}.com/company-logo',
-				hasApi: true,
-				hasCsv: true,
-			};
-
-			it('should create and return that ${modelName.singular.pascalCase}', async () => {
-				const graphqlQuery = {
-					operationName: 'Mutation',
-					query,
-					variables: {
-						create${modelName.singular.pascalCase}Input,
-					},
-				};
-				const response = await request(app.getHttpServer())
-					.post('/graphql')
-					.send(graphqlQuery);
-
-				const ${modelName.singular.pascalCase} = response.body.data.create${modelName.singular.pascalCase};
-
-				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(${modelName.singular.pascalCase}).toEqual(expected${modelName.singular.pascalCase}Object);
-			});
-		});
-
-		describe('validation', () => {
+	data += `describe('validation', () => {
 			describe('when creating with no data', () => {
 				let create${modelName.singular.pascalCase}Input;
 				let errorResponseMessage: string[];
@@ -160,11 +132,8 @@ const runCreateTests = () => {
 				});
 			});
 		});
-	});
-};
-
-export default runCreateTests;
 `;
+	data += bottomTestFragment;
 
 	return data;
 };
