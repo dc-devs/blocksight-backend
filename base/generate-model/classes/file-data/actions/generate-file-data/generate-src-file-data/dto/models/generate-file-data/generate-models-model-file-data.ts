@@ -24,14 +24,16 @@ const generateModelsModelFileData = ({
 	const className = `${modelName.singular.pascalCase}`;
 
 	if (relationType === RelationType.MANY_TO_MANY) {
-		relatedTo.forEach((modelName) => {
-			const modelNamePascal = pascalCase(modelName);
-			const modelNameParam = paramCase(modelName).toLowerCase();
+		if (relatedTo) {
+			Object.keys(relatedTo).forEach((modelName) => {
+				const modelNamePascal = pascalCase(modelName);
+				const modelNameParam = paramCase(modelName).toLowerCase();
 
-			data +=
-				`import { ${modelNamePascal} } from '../../../${modelNameParam}s/dto/models/${modelNameParam}.model';` +
-				Character.LINE_BREAK;
-		});
+				data +=
+					`import { ${modelNamePascal} } from '../../../${modelNameParam}s/dto/models/${modelNameParam}.model';` +
+					Character.LINE_BREAK;
+			});
+		}
 	}
 
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({

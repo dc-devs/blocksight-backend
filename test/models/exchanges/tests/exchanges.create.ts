@@ -2,14 +2,12 @@ import request from 'supertest';
 import query from '../queries/create.query';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import ErrorCode from '../../../../src/prisma/error-code.enum';
 import { coinbasePro } from '../../../../prisma/seeds/exchanges.seed';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
 import { ExchangeValidationError } from '../../../../src/models/exchanges/enums';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import expectedExchangeObject from '../expected-objects/expected-exchange-object';
-import GraphQLErrorMessage from '../../../../src/graphql/errors/error-message.enum';
 
 const runCreateTests = () => {
 	describe('Create', () => {

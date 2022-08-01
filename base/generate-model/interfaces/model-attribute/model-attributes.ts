@@ -1,11 +1,12 @@
-import IModelAttributeProps from './model-attribute-data';
 import { RelationType } from '../../enums';
+import { IRelatedTo } from '../../interfaces/config';
+import IModelAttributeProps from './model-attribute-data';
 
 interface IModelAttributes {
-	relationType: RelationType;
+	relatedTo: IRelatedTo;
 	all: IModelAttributeProps;
+	relationType: RelationType;
 	unique: IModelAttributeProps;
-	relatedTo: string[] | undefined;
 	withoutTimeStamps: IModelAttributeProps;
 }
 

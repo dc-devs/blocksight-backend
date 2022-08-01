@@ -1,10 +1,11 @@
-import { Attribute, Character, RelationType } from '../../../enums';
+import { IRelatedTo } from '../../../interfaces/config';
 import { IAttributes } from '../../../interfaces/model-attribute';
+import { Attribute, Character, RelationType } from '../../../enums';
 
 interface IProps {
 	attributes: IAttributes;
 	relationType: RelationType;
-	relatedTo: string[] | undefined;
+	relatedTo: IRelatedTo | undefined;
 }
 
 const generateSelectAttributes = ({
@@ -19,12 +20,14 @@ const generateSelectAttributes = ({
 		Character.TAB + `${Attribute.ID}:true,` + Character.LINE_BREAK;
 
 	if (relationType === RelationType.MANY_TO_MANY) {
-		relatedTo.forEach((attribute) => {
-			selectAttributes +=
-				Character.TAB +
-				`${attribute.toLocaleLowerCase()}: true,` +
-				Character.LINE_BREAK;
-		});
+		if (relatedTo) {
+			Object.keys(relatedTo).forEach((attribute) => {
+				selectAttributes +=
+					Character.TAB +
+					`${attribute.toLocaleLowerCase()}: true,` +
+					Character.LINE_BREAK;
+			});
+		}
 	}
 
 	Object.keys(attributes).forEach((attribute) => {

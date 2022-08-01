@@ -14,7 +14,7 @@ const generateTestsLevelFilePaths = ({
 }: IProps): IFilePathsTestTests => {
 	const indexFilePath = join(
 		rootPath,
-		`${modelName.plural.paramCase}.${FileName.INDEX}.ts`,
+		`${FileName.INDEX}.ts`,
 	);
 	const createFilePath = join(
 		rootPath,

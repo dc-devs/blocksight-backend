@@ -1,13 +1,26 @@
-import request from 'supertest';
+import { IModelName } from '../../../../../../../interfaces/model-name';
+import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+
+interface IProps {
+	modelName: IModelName;
+	modelAttributes: IModelAttributes;
+}
+
+const generateTestsCreateFileData = ({
+	modelName,
+	modelAttributes,
+}: IProps) => {
+	let data = `
+	import request from 'supertest';
 import query from '../queries/create.query';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import { coinbasePro } from '../../../../prisma/seeds/users-exchanges.seed';
+import { coinbasePro } from '../../../../prisma/seeds/${modelName.plural.paramCase}.seed';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import { UsersExchangesValidationError } from '../../../../src/models/users-exchanges/enums';
+import { ${modelName.singular.pascalCase}ValidationError } from '../../../../src/models/${modelName.plural.paramCase}/enums';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
-import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-object';
+import expected${modelName.singular.pascalCase}Object from '../expected-objects/expected-${modelName.singular.paramCase}-object';
 
 const runCreateTests = () => {
 	describe('Create', () => {
@@ -22,42 +35,42 @@ const runCreateTests = () => {
 			await app.close();
 		});
 
-		describe('when creating a new UsersExchanges with valid inputs', () => {
-			const createUsersExchangesInput = {
+		describe('when creating a new ${modelName.singular.pascalCase} with valid inputs', () => {
+			const create${modelName.singular.pascalCase}Input = {
 				name: 'New Exchnage',
-				websiteUrl: 'https://new-UsersExchanges.com/',
-				logoUrl: 'https://new-UsersExchanges.com/logo',
-				companyLogoUrl: 'https://new-UsersExchanges.com/company-logo',
+				websiteUrl: 'https://new-${modelName.singular.pascalCase}.com/',
+				logoUrl: 'https://new-${modelName.singular.pascalCase}.com/logo',
+				companyLogoUrl: 'https://new-${modelName.singular.pascalCase}.com/company-logo',
 				hasApi: true,
 				hasCsv: true,
 			};
 
-			it('should create and return that UsersExchanges', async () => {
+			it('should create and return that ${modelName.singular.pascalCase}', async () => {
 				const graphqlQuery = {
 					operationName: 'Mutation',
 					query,
 					variables: {
-						createUsersExchangesInput,
+						create${modelName.singular.pascalCase}Input,
 					},
 				};
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
 					.send(graphqlQuery);
 
-				const UsersExchanges = response.body.data.createUsersExchanges;
+				const ${modelName.singular.pascalCase} = response.body.data.create${modelName.singular.pascalCase};
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
-				expect(UsersExchanges).toEqual(expectedUsersExchangesObject);
+				expect(${modelName.singular.pascalCase}).toEqual(expected${modelName.singular.pascalCase}Object);
 			});
 		});
 
 		describe('validation', () => {
 			describe('when creating with no data', () => {
-				let createUsersExchangesInput;
+				let create${modelName.singular.pascalCase}Input;
 				let errorResponseMessage: string[];
 
 				beforeEach(() => {
-					createUsersExchangesInput = {};
+					create${modelName.singular.pascalCase}Input = {};
 					errorResponseMessage = [
 						ErrorMessage.NAME_MUST_BE_A_STRING,
 						ErrorMessage.WEBSITE_URL_MUST_BE_A_STRING,
@@ -73,7 +86,7 @@ const runCreateTests = () => {
 						operationName: 'Mutation',
 						query,
 						variables: {
-							createUsersExchangesInput,
+							create${modelName.singular.pascalCase}Input,
 						},
 					};
 
@@ -101,16 +114,16 @@ const runCreateTests = () => {
 			});
 
 			describe('name', () => {
-				describe('when creating an UsersExchanges with a name that already exists', () => {
-					let createUsersExchangesInput;
+				describe('when creating an ${modelName.singular.pascalCase} with a name that already exists', () => {
+					let create${modelName.singular.pascalCase}Input;
 
 					beforeEach(() => {
-						createUsersExchangesInput = {
+						create${modelName.singular.pascalCase}Input = {
 							name: coinbasePro.name,
-							websiteUrl: 'https://new-UsersExchanges.com/',
-							logoUrl: 'https://new-UsersExchanges.com/logo',
+							websiteUrl: 'https://new-${modelName.singular.pascalCase}.com/',
+							logoUrl: 'https://new-${modelName.singular.pascalCase}.com/logo',
 							companyLogoUrl:
-								'https://new-UsersExchanges.com/company-logo',
+								'https://new-${modelName.singular.pascalCase}.com/company-logo',
 							hasApi: true,
 							hasCsv: true,
 						};
@@ -121,7 +134,7 @@ const runCreateTests = () => {
 							operationName: 'Mutation',
 							query,
 							variables: {
-								createUsersExchangesInput,
+								create${modelName.singular.pascalCase}Input,
 							},
 						};
 						const response = await request(app.getHttpServer())
@@ -141,7 +154,7 @@ const runCreateTests = () => {
 						);
 
 						expect(nameError.message).toEqual(
-							UsersExchangesValidationError.NAME_IS_TAKEN,
+							${modelName.singular.pascalCase}ValidationError.NAME_IS_TAKEN,
 						);
 					});
 				});
@@ -151,3 +164,9 @@ const runCreateTests = () => {
 };
 
 export default runCreateTests;
+`;
+
+	return data;
+};
+
+export default generateTestsCreateFileData;

@@ -1,11 +1,12 @@
 import { RelationType } from '../../../enums';
+import { IRelatedTo } from '../../../interfaces/config';
 import filterAttributes from '../utils/filter-attributes';
 import getClassValidators from '../utils/get-class-validators';
 import { IModelAttributesInput } from '../../../interfaces/config';
 import { IModelAttributes } from '../../../interfaces/model-attribute';
 
 interface IProps {
-	relatedTo?: string[];
+	relatedTo?: IRelatedTo;
 	relationType: RelationType;
 	attributes: IModelAttributesInput;
 }

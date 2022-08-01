@@ -58,6 +58,7 @@
 		"axios": "^0.27.2",
 		"bcrypt": "^5.0.1",
 		"bignumber.js": "^9.0.2",
+		"change-case": "^4.1.2",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.13.2",
 		"coinbase-pro-node": "^4.0.0",
