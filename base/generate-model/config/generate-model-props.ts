@@ -3,13 +3,17 @@ import { IGenerateModelConstructorProps } from '../interfaces/config';
 const modelNamePluralPascalCase = 'UsersExchanges';
 
 // Left off
-// - Added many to many to config so this src code is now done
-//
 // TODO
 // 1. Generate CRUD tests for gen model
 // 2. Add relationship tests to users / exchanges
 // 3. Add those tests to users_exchanges in gen_model
 //
+// Short term TODO
+// - add isUnique to userId and exchangeId
+// - Update src/models/users-exchanges/enums/users-exchanges-validation-error.enum.ts
+// to add IS_TAKEN error Messages
+// - Update create test to loop through isUnique values to generate these tests
+// - Refactor create, rename files and put into utils/create
 
 const config: IGenerateModelConstructorProps = {
 	modelNamePluralPascalCase,
@@ -37,10 +41,12 @@ const config: IGenerateModelConstructorProps = {
 	},
 	attributes: {
 		userId: {
+			// isUnique: true,
 			typeScriptType: 'number',
 			classValidators: ['IsNumber'],
 		},
 		exchangeId: {
+			// isUnique: true,
 			typeScriptType: 'number',
 			classValidators: ['IsNumber'],
 		},

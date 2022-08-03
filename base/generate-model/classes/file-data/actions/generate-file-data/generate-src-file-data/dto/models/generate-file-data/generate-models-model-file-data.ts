@@ -26,11 +26,12 @@ const generateModelsModelFileData = ({
 	if (relationType === RelationType.MANY_TO_MANY) {
 		if (relatedTo) {
 			Object.keys(relatedTo).forEach((modelName) => {
-				const modelNamePascal = pascalCase(modelName);
-				const modelNameParam = paramCase(modelName).toLowerCase();
+				const className = pascalCase(modelName).replace(/s$/g, '');
+				const pathName = paramCase(modelName).toLowerCase();
+				const pathNameSingular = pathName.replace(/s$/g, '');
 
 				data +=
-					`import { ${modelNamePascal} } from '../../../${modelNameParam}s/dto/models/${modelNameParam}.model';` +
+					`import { ${className} } from '../../../${pathName}/dto/models/${pathNameSingular}.model';` +
 					Character.LINE_BREAK;
 			});
 		}

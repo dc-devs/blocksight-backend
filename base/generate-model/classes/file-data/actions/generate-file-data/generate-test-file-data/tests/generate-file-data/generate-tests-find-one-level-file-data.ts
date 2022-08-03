@@ -10,7 +10,7 @@ const generateTestsFindOneFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
-	let data = ``;
+	let data = `const runTests = () => {}; export default runTests`;
 
 	return data;
 };

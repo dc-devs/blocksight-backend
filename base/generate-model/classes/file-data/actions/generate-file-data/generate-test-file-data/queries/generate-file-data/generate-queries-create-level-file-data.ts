@@ -11,7 +11,7 @@ interface IProps {
 	modelAttributes: IModelAttributes;
 }
 
-const generateTestsCreateFileData = ({
+const generateQueriesCreateFileData = ({
 	modelName,
 	modelAttributes,
 }: IProps) => {
@@ -35,4 +35,4 @@ const generateTestsCreateFileData = ({
 	return data;
 };
 
-export default generateTestsCreateFileData;
+export default generateQueriesCreateFileData;

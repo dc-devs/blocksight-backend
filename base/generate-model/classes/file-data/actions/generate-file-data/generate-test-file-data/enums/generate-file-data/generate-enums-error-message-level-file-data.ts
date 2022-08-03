@@ -14,6 +14,7 @@ const generateEnumsErrorMessageFileData = ({
 }: IProps) => {
 	let data = '';
 	const errorBase = 'must be a';
+	const errorTail = 'conforming to the specified constraints';
 	const { attributes } = modelAttributes.withoutTimeStamps;
 	const topFragment = 'const enum ErrorMessage {' + Character.LINE_BREAK;
 	const bottomFragment = '}' + Character.LINE_BREAK;
@@ -25,8 +26,10 @@ const generateEnumsErrorMessageFileData = ({
 	Object.keys(attributes).forEach((attributeName) => {
 		const attribute = attributes[attributeName];
 		const { typeScriptType } = attribute;
-		const value = `${attributeName} ${errorBase} ${typeScriptType}`;
-		const property = snakeCase(value).toUpperCase();
+		const value = `${attributeName} ${errorBase} ${typeScriptType} ${errorTail}`;
+		const property = snakeCase(
+			`${attributeName} ${errorBase} ${typeScriptType}`,
+		).toUpperCase();
 		data +=
 			Character.TAB + `${property} = '${value}',` + Character.LINE_BREAK;
 	});

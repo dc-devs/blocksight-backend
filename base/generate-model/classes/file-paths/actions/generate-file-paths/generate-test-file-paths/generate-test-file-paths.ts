@@ -30,11 +30,16 @@ const generateTestFilePaths = ({
 		rootPath: join(rootPath, FileName.QUERIES),
 		modelName,
 	});
-	
+
 	const expectedObjects = generateExpectedObjectsLevelFilePaths({
 		rootPath: join(rootPath, FileName.EXPECTED_OBJECTS),
 		modelName,
 	});
+
+	const testSpecPath = join(
+		rootPath,
+		`${modelName.plural.paramCase}.e2e-spec.ts`,
+	);
 
 	const paths: IFilePathsTest = {
 		root: {
@@ -42,6 +47,9 @@ const generateTestFilePaths = ({
 			tests,
 			queries,
 			expectedObjects,
+			testSpec: {
+				path: testSpecPath,
+			},
 		},
 	};
 

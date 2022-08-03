@@ -91,9 +91,6 @@ const runCreateTests = () => {
 
 					expect(code).toEqual(ExtensionCode.BAD_USER_INPUT);
 
-					console.log(errorResponse.message);
-					console.log(errorResponseMessage);
-
 					expect(errorResponse.message).toEqual(
 						expect.arrayContaining(errorResponseMessage),
 					);
@@ -127,7 +124,7 @@ const runCreateTests = () => {
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
 							.send(graphqlQuery);
-						console.log(response.body);
+
 						const errors = response.body.errors;
 						const error = errors[0];
 						const { extensions } = error;

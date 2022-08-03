@@ -11,8 +11,8 @@ import {
 
 const select = {
 	id: true,
-	users: true,
-	exchanges: true,
+	user: true,
+	exchange: true,
 	userId: true,
 	exchangeId: true,
 	createdAt: true,

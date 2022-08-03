@@ -1,5 +1,6 @@
 import { IFileData } from '../../../../interfaces/file-data';
 import { IFilePaths } from '../../../../interfaces/file-paths';
+import createRootLevelFiles from './root/create-root-level-files';
 import createEnumLevelFiles from './enums/create-enum-level-files';
 import createTestsLevelFiles from './tests/create-tests-level-files';
 import createQueriesLevelFiles from './queries/create-queries-level-files';
@@ -11,6 +12,7 @@ interface IProps {
 }
 
 const createAllSrcModelFiles = ({ fileData, filePaths }: IProps) => {
+	createRootLevelFiles({ fileData, filePaths });
 	createEnumLevelFiles({ fileData, filePaths });
 	createTestsLevelFiles({ fileData, filePaths });
 	createQueriesLevelFiles({ fileData, filePaths });

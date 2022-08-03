@@ -1,4 +1,4 @@
-const expectedUserObject = expect.objectContaining({
+const expectedExchangeObject = expect.objectContaining({
 	id: expect.any(Number),
 	name: expect.any(String),
 	websiteUrl: expect.any(String),
@@ -10,4 +10,4 @@ const expectedUserObject = expect.objectContaining({
 	updatedAt: expect.any(String),
 });
 
-export default expectedUserObject;
+export default expectedExchangeObject;

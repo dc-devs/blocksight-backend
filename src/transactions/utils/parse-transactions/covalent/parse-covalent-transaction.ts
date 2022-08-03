@@ -34,7 +34,6 @@ const parseUniswapTransaction = (
 	if (isSupported) {
 		const parseLogEvents = contractAddressParseEventlogsMap[toAddress];
 		parsedLogEventData = parseLogEvents(logEvents);
-		console.log(parsedLogEventData);
 	}
 
 	return {

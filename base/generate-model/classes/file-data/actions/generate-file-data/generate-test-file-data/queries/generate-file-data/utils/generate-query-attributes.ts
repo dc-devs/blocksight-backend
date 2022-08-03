@@ -1,4 +1,4 @@
-import { Character } from '../../../../../../../../enums';
+import { Character, RelationType } from '../../../../../../../../enums';
 import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
 
 interface IProps {
@@ -7,7 +7,7 @@ interface IProps {
 
 const generateQueryAttributes = ({ modelAttributes }: IProps) => {
 	let data = '';
-	const { all, relatedTo } = modelAttributes;
+	const { all, relatedTo, relationType } = modelAttributes;
 	const { attributes } = all;
 
 	data += Character.TAB + Character.TAB + 'id' + Character.LINE_BREAK;
@@ -20,11 +20,16 @@ const generateQueryAttributes = ({ modelAttributes }: IProps) => {
 	if (relatedTo) {
 		Object.keys(relatedTo).forEach((modelName) => {
 			const modelAttributes = relatedTo[modelName];
+			let modelNameQuery = modelName;
+
+			if (relationType === RelationType.MANY_TO_MANY) {
+				modelNameQuery = modelNameQuery.replace(/s$/g, '');
+			}
 
 			data +=
 				Character.TAB +
 				Character.TAB +
-				modelName +
+				modelNameQuery +
 				' {' +
 				Character.LINE_BREAK;
 

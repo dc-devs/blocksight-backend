@@ -22,9 +22,12 @@ const generateSelectAttributes = ({
 	if (relationType === RelationType.MANY_TO_MANY) {
 		if (relatedTo) {
 			Object.keys(relatedTo).forEach((attribute) => {
+				const relationalAttribute = attribute
+					.toLocaleLowerCase()
+					.replace(/s$/g, '');
 				selectAttributes +=
 					Character.TAB +
-					`${attribute.toLocaleLowerCase()}: true,` +
+					`${relationalAttribute}: true,` +
 					Character.LINE_BREAK;
 			});
 		}

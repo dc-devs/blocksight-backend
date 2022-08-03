@@ -1,3 +1,5 @@
+import { Character } from '../../../../../../../../enums';
+
 interface IProps {
 	testName: string;
 }
@@ -17,6 +19,8 @@ const generateTopTestFragment = ({ testName }: IProps) => {
 			await redisClient.disconnect();
 			await app.close();
 		});`;
+
+	data += Character.LINE_BREAK;
 
 	return data;
 };

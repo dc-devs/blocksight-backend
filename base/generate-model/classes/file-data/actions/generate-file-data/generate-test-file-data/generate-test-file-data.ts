@@ -1,5 +1,6 @@
 import { IModelName } from '../../../../../interfaces/model-name';
 import { IFileDataTest } from '../../../../../interfaces/file-data';
+import generateTestSpecFileData from './root/generate-test-spec-file-data';
 import { IModelAttributes } from '../../../../../interfaces/model-attribute';
 import generateEnumsLevelFileData from './enums/generate-enums-level-file-data';
 import generateTestsLevelFileData from './tests/generate-tests-level-file-data';
@@ -29,14 +30,21 @@ const generateTestFileData = ({
 		modelName,
 		modelAttributes,
 	});
-	
+
 	const expectedObjects = generateExpectedObjectsLevelFileData({
 		modelName,
 		modelAttributes,
 	});
 
+	const testSpecFileData = generateTestSpecFileData({
+		modelName,
+	});
+
 	const paths = {
 		root: {
+			testSpec: {
+				data: testSpecFileData,
+			},
 			tests,
 			enums,
 			queries,

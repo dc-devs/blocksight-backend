@@ -1,4 +1,5 @@
 import { ClassValidator } from '../enums';
+import { pascalCase } from 'change-case';
 import { IRelatedTo } from '../../../interfaces/config';
 import generateInputField from './generate-input-field';
 import { Character, RelationType } from '../../../enums';
@@ -72,13 +73,14 @@ const generateInputFields = ({
 	if (addRelationalFields && relationType === RelationType.MANY_TO_MANY) {
 		if (relatedTo) {
 			Object.keys(relatedTo).forEach((modelName) => {
-				const modelNameLower = modelName.toLowerCase();
+				const modelNameLower = modelName.toLowerCase().replace(/s$/g, '');;
+				const className = pascalCase(modelName).replace(/s$/g, '');
 
 				data +=
-					`@Field(() => ${modelName}, { nullable: true })` +
+					`@Field(() => ${className}, { nullable: true })` +
 					Character.LINE_BREAK;
 				data +=
-					`${modelNameLower}?: ${modelName};` + Character.LINE_BREAK;
+					`${modelNameLower}?: ${className};` + Character.LINE_BREAK;
 				data += Character.LINE_BREAK;
 			});
 		}
