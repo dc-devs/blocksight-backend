@@ -1,6 +1,6 @@
 import { PrismaType, GraphqlModule } from '../../../../../../enums';
 import { IModelName } from '../../../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../../interfaces/model';
 import {
 	generateInputFields,
 	generateBottomClassFragment,
@@ -9,15 +9,13 @@ import {
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generatePrismaCursorFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps) => {
+const generatePrismaCursorFileData = ({ modelName, model }: IProps) => {
 	let data = '';
-	const { classValidators, attributes } = modelAttributes.withoutTimeStamps;
+	const { classValidators, attributes } =
+		model.attributeBundles.withoutTimeStamps;
 	const className = `${modelName.singular.pascalCase}${PrismaType.CURSOR}${PrismaType.INPUT}`;
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,

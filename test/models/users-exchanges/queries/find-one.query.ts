@@ -6,7 +6,7 @@ query Query($findOneUsersExchangesInput: FindOneUsersExchangesInput!) {
 		exchangeId
 		createdAt
 		updatedAt
-		user {
+		User {
 			id
 			role
 			email
@@ -14,7 +14,7 @@ query Query($findOneUsersExchangesInput: FindOneUsersExchangesInput!) {
 			createdAt
 			updatedAt
 		}
-		exchange {
+		Exchange {
 			id
 			name
 			websiteUrl

@@ -5,7 +5,7 @@ import { IModelName } from '../../../../../../../interfaces/model-name';
 import generateTopTestFragment from './utils/generate-top-test-fragment';
 import generateBottomTestFragment from './utils/generate-bottom-test-fragment';
 import generateCreateNewModelTest from './utils/generate-create-new-model-test';
-import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../interfaces/model';
 import generateTopValidationFragment from './utils/generate-top-validation-fragment';
 import generateBottomValidationFragment from './utils/generate-bottom-validation-fragment';
 import generateCreateValidationNoDataTest from './utils/generate-create-validation-no-data-test';
@@ -13,15 +13,15 @@ import generateCreateValidationUniqueAttrTest from './utils/generate-create-vali
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateTestsCreateFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps) => {
+const generateTestsCreateFileData = ({ modelName, model }: IProps) => {
 	let data = '';
-	const imports = generateCreateImports({ modelName });
+	const imports = generateCreateImports({
+		modelName,
+		model,
+	});
 	const topTestFragment = generateTopTestFragment({
 		testName: pascalCase(Crud.CREATE),
 	});
@@ -32,15 +32,15 @@ const generateTestsCreateFileData = ({
 	});
 	const createNewModelTest = generateCreateNewModelTest({
 		modelName,
-		modelAttributes,
+		model,
 	});
 	const validationNoDataTest = generateCreateValidationNoDataTest({
 		modelName,
-		modelAttributes,
+		model,
 	});
 	const validationUniqueAttrTest = generateCreateValidationUniqueAttrTest({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	data += imports;

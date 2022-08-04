@@ -2,21 +2,21 @@ import { snakeCase } from 'change-case';
 import { Character } from '../../../../../../../../enums';
 import generateInputProperties from './generate-input-properties';
 import { IModelName } from '../../../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
 const generateCreateValidationUniqueAttrTests = ({
 	modelName,
-	modelAttributes,
+	model,
 }: IProps) => {
 	let data = '';
 	const { attributes: attributesWithoutTimeStamps } =
-		modelAttributes.withoutTimeStamps;
-	const { attributes: uniqueAttributets } = modelAttributes.unique;
+		model.attributeBundles.withoutTimeStamps;
+	const { attributes: uniqueAttributets } = model.attributeBundles.unique;
 
 	Object.keys(uniqueAttributets).forEach((uniqueAttr) => {
 		const inputProperties = generateInputProperties({

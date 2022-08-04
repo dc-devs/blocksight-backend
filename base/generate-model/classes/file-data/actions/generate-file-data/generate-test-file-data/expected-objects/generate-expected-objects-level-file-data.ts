@@ -1,20 +1,20 @@
 import { IModelName } from '../../../../../../interfaces/model-name';
 import { IFileDataTestExpectedObjects } from '../../../../../../interfaces/file-data';
-import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../interfaces/model';
 import generateExpectedObjectFileData from './generate-file-data/generate-expected-object-level-file-data';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
 const generateExpectedObjectsLevelFileData = ({
 	modelName,
-	modelAttributes,
+	model,
 }: IProps): IFileDataTestExpectedObjects => {
 	const expectedObjectFileData = generateExpectedObjectFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	return {

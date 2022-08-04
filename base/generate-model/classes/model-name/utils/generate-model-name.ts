@@ -4,7 +4,7 @@ import { IModelName } from '../../../interfaces/model-name';
 import getSingularNameFromString from './get-singular-name-from-string';
 
 interface IProps {
-	relationType: RelationType;
+	relationType?: RelationType;
 	modelNamePluralPascalCase: string;
 }
 
@@ -12,7 +12,12 @@ const generateModelName = ({
 	relationType,
 	modelNamePluralPascalCase,
 }: IProps): IModelName => {
-	const isManyToMany = relationType === RelationType.MANY_TO_MANY;
+	let isManyToMany = false;
+
+	if (relationType) {
+		isManyToMany = relationType === RelationType.MANY_TO_MANY;
+	}
+
 	const modelNameSingularPascalCase = getSingularNameFromString({
 		pluralName: modelNamePluralPascalCase,
 	});

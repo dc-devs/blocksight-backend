@@ -1,8 +1,8 @@
 import IAttributes from './attributes';
 
-interface IModelAttributeData {
+interface IAttributeData {
 	attributes: IAttributes;
 	classValidators: string[];
 }
 
-export default IModelAttributeData;
+export default IAttributeData;

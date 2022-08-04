@@ -1,6 +1,6 @@
 import { IModelName } from '../../../../../../../interfaces/model-name';
 import { IFileDataInputs } from '../../../../../../../interfaces/file-data';
-import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../interfaces/model';
 import generateInputsIndexFileData from './generate-file-data/generate-inputs-index-file-data';
 import generateInputsCreateFileData from './generate-file-data/generate-inputs-ceate-file-data';
 import generateInputsUpdateFileData from './generate-file-data/generate-inputs-update-file-data';
@@ -9,20 +9,20 @@ import generateInputsFindOneFileData from './generate-file-data/generate-inputs-
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
 const generateInputsLevelFileData = ({
 	modelName,
-	modelAttributes,
+	model,
 }: IProps): IFileDataInputs => {
 	const createFileData = generateInputsCreateFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 	const updateFileData = generateInputsUpdateFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 	const indexFileData = generateInputsIndexFileData({
 		modelName,
@@ -32,7 +32,7 @@ const generateInputsLevelFileData = ({
 	});
 	const findOneFileData = generateInputsFindOneFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	return {

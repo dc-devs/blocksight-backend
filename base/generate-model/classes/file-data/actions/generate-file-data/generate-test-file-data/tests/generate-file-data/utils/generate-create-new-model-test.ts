@@ -1,16 +1,16 @@
 import { Character } from '../../../../../../../../enums';
 import { IModelName } from '../../../../../../../../interfaces/model-name';
 import generateInputProperties from './generate-input-properties';
-import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateCreateNewModelTest = ({ modelName, modelAttributes }: IProps) => {
+const generateCreateNewModelTest = ({ modelName, model }: IProps) => {
 	let data = '';
-	const { attributes } = modelAttributes.withoutTimeStamps;
+	const { attributes } = model.attributeBundles.withoutTimeStamps;
 	const inputProperties = generateInputProperties({ attributes });
 
 	data += `describe('when creating a new ${modelName.singular.pascalCase} with valid inputs', () => {

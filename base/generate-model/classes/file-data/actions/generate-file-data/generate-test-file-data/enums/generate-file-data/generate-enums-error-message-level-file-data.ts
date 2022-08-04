@@ -1,21 +1,18 @@
 import { snakeCase } from 'change-case';
 import { Character } from '../../../../../../../enums';
 import { IModelName } from '../../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateEnumsErrorMessageFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps) => {
+const generateEnumsErrorMessageFileData = ({ modelName, model }: IProps) => {
 	let data = '';
 	const errorBase = 'must be a';
 	const errorTail = 'conforming to the specified constraints';
-	const { attributes } = modelAttributes.withoutTimeStamps;
+	const { attributes } = model.attributeBundles.withoutTimeStamps;
 	const topFragment = 'const enum ErrorMessage {' + Character.LINE_BREAK;
 	const bottomFragment = '}' + Character.LINE_BREAK;
 	const exportFragment =

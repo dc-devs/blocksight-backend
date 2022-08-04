@@ -1,5 +1,5 @@
 import { Character } from '../../../enums';
-import { IAttributes } from '../../../interfaces/model-attribute';
+import { IAttributes } from '../../../interfaces/model';
 import generateClassValidatorDecorators from './generate-class-validator-decorators';
 
 interface IProps {

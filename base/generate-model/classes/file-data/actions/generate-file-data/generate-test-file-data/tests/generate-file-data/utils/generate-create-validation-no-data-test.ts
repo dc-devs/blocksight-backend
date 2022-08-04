@@ -1,14 +1,11 @@
 import { snakeCase } from 'change-case';
 import { Character } from '../../../../../../../../enums';
 import { IModelName } from '../../../../../../../../interfaces/model-name';
-import {
-	IModelAttributes,
-	IAttributes,
-} from '../../../../../../../../interfaces/model-attribute';
+import { IModel, IAttributes } from '../../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
 const generateErrorMessages = (attributes: IAttributes) => {
@@ -21,19 +18,19 @@ const generateErrorMessages = (attributes: IAttributes) => {
 		const enumValue = snakeCase(
 			`${attributeName} ${errorBase} ${typeScriptType}`,
 		).toUpperCase();
+
+		data += `expect.stringContaining(` + Character.LINE_BREAK;
 		data +=
 			Character.TAB + `ErrorMessage.${enumValue},` + Character.LINE_BREAK;
+		data += `),` + Character.LINE_BREAK;
 	});
 
 	return data;
 };
 
-const generateCreateValidationNoDataTest = ({
-	modelName,
-	modelAttributes,
-}: IProps) => {
+const generateCreateValidationNoDataTest = ({ modelName, model }: IProps) => {
 	let data = '';
-	const { attributes } = modelAttributes.withoutTimeStamps;
+	const { attributes } = model.attributeBundles.withoutTimeStamps;
 	const errorMessages = generateErrorMessages(attributes);
 
 	data += `describe('when creating with no data', () => {

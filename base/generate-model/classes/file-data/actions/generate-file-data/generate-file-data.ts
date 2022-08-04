@@ -3,19 +3,16 @@ import generateTestFileData from './generate-test-file-data';
 import { IFileData } from '../../../../interfaces/file-data';
 import { IModelName } from '../../../../interfaces/model-name';
 
-import { IModelAttributes } from '../../../../interfaces/model-attribute';
+import { IModel } from '../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps): IFileData => {
-	const src = generateSrcFileData({ modelName, modelAttributes });
-	const test = generateTestFileData({ modelName, modelAttributes });
+const generateFileData = ({ modelName, model }: IProps): IFileData => {
+	const src = generateSrcFileData({ modelName, model });
+	const test = generateTestFileData({ modelName, model });
 
 	return { src, test };
 };

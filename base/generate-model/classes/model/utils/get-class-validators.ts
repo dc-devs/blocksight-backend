@@ -1,9 +1,9 @@
-import { IModelAttributesInput } from '../../../interfaces/config';
+import { IModelInput } from '../../../interfaces/config';
 import { deduplicateArray, flattenArrayOfArrays } from '../../../utils';
 
 interface IProps {
 	filterTimeStamps?: boolean;
-	attributes: IModelAttributesInput;
+	attributes: IModelInput;
 }
 
 const getClassValidators = ({ attributes }: IProps) => {

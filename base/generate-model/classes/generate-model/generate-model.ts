@@ -1,9 +1,9 @@
 import File from '../file';
+import Model from '../model';
 import Folder from '../Folder';
 import { clean } from './actions';
 import ModelName from '../model-name';
 import FolderPaths from '../folder-paths';
-import ModelAttributes from '../model-attributes';
 import { IFolderPaths } from '../../interfaces/folder-paths';
 import { IGenerateModelConstructorProps } from '../../interfaces/config';
 
@@ -18,15 +18,25 @@ class GenerateModel {
 		relationType,
 		modelNamePluralPascalCase,
 	}: IGenerateModelConstructorProps) {
+		const relationalModelNames = {};
+
 		const modelName = new ModelName({
 			relationType,
 			modelNamePluralPascalCase,
 		});
 
-		const { modelAttributes } = new ModelAttributes({
+		Object.keys(relatedTo).forEach((modelName) => {
+			relationalModelNames[modelName] = new ModelName({
+				modelNamePluralPascalCase: modelName,
+			});
+		});
+
+		const { model } = new Model({
+			modelName,
 			relatedTo,
 			attributes,
 			relationType,
+			relationalModelNames,
 		});
 
 		const { folderPaths } = new FolderPaths({
@@ -40,7 +50,7 @@ class GenerateModel {
 		const { generateAllFiles } = new File({
 			folderPaths,
 			modelName,
-			modelAttributes,
+			model,
 		});
 
 		this.folderPaths = folderPaths;

@@ -3,7 +3,7 @@ import { pascalCase } from 'change-case';
 import { IRelatedTo } from '../../../interfaces/config';
 import generateInputField from './generate-input-field';
 import { Character, RelationType } from '../../../enums';
-import { IAttributes } from '../../../interfaces/model-attribute';
+import { IAttributes } from '../../../interfaces/model';
 
 interface IId {
 	addIsOptional?: boolean;
@@ -73,7 +73,9 @@ const generateInputFields = ({
 	if (addRelationalFields && relationType === RelationType.MANY_TO_MANY) {
 		if (relatedTo) {
 			Object.keys(relatedTo).forEach((modelName) => {
-				const modelNameLower = modelName.toLowerCase().replace(/s$/g, '');;
+				const modelNameLower = modelName
+					.toLowerCase()
+					.replace(/s$/g, '');
 				const className = pascalCase(modelName).replace(/s$/g, '');
 
 				data +=

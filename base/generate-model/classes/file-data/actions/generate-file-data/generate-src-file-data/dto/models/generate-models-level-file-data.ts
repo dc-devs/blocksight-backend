@@ -1,20 +1,20 @@
 import { IModelName } from '../../../../../../../interfaces/model-name';
 import { IFileDataModels } from '../../../../../../../interfaces/file-data';
 import generateModelsModelFileData from './generate-file-data/generate-models-model-file-data';
-import {  IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
 const generateInputsLevelFileData = ({
 	modelName,
-	modelAttributes,
+	model,
 }: IProps): IFileDataModels => {
 	const modelFileData = generateModelsModelFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	return {

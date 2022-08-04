@@ -1,5 +1,5 @@
 import { IModelName } from '../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../interfaces/model';
 import {
 	generateModuleFileData,
 	generateServiceFileData,
@@ -10,17 +10,17 @@ import {
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateRootLevelFileData = ({ modelName, modelAttributes }: IProps) => {
+const generateRootLevelFileData = ({ modelName, model }: IProps) => {
 	const moduleFileData = generateModuleFileData({ modelName });
 	const resolverFileData = generateResolverFileData({ modelName });
 	const serviceSpecFileData = generateServiceSpecFileData({ modelName });
 	const resolverSpecFileData = generateResolverSpecFileData({ modelName });
 	const serviceFileData = generateServiceFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	return {

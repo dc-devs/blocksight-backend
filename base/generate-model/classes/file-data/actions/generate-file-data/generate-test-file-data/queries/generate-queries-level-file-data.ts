@@ -1,6 +1,6 @@
 import { IModelName } from '../../../../../../interfaces/model-name';
 import { IFileDataTestQueries } from '../../../../../../interfaces/file-data';
-import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../interfaces/model';
 import generateQueriesCreateFileData from './generate-file-data/generate-queries-create-level-file-data';
 import generateQueriesDeleteFileData from './generate-file-data/generate-queries-delete-level-file-data';
 import generateQueriesUpdateFileData from './generate-file-data/generate-queries-update-level-file-data';
@@ -9,36 +9,36 @@ import generateQueriesFindOneFileData from './generate-file-data/generate-querie
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
 const generateQueriesLevelFileData = ({
 	modelName,
-	modelAttributes,
+	model,
 }: IProps): IFileDataTestQueries => {
 	const createFileData = generateQueriesCreateFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const deleteFileData = generateQueriesDeleteFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const updateFileData = generateQueriesUpdateFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const findAllFileData = generateQueriesFindAllFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const findOneFileData = generateQueriesFindOneFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	return {

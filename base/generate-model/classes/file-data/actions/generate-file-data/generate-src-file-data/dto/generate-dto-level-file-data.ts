@@ -3,28 +3,28 @@ import { generateInputsLevelFileData } from './inputs';
 import { generatePrismaLevelFileData } from './prisma';
 import { IModelName } from '../../../../../../interfaces/model-name';
 import { IFileDataDto } from '../../../../../../interfaces/file-data';
-import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
 const generateDtoLevelFileData = ({
 	modelName,
-	modelAttributes,
+	model,
 }: IProps): IFileDataDto => {
 	const inputs = generateInputsLevelFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 	const models = generateModelsLevelFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 	const prisma = generatePrismaLevelFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	return {

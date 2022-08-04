@@ -1,6 +1,6 @@
 import { IModelName } from '../../../../../../interfaces/model-name';
 import { IFileDataTestTests } from '../../../../../../interfaces/file-data';
-import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../interfaces/model';
 import generateTestsIndexFileData from './generate-file-data/generate-tests-index-level-file-data';
 import generateTestsCreateFileData from './generate-file-data/generate-tests-create-level-file-data';
 import generateTestsDeleteFileData from './generate-file-data/generate-tests-delete-level-file-data';
@@ -10,12 +10,12 @@ import generateTestsFindOneFileData from './generate-file-data/generate-tests-fi
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
 const generateTestsLevelFileData = ({
 	modelName,
-	modelAttributes,
+	model,
 }: IProps): IFileDataTestTests => {
 	const indexFileData = generateTestsIndexFileData({
 		modelName,
@@ -23,27 +23,27 @@ const generateTestsLevelFileData = ({
 
 	const createFileData = generateTestsCreateFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const deleteFileData = generateTestsDeleteFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const updateFileData = generateTestsUpdateFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const findAllFileData = generateTestsFindAllFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const findOneFileData = generateTestsFindOneFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	return {

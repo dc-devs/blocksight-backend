@@ -1,15 +1,16 @@
 import { IModelName } from '../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../interfaces/model';
 import generateSelectAttributes from '../../../../utils/generate-select-attributes';
 import generateUniqueAttributesObject from '../../../../utils/generate-unique-attributes-object';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateServiceFileData = ({ modelName, modelAttributes }: IProps) => {
-	const { all, unique, relationType, relatedTo } = modelAttributes;
+const generateServiceFileData = ({ modelName, model }: IProps) => {
+	const { attributeBundles, relationType, relatedTo } = model;
+	const { all, unique } = attributeBundles;
 	const { attributes: allAttributes } = all;
 	const { attributes: uniqueAttributes } = unique;
 	const select = generateSelectAttributes({

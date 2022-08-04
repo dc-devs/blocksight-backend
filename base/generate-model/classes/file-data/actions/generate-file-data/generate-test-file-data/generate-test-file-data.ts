@@ -1,7 +1,7 @@
 import { IModelName } from '../../../../../interfaces/model-name';
 import { IFileDataTest } from '../../../../../interfaces/file-data';
 import generateTestSpecFileData from './root/generate-test-spec-file-data';
-import { IModelAttributes } from '../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../interfaces/model';
 import generateEnumsLevelFileData from './enums/generate-enums-level-file-data';
 import generateTestsLevelFileData from './tests/generate-tests-level-file-data';
 import generateQueriesLevelFileData from './queries/generate-queries-level-file-data';
@@ -9,31 +9,28 @@ import generateExpectedObjectsLevelFileData from './expected-objects/generate-ex
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateTestFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps): IFileDataTest => {
+const generateTestFileData = ({ modelName, model }: IProps): IFileDataTest => {
 	const tests = generateTestsLevelFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const queries = generateQueriesLevelFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const enums = generateEnumsLevelFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const expectedObjects = generateExpectedObjectsLevelFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const testSpecFileData = generateTestSpecFileData({

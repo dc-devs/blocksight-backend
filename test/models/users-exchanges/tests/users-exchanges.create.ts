@@ -3,10 +3,8 @@ import query from '../queries/create.query';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
-import { firstRecord } from '../../../../prisma/seeds/users-exchanges.seed';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
-import { UsersExchangesValidationError } from '../../../../src/models/users-exchanges/enums';
 import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-object';
 
 const runCreateTests = () => {
@@ -55,8 +53,12 @@ const runCreateTests = () => {
 				beforeEach(() => {
 					createUsersExchangesInput = {};
 					errorResponseMessage = [
-						ErrorMessage.USER_ID_MUST_BE_A_NUMBER,
-						ErrorMessage.EXCHANGE_ID_MUST_BE_A_NUMBER,
+						expect.stringContaining(
+							ErrorMessage.USER_ID_MUST_BE_A_NUMBER,
+						),
+						expect.stringContaining(
+							ErrorMessage.EXCHANGE_ID_MUST_BE_A_NUMBER,
+						),
 					];
 				});
 

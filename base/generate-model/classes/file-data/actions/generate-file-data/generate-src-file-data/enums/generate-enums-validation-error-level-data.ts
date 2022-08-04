@@ -1,14 +1,11 @@
 import { Character } from '../../../../../../enums';
 import { snakeCase, capitalCase } from 'change-case';
 import { IModelName } from '../../../../../../interfaces/model-name';
-import {
-	IAttributes,
-	IModelAttributes,
-} from '../../../../../../interfaces/model-attribute';
+import { IAttributes, IModel } from '../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
 const generateEnumVariable = (attribute: string) => {
@@ -30,12 +27,9 @@ const generateEnumVariables = (attributes: IAttributes) => {
 	return variables;
 };
 
-const generateEnumsValidationErrorFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps) => {
+const generateEnumsValidationErrorFileData = ({ modelName, model }: IProps) => {
 	let data = ``;
-	const uniqueAttributes = modelAttributes.unique;
+	const uniqueAttributes = model.attributeBundles.unique;
 	const { attributes } = uniqueAttributes;
 	const enumVariables = generateEnumVariables(attributes);
 	const enumName = `${modelName.singular.pascalCase}ValidationError`;

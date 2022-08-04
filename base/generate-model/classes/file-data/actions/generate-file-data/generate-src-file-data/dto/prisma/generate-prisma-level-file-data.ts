@@ -1,6 +1,6 @@
 import { IModelName } from '../../../../../../../interfaces/model-name';
 import { IFileDataPrisma } from '../../../../../../../interfaces/file-data';
-import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../interfaces/model';
 import generatePrismaWhereFileData from './generate-file-data/generate-prisma-where-file-data';
 import generatePrismaIndexFileData from './generate-file-data/generate-prisma-index-file-data';
 import generatePrismaCursorFileData from './generate-file-data/generate-prisma-cursor-file-data';
@@ -9,33 +9,33 @@ import generatePrismaModelFileData from './generate-file-data/generate-prisma-mo
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
 const generatePrismaLevelFileData = ({
 	modelName,
-	modelAttributes,
+	model,
 }: IProps): IFileDataPrisma => {
 	const indexFileData = generatePrismaIndexFileData({ modelName });
 
 	const cursorFileData = generatePrismaCursorFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const orderFileData = generatePrismaOrderFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const whereFileData = generatePrismaWhereFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const modelFileData = generatePrismaModelFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	return {

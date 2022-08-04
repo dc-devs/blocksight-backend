@@ -1,7 +1,7 @@
 import { Character } from '../../../../../../../../enums';
 import { IModelName } from '../../../../../../../../interfaces/model-name';
 import { PrismaType, GraphqlModule } from '../../../../../../enums';
-import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../../interfaces/model';
 import {
 	generateInputFields,
 	generateBottomClassFragment,
@@ -10,15 +10,12 @@ import {
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generatePrismaOrderFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps) => {
+const generatePrismaOrderFileData = ({ modelName, model }: IProps) => {
 	let data = '';
-	const { classValidators, attributes } = modelAttributes.all;
+	const { classValidators, attributes } = model.attributeBundles.all;
 	const importPrisma =
 		`import { Prisma } from '@prisma/client';` + Character.LINE_BREAK;
 	const className = `${modelName.singular.pascalCase}${PrismaType.ORDER_BY}${PrismaType.INPUT}`;

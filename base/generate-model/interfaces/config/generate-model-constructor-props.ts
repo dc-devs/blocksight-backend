@@ -1,11 +1,11 @@
 import IRelatedTo from './related-to';
 import { RelationType } from '../../enums';
-import IModelAttributesInput from './model-attributes-input';
+import IModelInput from './model-attributes-input';
 
 interface IGenerateModelConstructorProps {
 	relatedTo?: IRelatedTo;
 	relationType?: RelationType;
-	attributes: IModelAttributesInput;
+	attributes: IModelInput;
 	modelNamePluralPascalCase: string;
 }
 

@@ -2,7 +2,7 @@ import { paramCase, pascalCase } from 'change-case';
 import { GraphqlModule } from '../../../../../../enums';
 import { Character, RelationType } from '../../../../../../../../enums';
 import { IModelName } from '../../../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../../interfaces/model';
 import {
 	generateInputFields,
 	generateBottomClassFragment,
@@ -11,16 +11,13 @@ import {
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateModelsModelFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps) => {
+const generateModelsModelFileData = ({ modelName, model }: IProps) => {
 	let data = '';
-	const { relatedTo, relationType } = modelAttributes;
-	const { classValidators, attributes } = modelAttributes.all;
+	const { relatedTo, relationType } = model;
+	const { classValidators, attributes } = model.attributeBundles.all;
 	const className = `${modelName.singular.pascalCase}`;
 
 	if (relationType === RelationType.MANY_TO_MANY) {

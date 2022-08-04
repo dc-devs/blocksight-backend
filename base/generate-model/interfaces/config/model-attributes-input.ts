@@ -1,7 +1,7 @@
-import IAttribute from '../model-attribute/attribute';
+import IAttribute from '../model/attribute';
 
-interface IModelAttributesInput {
+interface IModelInput {
 	[key: string]: IAttribute;
 }
 
-export default IModelAttributesInput;
+export default IModelInput;

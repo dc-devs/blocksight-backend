@@ -1,5 +1,5 @@
 import { IRelatedTo } from '../../../interfaces/config';
-import { IAttributes } from '../../../interfaces/model-attribute';
+import { IAttributes } from '../../../interfaces/model';
 import { Attribute, Character, RelationType } from '../../../enums';
 
 interface IProps {

@@ -3,33 +3,30 @@ import { IModelName } from '../../../../../interfaces/model-name';
 import { generateDtoLevelFileData } from './dto';
 import { generateRootLevelFileData } from './root';
 import { generateEnumsLevelFileData } from './enums';
-import { IModelAttributes } from '../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateSrcFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps): IFileDataSrc => {
+const generateSrcFileData = ({ modelName, model }: IProps): IFileDataSrc => {
 	const {
 		moduleFileData,
 		serviceFileData,
 		resolverFileData,
 		serviceSpecFileData,
 		resolverSpecFileData,
-	} = generateRootLevelFileData({ modelName, modelAttributes });
+	} = generateRootLevelFileData({ modelName, model });
 
 	const dto = generateDtoLevelFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
-	
+
 	const enums = generateEnumsLevelFileData({
 		modelName,
-		modelAttributes,
+		model,
 	});
 
 	const paths = {

@@ -6,7 +6,7 @@ mutation Mutation($deleteUsersExchangesInput: DeleteUsersExchangesInput!) {
 		exchangeId
 		createdAt
 		updatedAt
-		user {
+		User {
 			id
 			role
 			email
@@ -14,7 +14,7 @@ mutation Mutation($deleteUsersExchangesInput: DeleteUsersExchangesInput!) {
 			createdAt
 			updatedAt
 		}
-		exchange {
+		Exchange {
 			id
 			name
 			websiteUrl

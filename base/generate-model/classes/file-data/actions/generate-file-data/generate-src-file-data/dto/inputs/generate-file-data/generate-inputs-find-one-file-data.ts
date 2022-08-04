@@ -1,5 +1,5 @@
 import { IModelName } from '../../../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../../interfaces/model';
 import { DtoType, InputType, GraphqlModule } from '../../../../../../enums';
 import {
 	generateInputFields,
@@ -9,19 +9,16 @@ import {
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateInputsFindOneFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps) => {
+const generateInputsFindOneFileData = ({ modelName, model }: IProps) => {
 	let data = '';
-	const { classValidators, attributes } = modelAttributes.unique;
+	const { classValidators, attributes } = model.attributeBundles.unique;
 	const className = `${InputType.FIND_ONE}${modelName.singular.pascalCase}${DtoType.INPUT}`;
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,

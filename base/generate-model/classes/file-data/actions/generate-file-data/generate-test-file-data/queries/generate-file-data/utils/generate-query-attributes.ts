@@ -1,13 +1,14 @@
 import { Character, RelationType } from '../../../../../../../../enums';
-import { IModelAttributes } from '../../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../../interfaces/model';
 
 interface IProps {
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateQueryAttributes = ({ modelAttributes }: IProps) => {
+const generateQueryAttributes = ({ model }: IProps) => {
 	let data = '';
-	const { all, relatedTo, relationType } = modelAttributes;
+	const { attributeBundles, relatedTo, relationType } = model;
+	const { all } = attributeBundles;
 	const { attributes } = all;
 
 	data += Character.TAB + Character.TAB + 'id' + Character.LINE_BREAK;
@@ -19,7 +20,7 @@ const generateQueryAttributes = ({ modelAttributes }: IProps) => {
 
 	if (relatedTo) {
 		Object.keys(relatedTo).forEach((modelName) => {
-			const modelAttributes = relatedTo[modelName];
+			const model = relatedTo[modelName];
 			let modelNameQuery = modelName;
 
 			if (relationType === RelationType.MANY_TO_MANY) {
@@ -33,7 +34,7 @@ const generateQueryAttributes = ({ modelAttributes }: IProps) => {
 				' {' +
 				Character.LINE_BREAK;
 
-			modelAttributes.forEach((attribute) => {
+			model.forEach((attribute) => {
 				data +=
 					Character.TAB +
 					Character.TAB +
@@ -50,21 +51,3 @@ const generateQueryAttributes = ({ modelAttributes }: IProps) => {
 };
 
 export default generateQueryAttributes;
-
-//     name
-//     websiteUrl
-//     logoUrl
-//     companyLogoUrl
-//     hasApi
-//     hasCsv
-//     createdAt
-//     updatedAt
-
-//     users {
-//       id
-//       email
-//       primaryWalletAddress
-//       role
-//       createdAt
-//       updatedAt
-//     }

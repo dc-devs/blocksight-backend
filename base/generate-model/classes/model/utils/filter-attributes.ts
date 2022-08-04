@@ -1,10 +1,10 @@
 import { Attribute } from 'base/generate-model/enums';
-import { IModelAttributesInput } from '../../../interfaces/config';
+import { IModelInput } from '../../../interfaces/config';
 
 interface IProps {
 	filterUnique?: boolean;
 	filterTimeStampAttrs?: boolean;
-	attributes: IModelAttributesInput;
+	attributes: IModelInput;
 }
 
 const filterAttributes = ({
@@ -23,7 +23,7 @@ const filterAttributes = ({
 				filterCriteria = attribute.isUnique;
 			} else if (filterTimeStampAttrs) {
 				filterCriteria =
-					attributeKey !== Attribute.CERATED_AT &&
+					attributeKey !== Attribute.CREATED_AT &&
 					attributeKey !== Attribute.UPDATED_AT;
 			} else {
 				filterCriteria = true;

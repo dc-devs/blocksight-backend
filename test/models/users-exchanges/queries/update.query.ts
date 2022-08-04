@@ -6,7 +6,7 @@ mutation Mutation($updateUsersExchangesInput: UpdateUsersExchangesInput!) {
 		exchangeId
 		createdAt
 		updatedAt
-		user {
+		User {
 			id
 			role
 			email
@@ -14,7 +14,7 @@ mutation Mutation($updateUsersExchangesInput: UpdateUsersExchangesInput!) {
 			createdAt
 			updatedAt
 		}
-		exchange {
+		Exchange {
 			id
 			name
 			websiteUrl

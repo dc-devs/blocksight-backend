@@ -3,7 +3,7 @@ import { generateModelName } from './utils';
 import { IModelName, IModelNameOptions } from '../../interfaces/model-name';
 
 interface IConstructorProps {
-	relationType: RelationType;
+	relationType?: RelationType;
 	modelNamePluralPascalCase: string;
 }
 

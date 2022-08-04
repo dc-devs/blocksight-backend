@@ -1,15 +1,12 @@
 import { IModelName } from '../../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateTestsDeleteFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps) => {
+const generateTestsDeleteFileData = ({ modelName, model }: IProps) => {
 	let data = `const runTests = () => {}; export default runTests`;
 
 	return data;

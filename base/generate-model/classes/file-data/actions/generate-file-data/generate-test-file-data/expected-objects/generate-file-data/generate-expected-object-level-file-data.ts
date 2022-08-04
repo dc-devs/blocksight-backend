@@ -1,19 +1,38 @@
-import { pascalCase } from 'change-case';
-import { Character } from '../../../../../../../enums';
+import { pascalCase, paramCase } from 'change-case';
+import { Character, Attribute } from '../../../../../../../enums';
 import { IModelName } from '../../../../../../../interfaces/model-name';
-import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateExpectedObjectFileData = ({
-	modelName,
-	modelAttributes,
-}: IProps) => {
+const generateExpectedObjectFileData = ({ modelName, model }: IProps) => {
 	let data = '';
-	const { attributes } = modelAttributes.all;
+	const { relatedTo } = model;
+	const { attributes } = model.attributeBundles.all;
+
+	if (relatedTo) {
+		Object.keys(relatedTo).forEach((relatedModel) => {
+			const relatedModelSinglePascal = pascalCase(relatedModel).replace(
+				/s$/g,
+				'',
+			);
+			const relatedModelPluralParam = paramCase(relatedModel);
+			const relatedModelSinglularParam = paramCase(relatedModel).replace(
+				/s$/g,
+				'',
+			);
+
+			data +=
+				`import expected${relatedModelSinglePascal}Object from '../../${relatedModelPluralParam}/expected-objects/expected-${relatedModelSinglularParam}-object'` +
+				Character.LINE_BREAK;
+		});
+
+		data += Character.LINE_BREAK;
+	}
+
 	const topFragment =
 		'const expectedObject = expect.objectContaining({' +
 		Character.LINE_BREAK;
@@ -29,10 +48,39 @@ const generateExpectedObjectFileData = ({
 		const attribute = attributes[attributeName];
 		const { typeScriptType } = attribute;
 		const property = attributeName;
-		const value = `expect.any(${pascalCase(typeScriptType)})`;
+		let typeExpected = typeScriptType;
+
+		if (
+			attributeName === Attribute.CREATED_AT ||
+			attributeName === Attribute.UPDATED_AT
+		) {
+			typeExpected = 'String';
+		}
+
+		const value = `expect.any(${pascalCase(typeExpected)})`;
 
 		data += Character.TAB + `${property}: ${value},` + Character.LINE_BREAK;
 	});
+
+	if (relatedTo) {
+		Object.keys(relatedTo).forEach((relatedModel) => {
+			const relatedModelSinglePascal = pascalCase(relatedModel).replace(
+				/s$/g,
+				'',
+			);
+			const relatedModelPluralParam = paramCase(relatedModel);
+			const relatedModelSinglularParam = paramCase(relatedModel).replace(
+				/s$/g,
+				'',
+			);
+
+			data +=
+				`${relatedModelSinglularParam}: expected${relatedModelSinglePascal}Object,` +
+				Character.LINE_BREAK;
+		});
+
+		data += Character.LINE_BREAK;
+	}
 
 	data += bottomFragment;
 	data += Character.LINE_BREAK;

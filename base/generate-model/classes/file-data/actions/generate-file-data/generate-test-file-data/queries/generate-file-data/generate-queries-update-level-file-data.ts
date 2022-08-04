@@ -4,14 +4,14 @@ import { IModelName } from '../../../../../../../interfaces/model-name';
 import generateQueryAttributes from './utils/generate-query-attributes';
 import generateTopQueryFragment from './utils/generate-top-query-fragment';
 import generateBottomQueryFragment from './utils/generate-bottom-query-fragment';
-import { IModelAttributes } from '../../../../../../../interfaces/model-attribute';
+import { IModel } from '../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;
-	modelAttributes: IModelAttributes;
+	model: IModel;
 }
 
-const generateUpdateFileData = ({ modelName, modelAttributes }: IProps) => {
+const generateUpdateFileData = ({ modelName, model }: IProps) => {
 	let data = '';
 	const topQueryFragment = generateTopQueryFragment({
 		crudOperation: Crud.UPDATE,
@@ -19,7 +19,7 @@ const generateUpdateFileData = ({ modelName, modelAttributes }: IProps) => {
 		modelName: modelName.singular.pascalCase,
 	});
 	const queryAttributes = generateQueryAttributes({
-		modelAttributes,
+		model,
 	});
 	const bottomQueryFragment = generateBottomQueryFragment({
 		crudOperation: Crud.UPDATE,
