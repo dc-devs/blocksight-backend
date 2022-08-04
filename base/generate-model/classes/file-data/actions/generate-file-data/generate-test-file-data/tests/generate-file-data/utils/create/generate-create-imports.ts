@@ -1,6 +1,6 @@
-import { Character } from '../../../../../../../../enums';
-import { IModelName } from '../../../../../../../../interfaces/model-name';
-import { IModel } from '../../../../../../../../interfaces/model';
+import { Character } from '../../../../../../../../../enums';
+import { IModelName } from '../../../../../../../../../interfaces/model-name';
+import { IModel } from '../../../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;

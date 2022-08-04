@@ -1,5 +1,5 @@
-import { Character, TypeScriptType } from '../../../../../../../../enums';
-import { IAttributes } from '../../../../../../../../interfaces/model';
+import { Character, TypeScriptType } from '../../../../../../../../../enums';
+import { IAttributes } from '../../../../../../../../../interfaces/model';
 
 const defaultValues = {
 	[TypeScriptType.NUMBER]: 1,

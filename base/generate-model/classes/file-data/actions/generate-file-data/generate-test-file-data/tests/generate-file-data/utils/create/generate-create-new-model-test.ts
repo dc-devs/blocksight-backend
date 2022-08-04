@@ -1,7 +1,7 @@
-import { Character } from '../../../../../../../../enums';
-import { IModelName } from '../../../../../../../../interfaces/model-name';
+import { Character } from '../../../../../../../../../enums';
+import { IModelName } from '../../../../../../../../../interfaces/model-name';
 import generateInputProperties from './generate-input-properties';
-import { IModel } from '../../../../../../../../interfaces/model';
+import { IModel } from '../../../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;

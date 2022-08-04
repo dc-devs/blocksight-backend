@@ -1,8 +1,8 @@
 import { snakeCase } from 'change-case';
-import { Character } from '../../../../../../../../enums';
+import { Character } from '../../../../../../../../../enums';
 import generateInputProperties from './generate-input-properties';
-import { IModelName } from '../../../../../../../../interfaces/model-name';
-import { IModel } from '../../../../../../../../interfaces/model';
+import { IModelName } from '../../../../../../../../../interfaces/model-name';
+import { IModel } from '../../../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;

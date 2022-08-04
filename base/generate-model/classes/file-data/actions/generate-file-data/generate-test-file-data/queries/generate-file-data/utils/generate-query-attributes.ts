@@ -7,7 +7,8 @@ interface IProps {
 
 const generateQueryAttributes = ({ model }: IProps) => {
 	let data = '';
-	const { attributeBundles, relatedTo, relationType } = model;
+	const { attributeBundles, relatedTo, relationType, relationalModelNames } =
+		model;
 	const { all } = attributeBundles;
 	const { attributes } = all;
 
@@ -20,11 +21,15 @@ const generateQueryAttributes = ({ model }: IProps) => {
 
 	if (relatedTo) {
 		Object.keys(relatedTo).forEach((modelName) => {
+			let modelNameQuery;
 			const model = relatedTo[modelName];
-			let modelNameQuery = modelName;
 
 			if (relationType === RelationType.MANY_TO_MANY) {
-				modelNameQuery = modelNameQuery.replace(/s$/g, '');
+				modelNameQuery =
+					relationalModelNames[modelName].singular.camelCase;
+			} else {
+				modelNameQuery =
+					relationalModelNames[modelName].plural.camelCase;
 			}
 
 			data +=

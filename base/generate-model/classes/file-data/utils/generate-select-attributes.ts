@@ -1,17 +1,19 @@
 import { IRelatedTo } from '../../../interfaces/config';
-import { IAttributes } from '../../../interfaces/model';
+import { IAttributes, IRelationalModelNames } from '../../../interfaces/model';
 import { Attribute, Character, RelationType } from '../../../enums';
 
 interface IProps {
 	attributes: IAttributes;
 	relationType: RelationType;
 	relatedTo: IRelatedTo | undefined;
+	relationalModelNames: IRelationalModelNames;
 }
 
 const generateSelectAttributes = ({
 	relatedTo,
 	attributes,
 	relationType,
+	relationalModelNames,
 }: IProps) => {
 	let selectAttributes = ``;
 
@@ -21,10 +23,10 @@ const generateSelectAttributes = ({
 
 	if (relationType === RelationType.MANY_TO_MANY) {
 		if (relatedTo) {
-			Object.keys(relatedTo).forEach((attribute) => {
-				const relationalAttribute = attribute
-					.toLocaleLowerCase()
-					.replace(/s$/g, '');
+			Object.keys(relatedTo).forEach((modelName) => {
+				const relationalAttribute =
+					relationalModelNames[modelName].singular.camelCase;
+
 				selectAttributes +=
 					Character.TAB +
 					`${relationalAttribute}: true,` +

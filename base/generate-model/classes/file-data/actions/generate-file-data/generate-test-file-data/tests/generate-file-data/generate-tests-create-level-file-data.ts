@@ -1,15 +1,15 @@
 import { pascalCase } from 'change-case';
 import { Character, Crud } from '../../../../../../../enums';
-import generateCreateImports from './utils/generate-create-imports';
+import generateCreateImports from './utils/create/generate-create-imports';
 import { IModelName } from '../../../../../../../interfaces/model-name';
 import generateTopTestFragment from './utils/generate-top-test-fragment';
 import generateBottomTestFragment from './utils/generate-bottom-test-fragment';
-import generateCreateNewModelTest from './utils/generate-create-new-model-test';
+import generateCreateNewModelTest from './utils/create/generate-create-new-model-test';
 import { IModel } from '../../../../../../../interfaces/model';
 import generateTopValidationFragment from './utils/generate-top-validation-fragment';
 import generateBottomValidationFragment from './utils/generate-bottom-validation-fragment';
-import generateCreateValidationNoDataTest from './utils/generate-create-validation-no-data-test';
-import generateCreateValidationUniqueAttrTest from './utils/generate-create-validation-unique-attr-test';
+import generateCreateValidationNoDataTest from './utils/create/generate-create-validation-no-data-test';
+import generateCreateValidationUniqueAttrTest from './utils/create/generate-create-validation-unique-attr-test';
 
 interface IProps {
 	modelName: IModelName;

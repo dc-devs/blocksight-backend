@@ -1,7 +1,7 @@
 import { snakeCase } from 'change-case';
-import { Character } from '../../../../../../../../enums';
-import { IModelName } from '../../../../../../../../interfaces/model-name';
-import { IModel, IAttributes } from '../../../../../../../../interfaces/model';
+import { Character } from '../../../../../../../../../enums';
+import { IModelName } from '../../../../../../../../../interfaces/model-name';
+import { IModel, IAttributes } from '../../../../../../../../../interfaces/model';
 
 interface IProps {
 	modelName: IModelName;

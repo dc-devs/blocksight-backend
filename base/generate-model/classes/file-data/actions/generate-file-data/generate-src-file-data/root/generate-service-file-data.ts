@@ -9,13 +9,14 @@ interface IProps {
 }
 
 const generateServiceFileData = ({ modelName, model }: IProps) => {
-	const { attributeBundles, relationType, relatedTo } = model;
+	const { attributeBundles, relationType, relatedTo, relationalModelNames } = model;
 	const { all, unique } = attributeBundles;
 	const { attributes: allAttributes } = all;
 	const { attributes: uniqueAttributes } = unique;
 	const select = generateSelectAttributes({
 		relatedTo,
 		relationType,
+		relationalModelNames,
 		attributes: allAttributes,
 	});
 	const uniqueAttributesObject = generateUniqueAttributesObject({
