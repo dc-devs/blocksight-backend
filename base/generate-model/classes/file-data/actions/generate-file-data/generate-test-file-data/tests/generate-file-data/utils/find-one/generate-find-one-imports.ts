@@ -7,6 +7,7 @@ interface IProps {
 
 const generateFindOneImports = ({ model }: IProps) => {
 	let data = '';
+	const { hasUniqueProps } = model;
 
 	data += `import request from 'supertest';
 import query from '../queries/find-one.query';
@@ -14,6 +15,12 @@ import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import expected${model.name.singular.pascalCase}Object from '../expected-objects/expected-${model.name.singular.paramCase}-object';`;
+
+	if (hasUniqueProps) {
+		data +=
+			`import { firstRecord } from '../../../../prisma/seeds/${model.name.plural.paramCase}.seed'` +
+			Character.LINE_BREAK;
+	}
 
 	data += Character.LINE_BREAK;
 

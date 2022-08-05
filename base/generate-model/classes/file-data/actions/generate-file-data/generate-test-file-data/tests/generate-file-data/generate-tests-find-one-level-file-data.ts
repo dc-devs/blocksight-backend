@@ -7,7 +7,9 @@ import { IModel } from '../../../../../../../interfaces/model';
 import generateFindOneImports from './utils/find-one/generate-find-one-imports';
 import generateTopValidationFragment from './utils/generate-top-validation-fragment';
 import generateBottomValidationFragment from './utils/generate-bottom-validation-fragment';
-import generateDeleteInvalidIdTest from './utils/delete/generate-delete-invalid-id-test';
+import generateFindOneModelValidationTestInvalidId from './utils/find-one/generate-find-one-model-validation-test-invalid-id';
+import generateFindOneModelValidationTestNoData from './utils/find-one/generate-find-one-model-validation-test-no-data';
+import generateFindOneModelUniqueAttributeTests from './utils/find-one/generate-find-one-model-unique-attribute-tests';
 
 interface IProps {
 	model: IModel;
@@ -30,9 +32,18 @@ const generateTestsFindOneFileData = ({ model }: IProps) => {
 	const findOneModelTest = generateFindOneModelTest({
 		model,
 	});
-	const validationNoModelTest = generateDeleteInvalidIdTest({
-		model,
-	});
+	const findOneModelValidationTestInvalidId =
+		generateFindOneModelValidationTestInvalidId({
+			model,
+		});
+	const findOneModelValidationTestNoData =
+		generateFindOneModelValidationTestNoData({
+			model,
+		});
+	const findOneModelUniqueAttributeTests =
+		generateFindOneModelUniqueAttributeTests({
+			model,
+		});
 
 	data += imports;
 	data += Character.LINE_BREAK;
@@ -42,9 +53,13 @@ const generateTestsFindOneFileData = ({ model }: IProps) => {
 	data += Character.LINE_BREAK;
 	data += topValidationFragment;
 	data += Character.LINE_BREAK;
-	// data += validationNoModelTest;
-	// data += Character.LINE_BREAK;
+	data += findOneModelValidationTestInvalidId;
+	data += Character.LINE_BREAK;
+	data += findOneModelValidationTestNoData;
+	data += Character.LINE_BREAK;
 	data += bottomValidationFragment;
+	data += Character.LINE_BREAK;
+	data += findOneModelUniqueAttributeTests;
 	data += Character.LINE_BREAK;
 	data += bottomTestFragment;
 

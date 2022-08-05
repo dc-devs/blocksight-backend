@@ -99,7 +99,7 @@ const runFindOneTests = () => {
 			});
 
 			describe('validation', () => {
-				describe('when querying with an id for exchange that does not exist', () => {
+				describe('when querying with an name for exchange that does not exist', () => {
 					it('should return null', async () => {
 						const name = 'non-existent-company';
 						const graphQlquery = {
