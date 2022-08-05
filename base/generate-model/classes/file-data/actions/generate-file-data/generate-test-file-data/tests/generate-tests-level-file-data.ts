@@ -39,7 +39,6 @@ const generateTestsLevelFileData = ({
 	});
 
 	const findOneFileData = generateTestsFindOneFileData({
-		modelName,
 		model,
 	});
 
