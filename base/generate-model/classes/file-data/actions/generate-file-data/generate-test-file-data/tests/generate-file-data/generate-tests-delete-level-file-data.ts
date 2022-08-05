@@ -1,24 +1,21 @@
 import { pascalCase } from 'change-case';
 import { Character, Crud } from '../../../../../../../enums';
 import generateDeleteImports from './utils/delete/generate-delete-imports';
-import { IModelName } from '../../../../../../../interfaces/model-name';
 import generateTopTestFragment from './utils/generate-top-test-fragment';
 import generateBottomTestFragment from './utils/generate-bottom-test-fragment';
 import generateDeleteModelTest from './utils/delete/generate-delete-model-test';
 import { IModel } from '../../../../../../../interfaces/model';
 import generateTopValidationFragment from './utils/generate-top-validation-fragment';
 import generateBottomValidationFragment from './utils/generate-bottom-validation-fragment';
-import generateCreateValidationNoDataTest from './utils/create/generate-create-validation-no-data-test';
-import generateCreateValidationUniqueAttrTest from './utils/create/generate-create-validation-unique-attr-test';
+import generateDeleteInvalidIdTest from './utils/delete/generate-delete-invalid-id-test';
 
 interface IProps {
-	modelName: IModelName;
 	model: IModel;
 }
 
-const generateTestsDeleteFileData = ({ modelName, model }: IProps) => {
+const generateTestsDeleteFileData = ({ model }: IProps) => {
 	let data = '';
-	const imports = generateDeleteImports({model});
+	const imports = generateDeleteImports({ model });
 	const topTestFragment = generateTopTestFragment({
 		testName: pascalCase(Crud.DELETE),
 	});
@@ -30,12 +27,7 @@ const generateTestsDeleteFileData = ({ modelName, model }: IProps) => {
 	const deleteModelTest = generateDeleteModelTest({
 		model,
 	});
-	const validationNoDataTest = generateCreateValidationNoDataTest({
-		modelName,
-		model,
-	});
-	const validationUniqueAttrTest = generateCreateValidationUniqueAttrTest({
-		modelName,
+	const validationNoModelTest = generateDeleteInvalidIdTest({
 		model,
 	});
 
@@ -47,10 +39,8 @@ const generateTestsDeleteFileData = ({ modelName, model }: IProps) => {
 	data += Character.LINE_BREAK;
 	data += topValidationFragment;
 	data += Character.LINE_BREAK;
-	// data += validationNoDataTest;
-	// data += Character.LINE_BREAK;
-	// data += validationUniqueAttrTest;
-	// data += Character.LINE_BREAK;
+	data += validationNoModelTest;
+	data += Character.LINE_BREAK;
 	data += bottomValidationFragment;
 	data += Character.LINE_BREAK;
 	data += bottomTestFragment;

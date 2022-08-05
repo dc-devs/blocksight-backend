@@ -20,6 +20,10 @@ const generateEnumsErrorMessageFileData = ({ modelName, model }: IProps) => {
 
 	data += topFragment;
 
+	data +=
+		`DELETE_RECORD_NOT_FOUND = 'Record to delete does not exist.',` +
+		Character.LINE_BREAK;
+
 	Object.keys(attributes).forEach((attributeName) => {
 		const attribute = attributes[attributeName];
 		const { typeScriptType } = attribute;

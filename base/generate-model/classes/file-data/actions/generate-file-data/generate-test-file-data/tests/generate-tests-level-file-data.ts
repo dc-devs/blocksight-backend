@@ -26,10 +26,7 @@ const generateTestsLevelFileData = ({
 		model,
 	});
 
-	const deleteFileData = generateTestsDeleteFileData({
-		modelName,
-		model,
-	});
+	const deleteFileData = generateTestsDeleteFileData({ model });
 
 	const updateFileData = generateTestsUpdateFileData({
 		modelName,
