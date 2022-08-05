@@ -1,6 +1,6 @@
 const deleteQuery = `
-mutation Mutation($deleteUsersExchangesInput: DeleteUsersExchangesInput!) {
-	deleteUsersExchanges(deleteUsersExchangesInput: $deleteUsersExchangesInput) {
+mutation Mutation($deleteUsersExchangesInput: Int!) {
+	deleteUsersExchanges(id: $deleteUsersExchangesInput) {
 		id
 		userId
 		exchangeId

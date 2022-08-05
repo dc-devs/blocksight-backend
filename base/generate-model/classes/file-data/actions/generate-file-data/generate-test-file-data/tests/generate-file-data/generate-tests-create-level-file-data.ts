@@ -4,7 +4,7 @@ import generateCreateImports from './utils/create/generate-create-imports';
 import { IModelName } from '../../../../../../../interfaces/model-name';
 import generateTopTestFragment from './utils/generate-top-test-fragment';
 import generateBottomTestFragment from './utils/generate-bottom-test-fragment';
-import generateCreateNewModelTest from './utils/create/generate-create-new-model-test';
+import generateCreateModelTest from './utils/create/generate-create-new-model-test';
 import { IModel } from '../../../../../../../interfaces/model';
 import generateTopValidationFragment from './utils/generate-top-validation-fragment';
 import generateBottomValidationFragment from './utils/generate-bottom-validation-fragment';
@@ -30,7 +30,7 @@ const generateTestsCreateFileData = ({ modelName, model }: IProps) => {
 	const bottomTestFragment = generateBottomTestFragment({
 		testName: pascalCase(Crud.CREATE),
 	});
-	const createNewModelTest = generateCreateNewModelTest({
+	const createModelTest = generateCreateModelTest({
 		modelName,
 		model,
 	});
@@ -47,7 +47,7 @@ const generateTestsCreateFileData = ({ modelName, model }: IProps) => {
 	data += Character.LINE_BREAK;
 	data += topTestFragment;
 	data += Character.LINE_BREAK;
-	data += createNewModelTest;
+	data += createModelTest;
 	data += Character.LINE_BREAK;
 	data += topValidationFragment;
 	data += Character.LINE_BREAK;
@@ -57,7 +57,6 @@ const generateTestsCreateFileData = ({ modelName, model }: IProps) => {
 	data += Character.LINE_BREAK;
 	data += bottomValidationFragment;
 	data += Character.LINE_BREAK;
-
 	data += bottomTestFragment;
 
 	return data;

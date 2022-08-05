@@ -7,13 +7,8 @@ const modelNamePluralPascalCase = 'UsersExchanges';
 // 1. Generate CRUD tests for gen model
 // 2. Add relationship tests to users / exchanges
 // 3. Add those tests to users_exchanges in gen_model
-//
-// Short term TODO
-// - Refactor create, rename files and put into utils/create
-// - Update relatedTo somehow, not sure what's best..
 
-
-// Not all names should be in plural PascalCase
+// Note: all names should be in plural PascalCase
 const config: IGenerateModelConstructorProps = {
 	modelNamePluralPascalCase,
 	relationType: RelationType.MANY_TO_MANY,

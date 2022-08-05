@@ -17,6 +17,8 @@ const generateTestsDeleteFileData = ({ modelName, model }: IProps) => {
 		crudOperation: Crud.DELETE,
 		queryType: QueryType.MUTATION,
 		modelName: modelName.singular.pascalCase,
+		customInputType: 'Int',
+		customVariableName: 'id',
 	});
 	const queryAttributes = generateQueryAttributes({
 		model,
