@@ -20,7 +20,8 @@ const runUpdateTests = () => {
 			await redisClient.disconnect();
 			await app.close();
 		});
-
+		
+		// maybe replace with firstModel
 		const updateName = 'test-company-name';
 
 		describe('when updating with a valid exchange id and udpate data', () => {

@@ -53,6 +53,13 @@ const config: IGenerateModelConstructorProps = {
 			'updatedAt',
 		],
 	},
+	// tests: {
+	// 	update: {
+	// 		customAttributes: {
+
+	// 		}
+	// 	}
+	// }
 };
 
 export default config;

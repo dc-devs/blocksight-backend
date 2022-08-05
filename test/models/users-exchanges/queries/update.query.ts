@@ -1,6 +1,6 @@
 const updateQuery = `
-mutation Mutation($updateUsersExchangesInput: UpdateUsersExchangesInput!) {
-	updateUsersExchanges(updateUsersExchangesInput: $updateUsersExchangesInput) {
+mutation Mutation($id: Int!, $updateUsersExchangesInput: UpdateUsersExchangesInput!) {
+  updateUsersExchanges(id: $id, updateUsersExchangesInput: $updateUsersExchangesInput) {
 		id
 		userId
 		exchangeId

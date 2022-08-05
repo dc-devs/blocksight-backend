@@ -15,8 +15,6 @@ interface IProps {
 	model: IModel;
 }
 
-// LEFT OFF first Find one test passing
-
 const generateTestsFindOneFileData = ({ model }: IProps) => {
 	let data = '';
 

@@ -1,13 +1,51 @@
-import { IModelName } from '../../../../../../../interfaces/model-name';
+import { pascalCase } from 'change-case';
+import { Character, Crud } from '../../../../../../../enums';
+import generateTopTestFragment from './utils/generate-top-test-fragment';
+import generateBottomTestFragment from './utils/generate-bottom-test-fragment';
 import { IModel } from '../../../../../../../interfaces/model';
+import generateUpdateImports from './utils/update/generate-update-imports';
+import generateTopValidationFragment from './utils/generate-top-validation-fragment';
+import generateBottomValidationFragment from './utils/generate-bottom-validation-fragment';
+import generateUpdateModelTest from './utils/update/generate-update-model-test';
+// import generateUpdateModelValidationTestInvalidId from './utils/update/generate-update-model-validation-test-invalid-id';
+// import generateUpdateModelValidationTestNoData from './utils/update/generate-update-model-validation-test-no-data';
+// import generateUpdateModelUniqueAttributeTests from './utils/update/generate-update-model-unique-attribute-tests';
 
 interface IProps {
-	modelName: IModelName;
 	model: IModel;
 }
 
-const generateTestsUpdateFileData = ({ modelName, model }: IProps) => {
-	let data = `const runTests = () => {}; export default runTests`;
+const generateTestsUpdateFileData = ({ model }: IProps) => {
+	let data = '';
+
+	const imports = generateUpdateImports({ model });
+	const topTestFragment = generateTopTestFragment({
+		testName: pascalCase(Crud.UPDATE),
+	});
+	const topValidationFragment = generateTopValidationFragment();
+	const bottomValidationFragment = generateBottomValidationFragment();
+	const bottomTestFragment = generateBottomTestFragment({
+		testName: pascalCase(Crud.UPDATE),
+	});
+	const updateModelTest = generateUpdateModelTest({
+		model,
+	});
+	// const updateModelValidationTestInvalidId =
+	// 	generateUpdateModelValidationTestInvalidId({
+	// 		model,
+	// 	});
+
+	data += imports;
+	data += Character.LINE_BREAK;
+	data += topTestFragment;
+	data += Character.LINE_BREAK;
+	data += updateModelTest;
+	data += Character.LINE_BREAK;
+	data += topValidationFragment;
+	data += Character.LINE_BREAK;
+	data += bottomValidationFragment;
+	data += Character.LINE_BREAK;
+	data += bottomTestFragment;
 
 	return data;
 };

@@ -2,7 +2,7 @@ import QueryType from './enum/query-type';
 import { Crud } from '../../../../../../../enums';
 import { IModelName } from '../../../../../../../interfaces/model-name';
 import generateQueryAttributes from './utils/generate-query-attributes';
-import generateTopQueryFragment from './utils/generate-top-query-fragment';
+import generateTopQueryFragmentUpdate from './utils/generate-top-query-fragment-update';
 import generateBottomQueryFragment from './utils/generate-bottom-query-fragment';
 import { IModel } from '../../../../../../../interfaces/model';
 
@@ -11,12 +11,12 @@ interface IProps {
 	model: IModel;
 }
 
-const generateUpdateFileData = ({ modelName, model }: IProps) => {
+const generateUpdateFileData = ({ model }: IProps) => {
 	let data = '';
-	const topQueryFragment = generateTopQueryFragment({
+	const topQueryFragment = generateTopQueryFragmentUpdate({
+		model,
 		crudOperation: Crud.UPDATE,
 		queryType: QueryType.MUTATION,
-		modelName: modelName.singular.pascalCase,
 	});
 	const queryAttributes = generateQueryAttributes({
 		model,
