@@ -2,17 +2,6 @@ import { RelationType } from '../enums';
 import { IGenerateModelConstructorProps } from '../interfaces/config';
 const modelNamePluralPascalCase = 'UsersExchanges';
 
-//
-// LONG TERM TODO
-// 1. Generate CRUD tests for gen model
-// 2. Add relationship tests to users / exchanges
-// 3. Add those tests to users_exchanges in gen_model
-
-// LEFT OFF
-// Started findAll Where test..
-// Need to add those attributes to where config , or should you just let those tests fail and update later?
-// The only test you'll need to update?
-
 // Note: all names should be in plural PascalCase
 const config: IGenerateModelConstructorProps = {
 	modelNamePluralPascalCase,
