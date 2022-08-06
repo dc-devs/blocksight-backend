@@ -24,7 +24,6 @@ const generateInputValues = ({ model }: IProps) => {
 		const attributeValue =
 			customValues[attributeName] || defatulValues[typeScriptType];
 
-		console.log(attributeName, attributeValue);
 		data += `${attributeName}: ${attributeValue},` + Character.LINE_BREAK;
 	});
 

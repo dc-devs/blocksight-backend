@@ -46,6 +46,38 @@ const runUpdateTests = () => {
 				});
 			});
 		});
+
+		describe(`and the where argument aims to fetch UsersExchanges with 'userId: 1'`, () => {
+			it('should return all UsersExchanges with that name', async () => {
+				const graphQlquery = {
+					operationName: 'Query',
+					query,
+					variables: {
+						findAllUsersExchangesInput: {
+							where: {
+								userId: 1,
+							},
+						},
+					},
+				};
+
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(graphQlquery);
+
+				const usersExchanges = response.body.data.findAllUsersExchanges;
+
+				expect(response.statusCode).toEqual(HttpStatus.OK);
+				expect(usersExchanges).toHaveLength(4);
+
+				usersExchanges.forEach((usersExchanges) => {
+					expect(usersExchanges).toEqual(
+						expectedUsersExchangesObject,
+					);
+					expect(usersExchanges.userId).toEqual(1);
+				});
+			});
+		});
 	});
 };
 

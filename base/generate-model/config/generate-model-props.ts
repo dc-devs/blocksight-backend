@@ -9,7 +9,10 @@ const modelNamePluralPascalCase = 'UsersExchanges';
 // 3. Add those tests to users_exchanges in gen_model
 
 // LEFT OFF
-// Added basic Update tests, need to add when attributes are unique..
+// Started findAll Where test..
+// Need to add those attributes to where config , or should you just let those tests fail and update later?
+// The only test you'll need to update?
+
 // Note: all names should be in plural PascalCase
 const config: IGenerateModelConstructorProps = {
 	modelNamePluralPascalCase,
@@ -60,6 +63,13 @@ const config: IGenerateModelConstructorProps = {
 			customValues: {
 				userId: 3,
 				exchangeId: 3,
+			},
+		},
+		findAll: {
+			where: {
+				modelAttribute: 'userId',
+				modelValue: 1,
+				expectedCount: 4,
 			},
 		},
 	},

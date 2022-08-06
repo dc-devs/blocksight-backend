@@ -5,6 +5,7 @@ import generateBottomTestFragment from './utils/generate-bottom-test-fragment';
 import { IModel } from '../../../../../../../interfaces/model';
 import generateFindAllImports from './utils/find-all/generate-find-all-imports';
 import generateFindAllTest from './utils/find-all/generate-find-all-test';
+import generateFindAllWhereTest from './utils/find-all/generate-find-all-where-tests';
 
 interface IProps {
 	model: IModel;
@@ -20,12 +21,15 @@ const generateTestsFindAllFileData = ({ model }: IProps) => {
 		testName: pascalCase(Crud.UPDATE),
 	});
 	const findAllTest = generateFindAllTest({ model });
+	const findAllWhereTest = generateFindAllWhereTest({ model });
 
 	data += imports;
 	data += Character.LINE_BREAK;
 	data += topTestFragment;
 	data += Character.LINE_BREAK;
 	data += findAllTest;
+	data += Character.LINE_BREAK;
+	data += findAllWhereTest;
 	data += Character.LINE_BREAK;
 	data += bottomTestFragment;
 
