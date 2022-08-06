@@ -25,6 +25,6 @@ const usersExchanges = [
 ];
 
 const firstRecord = userExchanceCoinbase;
-const allModelsCount = usersExchanges.length - 1;
+const allModelsCount = usersExchanges.length;
 
 export { usersExchanges, firstRecord, allModelsCount };
