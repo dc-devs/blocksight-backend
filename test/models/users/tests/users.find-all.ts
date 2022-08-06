@@ -1,11 +1,10 @@
 import request from 'supertest';
 import { UserRole } from '@prisma/client';
-import ErrorMessage from '../enums/error-message.enum';
+import query from '../queries/find-all.query';
 import UserProperty from '../enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import expectedUserObject from '../expected-objects/expected-user-object';
-import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import {
 	allUsersCount,
@@ -29,26 +28,16 @@ const runFindAllTests = () => {
 
 		describe('when querying to get all users', () => {
 			it('should return all users', async () => {
-				const query = {
+				const graphQlquery = {
 					operationName: 'Query',
-					query: `
-						query Query($findAllUsersInput: FindAllUsersInput!) {
-							findAllUsers(findAllUsersInput: $findAllUsersInput) {
-								id
-								role
-								email
-								primaryWalletAddress
-								createdAt
-								updatedAt
-							}
-						}`,
+					query,
 					variables: {
 						findAllUsersInput: {},
 					},
 				};
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
-					.send(query);
+					.send(graphQlquery);
 
 				const users = response.body.data.findAllUsers;
 
@@ -66,19 +55,9 @@ const runFindAllTests = () => {
 			describe('where', () => {
 				describe("and the where argument aims to fetch users with 'role: SUPER_ADMIN'", () => {
 					it('should return all users with that role', async () => {
-						const query = {
+						const graphQlquery = {
 							operationName: 'Query',
-							query: `
-							query Query($findAllUsersInput: FindAllUsersInput!) {
-								findAllUsers(findAllUsersInput: $findAllUsersInput) {
-									id
-									role
-									email
-									primaryWalletAddress
-									createdAt
-									updatedAt
-								}
-							}`,
+							query,
 							variables: {
 								findAllUsersInput: {
 									where: {
@@ -90,7 +69,7 @@ const runFindAllTests = () => {
 
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const users = response.body.data.findAllUsers;
 
@@ -109,19 +88,9 @@ const runFindAllTests = () => {
 
 				describe("and the where AND argument aims to fetch one users with 'role: ADMIN' and a specified email", () => {
 					it('should return all users with that role', async () => {
-						const query = {
+						const graphQlquery = {
 							operationName: 'Query',
-							query: `
-							query Query($findAllUsersInput: FindAllUsersInput!) {
-								findAllUsers(findAllUsersInput: $findAllUsersInput) {
-									id
-									role
-									email
-									primaryWalletAddress
-									createdAt
-									updatedAt
-								}
-							}`,
+							query,
 							variables: {
 								findAllUsersInput: {
 									where: {
@@ -134,7 +103,7 @@ const runFindAllTests = () => {
 
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const users = response.body.data.findAllUsers;
 						const user = users[0];
@@ -152,19 +121,9 @@ const runFindAllTests = () => {
 
 				describe("and the where NOT argument aims to fetch one users with 'role: ADMIN' and not a specified email", () => {
 					it('should return all users with that role', async () => {
-						const query = {
+						const graphQlquery = {
 							operationName: 'Query',
-							query: `
-							query Query($findAllUsersInput: FindAllUsersInput!) {
-								findAllUsers(findAllUsersInput: $findAllUsersInput) {
-									id
-									role
-									email
-									primaryWalletAddress
-									createdAt
-									updatedAt
-								}
-							}`,
+							query,
 							variables: {
 								findAllUsersInput: {
 									where: {
@@ -177,7 +136,7 @@ const runFindAllTests = () => {
 
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const users = response.body.data.findAllUsers;
 						const user = users[0];
@@ -195,19 +154,9 @@ const runFindAllTests = () => {
 
 				describe("and the where OR argument aims to fetch one users with 'role: ADMIN' or 'role: SUPER_ADMIN'", () => {
 					it('should return all users with that role', async () => {
-						const query = {
+						const graphQlquery = {
 							operationName: 'Query',
-							query: `
-							query Query($findAllUsersInput: FindAllUsersInput!) {
-								findAllUsers(findAllUsersInput: $findAllUsersInput) {
-									id
-									role
-									email
-									primaryWalletAddress
-									createdAt
-									updatedAt
-								}
-							}`,
+							query,
 							variables: {
 								findAllUsersInput: {
 									where: {
@@ -222,7 +171,7 @@ const runFindAllTests = () => {
 
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const users = response.body.data.findAllUsers;
 						const firstSelectedUser = users[0];
@@ -262,19 +211,9 @@ const runFindAllTests = () => {
 						it('should return the first 10 users', async () => {
 							const skip = 10;
 							const take = 10;
-							const query = {
+							const graphQlquery = {
 								operationName: 'Query',
-								query: `
-									query Query($findAllUsersInput: FindAllUsersInput!) {
-										findAllUsers(findAllUsersInput: $findAllUsersInput) {
-											id
-											role
-											email
-											primaryWalletAddress
-											createdAt
-											updatedAt
-										}
-									}`,
+								query,
 								variables: {
 									findAllUsersInput: {
 										skip,
@@ -284,7 +223,7 @@ const runFindAllTests = () => {
 							};
 							const response = await request(app.getHttpServer())
 								.post('/graphql')
-								.send(query);
+								.send(graphQlquery);
 
 							const users = response.body.data.findAllUsers;
 
@@ -310,19 +249,9 @@ const runFindAllTests = () => {
 						it('should return the first 10 users', async () => {
 							const cursor = { id: 11 };
 							const take = 10;
-							const query = {
+							const graphQlquery = {
 								operationName: 'Query',
-								query: `
-									query Query($findAllUsersInput: FindAllUsersInput!) {
-										findAllUsers(findAllUsersInput: $findAllUsersInput) {
-											id
-											role
-											email
-											primaryWalletAddress
-											createdAt
-											updatedAt
-										}
-									}`,
+								query,
 								variables: {
 									findAllUsersInput: {
 										cursor,
@@ -333,7 +262,7 @@ const runFindAllTests = () => {
 
 							const response = await request(app.getHttpServer())
 								.post('/graphql')
-								.send(query);
+								.send(graphQlquery);
 
 							const users = response.body.data.findAllUsers;
 
@@ -352,46 +281,6 @@ const runFindAllTests = () => {
 							expect(lastUser.id).toEqual(lastUserId);
 						});
 					});
-				});
-			});
-		});
-
-		describe('validation', () => {
-			describe('when querying with an unexpected user field', () => {
-				it('should return with an unexpected field error', async () => {
-					const extraParam = 'extraParam';
-					const query = {
-						operationName: 'Query',
-						query: `
-							query Query($findAllUsersInput: FindAllUsersInput!) {
-								findAllUsers(findAllUsersInput: $findAllUsersInput) {
-									id
-									role
-									email
-									primaryWalletAddress
-									createdAt
-									updatedAt
-									${extraParam}
-								}
-							}`,
-						variables: {},
-					};
-					const response = await request(app.getHttpServer())
-						.post('/graphql')
-						.send(query);
-
-					const errors = response.body.errors;
-					const error = errors[0];
-					const { message, extensions } = error;
-
-					expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-					expect(errors.length).toEqual(1);
-					expect(message).toEqual(
-						ErrorMessage.EXTRA_PARAM_SHOULD_NOT_EXIST,
-					);
-					expect(extensions.code).toEqual(
-						ExtensionCode.GRAPHQL_VALIDATION_FAILED,
-					);
 				});
 			});
 		});

@@ -1,4 +1,5 @@
 import request from 'supertest';
+import query from '../queries/delete.query';
 import ErrorMessage from '../enums/error-message.enum';
 import UserProperty from '../enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
@@ -24,26 +25,16 @@ const runDeleteTests = () => {
 		describe('when deleting with a valid user id', () => {
 			it('should delete that user', async () => {
 				const id = 55;
-				const query = {
+				const graphQlquery = {
 					operationName: 'Mutation',
-					query: `
-						mutation Mutation($id: Int!) {
-							deleteUser(id: $id) {
-								id
-								email
-								primaryWalletAddress
-								role
-								createdAt
-								updatedAt
-							}
-						}`,
+					query,
 					variables: {
 						id,
 					},
 				};
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
-					.send(query);
+					.send(graphQlquery);
 
 				const user = response.body.data.deleteUser;
 
@@ -57,26 +48,16 @@ const runDeleteTests = () => {
 			describe('when deleting with an invalid user id', () => {
 				it('should delete that user', async () => {
 					const id = 100;
-					const query = {
+					const graphQlquery = {
 						operationName: 'Mutation',
-						query: `
-							mutation Mutation($id: Int!) {
-								deleteUser(id: $id) {
-									id
-									email
-									primaryWalletAddress
-									role
-									createdAt
-									updatedAt
-								}
-							}`,
+						query,
 						variables: {
 							id,
 						},
 					};
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
-						.send(query);
+						.send(graphQlquery);
 
 					const errors = response.body.errors;
 					const prismaError = errors[0];

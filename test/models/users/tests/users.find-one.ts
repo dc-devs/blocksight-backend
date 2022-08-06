@@ -1,4 +1,5 @@
 import request from 'supertest';
+import query from '../queries/find-one.query';
 import UserProperty from '../enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import { firstUser } from '../../../../prisma/seeds/users.seed';
@@ -23,19 +24,9 @@ const runFindOneTests = () => {
 			describe('when querying with an id for user that does exist', () => {
 				it('should return user', async () => {
 					const id = 1;
-					const query = {
+					const graphQlquery = {
 						operationName: 'Query',
-						query: `
-							query Query($findOneUserInput: FindOneUserInput!) {
-								findOneUser(findOneUserInput: $findOneUserInput) {
-									id
-									role
-									email
-									primaryWalletAddress
-									updatedAt
-									createdAt
-								}
-							}`,
+						query,
 						variables: {
 							findOneUserInput: {
 								id,
@@ -45,7 +36,7 @@ const runFindOneTests = () => {
 
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
-						.send(query);
+						.send(graphQlquery);
 
 					const user = response.body.data.findOneUser;
 
@@ -60,19 +51,9 @@ const runFindOneTests = () => {
 				describe('when querying with an id for user that does not exist', () => {
 					it('should return null', async () => {
 						const id = 100;
-						const query = {
+						const graphQlquery = {
 							operationName: 'Query',
-							query: `
-								query Query($findOneUserInput: FindOneUserInput!) {
-									findOneUser(findOneUserInput: $findOneUserInput) {
-										id
-										role
-										email
-										primaryWalletAddress
-										updatedAt
-										createdAt
-									}
-								}`,
+							query,
 							variables: {
 								findOneUserInput: {
 									id,
@@ -82,7 +63,7 @@ const runFindOneTests = () => {
 
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const user = response.body.data.findOneUser;
 
@@ -97,19 +78,9 @@ const runFindOneTests = () => {
 			describe('when querying with an email for user that does exist', () => {
 				it('should return user', async () => {
 					const email = firstUser.email;
-					const query = {
+					const graphQlquery = {
 						operationName: 'Query',
-						query: `
-							query Query($findOneUserInput: FindOneUserInput!) {
-								findOneUser(findOneUserInput: $findOneUserInput) {
-									id
-									role
-									email
-									primaryWalletAddress
-									createdAt
-									updatedAt
-								}
-							}`,
+						query,
 						variables: {
 							findOneUserInput: {
 								email,
@@ -118,7 +89,7 @@ const runFindOneTests = () => {
 					};
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
-						.send(query);
+						.send(graphQlquery);
 
 					const user = response.body.data.findOneUser;
 
@@ -132,19 +103,9 @@ const runFindOneTests = () => {
 				describe('when querying with an email for user that does not exist', () => {
 					it('should return null', async () => {
 						const email = 'i-dont-exist@gmail.com';
-						const query = {
+						const graphQlquery = {
 							operationName: 'Query',
-							query: `
-								query Query($findOneUserInput: FindOneUserInput!) {
-									findOneUser(findOneUserInput: $findOneUserInput) {
-										id
-										role
-										email
-										primaryWalletAddress
-										createdAt
-										updatedAt
-									}
-								}`,
+							query,
 							variables: {
 								findOneUserInput: {
 									email,
@@ -154,7 +115,7 @@ const runFindOneTests = () => {
 
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const user = response.body.data.findOneUser;
 
@@ -168,19 +129,9 @@ const runFindOneTests = () => {
 		describe('validation', () => {
 			describe('when querying with no data', () => {
 				it('should return null', async () => {
-					const query = {
+					const graphQlquery = {
 						operationName: 'Query',
-						query: `
-							query Query($findOneUserInput: FindOneUserInput!) {
-								findOneUser(findOneUserInput: $findOneUserInput) {
-									id
-									role
-									email
-									primaryWalletAddress
-									createdAt
-									updatedAt
-								}
-							}`,
+						query,
 						variables: {
 							findOneUserInput: {},
 						},
@@ -188,7 +139,7 @@ const runFindOneTests = () => {
 
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
-						.send(query);
+						.send(graphQlquery);
 
 					const user = response.body.data.findOneUser;
 

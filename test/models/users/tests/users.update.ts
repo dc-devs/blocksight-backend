@@ -1,5 +1,6 @@
 import request from 'supertest';
 import { UserRole } from '@prisma/client';
+import query from '../queries/update.query';
 import UserProperty from '../enums/user-property.enum';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
@@ -40,19 +41,9 @@ const runUpdateTests = () => {
 					createdAt: expect.any(String),
 					updatedAt: expect.any(String),
 				});
-				const query = {
+				const graphQlquery = {
 					operationName: 'Mutation',
-					query: `
-						mutation Mutation($id: Int!, $data: UpdateUserInput!) {
-							updateUser(id: $id, updateUserInput: $data) {
-								id
-								email
-								primaryWalletAddress
-								role
-								createdAt
-								updatedAt
-							}
-						}`,
+					query,
 					variables: {
 						id,
 						data: updateUserInput,
@@ -60,7 +51,7 @@ const runUpdateTests = () => {
 				};
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
-					.send(query);
+					.send(graphQlquery);
 
 				const user = response.body.data.updateUser;
 
@@ -83,19 +74,9 @@ const runUpdateTests = () => {
 					});
 
 					it('should return an error', async () => {
-						const query = {
+						const graphQlquery = {
 							operationName: 'Mutation',
-							query: `
-								mutation Mutation($id: Int!, $data: UpdateUserInput!) {
-									updateUser(id: $id, updateUserInput: $data) {
-										id
-										email
-										primaryWalletAddress
-										role
-										createdAt
-										updatedAt
-									}
-								}`,
+							query,
 							variables: {
 								id,
 								data: updateUserInput,
@@ -103,7 +84,7 @@ const runUpdateTests = () => {
 						};
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const errors = response.body.errors;
 						const emailError = errors[0];
@@ -134,19 +115,9 @@ const runUpdateTests = () => {
 
 					it('should return an error', async () => {
 						const id = 20;
-						const query = {
+						const graphQlquery = {
 							operationName: 'Mutation',
-							query: `
-						mutation Mutation($id: Int!, $data: UpdateUserInput!) {
-							updateUser(id: $id, updateUserInput: $data) {
-								id
-								email
-								primaryWalletAddress
-								role
-								createdAt
-								updatedAt
-							}
-						}`,
+							query,
 							variables: {
 								id,
 								data: updateUserInput,
@@ -154,7 +125,7 @@ const runUpdateTests = () => {
 						};
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const errors = response.body.errors;
 						const error = errors[0];
@@ -189,19 +160,9 @@ const runUpdateTests = () => {
 
 					it('should return a error', async () => {
 						const id = 1;
-						const query = {
+						const graphQlquery = {
 							operationName: 'Mutation',
-							query: `
-								mutation Mutation($id: Int!, $data: UpdateUserInput!) {
-									updateUser(id: $id, updateUserInput: $data) {
-										id
-										email
-										primaryWalletAddress
-										role
-										createdAt
-										updatedAt
-									}
-								}`,
+							query,
 							variables: {
 								id,
 								data: updateUserInput,
@@ -209,7 +170,7 @@ const runUpdateTests = () => {
 						};
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const errors = response.body.errors;
 						const roleError = errors[0];
@@ -244,19 +205,9 @@ const runUpdateTests = () => {
 
 					it('should return a error', async () => {
 						const id = 100;
-						const query = {
+						const graphQlquery = {
 							operationName: 'Mutation',
-							query: `
-								mutation Mutation($id: Int!, $data: UpdateUserInput!) {
-									updateUser(id: $id, updateUserInput: $data) {
-										id
-										email
-										primaryWalletAddress
-										role
-										createdAt
-										updatedAt
-									}
-								}`,
+							query,
 							variables: {
 								id,
 								data: updateUserInput,
@@ -264,7 +215,7 @@ const runUpdateTests = () => {
 						};
 						const response = await request(app.getHttpServer())
 							.post('/graphql')
-							.send(query);
+							.send(graphQlquery);
 
 						const errors = response.body.errors;
 						const error = errors[0];
