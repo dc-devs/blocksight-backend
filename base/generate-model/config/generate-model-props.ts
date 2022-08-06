@@ -8,6 +8,8 @@ const modelNamePluralPascalCase = 'UsersExchanges';
 // 2. Add relationship tests to users / exchanges
 // 3. Add those tests to users_exchanges in gen_model
 
+// LEFT OFF
+// Added basic Update tests, need to add when attributes are unique..
 // Note: all names should be in plural PascalCase
 const config: IGenerateModelConstructorProps = {
 	modelNamePluralPascalCase,

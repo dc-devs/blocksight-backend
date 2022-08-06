@@ -8,8 +8,7 @@ import generateTopValidationFragment from './utils/generate-top-validation-fragm
 import generateBottomValidationFragment from './utils/generate-bottom-validation-fragment';
 import generateUpdateModelTest from './utils/update/generate-update-model-test';
 import generateUpdateModelValidationTestInvalidId from './utils/update/generate-update-model-validation-test-invalid-id';
-// import generateUpdateModelValidationTestNoData from './utils/update/generate-update-model-validation-test-no-data';
-// import generateUpdateModelUniqueAttributeTests from './utils/update/generate-update-model-unique-attribute-tests';
+import generateUpdateModelValidationTestUniqueAttrs from './utils/update/generate-update-model-validation-test-unique-attrs';
 
 interface IProps {
 	model: IModel;
@@ -17,7 +16,7 @@ interface IProps {
 
 const generateTestsUpdateFileData = ({ model }: IProps) => {
 	let data = '';
-
+	const { hasUniqueProps } = model;
 	const imports = generateUpdateImports({ model });
 	const topTestFragment = generateTopTestFragment({
 		testName: pascalCase(Crud.UPDATE),
@@ -34,6 +33,10 @@ const generateTestsUpdateFileData = ({ model }: IProps) => {
 		generateUpdateModelValidationTestInvalidId({
 			model,
 		});
+	const updateModelValidationTestUniqueAttrs =
+		generateUpdateModelValidationTestUniqueAttrs({
+			model,
+		});
 
 	data += imports;
 	data += Character.LINE_BREAK;
@@ -47,6 +50,12 @@ const generateTestsUpdateFileData = ({ model }: IProps) => {
 	data += Character.LINE_BREAK;
 	data += bottomValidationFragment;
 	data += Character.LINE_BREAK;
+
+	if (hasUniqueProps) {
+		data += updateModelValidationTestUniqueAttrs;
+		data += Character.LINE_BREAK;
+	}
+
 	data += bottomTestFragment;
 
 	return data;

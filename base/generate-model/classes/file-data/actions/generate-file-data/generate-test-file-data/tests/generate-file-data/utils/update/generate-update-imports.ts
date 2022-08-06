@@ -7,13 +7,15 @@ interface IProps {
 
 const generateFindOneImports = ({ model }: IProps) => {
 	let data = '';
+	const { hasUniqueProps } = model;
+	const firstRecord = hasUniqueProps ? ' firstRecord,' : '';
 
 	data += `import request from 'supertest';
 import query from '../queries/update.query';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
-import { allModelsCount } from '../../../../prisma/seeds/${model.name.plural.paramCase}.seed';
+import {${firstRecord} allModelsCount } from '../../../../prisma/seeds/${model.name.plural.paramCase}.seed';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import { ${model.name.singular.pascalCase}ValidationError } from '../../../../src/models/${model.name.plural.paramCase}/enums';`;
