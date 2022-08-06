@@ -4,7 +4,7 @@ import { INestApplication, HttpStatus } from '@nestjs/common';
 import { ExchangeName } from '../../../../src/models/exchanges/enums';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
-import expectedExchangeObject from '../expected-objects/expected-exchange-object';
+import expectedExchangeObject from '../expected-objects/expected-exchange-object-with-relation';
 
 const runFindOneTests = () => {
 	describe('Find One', () => {

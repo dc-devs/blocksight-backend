@@ -10,6 +10,11 @@ const expectedExchangeObject = expect.objectContaining({
 	hasCsv: expect.any(Boolean),
 	createdAt: expect.any(String),
 	updatedAt: expect.any(String),
+	users: expect.arrayContaining([
+		expect.objectContaining({
+			user: expectedUserObject,
+		}),
+	]),
 });
 
 export default expectedExchangeObject;
