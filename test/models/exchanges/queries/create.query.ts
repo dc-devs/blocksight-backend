@@ -6,14 +6,6 @@ mutation Mutation($createExchangeInput: CreateExchangeInput!) {
     websiteUrl
     logoUrl
     companyLogoUrl
-    users {
-      id
-      email
-      primaryWalletAddress
-      role
-      createdAt
-      updatedAt
-    }
     hasApi
     hasCsv
     createdAt

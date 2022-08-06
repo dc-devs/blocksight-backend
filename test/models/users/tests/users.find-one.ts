@@ -4,8 +4,8 @@ import UserProperty from '../enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import { firstUser } from '../../../../prisma/seeds/users.seed';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
-import expectedUserObject from '../expected-objects/expected-user-object';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import expectedUserObject from '../expected-objects/expected-user-object-with-relation';
 
 const runFindOneTests = () => {
 	describe('Find One', () => {

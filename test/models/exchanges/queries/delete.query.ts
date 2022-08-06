@@ -5,14 +5,6 @@ const deleteQuery = `mutation Mutation($id: Int!) {
     websiteUrl
     logoUrl
     companyLogoUrl
-    users {
-      id
-      email
-      primaryWalletAddress
-      role
-      createdAt
-      updatedAt
-    }
     hasApi
     hasCsv
     createdAt

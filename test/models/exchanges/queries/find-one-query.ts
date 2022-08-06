@@ -11,13 +11,15 @@ query Query($findOneExchangeInput: FindOneExchangeInput!) {
     createdAt
     updatedAt
     users {
-      id
-      email
-      primaryWalletAddress
-      role
-      createdAt
-      updatedAt
-    }
+			user {
+				id
+				email
+				primaryWalletAddress
+				role
+				createdAt
+				updatedAt
+			}
+		}
   }
 }`;
 

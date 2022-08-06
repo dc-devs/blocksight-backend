@@ -9,12 +9,14 @@ query Query($findAllExchangesInput: FindAllExchangesInput!) {
 		hasApi
 		hasCsv
 		users {
-			id
-			email
-			primaryWalletAddress
-			role
-			createdAt
-			updatedAt
+			user {
+				id
+				email
+				primaryWalletAddress
+				role
+				createdAt
+				updatedAt
+			}
 		}
 		createdAt
 		updatedAt

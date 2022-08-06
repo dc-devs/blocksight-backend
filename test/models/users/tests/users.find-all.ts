@@ -4,8 +4,9 @@ import query from '../queries/find-all.query';
 import UserProperty from '../enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
-import expectedUserObject from '../expected-objects/expected-user-object';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import expectedUserObject from '../expected-objects/expected-user-object';
+import expectedUserObjectWithRelation from '../expected-objects/expected-user-object-with-relation';
 import {
 	allUsersCount,
 	thirdUser as thirdUserAdmin,
@@ -45,7 +46,11 @@ const runFindAllTests = () => {
 				expect(users.length).toEqual(allUsersCount);
 
 				users.forEach((user) => {
-					expect(user).toEqual(expectedUserObject);
+					if (user.id === 1) {
+						expect(user).toEqual(expectedUserObjectWithRelation);
+					} else {
+						expect(user).toEqual(expectedUserObject);
+					}
 					expect(user).not.toHaveProperty(UserProperty.PASSWORD);
 				});
 			});
@@ -77,7 +82,13 @@ const runFindAllTests = () => {
 						expect(users).toHaveLength(1);
 
 						users.forEach((user) => {
-							expect(user).toEqual(expectedUserObject);
+							if (user.id === 1) {
+								expect(user).toEqual(
+									expectedUserObjectWithRelation,
+								);
+							} else {
+								expect(user).toEqual(expectedUserObject);
+							}
 							expect(user).not.toHaveProperty(
 								UserProperty.PASSWORD,
 							);
@@ -196,7 +207,13 @@ const runFindAllTests = () => {
 						);
 
 						users.forEach((user) => {
-							expect(user).toEqual(expectedUserObject);
+							if (user.id === 1) {
+								expect(user).toEqual(
+									expectedUserObjectWithRelation,
+								);
+							} else {
+								expect(user).toEqual(expectedUserObject);
+							}
 							expect(user).not.toHaveProperty(
 								UserProperty.PASSWORD,
 							);
@@ -231,7 +248,13 @@ const runFindAllTests = () => {
 							expect(users).toHaveLength(take);
 
 							users.forEach((user) => {
-								expect(user).toEqual(expectedUserObject);
+								if (user.id === 1) {
+									expect(user).toEqual(
+										expectedUserObjectWithRelation,
+									);
+								} else {
+									expect(user).toEqual(expectedUserObject);
+								}
 								expect(user).not.toHaveProperty(
 									UserProperty.PASSWORD,
 								);
@@ -270,7 +293,13 @@ const runFindAllTests = () => {
 							expect(users).toHaveLength(take);
 
 							users.forEach((user) => {
-								expect(user).toEqual(expectedUserObject);
+								if (user.id === 1) {
+									expect(user).toEqual(
+										expectedUserObjectWithRelation,
+									);
+								} else {
+									expect(user).toEqual(expectedUserObject);
+								}
 								expect(user).not.toHaveProperty(
 									UserProperty.PASSWORD,
 								);

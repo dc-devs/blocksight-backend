@@ -7,6 +7,19 @@ query Query($findOneUserInput: FindOneUserInput!) {
 		primaryWalletAddress
 		createdAt
 		updatedAt
+		exchanges {
+			exchange {
+				id
+				name
+				websiteUrl
+				logoUrl
+				companyLogoUrl
+				hasApi
+				hasCsv
+				createdAt
+				updatedAt
+			}
+		}
 	}
 }`;
 

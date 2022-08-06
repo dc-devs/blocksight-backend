@@ -1,11 +1,9 @@
 import request from 'supertest';
 import query from '../queries/find-all-query';
-import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import { allExchangesCount } from '../../../../prisma/seeds/exchanges.seed';
-import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import expectedExchangeObject from '../expected-objects/expected-exchange-object';
+import expectedExchangeObject from '../expected-objects/expected-exchange-object-with-relation';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import {
 	ExchangeName,
@@ -265,57 +263,6 @@ const runFindAllTests = () => {
 							expect(lastExchange.id).toEqual(lastExchangeId);
 						});
 					});
-				});
-			});
-		});
-
-		describe('validation', () => {
-			describe('when querying with an unexpected exchange field', () => {
-				it('should return with an unexpected field error', async () => {
-					const extraParam = 'extraParam';
-					const query = {
-						operationName: 'Query',
-						query: `
-							query Query($findAllExchangesInput: FindAllExchangesInput!) {
-								findAllExchanges(findAllExchangesInput: $findAllExchangesInput) {
-									id
-									name
-									websiteUrl
-									logoUrl
-									companyLogoUrl
-									hasApi
-									hasCsv
-									users {
-										id
-										email
-										primaryWalletAddress
-										role
-										createdAt
-										updatedAt
-									}
-									createdAt
-									updatedAt
-									${extraParam}
-								}
-							}`,
-						variables: {},
-					};
-					const response = await request(app.getHttpServer())
-						.post('/graphql')
-						.send(query);
-
-					const errors = response.body.errors;
-					const error = errors[0];
-					const { message, extensions } = error;
-
-					expect(response.statusCode).toEqual(HttpStatus.BAD_REQUEST);
-					expect(errors.length).toEqual(1);
-					expect(message).toEqual(
-						ErrorMessage.EXTRA_PARAM_SHOULD_NOT_EXIST,
-					);
-					expect(extensions.code).toEqual(
-						ExtensionCode.GRAPHQL_VALIDATION_FAILED,
-					);
 				});
 			});
 		});
