@@ -58,7 +58,47 @@ const runUpdateTests = () => {
 			});
 		});
 
-		describe('validation', () => {});
+		describe('validation', () => {
+			describe('when updating with an invalid UsersExchanges id', () => {
+				let updateUsersExchangesInput;
+
+				beforeEach(() => {
+					updateUsersExchangesInput = {
+						userId: 3,
+						exchangeId: 3,
+					};
+				});
+
+				it('should return a error', async () => {
+					const id = 9999;
+					const graphqlQuery = {
+						operationName: 'Mutation',
+						query,
+						variables: {
+							id,
+							updateUsersExchangesInput,
+						},
+					};
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(graphqlQuery);
+
+					const errors = response.body.errors;
+					const error = errors[0];
+					const { extensions } = error;
+
+					expect(errors.length).toEqual(1);
+
+					expect(extensions.errors.cause.type).toEqual(
+						ExtensionCode.BAD_USER_INPUT,
+					);
+
+					expect(extensions.errors.cause.message).toEqual(
+						ErrorMessage.UPDATE_RECORD_NOT_FOUND,
+					);
+				});
+			});
+		});
 	});
 };
 

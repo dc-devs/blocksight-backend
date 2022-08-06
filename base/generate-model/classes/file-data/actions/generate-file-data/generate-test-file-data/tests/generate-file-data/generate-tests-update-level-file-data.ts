@@ -7,7 +7,7 @@ import generateUpdateImports from './utils/update/generate-update-imports';
 import generateTopValidationFragment from './utils/generate-top-validation-fragment';
 import generateBottomValidationFragment from './utils/generate-bottom-validation-fragment';
 import generateUpdateModelTest from './utils/update/generate-update-model-test';
-// import generateUpdateModelValidationTestInvalidId from './utils/update/generate-update-model-validation-test-invalid-id';
+import generateUpdateModelValidationTestInvalidId from './utils/update/generate-update-model-validation-test-invalid-id';
 // import generateUpdateModelValidationTestNoData from './utils/update/generate-update-model-validation-test-no-data';
 // import generateUpdateModelUniqueAttributeTests from './utils/update/generate-update-model-unique-attribute-tests';
 
@@ -30,10 +30,10 @@ const generateTestsUpdateFileData = ({ model }: IProps) => {
 	const updateModelTest = generateUpdateModelTest({
 		model,
 	});
-	// const updateModelValidationTestInvalidId =
-	// 	generateUpdateModelValidationTestInvalidId({
-	// 		model,
-	// 	});
+	const updateModelValidationTestInvalidId =
+		generateUpdateModelValidationTestInvalidId({
+			model,
+		});
 
 	data += imports;
 	data += Character.LINE_BREAK;
@@ -42,6 +42,8 @@ const generateTestsUpdateFileData = ({ model }: IProps) => {
 	data += updateModelTest;
 	data += Character.LINE_BREAK;
 	data += topValidationFragment;
+	data += Character.LINE_BREAK;
+	data += updateModelValidationTestInvalidId;
 	data += Character.LINE_BREAK;
 	data += bottomValidationFragment;
 	data += Character.LINE_BREAK;

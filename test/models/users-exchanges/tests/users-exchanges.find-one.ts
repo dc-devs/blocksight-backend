@@ -46,7 +46,7 @@ const runFindOneTests = () => {
 		describe('validation', () => {
 			describe('when querying with an id for UsersExchanges that does not exist', () => {
 				it('should return null', async () => {
-					const id = 100;
+					const id = 9999;
 					const graphQlquery = {
 						operationName: 'Query',
 						query,
