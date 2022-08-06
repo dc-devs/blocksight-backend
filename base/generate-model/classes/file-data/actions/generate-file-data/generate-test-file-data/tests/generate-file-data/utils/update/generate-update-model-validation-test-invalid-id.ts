@@ -45,7 +45,7 @@ const generateFindOneModelTest = ({ model }: IProps) => {
 		});
 
 		it('should return a error', async () => {
-			const id = 9999;
+			const id = allModelsCount + 10;
 			const graphqlQuery = {
 				operationName: 'Mutation',
 				query,

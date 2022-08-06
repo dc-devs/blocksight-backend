@@ -10,7 +10,7 @@ const generateFindOneModelValidationTestInvalidId = ({ model }: IProps) => {
 
 	data += `describe('when querying with an id for ${model.name.singular.pascalCase} that does not exist', () => {
 		it('should return null', async () => {
-			const id = 9999;
+			const id = allModelsCount + 10;
 			const graphQlquery = {
 				operationName: 'Query',
 				query,

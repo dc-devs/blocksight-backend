@@ -1,8 +1,10 @@
 import request from 'supertest';
 import query from '../queries/find-one.query';
+
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import { allModelsCount } from '../../../../prisma/seeds/users-exchanges.seed';
 import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-object';
 
 const runFindOneTests = () => {
@@ -46,7 +48,7 @@ const runFindOneTests = () => {
 		describe('validation', () => {
 			describe('when querying with an id for UsersExchanges that does not exist', () => {
 				it('should return null', async () => {
-					const id = 9999;
+					const id = allModelsCount + 10;
 					const graphQlquery = {
 						operationName: 'Query',
 						query,
