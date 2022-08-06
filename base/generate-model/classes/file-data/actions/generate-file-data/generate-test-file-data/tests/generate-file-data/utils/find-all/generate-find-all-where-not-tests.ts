@@ -14,7 +14,7 @@ const generateFindAllWhereNotTests = ({ model }: IProps) => {
 		modelAttribute: notModelAttribute,
 	} = model.tests.findAll.whereNot;
 
-	data += `describe(\`and the where NOT argument aims to fetch ${
+	data += `describe(\`when querying and the where NOT argument aims to fetch ${
 		model.name.plural.pascalCase
 	} with '${modelAttribute}: ${modelValue}'' and not '${notModelAttribute}: ${notModelValue}'\`, () => {
 			it('should return all ${

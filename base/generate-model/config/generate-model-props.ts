@@ -81,6 +81,11 @@ const config: IGenerateModelConstructorProps = {
 				expectedCount: 4,
 				modelAttribute: 'exchangeId',
 			},
+			pagination: {
+				skip: 1,
+				take: 2,
+				cursor: JSON.stringify({ id: 1 }),
+			},
 		},
 	},
 };

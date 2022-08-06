@@ -14,7 +14,7 @@ const generateFindAllWhereOrTests = ({ model }: IProps) => {
 		modelAttribute: orModelAttribute,
 	} = model.tests.findAll.whereOr;
 
-	data += `describe(\`and the where OR argument aims to fetch ${model.name.plural.pascalCase} with '${modelAttribute}: ${modelValue}' or '${orModelAttribute}: ${orModelValue}'\`, () => {
+	data += `describe(\`when querying and the where OR argument aims to fetch ${model.name.plural.pascalCase} with '${modelAttribute}: ${modelValue}' or '${orModelAttribute}: ${orModelValue}'\`, () => {
 			it('should return all ${model.name.plural.pascalCase} with that combination', async () => {
 				const graphQlquery = {
 					operationName: 'Query',
