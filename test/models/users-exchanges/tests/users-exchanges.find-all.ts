@@ -48,7 +48,7 @@ const runUpdateTests = () => {
 		});
 
 		describe(`and the where argument aims to fetch UsersExchanges with 'userId: 1'`, () => {
-			it('should return all UsersExchanges with that name', async () => {
+			it('should return all UsersExchanges with that userId', async () => {
 				const graphQlquery = {
 					operationName: 'Query',
 					query,
@@ -76,6 +76,37 @@ const runUpdateTests = () => {
 					);
 					expect(usersExchanges.userId).toEqual(1);
 				});
+			});
+		});
+
+		describe(`and the where NOT argument aims to fetch UsersExchanges with 'userId: 1'' and not 'exchangeId: 3'`, () => {
+			it('should return all UsersExchanges with that combination', async () => {
+				const graphQlquery = {
+					operationName: 'Query',
+					query,
+					variables: {
+						findAllUsersExchangesInput: {
+							where: {
+								userId: 1,
+								NOT: [{ exchangeId: 3 }],
+							},
+						},
+					},
+				};
+
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(graphQlquery);
+				console.log(response.body);
+				const usersExchanges = response.body.data.findAllUsersExchanges;
+				const usersExchange = usersExchanges[0];
+
+				expect(response.statusCode).toEqual(HttpStatus.OK);
+
+				expect(usersExchanges).toHaveLength(3);
+
+				expect(usersExchange).toEqual(expectedUsersExchangesObject);
+				expect(usersExchange.userId).toEqual(1);
 			});
 		});
 	});

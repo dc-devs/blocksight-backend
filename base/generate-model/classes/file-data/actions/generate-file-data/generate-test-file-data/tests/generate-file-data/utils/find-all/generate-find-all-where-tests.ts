@@ -11,7 +11,7 @@ const generateFindAllWhereTests = ({ model }: IProps) => {
 		model.tests.findAll.where;
 
 	data += `describe(\`and the where argument aims to fetch ${model.name.singular.pascalCase} with '${modelAttribute}: ${modelValue}'\`, () => {
-	it('should return all ${model.name.singular.pascalCase} with that name', async () => {
+	it('should return all ${model.name.singular.pascalCase} with that ${modelAttribute}', async () => {
 		const graphQlquery = {
 			operationName: 'Query',
 			query,
