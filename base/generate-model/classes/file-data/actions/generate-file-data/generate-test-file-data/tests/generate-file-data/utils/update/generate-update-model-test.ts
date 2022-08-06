@@ -5,31 +5,29 @@ interface IProps {
 	model: IModel;
 }
 
-const updateValues = {
+const defatulValues = {
 	string: 'Updated Value',
-	number: 3,
+	number: 12345,
 };
 
 const generateInputAttributes = ({ model }: IProps) => {
 	let data = '';
+	const { tests } = model;
+	const { update } = tests;
+	const { customValues } = update;
 	const { attributes } = model.attributeBundles.withoutTimeStamps;
 
 	Object.keys(attributes).forEach((attributeName) => {
 		const attribute = attributes[attributeName];
 		const { typeScriptType } = attribute;
-		const attributeValue = updateValues[typeScriptType];
+		const attributeValue =
+			customValues[attributeName] || defatulValues[typeScriptType];
 
 		console.log(attributeName, attributeValue);
 		data += `${attributeName}: ${attributeValue},` + Character.LINE_BREAK;
 	});
 
 	return data;
-	// name: updateName,
-	// websiteUrl: 'http://test.com',
-	// logoUrl: 'http://test.com/logo',
-	// companyLogoUrl: 'http://test.com/company-logo',
-	// hasApi: false,
-	// hasCsv: false,
 };
 
 const generateFindOneModelTest = ({ model }: IProps) => {

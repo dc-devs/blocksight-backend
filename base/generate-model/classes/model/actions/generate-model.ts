@@ -3,11 +3,12 @@ import { IRelatedTo } from '../../../interfaces/config';
 import filterAttributes from '../utils/filter-attributes';
 import getClassValidators from '../utils/get-class-validators';
 import { IModelInput } from '../../../interfaces/config';
-import { IModel } from '../../../interfaces/model';
+import { IModel, ITests } from '../../../interfaces/model';
 import { IModelName } from '../../../interfaces/model-name';
 import { IRelationalModelNames } from '../../../interfaces/model';
 
 interface IProps {
+	tests: ITests;
 	modelName: IModelName;
 	relatedTo?: IRelatedTo;
 	attributes: IModelInput;
@@ -16,6 +17,7 @@ interface IProps {
 }
 
 const generateModel = ({
+	tests,
 	modelName,
 	relatedTo,
 	attributes,
@@ -45,6 +47,7 @@ const generateModel = ({
 	const hasUniqueProps = Object.keys(attributesUnique).length > 0;
 
 	return {
+		tests,
 		relatedTo,
 		relationType,
 		hasUniqueProps,

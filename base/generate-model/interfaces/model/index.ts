@@ -1,3 +1,4 @@
+import ITests from './tests';
 import IModel from './model';
 import IAttribute from './attribute';
 import IRelatedTo from './related-to';
@@ -7,6 +8,7 @@ import IAttributeBundles from './attribute-bundles';
 import IRelationalModelNames from './relational-model-names';
 
 export {
+	ITests,
 	IModel,
 	IAttribute,
 	IAttributes,

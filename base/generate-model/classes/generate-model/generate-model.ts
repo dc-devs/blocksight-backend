@@ -13,6 +13,7 @@ class GenerateModel {
 	generateAllFolders: CallableFunction;
 
 	constructor({
+		tests,
 		attributes,
 		relatedTo,
 		relationType,
@@ -32,6 +33,7 @@ class GenerateModel {
 		});
 
 		const { model } = new Model({
+			tests,
 			modelName,
 			relatedTo,
 			attributes,

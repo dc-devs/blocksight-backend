@@ -1,3 +1,4 @@
+import ITests from './tests';
 import IRelatedTo from './related-to';
 import { IModelName } from '../model-name';
 import { RelationType } from '../../enums';
@@ -5,6 +6,7 @@ import IAttributeBundles from './attribute-bundles';
 import IRelationalModelNames from './relational-model-names';
 
 interface IModel {
+	tests: ITests;
 	name: IModelName;
 	relatedTo: IRelatedTo;
 	hasUniqueProps: boolean;

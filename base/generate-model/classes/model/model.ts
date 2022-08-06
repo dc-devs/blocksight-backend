@@ -1,12 +1,12 @@
 import { RelationType } from '../../enums';
 import { generateModel } from './actions';
-import { IModelInput } from '../../interfaces/config';
-import { IRelatedTo } from '../../interfaces/config';
-import { IModel } from '../../interfaces/model';
+import { IModelInput, IRelatedTo } from '../../interfaces/config';
+import { IModel, ITests } from '../../interfaces/model';
 import { IModelName } from '../../interfaces/model-name';
 import { IRelationalModelNames } from '../../interfaces/model';
 
 interface IConstructorProps {
+	tests: ITests;
 	modelName: IModelName;
 	relatedTo: IRelatedTo;
 	relationType: RelationType;
@@ -18,6 +18,7 @@ class ModelAttributes {
 	model: IModel;
 
 	constructor({
+		tests,
 		modelName,
 		attributes,
 		relatedTo,
@@ -25,6 +26,7 @@ class ModelAttributes {
 		relationalModelNames,
 	}: IConstructorProps) {
 		const model = generateModel({
+			tests,
 			modelName,
 			relatedTo,
 			attributes,
