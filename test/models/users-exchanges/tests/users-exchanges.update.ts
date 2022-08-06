@@ -6,7 +6,6 @@ import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import { allModelsCount } from '../../../../prisma/seeds/users-exchanges.seed';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
-import { UsersExchangesValidationError } from '../../../../src/models/users-exchanges/enums';
 
 const runUpdateTests = () => {
 	describe('Update', () => {

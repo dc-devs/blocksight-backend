@@ -1,10 +1,8 @@
 import request from 'supertest';
 import query from '../queries/find-all.query';
-import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import { allModelsCount } from '../../../../prisma/seeds/users-exchanges.seed';
-import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
 import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-object';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 
@@ -99,7 +97,7 @@ const runUpdateTests = () => {
 					const response = await request(app.getHttpServer())
 						.post('/graphql')
 						.send(graphQlquery);
-					console.log(response.body);
+
 					const usersExchanges =
 						response.body.data.findAllUsersExchanges;
 					const usersExchange = usersExchanges[0];

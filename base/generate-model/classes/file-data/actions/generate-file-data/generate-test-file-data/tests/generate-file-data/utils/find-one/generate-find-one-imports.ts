@@ -11,7 +11,6 @@ const generateFindOneImports = ({ model }: IProps) => {
 
 	data += `import request from 'supertest';
 import query from '../queries/find-one.query';
-
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';

@@ -36,7 +36,7 @@ const generateFindAllWhereNotTests = ({ model }: IProps) => {
 				const response = await request(app.getHttpServer())
 					.post('/graphql')
 					.send(graphQlquery);
-				console.log(response.body);
+
 				const ${model.name.plural.camelCase} = response.body.data.findAllUsersExchanges;
 				const ${model.name.singular.camelCase.replace(/s$/g, '')} = ${
 		model.name.plural.camelCase

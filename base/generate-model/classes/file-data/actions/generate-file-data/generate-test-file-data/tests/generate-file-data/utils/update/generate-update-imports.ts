@@ -17,8 +17,12 @@ import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import {${firstRecord} allModelsCount } from '../../../../prisma/seeds/${model.name.plural.paramCase}.seed';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
-import { ${model.name.singular.pascalCase}ValidationError } from '../../../../src/models/${model.name.plural.paramCase}/enums';`;
+import { redisClient } from '../../../../src/server/initialize/initialize-redis';`;
+
+	if (hasUniqueProps) {
+		data += Character.LINE_BREAK;
+		data += `import { ${model.name.singular.pascalCase}ValidationError } from '../../../../src/models/${model.name.plural.paramCase}/enums';`;
+	}
 
 	data += Character.LINE_BREAK;
 
