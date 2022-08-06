@@ -109,6 +109,37 @@ const runUpdateTests = () => {
 				expect(usersExchange.userId).toEqual(1);
 			});
 		});
+
+		describe(`and the where OR argument aims to fetch UsersExchanges with 'userId: 1' or 'exchangeId: 4'`, () => {
+			it('should return all UsersExchanges with that combination', async () => {
+				const graphQlquery = {
+					operationName: 'Query',
+					query,
+					variables: {
+						findAllUsersExchangesInput: {
+							where: {
+								OR: [{ exchangeId: 4 }, { userId: 1 }],
+							},
+						},
+					},
+				};
+
+				const response = await request(app.getHttpServer())
+					.post('/graphql')
+					.send(graphQlquery);
+
+				const usersExchanges = response.body.data.findAllUsersExchanges;
+
+				expect(response.statusCode).toEqual(HttpStatus.OK);
+				expect(usersExchanges.length).toBe(4);
+
+				usersExchanges.forEach((usersExchanges) => {
+					expect(usersExchanges).toEqual(
+						expectedUsersExchangesObject,
+					);
+				});
+			});
+		});
 	});
 };
 

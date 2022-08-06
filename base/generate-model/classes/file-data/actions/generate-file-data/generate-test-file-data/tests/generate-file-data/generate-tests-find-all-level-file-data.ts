@@ -6,7 +6,8 @@ import { IModel } from '../../../../../../../interfaces/model';
 import generateFindAllImports from './utils/find-all/generate-find-all-imports';
 import generateFindAllTest from './utils/find-all/generate-find-all-test';
 import generateFindAllWhereTest from './utils/find-all/generate-find-all-where-tests';
-import generateFindAllWheretNotTest from './utils/find-all/generate-find-all-where-not-tests';
+import generateFindAllWhereNotTest from './utils/find-all/generate-find-all-where-not-tests';
+import generateFindAllWhereOrTest from './utils/find-all/generate-find-all-where-or-tests';
 
 interface IProps {
 	model: IModel;
@@ -23,7 +24,8 @@ const generateTestsFindAllFileData = ({ model }: IProps) => {
 	});
 	const findAllTest = generateFindAllTest({ model });
 	const findAllWhereTest = generateFindAllWhereTest({ model });
-	const findAllWhereNotTest = generateFindAllWheretNotTest({ model });
+	const findAllWhereNotTest = generateFindAllWhereNotTest({ model });
+	const findAllWhereOrTest = generateFindAllWhereOrTest({ model });
 
 	data += imports;
 	data += Character.LINE_BREAK;
@@ -34,6 +36,8 @@ const generateTestsFindAllFileData = ({ model }: IProps) => {
 	data += findAllWhereTest;
 	data += Character.LINE_BREAK;
 	data += findAllWhereNotTest;
+	data += Character.LINE_BREAK;
+	data += findAllWhereOrTest;
 	data += Character.LINE_BREAK;
 	data += bottomTestFragment;
 

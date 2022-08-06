@@ -76,6 +76,11 @@ const config: IGenerateModelConstructorProps = {
 				expectedCount: 3,
 				modelAttribute: 'exchangeId',
 			},
+			whereOr: {
+				modelValue: 4,
+				expectedCount: 4,
+				modelAttribute: 'exchangeId',
+			},
 		},
 	},
 };
