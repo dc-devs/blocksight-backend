@@ -20,27 +20,14 @@ const generateTestsLevelFileData = ({
 	const indexFileData = generateTestsIndexFileData({
 		modelName,
 	});
-
 	const createFileData = generateTestsCreateFileData({
 		modelName,
 		model,
 	});
-
 	const deleteFileData = generateTestsDeleteFileData({ model });
-
-	const updateFileData = generateTestsUpdateFileData({
-		modelName,
-		model,
-	});
-
-	const findAllFileData = generateTestsFindAllFileData({
-		modelName,
-		model,
-	});
-
-	const findOneFileData = generateTestsFindOneFileData({
-		model,
-	});
+	const updateFileData = generateTestsUpdateFileData({ model });
+	const findAllFileData = generateTestsFindAllFileData({ model });
+	const findOneFileData = generateTestsFindOneFileData({ model });
 
 	return {
 		index: {
