@@ -2,6 +2,7 @@ import App from './common/enums/app';
 import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import port from './common/constants/port';
+import { PrismaService } from './prisma/prisma.service';
 import { initializeSession } from './server/initialize';
 import logInitMessage from './server/utils/log-init-message';
 import { validationPipe, corsOptions } from './server/config';
@@ -12,6 +13,9 @@ const bootstrap = async () => {
 	const app = await NestFactory.create<NestExpressApplication>(AppModule, {
 		logger: ['verbose'],
 	});
+
+	const prismaService = app.get(PrismaService);
+	await prismaService.enableShutdownHooks(app);
 
 	const session = await initializeSession();
 
