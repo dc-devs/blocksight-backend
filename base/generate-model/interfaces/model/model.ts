@@ -8,6 +8,9 @@ import IRelationalModelNames from './relational-model-names';
 interface IModel {
 	tests: ITests;
 	name: IModelName;
+	isHasOne: boolean;
+	isHasMany: boolean;
+	isManyToMany: boolean;
 	relatedTo: IRelatedTo;
 	hasUniqueProps: boolean;
 	relationType: RelationType;

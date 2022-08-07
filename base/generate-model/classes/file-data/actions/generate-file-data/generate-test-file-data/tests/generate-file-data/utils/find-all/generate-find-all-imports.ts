@@ -13,7 +13,7 @@ const generateFindOneImports = ({ model }: IProps) => {
 		import { INestApplication, HttpStatus } from '@nestjs/common';
 		import initializeTestApp from '../../../helpers/init/initializeTestApp';
 		import { allModelsCount } from '../../../../prisma/seeds/${model.name.plural.paramCase}.seed';
-		import expected${model.name.singular.pascalCase}Object from '../expected-objects/expected-${model.name.singular.paramCase}-object';
+		import expected${model.name.singular.pascalCase}Object from '../expected-objects/expected-${model.name.singular.paramCase}-with-empty-relation-object';
 		import { redisClient } from '../../../../src/server/initialize/initialize-redis';`;
 
 	data += Character.LINE_BREAK;

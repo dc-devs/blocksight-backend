@@ -3,7 +3,7 @@ import query from '../queries/find-all-query';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import { allExchangesCount } from '../../../../prisma/seeds/exchanges.seed';
-import expectedExchangeObject from '../expected-objects/expected-exchange-object-with-relation';
+import expectedExchangeObject from '../expected-objects/expected-exchange-object-with-empty-relation';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import {
 	ExchangeName,

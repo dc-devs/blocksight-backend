@@ -1,37 +1,15 @@
-import { pascalCase, paramCase } from 'change-case';
+import { pascalCase, paramCase, camelCase } from 'change-case';
 import { Character, Attribute } from '../../../../../../../enums';
-import { IModelName } from '../../../../../../../interfaces/model-name';
 import { IModel } from '../../../../../../../interfaces/model';
 
 interface IProps {
-	modelName: IModelName;
 	model: IModel;
 }
 
-const generateExpectedObjectFileData = ({ modelName, model }: IProps) => {
+const generateExpectedObjectWithEmptyRelationFileData = ({ model }: IProps) => {
 	let data = '';
-	const { relatedTo } = model;
+	const { relatedTo, isHasMany, isHasOne, isManyToMany } = model;
 	const { attributes } = model.attributeBundles.all;
-
-	if (relatedTo) {
-		Object.keys(relatedTo).forEach((relatedModel) => {
-			const relatedModelSinglePascal = pascalCase(relatedModel).replace(
-				/s$/g,
-				'',
-			);
-			const relatedModelPluralParam = paramCase(relatedModel);
-			const relatedModelSinglularParam = paramCase(relatedModel).replace(
-				/s$/g,
-				'',
-			);
-
-			data +=
-				`import expected${relatedModelSinglePascal}Object from '../../${relatedModelPluralParam}/expected-objects/expected-${relatedModelSinglularParam}-object'` +
-				Character.LINE_BREAK;
-		});
-
-		data += Character.LINE_BREAK;
-	}
 
 	const topFragment =
 		'const expectedObject = expect.objectContaining({' +
@@ -64,19 +42,23 @@ const generateExpectedObjectFileData = ({ modelName, model }: IProps) => {
 
 	if (relatedTo) {
 		Object.keys(relatedTo).forEach((relatedModel) => {
-			const relatedModelSinglePascal = pascalCase(relatedModel).replace(
+			const relatedModelSinglularCamel = camelCase(relatedModel).replace(
 				/s$/g,
 				'',
 			);
-			const relatedModelPluralParam = paramCase(relatedModel);
-			const relatedModelSinglularParam = paramCase(relatedModel).replace(
-				/s$/g,
-				'',
-			);
+			const relatedModelPluralCamel = camelCase(relatedModel);
 
-			data +=
-				`${relatedModelSinglularParam}: expected${relatedModelSinglePascal}Object,` +
-				Character.LINE_BREAK;
+			if (isManyToMany || isHasOne) {
+				data +=
+					`${relatedModelSinglularCamel}: expect.objectContaining({}),` +
+					Character.LINE_BREAK;
+			}
+
+			if (isHasMany) {
+				data +=
+					`${relatedModelPluralCamel}: expect.arrayContaining([]),` +
+					Character.LINE_BREAK;
+			}
 		});
 
 		data += Character.LINE_BREAK;
@@ -89,4 +71,4 @@ const generateExpectedObjectFileData = ({ modelName, model }: IProps) => {
 	return data;
 };
 
-export default generateExpectedObjectFileData;
+export default generateExpectedObjectWithEmptyRelationFileData;

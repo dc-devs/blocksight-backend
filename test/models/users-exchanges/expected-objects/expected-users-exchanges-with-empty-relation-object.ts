@@ -4,6 +4,8 @@ const expectedObject = expect.objectContaining({
 	exchangeId: expect.any(Number),
 	createdAt: expect.any(String),
 	updatedAt: expect.any(String),
+	user: expect.objectContaining({}),
+	exchange: expect.objectContaining({}),
 });
 
 export default expectedObject;

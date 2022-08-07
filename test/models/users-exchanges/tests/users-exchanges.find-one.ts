@@ -4,7 +4,7 @@ import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import { allModelsCount } from '../../../../prisma/seeds/users-exchanges.seed';
-import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-object';
+import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-with-relation-object';
 
 const runFindOneTests = () => {
 	describe('FindOne', () => {

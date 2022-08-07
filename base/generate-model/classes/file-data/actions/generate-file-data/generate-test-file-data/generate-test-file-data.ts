@@ -29,7 +29,6 @@ const generateTestFileData = ({ modelName, model }: IProps): IFileDataTest => {
 	});
 
 	const expectedObjects = generateExpectedObjectsLevelFileData({
-		modelName,
 		model,
 	});
 

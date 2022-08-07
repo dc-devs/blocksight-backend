@@ -15,7 +15,7 @@ import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import { allModelsCount } from '../../../../prisma/seeds/${model.name.plural.paramCase}.seed';
-import expected${model.name.singular.pascalCase}Object from '../expected-objects/expected-${model.name.singular.paramCase}-object';`;
+import expected${model.name.singular.pascalCase}Object from '../expected-objects/expected-${model.name.singular.paramCase}-with-relation-object';`;
 
 	if (hasUniqueProps) {
 		data +=

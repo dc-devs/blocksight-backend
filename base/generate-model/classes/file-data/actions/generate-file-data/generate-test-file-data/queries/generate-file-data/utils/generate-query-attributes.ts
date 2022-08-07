@@ -1,14 +1,15 @@
-import { Character, RelationType } from '../../../../../../../../enums';
+import generateRelatedToQuery from './generate-related-to-query';
 import { IModel } from '../../../../../../../../interfaces/model';
+import { Character, Crud } from '../../../../../../../../enums';
 
 interface IProps {
 	model: IModel;
+	crudOperation?: Crud;
 }
 
-const generateQueryAttributes = ({ model }: IProps) => {
+const generateQueryAttributes = ({ model, crudOperation }: IProps) => {
 	let data = '';
-	const { attributeBundles, relatedTo, relationType, relationalModelNames } =
-		model;
+	const { attributeBundles, relatedTo } = model;
 	const { all } = attributeBundles;
 	const { attributes } = all;
 
@@ -19,37 +20,11 @@ const generateQueryAttributes = ({ model }: IProps) => {
 			Character.TAB + Character.TAB + attribute + Character.LINE_BREAK;
 	});
 
-	if (relatedTo) {
-		Object.keys(relatedTo).forEach((modelName) => {
-			let modelNameQuery;
-			const model = relatedTo[modelName];
-
-			if (relationType === RelationType.MANY_TO_MANY) {
-				modelNameQuery =
-					relationalModelNames[modelName].singular.camelCase;
-			} else {
-				modelNameQuery =
-					relationalModelNames[modelName].plural.camelCase;
-			}
-
-			data +=
-				Character.TAB +
-				Character.TAB +
-				modelNameQuery +
-				' {' +
-				Character.LINE_BREAK;
-
-			model.forEach((attribute) => {
-				data +=
-					Character.TAB +
-					Character.TAB +
-					Character.TAB +
-					attribute +
-					Character.LINE_BREAK;
-			});
-
-			data += Character.TAB + Character.TAB + '}' + Character.LINE_BREAK;
-		});
+	if (
+		relatedTo &&
+		(crudOperation === Crud.FIND_ONE || crudOperation === Crud.FIND_ALL)
+	) {
+		data += generateRelatedToQuery({ model });
 	}
 
 	return data;

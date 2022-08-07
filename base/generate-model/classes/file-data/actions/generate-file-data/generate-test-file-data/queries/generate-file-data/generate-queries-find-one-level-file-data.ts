@@ -19,6 +19,7 @@ const generateFindOneFileData = ({ modelName, model }: IProps) => {
 		modelName: modelName.singular.pascalCase,
 	});
 	const queryAttributes = generateQueryAttributes({
+		crudOperation: Crud.FIND_ONE,
 		model,
 	});
 	const bottomQueryFragment = generateBottomQueryFragment({

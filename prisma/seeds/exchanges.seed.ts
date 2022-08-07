@@ -47,7 +47,16 @@ const kuCoin = {
 	hasCsv: true,
 };
 
-const exchanges = [coinbase, coinbasePro, cryptoCom, kuCoin];
+const dummyLastExchange = {
+	name: 'Dummy Exchange - I will be deleted in testing',
+	websiteUrl: 'https://dummy.com',
+	logoUrl: 'https://dummy.com',
+	companyLogoUrl: 'https://dummy.com',
+	hasApi: true,
+	hasCsv: true,
+};
+
+const exchanges = [coinbase, coinbasePro, cryptoCom, kuCoin, dummyLastExchange];
 const allExchangesCount = exchanges.length;
 
 export { coinbase, coinbasePro, exchanges, allExchangesCount };

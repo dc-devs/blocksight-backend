@@ -45,10 +45,16 @@ const generateModel = ({
 	});
 
 	const hasUniqueProps = Object.keys(attributesUnique).length > 0;
+	const isManyToMany = RelationType.MANY_TO_MANY === relationType;
+	const isHasOne = RelationType.HAS_ONE === relationType;
+	const isHasMany = RelationType.HAS_MANY === relationType;
 
 	return {
 		tests,
 		relatedTo,
+		isHasOne,
+		isHasMany,
+		isManyToMany,
 		relationType,
 		hasUniqueProps,
 		name: modelName,

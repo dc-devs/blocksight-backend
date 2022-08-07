@@ -24,9 +24,11 @@ enum FielName {
 	RESOLVER = 'resolver',
 	FIND_ONE = 'find-one',
 	FIND_ALL = 'find-all',
+	WITH_RELATION = 'with-relation',
 	ERROR_MESSAGE = 'error-message',
 	EXPECTED_OBJECTS = 'expected-objects',
 	VALIDATION_ERROR = 'validation-error',
+	WITH_EMPTY_RELATION = 'with-empty-relation',
 }
 
 export default FielName;
