@@ -27,6 +27,10 @@ const runUpdateTests = () => {
 				updateUsersExchangesInput = {
 					userId: 3,
 					exchangeId: 3,
+					apiKey: 'Updated Value',
+					apiSecret: 'Updated Value',
+					apiPassphrase: 'Updated Value',
+					apiNickname: 'Updated Value',
 				};
 			});
 
@@ -65,6 +69,10 @@ const runUpdateTests = () => {
 					updateUsersExchangesInput = {
 						userId: 3,
 						exchangeId: 3,
+						apiKey: 'Updated Value',
+						apiSecret: 'Updated Value',
+						apiPassphrase: 'Updated Value',
+						apiNickname: 'Updated Value',
 					};
 				});
 

@@ -4,6 +4,10 @@ mutation Mutation($deleteUsersExchangesInput: Int!) {
 		id
 		userId
 		exchangeId
+		apiKey
+		apiSecret
+		apiPassphrase
+		apiNickname
 		createdAt
 		updatedAt
 	}

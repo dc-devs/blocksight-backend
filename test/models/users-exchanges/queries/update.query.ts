@@ -4,6 +4,10 @@ mutation Mutation($id: Int!, $updateUsersExchangesInput: UpdateUsersExchangesInp
 		id
 		userId
 		exchangeId
+		apiKey
+		apiSecret
+		apiPassphrase
+		apiNickname
 		createdAt
 		updatedAt
 	}

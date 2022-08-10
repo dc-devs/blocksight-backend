@@ -31,6 +31,10 @@ type UsersExchanges {
   exchange: Exchange
   userId: Float
   exchangeId: Float
+  apiKey: String
+  apiSecret: String
+  apiPassphrase: String
+  apiNickname: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -173,12 +177,20 @@ input UsersExchangesCursorInput {
   id: Float
   userId: Float
   exchangeId: Float
+  apiKey: String
+  apiSecret: String
+  apiPassphrase: String
+  apiNickname: String
 }
 
 input UsersExchangesWhereInput {
   id: Float
   userId: Float
   exchangeId: Float
+  apiKey: String
+  apiSecret: String
+  apiPassphrase: String
+  apiNickname: String
   createdAt: DateTime
   updatedAt: DateTime
   AND: [UsersExchangesInput!]
@@ -190,6 +202,10 @@ input UsersExchangesInput {
   id: Float
   userId: Float
   exchangeId: Float
+  apiKey: String
+  apiSecret: String
+  apiPassphrase: String
+  apiNickname: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -198,6 +214,10 @@ input UsersExchangesOrderByInput {
   id: String
   userId: String
   exchangeId: String
+  apiKey: String
+  apiSecret: String
+  apiPassphrase: String
+  apiNickname: String
   createdAt: String
   updatedAt: String
 }
@@ -286,11 +306,19 @@ input UpdateUserInput {
 input CreateUsersExchangesInput {
   userId: Float
   exchangeId: Float
+  apiKey: String
+  apiSecret: String
+  apiPassphrase: String
+  apiNickname: String
 }
 
 input UpdateUsersExchangesInput {
   userId: Float
   exchangeId: Float
+  apiKey: String
+  apiSecret: String
+  apiPassphrase: String
+  apiNickname: String
 }
 
 input SessionInput {

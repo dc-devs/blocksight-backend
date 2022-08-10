@@ -9,7 +9,8 @@ interface IProps {
 }
 
 const generateServiceFileData = ({ modelName, model }: IProps) => {
-	const { attributeBundles, relationType, relatedTo, relationalModelNames } = model;
+	const { attributeBundles, relationType, relatedTo, relationalModelNames } =
+		model;
 	const { all, unique } = attributeBundles;
 	const { attributes: allAttributes } = all;
 	const { attributes: uniqueAttributes } = unique;
@@ -22,8 +23,7 @@ const generateServiceFileData = ({ modelName, model }: IProps) => {
 	const uniqueAttributesObject = generateUniqueAttributesObject({
 		attributes: uniqueAttributes,
 	});
-	const data = `import { Prisma } from '@prisma/client';
-import { Injectable } from '@nestjs/common';
+	const data = `import { Injectable } from '@nestjs/common';
 import { ${modelName.singular.pascalCase} } from './dto/models/${modelName.singular.paramCase}.model';
 import { PrismaService } from '../../prisma/prisma.service';
 import {
@@ -63,7 +63,7 @@ export class ${modelName.plural.pascalCase}Service {
 	}
 
 	create(create${modelName.singular.pascalCase}Input: Create${modelName.singular.pascalCase}Input): Promise<${modelName.singular.pascalCase}> {
-		const data = create${modelName.singular.pascalCase}Input as Prisma.${modelName.singular.pascalCase}CreateInput;
+		const data = create${modelName.singular.pascalCase}Input;
 
 		return this.prisma.${modelName.singular.camelCase}.create({
 			data,

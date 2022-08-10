@@ -22,8 +22,12 @@ const generateInputProperties = ({ attributes, customValues = {} }: IProps) => {
 		const attribute = attributes[attributeName];
 		const { typeScriptType } = attribute;
 		const property = attributeName;
-		const value =
+		const valueRaw =
 			customValues[attributeName] || defaultValues[typeScriptType];
+		const value =
+			typeScriptType === TypeScriptType.STRING
+				? `'${valueRaw}'`
+				: valueRaw;
 
 		data += `${property}: ${value},`;
 		data += Character.LINE_BREAK;

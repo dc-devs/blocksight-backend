@@ -4,6 +4,10 @@ query Query($findOneUsersExchangesInput: FindOneUsersExchangesInput!) {
 		id
 		userId
 		exchangeId
+		apiKey
+		apiSecret
+		apiPassphrase
+		apiNickname
 		createdAt
 		updatedAt
 		user {

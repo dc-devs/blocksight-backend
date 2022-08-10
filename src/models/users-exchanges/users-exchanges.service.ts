@@ -1,7 +1,8 @@
 import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
-import { UsersExchanges } from './dto/models/users-exchanges.model';
+import SecretBox from '../../utils/secret-box';
 import { PrismaService } from '../../prisma/prisma.service';
+import { UsersExchanges } from './dto/models/users-exchanges.model';
 import {
 	UpdateUsersExchangesInput,
 	CreateUsersExchangesInput,
@@ -15,6 +16,10 @@ const select = {
 	exchange: true,
 	userId: true,
 	exchangeId: true,
+	apiKey: true,
+	apiSecret: true,
+	apiPassphrase: true,
+	apiNickname: true,
 	createdAt: true,
 	updatedAt: true,
 };
@@ -49,14 +54,34 @@ export class UsersExchangesService {
 		});
 	}
 
-	create(
+	async create(
 		createUsersExchangesInput: CreateUsersExchangesInput,
 	): Promise<UsersExchanges> {
-		const data =
-			createUsersExchangesInput as Prisma.UsersExchangesCreateInput;
+		const secretbox = new SecretBox();
+		const data = createUsersExchangesInput;
+
+		const {
+			apiKey,
+			userId,
+			apiSecret,
+			exchangeId,
+			apiNickname,
+			apiPassphrase,
+		} = data;
+
+		const encryptedApiKey = await secretbox.encrypt(apiKey);
+		const encryptedApiSecret = await secretbox.encrypt(apiSecret);
+		const encryptedApiPassphrase = await secretbox.encrypt(apiPassphrase);
 
 		return this.prisma.usersExchanges.create({
-			data,
+			data: {
+				userId,
+				exchangeId,
+				apiNickname,
+				apiKey: encryptedApiKey,
+				apiSecret: encryptedApiSecret,
+				apiPassphrase: encryptedApiPassphrase,
+			},
 			select,
 		});
 	}

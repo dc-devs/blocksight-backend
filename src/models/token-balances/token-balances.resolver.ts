@@ -13,7 +13,6 @@ export class TokenBalancesResolver {
 		getTokenBalancesInput: GetTokenBalancesInput,
 	) {
 		const { filter, address, currency } = getTokenBalancesInput;
-
 		const tokenBalances = await this.tokenBalancesService.getTokenBalances({
 			filter,
 			address,

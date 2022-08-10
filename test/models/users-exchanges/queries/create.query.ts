@@ -4,6 +4,10 @@ mutation Mutation($createUsersExchangesInput: CreateUsersExchangesInput!) {
 		id
 		userId
 		exchangeId
+		apiKey
+		apiSecret
+		apiPassphrase
+		apiNickname
 		createdAt
 		updatedAt
 	}

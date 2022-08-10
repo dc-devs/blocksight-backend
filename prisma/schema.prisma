@@ -47,6 +47,10 @@ model UsersExchanges {
   userId                  Int               // relation scalar field (used in the `@relation` attribute above)
   exchange                Exchange          @relation(fields: [exchangeId], references: [id])
   exchangeId              Int               // relation scalar field (used in the `@relation` attribute above)
+  apiKey                  String            @default("")
+  apiSecret               String            @default("")
+  apiPassphrase           String            @default("")
+  apiNickname             String            @default("")
   createdAt               DateTime          @default(now())
   updatedAt               DateTime          @updatedAt
 

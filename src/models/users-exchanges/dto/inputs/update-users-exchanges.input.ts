@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsOptional, IsNumber } from 'class-validator';
+import { IsOptional, IsNumber, IsString } from 'class-validator';
 
 @InputType()
 export class UpdateUsersExchangesInput {
@@ -12,4 +12,24 @@ export class UpdateUsersExchangesInput {
 	@IsOptional()
 	@Field({ nullable: true })
 	exchangeId?: number;
+
+	@IsString()
+	@IsOptional()
+	@Field({ nullable: true })
+	apiKey?: string;
+
+	@IsString()
+	@IsOptional()
+	@Field({ nullable: true })
+	apiSecret?: string;
+
+	@IsString()
+	@IsOptional()
+	@Field({ nullable: true })
+	apiPassphrase?: string;
+
+	@IsString()
+	@IsOptional()
+	@Field({ nullable: true })
+	apiNickname?: string;
 }

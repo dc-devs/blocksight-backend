@@ -1,4 +1,4 @@
-import { Character } from '../../../../../../../../../enums';
+import { Character, TypeScriptType } from '../../../../../../../../../enums';
 import { IModel } from '../../../../../../../../../interfaces/model';
 
 interface IProps {
@@ -21,8 +21,12 @@ const generateInputValues = ({ model }: IProps) => {
 	Object.keys(attributes).forEach((attributeName) => {
 		const attribute = attributes[attributeName];
 		const { typeScriptType } = attribute;
-		const attributeValue =
+		const attributeValueRaw =
 			customValues[attributeName] || defatulValues[typeScriptType];
+		const attributeValue =
+			typeScriptType === TypeScriptType.STRING
+				? `'${attributeValueRaw}'`
+				: attributeValueRaw;
 
 		data += `${attributeName}: ${attributeValue},` + Character.LINE_BREAK;
 	});

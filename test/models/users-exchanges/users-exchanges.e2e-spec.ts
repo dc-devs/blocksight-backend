@@ -7,9 +7,9 @@ import {
 } from './tests';
 
 describe('UsersExchanges', () => {
-	runFindAllTests();
-	runFindOneTests();
-	runDeleteTests();
-	runUpdateTests();
+	// runFindAllTests();
+	// runFindOneTests();
+	// runDeleteTests();
+	// runUpdateTests();
 	runCreateTests();
 });

@@ -17,6 +17,22 @@ const config: IGenerateModelConstructorProps = {
 			typeScriptType: 'number',
 			classValidators: ['IsNumber'],
 		},
+		apiKey: {
+			typeScriptType: 'string',
+			classValidators: ['IsString'],
+		},
+		apiSecret: {
+			typeScriptType: 'string',
+			classValidators: ['IsString'],
+		},
+		apiPassphrase: {
+			typeScriptType: 'string',
+			classValidators: ['IsString'],
+		},
+		apiNickname: {
+			typeScriptType: 'string',
+			classValidators: ['IsString'],
+		},
 		createdAt: {
 			typeScriptType: 'Date',
 			classValidators: ['IsDate'],

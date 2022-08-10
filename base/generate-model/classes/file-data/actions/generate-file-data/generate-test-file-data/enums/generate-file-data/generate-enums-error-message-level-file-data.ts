@@ -31,7 +31,7 @@ const generateEnumsErrorMessageFileData = ({ modelName, model }: IProps) => {
 	Object.keys(attributes).forEach((attributeName) => {
 		const attribute = attributes[attributeName];
 		const { typeScriptType } = attribute;
-		const value = `${attributeName} ${errorBase} ${typeScriptType} ${errorTail}`;
+		const value = `${attributeName} ${errorBase} ${typeScriptType}`;
 		const property = snakeCase(
 			`${attributeName} ${errorBase} ${typeScriptType}`,
 		).toUpperCase();

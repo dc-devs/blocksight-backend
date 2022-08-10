@@ -18,6 +18,22 @@ export class UsersExchangesOrderByInput {
 
 	@IsOptional()
 	@Field({ nullable: true })
+	apiKey?: Prisma.SortOrder;
+
+	@IsOptional()
+	@Field({ nullable: true })
+	apiSecret?: Prisma.SortOrder;
+
+	@IsOptional()
+	@Field({ nullable: true })
+	apiPassphrase?: Prisma.SortOrder;
+
+	@IsOptional()
+	@Field({ nullable: true })
+	apiNickname?: Prisma.SortOrder;
+
+	@IsOptional()
+	@Field({ nullable: true })
 	createdAt?: Prisma.SortOrder;
 
 	@IsOptional()

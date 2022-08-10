@@ -1,6 +1,7 @@
 import request from 'supertest';
 import query from '../queries/create.query';
 import ErrorMessage from '../enums/error-message.enum';
+import SecretBox from '../../../../src/utils/secret-box';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import initializeTestApp from '../../../helpers/init/initializeTestApp';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
@@ -24,9 +25,14 @@ const runCreateTests = () => {
 			const createUsersExchangesInput = {
 				userId: 1,
 				exchangeId: 1,
+				apiKey: 'Test value',
+				apiSecret: 'Test value',
+				apiPassphrase: 'Test value',
+				apiNickname: 'Test value',
 			};
 
 			it('should create and return UsersExchanges', async () => {
+				const secretbox = new SecretBox();
 				const graphqlQuery = {
 					operationName: 'Mutation',
 					query,
@@ -39,9 +45,23 @@ const runCreateTests = () => {
 					.send(graphqlQuery);
 
 				const usersExchanges = response.body.data.createUsersExchanges;
+				const { apiKey, apiPassphrase, apiSecret } = usersExchanges;
+				const {
+					apiKey: apiKeyInput,
+					apiSecret: apiSecretInput,
+					apiPassphrase: apiPassphraseInput,
+				} = createUsersExchangesInput;
 
 				expect(response.statusCode).toEqual(HttpStatus.OK);
 				expect(usersExchanges).toEqual(expectedUsersExchangesObject);
+
+				expect(await secretbox.decrypt(apiKey)).toEqual(apiKeyInput);
+				expect(await secretbox.decrypt(apiPassphrase)).toEqual(
+					apiSecretInput,
+				);
+				expect(await secretbox.decrypt(apiKey)).toEqual(
+					apiPassphraseInput,
+				);
 			});
 		});
 
@@ -58,6 +78,18 @@ const runCreateTests = () => {
 						),
 						expect.stringContaining(
 							ErrorMessage.EXCHANGE_ID_MUST_BE_A_NUMBER,
+						),
+						expect.stringContaining(
+							ErrorMessage.API_KEY_MUST_BE_A_STRING,
+						),
+						expect.stringContaining(
+							ErrorMessage.API_SECRET_MUST_BE_A_STRING,
+						),
+						expect.stringContaining(
+							ErrorMessage.API_PASSPHRASE_MUST_BE_A_STRING,
+						),
+						expect.stringContaining(
+							ErrorMessage.API_NICKNAME_MUST_BE_A_STRING,
 						),
 					];
 				});
