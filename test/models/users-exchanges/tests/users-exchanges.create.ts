@@ -25,10 +25,10 @@ const runCreateTests = () => {
 			const createUsersExchangesInput = {
 				userId: 1,
 				exchangeId: 1,
-				apiKey: 'Test value',
-				apiSecret: 'Test value',
-				apiPassphrase: 'Test value',
-				apiNickname: 'Test value',
+				apiKey: 'Test value 1',
+				apiSecret: 'Test value 2',
+				apiPassphrase: 'Test value 3',
+				apiNickname: 'Test value 4',
 			};
 
 			it('should create and return UsersExchanges', async () => {
@@ -57,10 +57,10 @@ const runCreateTests = () => {
 
 				expect(await secretbox.decrypt(apiKey)).toEqual(apiKeyInput);
 				expect(await secretbox.decrypt(apiPassphrase)).toEqual(
-					apiSecretInput,
-				);
-				expect(await secretbox.decrypt(apiKey)).toEqual(
 					apiPassphraseInput,
+				);
+				expect(await secretbox.decrypt(apiSecret)).toEqual(
+					apiSecretInput,
 				);
 			});
 		});
