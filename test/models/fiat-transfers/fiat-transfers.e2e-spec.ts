@@ -6,7 +6,7 @@ import {
 	runFindOneTests,
 } from './tests';
 
-describe('UsersExchanges', () => {
+describe('FiatTransfers', () => {
 	runFindAllTests();
 	runFindOneTests();
 	runDeleteTests();

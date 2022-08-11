@@ -1,37 +1,34 @@
 import { RelationType } from '../enums';
 import { IGenerateModelConstructorProps } from '../interfaces/config';
-const modelNamePluralPascalCase = 'UsersExchanges';
 
-// Note: all names should be in plural PascalCase
+const modelNamePluralPascalCase = 'FiatTransfers';
+
 const config: IGenerateModelConstructorProps = {
 	modelNamePluralPascalCase,
-	relationType: RelationType.MANY_TO_MANY,
 	attributes: {
-		userId: {
-			// isUnique: true,
+		type: {
+			typeScriptType: 'string',
+			classValidators: ['IsString'],
+		},
+		amount: {
 			typeScriptType: 'number',
 			classValidators: ['IsNumber'],
+		},
+		currency: {
+			typeScriptType: 'string',
+			classValidators: ['IsString'],
+		},
+		timestamp: {
+			typeScriptType: 'Date',
+			classValidators: ['IsDate'],
+		},
+		transferData: {
+			typeScriptType: 'string',
+			classValidators: ['IsString'],
 		},
 		exchangeId: {
-			// isUnique: true,
 			typeScriptType: 'number',
 			classValidators: ['IsNumber'],
-		},
-		apiKey: {
-			typeScriptType: 'string',
-			classValidators: ['IsString'],
-		},
-		apiSecret: {
-			typeScriptType: 'string',
-			classValidators: ['IsString'],
-		},
-		apiPassphrase: {
-			typeScriptType: 'string',
-			classValidators: ['IsString'],
-		},
-		apiNickname: {
-			typeScriptType: 'string',
-			classValidators: ['IsString'],
 		},
 		createdAt: {
 			typeScriptType: 'Date',
@@ -42,15 +39,8 @@ const config: IGenerateModelConstructorProps = {
 			classValidators: ['IsDate'],
 		},
 	},
+	relationType: RelationType.HAS_ONE,
 	relatedTo: {
-		Users: [
-			'id',
-			'role',
-			'email',
-			'primaryWalletAddress',
-			'createdAt',
-			'updatedAt',
-		],
 		Exchanges: [
 			'id',
 			'name',
@@ -66,25 +56,29 @@ const config: IGenerateModelConstructorProps = {
 	tests: {
 		update: {
 			customValues: {
-				userId: 3,
-				exchangeId: 3,
+				type: 'Updated Type',
+				amount: 100.01,
+				currency: 'Updated Currency',
+				timestamp: '2021-06-04 16:09:55.901324+00',
+				transferData: JSON.stringify({ test: 'value' }),
+				exchangeId: 1,
 			},
 		},
 		findAll: {
 			where: {
-				modelAttribute: 'userId',
-				modelValue: 1,
-				expectedCount: 4,
+				modelAttribute: 'type',
+				modelValue: 'deposit',
+				expectedCount: 5,
 			},
 			whereNot: {
-				modelValue: 3,
-				expectedCount: 3,
-				modelAttribute: 'exchangeId',
+				modelAttribute: 'type',
+				modelValue: 'withdraw',
+				expectedCount: 5,
 			},
 			whereOr: {
-				modelValue: 4,
-				expectedCount: 4,
-				modelAttribute: 'exchangeId',
+				modelAttribute: 'type',
+				modelValue: 'withdraw',
+				expectedCount: 5,
 			},
 			pagination: {
 				skip: 1,

@@ -1,6 +1,5 @@
 interface ITestUpdateCustomValues {
-	userId?: number;
-	exchangeId?: number;
+	[key: string]: number | string | Date;
 }
 
 export default ITestUpdateCustomValues;

@@ -7,16 +7,27 @@ interface IProps {
 
 const generateFindAllWhereNotTests = ({ model }: IProps) => {
 	let data = '';
-	const { modelValue, modelAttribute } = model.tests.findAll.where;
+	const { modelValue: modelValueRaw, modelAttribute } =
+		model.tests.findAll.where;
 	const {
 		expectedCount,
-		modelValue: notModelValue,
+		modelValue: notModelValueRaw,
 		modelAttribute: notModelAttribute,
 	} = model.tests.findAll.whereNot;
 
+	const modelValue =
+		typeof modelValueRaw === 'string'
+			? `"${modelValueRaw}"`
+			: modelValueRaw;
+
+	const notModelValue =
+		typeof notModelValueRaw === 'string'
+			? `"${notModelValueRaw}"`
+			: notModelValueRaw;
+
 	data += `describe(\`when querying and the where NOT argument aims to fetch ${
 		model.name.plural.pascalCase
-	} with '${modelAttribute}: ${modelValue}'' and not '${notModelAttribute}: ${notModelValue}'\`, () => {
+	} with '${modelAttribute}: ${modelValue}' and not '${notModelAttribute}: ${notModelValue}'\`, () => {
 			it('should return all ${
 				model.name.plural.pascalCase
 			} with that combination', async () => {
@@ -37,7 +48,9 @@ const generateFindAllWhereNotTests = ({ model }: IProps) => {
 					.post('/graphql')
 					.send(graphQlquery);
 
-				const ${model.name.plural.camelCase} = response.body.data.findAllUsersExchanges;
+				const ${model.name.plural.camelCase} = response.body.data.findAll${
+		model.name.plural.pascalCase
+	};
 				const ${model.name.singular.camelCase.replace(/s$/g, '')} = ${
 		model.name.plural.camelCase
 	}[0];

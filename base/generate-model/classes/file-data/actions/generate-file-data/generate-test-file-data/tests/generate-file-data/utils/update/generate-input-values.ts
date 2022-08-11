@@ -13,18 +13,18 @@ const defatulValues = {
 const generateInputValues = ({ model }: IProps) => {
 	let data = '';
 
-	const { tests } = model;
-	const { update } = tests;
-	const { customValues } = update;
+	const customValues = model?.tests?.update?.customValues;
 	const { attributes } = model.attributeBundles.withoutTimeStamps;
 
 	Object.keys(attributes).forEach((attributeName) => {
 		const attribute = attributes[attributeName];
 		const { typeScriptType } = attribute;
 		const attributeValueRaw =
-			customValues[attributeName] || defatulValues[typeScriptType];
+			(customValues && customValues[attributeName]) ||
+			defatulValues[typeScriptType];
 		const attributeValue =
-			typeScriptType === TypeScriptType.STRING
+			typeScriptType === TypeScriptType.STRING ||
+			typeScriptType === TypeScriptType.DATE
 				? `'${attributeValueRaw}'`
 				: attributeValueRaw;
 

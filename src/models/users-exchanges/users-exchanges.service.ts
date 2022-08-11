@@ -1,4 +1,3 @@
-import { Prisma } from '@prisma/client';
 import { Injectable } from '@nestjs/common';
 import SecretBox from '../../utils/secret-box';
 import { PrismaService } from '../../prisma/prisma.service';

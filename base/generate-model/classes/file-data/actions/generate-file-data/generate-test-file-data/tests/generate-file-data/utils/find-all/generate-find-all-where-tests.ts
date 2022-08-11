@@ -7,8 +7,16 @@ interface IProps {
 
 const generateFindAllWhereTests = ({ model }: IProps) => {
 	let data = '';
-	const { modelValue, expectedCount, modelAttribute } =
-		model.tests.findAll.where;
+	const {
+		modelValue: modelValueRaw,
+		expectedCount,
+		modelAttribute,
+	} = model.tests.findAll.where;
+
+	const modelValue =
+		typeof modelValueRaw === 'string'
+			? `"${modelValueRaw}"`
+			: modelValueRaw;
 
 	data += `describe(\`when querying and the where argument aims to fetch ${model.name.singular.pascalCase} with '${modelAttribute}: ${modelValue}'\`, () => {
 	it('should return all ${model.name.singular.pascalCase} with that ${modelAttribute}', async () => {

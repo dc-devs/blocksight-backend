@@ -12,13 +12,13 @@ const getCoinbaseTotalFiatTransferred = async ({ transferType }: Props) => {
 
 	const transfers = await coinbaseProClient.rest.transfer.getTransfers(
 		transferType,
-		id
+		id,
 	);
-	const { data } = transfers;
+	// const { data } = transfers;
 
-	const totalDeposits = getTransfersTotalFiatValue(data);
+	// const totalDeposits = getTransfersTotalFiatValue(data);
 
-	return totalDeposits;
+	return { profiles, transfers };
 };
 
 export default getCoinbaseTotalFiatTransferred;

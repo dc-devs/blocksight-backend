@@ -1,4 +1,4 @@
-import { users, exchanges, usersExchanges } from './seeds';
+import { users, exchanges, usersExchanges, fiatTransfers } from './seeds';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -14,6 +14,10 @@ const main = async () => {
 
 	await prisma.usersExchanges.createMany({
 		data: [...usersExchanges],
+	});
+
+	await prisma.fiatTransfer.createMany({
+		data: [...fiatTransfers],
 	});
 };
 

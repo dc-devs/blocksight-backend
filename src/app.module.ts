@@ -9,8 +9,9 @@ import { ExchangesModule } from './models/exchanges/exchanges.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { UsersExchangesModule } from './models/users-exchanges/users-exchanges.module';
+import { FiatTransfersModule } from './models/fiat-transfers/fiat-transfers.module';
 import { TokenBalancesModule } from './models/token-balances/token-balances.module';
+import { UsersExchangesModule } from './models/users-exchanges/users-exchanges.module';
 
 @Module({
 	imports: [
@@ -18,6 +19,7 @@ import { TokenBalancesModule } from './models/token-balances/token-balances.modu
 		GraphqlModule,
 		TransfersModule,
 		TransactionsModule,
+		FiatTransfersModule,
 		TokenBalancesModule,
 		UsersExchangesModule,
 		ConfigModule.forRoot({

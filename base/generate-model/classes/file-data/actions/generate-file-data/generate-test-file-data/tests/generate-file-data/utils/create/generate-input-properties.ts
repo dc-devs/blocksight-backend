@@ -25,7 +25,8 @@ const generateInputProperties = ({ attributes, customValues = {} }: IProps) => {
 		const valueRaw =
 			customValues[attributeName] || defaultValues[typeScriptType];
 		const value =
-			typeScriptType === TypeScriptType.STRING
+			typeScriptType === TypeScriptType.STRING ||
+			typeScriptType === TypeScriptType.DATE
 				? `'${valueRaw}'`
 				: valueRaw;
 

@@ -7,12 +7,23 @@ interface IProps {
 
 const generateFindAllWhereOrTests = ({ model }: IProps) => {
 	let data = '';
-	const { modelValue, modelAttribute } = model.tests.findAll.where;
+	const { modelValue: modelValueRaw, modelAttribute } =
+		model.tests.findAll.where;
 	const {
 		expectedCount,
-		modelValue: orModelValue,
+		modelValue: orModelValueRaw,
 		modelAttribute: orModelAttribute,
 	} = model.tests.findAll.whereOr;
+
+	const modelValue =
+		typeof modelValueRaw === 'string'
+			? `"${modelValueRaw}"`
+			: modelValueRaw;
+
+	const orModelValue =
+		typeof orModelValueRaw === 'string'
+			? `"${orModelValueRaw}"`
+			: orModelValueRaw;
 
 	data += `describe(\`when querying and the where OR argument aims to fetch ${model.name.plural.pascalCase} with '${modelAttribute}: ${modelValue}' or '${orModelAttribute}: ${orModelValue}'\`, () => {
 			it('should return all ${model.name.plural.pascalCase} with that combination', async () => {
@@ -38,7 +49,7 @@ const generateFindAllWhereOrTests = ({ model }: IProps) => {
 				expect(${model.name.plural.camelCase}.length).toBe(${expectedCount});
 
 				${model.name.plural.camelCase}.forEach((${model.name.singular.camelCase}) => {
-					expect(${model.name.singular.camelCase}).toEqual(expectedUsersExchangesObject);
+					expect(${model.name.singular.camelCase}).toEqual(expected${model.name.singular.pascalCase}Object);
 				});
 			});
 		});`;
