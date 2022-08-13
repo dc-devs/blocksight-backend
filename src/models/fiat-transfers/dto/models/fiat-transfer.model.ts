@@ -1,6 +1,8 @@
 import { Prisma } from '@prisma/client';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { IsString, IsNumber, IsDate } from 'class-validator';
+import { GraphQLJSON } from 'graphql-type-json';
+import { Exchange } from '../../../exchanges/dto/models/exchange.model';
 
 @ObjectType()
 export class FiatTransfer {
@@ -25,12 +27,15 @@ export class FiatTransfer {
 	timestamp?: Date;
 
 	@IsString()
-	@Field(() => JSON, { nullable: true })
-	transferData?: Prisma.JsonValue;
+	@Field(() => GraphQLJSON, { nullable: true })
+	transferData?: Prisma.InputJsonValue;
 
 	@IsNumber()
 	@Field({ nullable: true })
 	exchangeId?: number;
+
+	@Field(() => Exchange, { nullable: true })
+	exchange?: Exchange;
 
 	@IsDate()
 	@Field({ nullable: true })

@@ -28,8 +28,8 @@ const runUpdateTests = () => {
 					type: 'Updated Type',
 					amount: 100.01,
 					currency: 'Updated Currency',
-					timestamp: '2021-06-04 16:09:55.901324+00',
-					transferData: '{"test":"value"}',
+					timestamp: new Date().toISOString(),
+					transferData: JSON.stringify({ test: 'value' }),
 					exchangeId: 1,
 				};
 			});
@@ -71,7 +71,7 @@ const runUpdateTests = () => {
 						amount: 100.01,
 						currency: 'Updated Currency',
 						timestamp: '2021-06-04 16:09:55.901324+00',
-						transferData: '{"test":"value"}',
+						transferData: JSON.stringify({ test: 'value' }),
 						exchangeId: 1,
 					};
 				});

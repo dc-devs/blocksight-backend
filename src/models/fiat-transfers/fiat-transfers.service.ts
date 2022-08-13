@@ -16,6 +16,7 @@ const select = {
 	timestamp: true,
 	transferData: true,
 	exchangeId: true,
+	exchange: true,
 	createdAt: true,
 	updatedAt: true,
 };

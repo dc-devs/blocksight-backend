@@ -9,10 +9,6 @@ import {
 class SecretBox {
 	secretBoxKey: string;
 
-	constructor() {
-		console.log('SECRET_BOX_KEY', process.env.SECRET_BOX_KEY);
-	}
-
 	getSecretBoxKey = async () => {
 		return process.env.SECRET_BOX_KEY;
 	};

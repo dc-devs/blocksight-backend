@@ -6,8 +6,8 @@ import { allModelsCount } from '../../../../prisma/seeds/fiat-transfers.seed';
 import expectedFiatTransferObject from '../expected-objects/expected-fiat-transfer-with-empty-relation-object';
 import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 
-const runUpdateTests = () => {
-	describe('Update', () => {
+const runFindAllTests = () => {
+	describe('FindAll', () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
@@ -66,7 +66,7 @@ const runUpdateTests = () => {
 						response.body.data.findAllFiatTransfers;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
-					expect(fiatTransfers).toHaveLength(5);
+					expect(fiatTransfers).toHaveLength(11);
 
 					fiatTransfers.forEach((fiatTransfer) => {
 						expect(fiatTransfer).toEqual(
@@ -83,7 +83,7 @@ const runUpdateTests = () => {
 						operationName: 'Query',
 						query,
 						variables: {
-							findAllFiatTransferInput: {
+							findAllFiatTransfersInput: {
 								where: {
 									type: 'deposit',
 									NOT: [{ type: 'withdraw' }],
@@ -102,7 +102,7 @@ const runUpdateTests = () => {
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
 
-					expect(fiatTransfers).toHaveLength(5);
+					expect(fiatTransfers).toHaveLength(11);
 
 					expect(fiatTransfer).toEqual(expectedFiatTransferObject);
 					expect(fiatTransfer.type).toEqual('deposit');
@@ -134,7 +134,7 @@ const runUpdateTests = () => {
 						response.body.data.findAllFiatTransfers;
 
 					expect(response.statusCode).toEqual(HttpStatus.OK);
-					expect(fiatTransfers.length).toBe(5);
+					expect(fiatTransfers.length).toBe(22);
 
 					fiatTransfers.forEach((fiatTransfer) => {
 						expect(fiatTransfer).toEqual(
@@ -228,4 +228,4 @@ const runUpdateTests = () => {
 	});
 };
 
-export default runUpdateTests;
+export default runFindAllTests;

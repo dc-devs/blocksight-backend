@@ -1,6 +1,52 @@
 import { RelationType } from '../enums';
 import { IGenerateModelConstructorProps } from '../interfaces/config';
 
+// TODO:
+// Add specialType: JSON
+// Update DTOs
+// CreateFiatTransferInput
+// UpdateFiatTransferInput
+// FiatTransfer
+// FiatTransferCursorInput
+// import { GraphQLJSON } from 'graphql-type-json';
+// @Field(() => GraphQLJSON, { nullable: true })
+// transferData?: Prisma.InputJsonValue;
+//
+// FiatTransfer Also Add
+// +import { Exchange } from '../../../exchanges/dto/models/exchange.model';
+//  @Field(() => Exchange, { nullable: true })
+// +       exchange?: Exchange;
+//
+// FiatTransferInput
+// @Field(() => GraphQLJSON, { nullable: true })
+// transferData?: Prisma.JsonFilter;
+//
+// Service.ts
+// select:
+// exchange: true,
+//
+//
+// Expect Objects
+// All Date types should timestamp: expect.any(String),
+//
+//
+//  const findAllQuery = `
+// Need to add 's' to all of the inputs
+//
+//query Query($findAllFiatTransfersInput: FindAllFiatTransfersInput!) {
+// +       findAllFiatTransfers(findAllFiatTransfersInput: $findAllFiatTransfersInput) {
+//
+// Create/Updae Test values:
+// Date new Date().toISOString(),
+// JSON = transferData: JSON.stringify({ test: 'value' }),
+
+// runFindAllTests were called update??
+//- findAllFiatTransfersInput <-- Some were called added singular
+
+// 
+
+// LAST Update tests only start NestJs Once..
+
 const modelNamePluralPascalCase = 'FiatTransfers';
 
 const config: IGenerateModelConstructorProps = {

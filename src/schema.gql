@@ -54,6 +54,24 @@ type SessionResponse {
   isAuthenticated: Boolean!
 }
 
+type FiatTransfer {
+  id: Float
+  type: String
+  amount: Float
+  currency: String
+  timestamp: DateTime
+  transferData: JSON
+  exchangeId: Float
+  exchange: Exchange
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
 type Value {
   value: String
   formatted: String
@@ -101,6 +119,8 @@ type TokenBalances {
 type Query {
   findOneUser(findOneUserInput: FindOneUserInput!): User
   findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
+  findAllFiatTransfers(findAllFiatTransfersInput: FindAllFiatTransfersInput!): [FiatTransfer!]!
+  findOneFiatTransfer(findOneFiatTransferInput: FindOneFiatTransferInput!): FiatTransfer
   getTokenBalances(getTokenBalancesInput: GetTokenBalancesInput!): TokenBalances
   findAllUsersExchanges(findAllUsersExchangesInput: FindAllUsersExchangesInput!): [UsersExchanges!]!
   findOneUsersExchanges(findOneUsersExchangesInput: FindOneUsersExchangesInput!): UsersExchanges
@@ -157,6 +177,67 @@ input UserOrderByInput {
   role: String
   createdAt: String
   updatedAt: String
+}
+
+input FindAllFiatTransfersInput {
+  skip: Float
+  take: Float
+  cursor: FiatTransferCursorInput
+  where: FiatTransferWhereInput
+  orderBy: FiatTransferOrderByInput
+}
+
+input FiatTransferCursorInput {
+  id: Float
+  type: String
+  amount: Float
+  currency: String
+  timestamp: DateTime
+  transferData: JSON
+  exchangeId: Float
+}
+
+input FiatTransferWhereInput {
+  id: Float
+  type: String
+  amount: Float
+  currency: String
+  timestamp: DateTime
+  transferData: JSON
+  exchangeId: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+  AND: [FiatTransferInput!]
+  OR: [FiatTransferInput!]
+  NOT: [FiatTransferInput!]
+}
+
+input FiatTransferInput {
+  id: Float
+  type: String
+  amount: Float
+  currency: String
+  timestamp: DateTime
+  transferData: JSON
+  exchangeId: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input FiatTransferOrderByInput {
+  id: String
+  type: String
+  amount: String
+  currency: String
+  timestamp: String
+  transferData: String
+  exchangeId: String
+  createdAt: String
+  updatedAt: String
+}
+
+input FindOneFiatTransferInput {
+  id: Float
 }
 
 input GetTokenBalancesInput {
@@ -286,6 +367,9 @@ input FindOneExchangeInput {
 type Mutation {
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
   deleteUser(id: Int!): User!
+  createFiatTransfer(createFiatTransferInput: CreateFiatTransferInput!): FiatTransfer!
+  updateFiatTransfer(id: Int!, updateFiatTransferInput: UpdateFiatTransferInput!): FiatTransfer!
+  deleteFiatTransfer(id: Int!): FiatTransfer!
   createUsersExchanges(createUsersExchangesInput: CreateUsersExchangesInput!): UsersExchanges!
   updateUsersExchanges(id: Int!, updateUsersExchangesInput: UpdateUsersExchangesInput!): UsersExchanges!
   deleteUsersExchanges(id: Int!): UsersExchanges!
@@ -301,6 +385,24 @@ type Mutation {
 input UpdateUserInput {
   email: String
   primaryWalletAddress: String
+}
+
+input CreateFiatTransferInput {
+  type: String
+  amount: Float
+  currency: String
+  timestamp: DateTime
+  transferData: JSON
+  exchangeId: Float
+}
+
+input UpdateFiatTransferInput {
+  type: String
+  amount: Float
+  currency: String
+  timestamp: DateTime
+  transferData: JSON
+  exchangeId: Float
 }
 
 input CreateUsersExchangesInput {

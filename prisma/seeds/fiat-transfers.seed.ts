@@ -5,7 +5,7 @@ const generateFiatTransfers = (type: string, count: number) => {
 		const isEvenNumber = i % 2 == 0;
 		const exchangeId = isEvenNumber ? 1 : 2;
 		const transfer = {
-			type: 'deposit',
+			type,
 			amount: i,
 			currency: 'USD',
 			timestamp: new Date(),

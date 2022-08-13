@@ -1,6 +1,6 @@
 const findAllQuery = `
-query Query($findAllFiatTransferInput: FindAllFiatTransferInput!) {
-	findAllFiatTransfer(findAllFiatTransferInput: $findAllFiatTransferInput) {
+query Query($findAllFiatTransfersInput: FindAllFiatTransfersInput!) {
+	findAllFiatTransfers(findAllFiatTransfersInput: $findAllFiatTransfersInput) {
 		id
 		type
 		amount

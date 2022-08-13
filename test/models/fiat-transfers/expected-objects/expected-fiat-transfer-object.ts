@@ -3,7 +3,7 @@ const expectedObject = expect.objectContaining({
 	type: expect.any(String),
 	amount: expect.any(Number),
 	currency: expect.any(String),
-	timestamp: expect.any(Date),
+	timestamp: expect.any(String),
 	transferData: expect.any(String),
 	exchangeId: expect.any(Number),
 	createdAt: expect.any(String),

@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { Field, InputType } from '@nestjs/graphql';
 import { IsOptional, IsString, IsNumber, IsDate } from 'class-validator';
+import { GraphQLJSON } from 'graphql-type-json';
 
 @InputType()
 export class FiatTransferCursorInput {
@@ -31,8 +32,8 @@ export class FiatTransferCursorInput {
 
 	@IsString()
 	@IsOptional()
-	@Field(() => JSON, { nullable: true })
-	transferData?: Prisma.JsonValue;
+	@Field(() => GraphQLJSON, { nullable: true })
+	transferData?: Prisma.InputJsonValue;
 
 	@IsNumber()
 	@IsOptional()
