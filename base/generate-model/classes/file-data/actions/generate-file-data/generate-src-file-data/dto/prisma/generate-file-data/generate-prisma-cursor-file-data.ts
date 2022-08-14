@@ -14,12 +14,14 @@ interface IProps {
 
 const generatePrismaCursorFileData = ({ modelName, model }: IProps) => {
 	let data = '';
+	const { hasJSONAttribute } = model;
 	const { classValidators, attributes } =
 		model.attributeBundles.withoutTimeStamps;
 	const className = `${modelName.singular.pascalCase}${PrismaType.CURSOR}${PrismaType.INPUT}`;
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,
 		classValidators,
+		hasJSONAttribute,
 		classValidatorsIsOptional: true,
 		graphqlType: GraphqlModule.INPUT_TYPE,
 	});

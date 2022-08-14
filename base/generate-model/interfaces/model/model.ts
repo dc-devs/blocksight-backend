@@ -13,6 +13,7 @@ interface IModel {
 	isManyToMany: boolean;
 	relatedTo: IRelatedTo;
 	hasUniqueProps: boolean;
+	hasJSONAttribute: boolean;
 	relationType: RelationType;
 	attributeBundles: IAttributeBundles;
 	relationalModelNames: IRelationalModelNames;

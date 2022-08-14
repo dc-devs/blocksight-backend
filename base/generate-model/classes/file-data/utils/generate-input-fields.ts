@@ -70,7 +70,11 @@ const generateInputFields = ({
 		data += idField;
 	}
 
-	if (addRelationalFields && relationType === RelationType.MANY_TO_MANY) {
+	if (
+		addRelationalFields &&
+		(relationType === RelationType.MANY_TO_MANY ||
+			relationType === RelationType.HAS_ONE)
+	) {
 		if (relatedTo) {
 			Object.keys(relatedTo).forEach((modelName) => {
 				const modelNameLower = modelName

@@ -21,7 +21,10 @@ const generateSelectAttributes = ({
 	selectAttributes +=
 		Character.TAB + `${Attribute.ID}:true,` + Character.LINE_BREAK;
 
-	if (relationType === RelationType.MANY_TO_MANY) {
+	if (
+		relationType === RelationType.MANY_TO_MANY ||
+		relationType === RelationType.HAS_ONE
+	) {
 		if (relatedTo) {
 			Object.keys(relatedTo).forEach((modelName) => {
 				const relationalAttribute =

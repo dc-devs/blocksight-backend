@@ -5,9 +5,11 @@ interface IProps {
 	model: IModel;
 }
 
-const defatulValues = {
-	string: 'Updated Value',
-	number: 12345,
+const defaultValues = {
+	[TypeScriptType.NUMBER]: 1,
+	[TypeScriptType.STRING]: 'Updated Test value',
+	[TypeScriptType.BOOLEAN]: true,
+	[TypeScriptType.DATE]: new Date().toISOString(),
 };
 
 const generateInputValues = ({ model }: IProps) => {
@@ -21,7 +23,7 @@ const generateInputValues = ({ model }: IProps) => {
 		const { typeScriptType } = attribute;
 		const attributeValueRaw =
 			(customValues && customValues[attributeName]) ||
-			defatulValues[typeScriptType];
+			defaultValues[typeScriptType];
 		const attributeValue =
 			typeScriptType === TypeScriptType.STRING ||
 			typeScriptType === TypeScriptType.DATE

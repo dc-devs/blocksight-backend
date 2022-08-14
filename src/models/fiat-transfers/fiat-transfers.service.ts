@@ -10,13 +10,13 @@ import {
 
 const select = {
 	id: true,
+	exchange: true,
 	type: true,
 	amount: true,
 	currency: true,
 	timestamp: true,
 	transferData: true,
 	exchangeId: true,
-	exchange: true,
 	createdAt: true,
 	updatedAt: true,
 };
@@ -54,8 +54,9 @@ export class FiatTransfersService {
 	create(
 		createFiatTransferInput: CreateFiatTransferInput,
 	): Promise<FiatTransfer> {
+		const data = createFiatTransferInput;
 		const { exchangeId, type, amount, currency, timestamp, transferData } =
-			createFiatTransferInput;
+			data;
 
 		return this.prisma.fiatTransfer.create({
 			data: {

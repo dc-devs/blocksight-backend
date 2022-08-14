@@ -5,6 +5,7 @@ const defaultValues = {
 	[TypeScriptType.NUMBER]: 1,
 	[TypeScriptType.STRING]: 'Test value',
 	[TypeScriptType.BOOLEAN]: true,
+	[TypeScriptType.DATE]: new Date().toISOString(),
 };
 
 interface ICustomAttribute {
@@ -27,7 +28,7 @@ const generateInputProperties = ({ attributes, customValues = {} }: IProps) => {
 		const value =
 			typeScriptType === TypeScriptType.STRING ||
 			typeScriptType === TypeScriptType.DATE
-				? `'${valueRaw}'`
+				? `"${valueRaw}"`
 				: valueRaw;
 
 		data += `${property}: ${value},`;

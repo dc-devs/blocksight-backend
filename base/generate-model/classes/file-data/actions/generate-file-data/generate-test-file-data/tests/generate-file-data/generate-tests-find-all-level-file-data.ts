@@ -22,10 +22,10 @@ const generateTestsFindAllFileData = ({ model }: IProps) => {
 	const topPaginationFragment = `describe('pagination', () => {`;
 	const imports = generateFindAllImports({ model });
 	const topTestFragment = generateTopTestFragment({
-		testName: pascalCase(Crud.UPDATE),
+		testName: pascalCase(Crud.FIND_ALL),
 	});
 	const bottomTestFragment = generateBottomTestFragment({
-		testName: pascalCase(Crud.UPDATE),
+		testName: pascalCase(Crud.FIND_ALL),
 	});
 	const findAllTest = generateFindAllTest({ model });
 	const findAllWhereTest = generateFindAllWhereTest({ model });

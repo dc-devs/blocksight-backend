@@ -1,14 +1,17 @@
+import { Exchange } from '../../../exchanges/dto/models/exchange.model';
 import { Prisma } from '@prisma/client';
+import { GraphQLJSON } from 'graphql-type-json';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { IsString, IsNumber, IsDate } from 'class-validator';
-import { GraphQLJSON } from 'graphql-type-json';
-import { Exchange } from '../../../exchanges/dto/models/exchange.model';
 
 @ObjectType()
 export class FiatTransfer {
 	@IsNumber()
 	@Field({ nullable: true })
 	id?: number;
+
+	@Field(() => Exchange, { nullable: true })
+	exchange?: Exchange;
 
 	@IsString()
 	@Field({ nullable: true })
@@ -33,9 +36,6 @@ export class FiatTransfer {
 	@IsNumber()
 	@Field({ nullable: true })
 	exchangeId?: number;
-
-	@Field(() => Exchange, { nullable: true })
-	exchange?: Exchange;
 
 	@IsDate()
 	@Field({ nullable: true })

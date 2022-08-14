@@ -8,7 +8,7 @@ const generateFiatTransfers = (type: string, count: number) => {
 			type,
 			amount: i,
 			currency: 'USD',
-			timestamp: new Date(),
+			timestamp: new Date().toISOString(),
 			transferData: JSON.stringify({ originalData: 'data' }),
 			exchangeId,
 		};

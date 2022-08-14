@@ -1,4 +1,4 @@
-import { RelationType } from '../../../enums';
+import { SpecialType, RelationType } from '../../../enums';
 import { IRelatedTo } from '../../../interfaces/config';
 import filterAttributes from '../utils/filter-attributes';
 import getClassValidators from '../utils/get-class-validators';
@@ -44,6 +44,12 @@ const generateModel = ({
 		attributes: attributesWithoutTimeStamps,
 	});
 
+	const hasJSONAttribute = Object.keys(attributes).some((attributeName) => {
+		const attribute = attributes[attributeName];
+
+		return attribute?.specialType === SpecialType.JSON;
+	});
+
 	const hasUniqueProps = Object.keys(attributesUnique).length > 0;
 	const isManyToMany = RelationType.MANY_TO_MANY === relationType;
 	const isHasOne = RelationType.HAS_ONE === relationType;
@@ -58,6 +64,7 @@ const generateModel = ({
 		relationType,
 		hasUniqueProps,
 		name: modelName,
+		hasJSONAttribute,
 		relationalModelNames,
 		attributeBundles: {
 			all: {

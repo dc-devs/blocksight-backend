@@ -1,5 +1,5 @@
 import { pascalCase, paramCase, camelCase } from 'change-case';
-import { Character, Attribute } from '../../../../../../../enums';
+import { Character, Attribute,	TypeScriptType, } from '../../../../../../../enums';
 import { IModel } from '../../../../../../../interfaces/model';
 
 interface IProps {
@@ -50,7 +50,8 @@ const generateExpectedObjectWithRelationFileData = ({ model }: IProps) => {
 
 		if (
 			attributeName === Attribute.CREATED_AT ||
-			attributeName === Attribute.UPDATED_AT
+			attributeName === Attribute.UPDATED_AT ||
+			typeScriptType === TypeScriptType.DATE
 		) {
 			typeExpected = 'String';
 		}

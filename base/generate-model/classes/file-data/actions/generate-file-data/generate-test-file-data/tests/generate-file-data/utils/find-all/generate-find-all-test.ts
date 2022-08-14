@@ -5,7 +5,7 @@ interface IProps {
 	model: IModel;
 }
 
-const generateCreateNewModelTest = ({ model }: IProps) => {
+const generateFindAllModelsTest = ({ model }: IProps) => {
 	let data = '';
 
 	data += `describe('when querying to get all ${model.name.singular.pascalCase}', () => {
@@ -38,4 +38,4 @@ const generateCreateNewModelTest = ({ model }: IProps) => {
 	return data;
 };
 
-export default generateCreateNewModelTest;
+export default generateFindAllModelsTest;

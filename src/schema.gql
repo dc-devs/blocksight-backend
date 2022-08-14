@@ -56,13 +56,13 @@ type SessionResponse {
 
 type FiatTransfer {
   id: Float
+  exchange: Exchange
   type: String
   amount: Float
   currency: String
   timestamp: DateTime
   transferData: JSON
   exchangeId: Float
-  exchange: Exchange
   createdAt: DateTime
   updatedAt: DateTime
 }

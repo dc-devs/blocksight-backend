@@ -35,7 +35,7 @@ const generateFindAllWhereNotTests = ({ model }: IProps) => {
 					operationName: 'Query',
 					query,
 					variables: {
-						findAll${model.name.singular.pascalCase}Input: {
+						findAll${model.name.plural.pascalCase}Input: {
 							where: {
 								${modelAttribute}: ${modelValue},
 								NOT: [{ '${notModelAttribute}': ${notModelValue} }],

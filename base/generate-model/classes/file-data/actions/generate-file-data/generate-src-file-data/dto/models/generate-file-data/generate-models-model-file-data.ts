@@ -16,11 +16,14 @@ interface IProps {
 
 const generateModelsModelFileData = ({ modelName, model }: IProps) => {
 	let data = '';
-	const { relatedTo, relationType } = model;
+	const { relatedTo, relationType, hasJSONAttribute } = model;
 	const { classValidators, attributes } = model.attributeBundles.all;
 	const className = `${modelName.singular.pascalCase}`;
 
-	if (relationType === RelationType.MANY_TO_MANY) {
+	if (
+		relationType === RelationType.MANY_TO_MANY ||
+		relationType === RelationType.HAS_ONE
+	) {
 		if (relatedTo) {
 			Object.keys(relatedTo).forEach((modelName) => {
 				const className = pascalCase(modelName).replace(/s$/g, '');
@@ -37,8 +40,10 @@ const generateModelsModelFileData = ({ modelName, model }: IProps) => {
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,
 		classValidators,
+		hasJSONAttribute,
 		graphqlType: GraphqlModule.OBJECT_TYPE,
 	});
+
 	const inputFields = generateInputFields({
 		relatedTo,
 		attributes,

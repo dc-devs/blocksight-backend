@@ -22,6 +22,7 @@ const generatePrismaOrderFileData = ({ modelName, model }: IProps) => {
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,
 		classValidators,
+		shouldSkipImportPrisma: true,
 		classValidatorsIsOptional: true,
 		classValidatorsAutoImports: false,
 		graphqlType: GraphqlModule.INPUT_TYPE,

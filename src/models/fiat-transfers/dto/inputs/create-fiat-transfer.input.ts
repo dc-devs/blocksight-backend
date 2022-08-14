@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client';
+import { GraphQLJSON } from 'graphql-type-json';
 import { Field, InputType } from '@nestjs/graphql';
 import { IsString, IsNumber, IsDate } from 'class-validator';
-import { GraphQLJSON } from 'graphql-type-json';
 
 @InputType()
 export class CreateFiatTransferInput {

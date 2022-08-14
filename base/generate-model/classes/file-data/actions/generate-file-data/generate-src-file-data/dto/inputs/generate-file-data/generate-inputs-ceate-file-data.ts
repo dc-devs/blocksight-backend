@@ -14,13 +14,14 @@ interface IProps {
 
 const generateInputsCreateFileData = ({ modelName, model }: IProps) => {
 	let data = '';
-	const { relatedTo, relationType } = model;
+	const { relatedTo, relationType, hasJSONAttribute } = model;
 	const { classValidators, attributes } =
 		model.attributeBundles.withoutTimeStamps;
 	const className = `${InputType.CREATE}${modelName.singular.pascalCase}${DtoType.INPUT}`;
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,
 		classValidators,
+		hasJSONAttribute,
 		graphqlType: GraphqlModule.INPUT_TYPE,
 	});
 	const inputFields = generateInputFields({

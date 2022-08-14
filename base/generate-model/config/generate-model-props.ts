@@ -1,49 +1,35 @@
 import { RelationType } from '../enums';
 import { IGenerateModelConstructorProps } from '../interfaces/config';
 
-// TODO:
-// Add specialType: JSON
-// Update DTOs
-// CreateFiatTransferInput
-// UpdateFiatTransferInput
-// FiatTransfer
-// FiatTransferCursorInput
-// import { GraphQLJSON } from 'graphql-type-json';
-// @Field(() => GraphQLJSON, { nullable: true })
-// transferData?: Prisma.InputJsonValue;
-//
-// FiatTransfer Also Add
-// +import { Exchange } from '../../../exchanges/dto/models/exchange.model';
-//  @Field(() => Exchange, { nullable: true })
-// +       exchange?: Exchange;
-//
-// FiatTransferInput
-// @Field(() => GraphQLJSON, { nullable: true })
-// transferData?: Prisma.JsonFilter;
-//
-// Service.ts
-// select:
-// exchange: true,
-//
-//
-// Expect Objects
-// All Date types should timestamp: expect.any(String),
-//
-//
-//  const findAllQuery = `
-// Need to add 's' to all of the inputs
-//
-//query Query($findAllFiatTransfersInput: FindAllFiatTransfersInput!) {
-// +       findAllFiatTransfers(findAllFiatTransfersInput: $findAllFiatTransfersInput) {
-//
-// Create/Updae Test values:
-// Date new Date().toISOString(),
-// JSON = transferData: JSON.stringify({ test: 'value' }),
+/** 
+ * Manual Updates if JSON Type
+ *  service.ts
+ 
+const data = createFiatTransferInput;
+const { exchangeId, type, amount, currency, timestamp, transferData } = data;
 
+return this.prisma.fiatTransfer.create({
+	data: {
+		type,
+		amount,
+		currency,
+		timestamp,
+		transferData,
+		exchange: { connect: { id: exchangeId } },
+	},
+	select,
+});
+
+ * prisma/fiat-transfer.input.ts 
+
+@IsString()
+@Field(() => GraphQLJSON, { nullable: true })
+transferData?: Prisma.JsonFilter;
+
+*/
+// TODO
 // runFindAllTests were called update??
 //- findAllFiatTransfersInput <-- Some were called added singular
-
-// 
 
 // LAST Update tests only start NestJs Once..
 
@@ -69,6 +55,7 @@ const config: IGenerateModelConstructorProps = {
 			classValidators: ['IsDate'],
 		},
 		transferData: {
+			specialType: 'JSON',
 			typeScriptType: 'string',
 			classValidators: ['IsString'],
 		},
@@ -105,7 +92,7 @@ const config: IGenerateModelConstructorProps = {
 				type: 'Updated Type',
 				amount: 100.01,
 				currency: 'Updated Currency',
-				timestamp: '2021-06-04 16:09:55.901324+00',
+				timestamp: new Date().toISOString(),
 				transferData: JSON.stringify({ test: 'value' }),
 				exchangeId: 1,
 			},
@@ -114,17 +101,17 @@ const config: IGenerateModelConstructorProps = {
 			where: {
 				modelAttribute: 'type',
 				modelValue: 'deposit',
-				expectedCount: 5,
+				expectedCount: 11,
 			},
 			whereNot: {
 				modelAttribute: 'type',
 				modelValue: 'withdraw',
-				expectedCount: 5,
+				expectedCount: 11,
 			},
 			whereOr: {
 				modelAttribute: 'type',
 				modelValue: 'withdraw',
-				expectedCount: 5,
+				expectedCount: 22,
 			},
 			pagination: {
 				skip: 1,

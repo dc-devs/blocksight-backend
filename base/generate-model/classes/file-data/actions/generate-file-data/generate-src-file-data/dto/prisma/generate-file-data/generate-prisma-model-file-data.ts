@@ -14,11 +14,13 @@ interface IProps {
 
 const generatePrismaModelFileData = ({ modelName, model }: IProps) => {
 	let data = '';
+	const { hasJSONAttribute } = model;
 	const { classValidators, attributes } = model.attributeBundles.all;
 	const className = `${modelName.singular.pascalCase}${PrismaType.INPUT}`;
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
 		className,
 		classValidators,
+		hasJSONAttribute,
 		graphqlType: GraphqlModule.INPUT_TYPE,
 	});
 	const inputFields = generateInputFields({
