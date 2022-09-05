@@ -55,7 +55,7 @@ export class FiatTransfersService {
 		createFiatTransferInput: CreateFiatTransferInput,
 	): Promise<FiatTransfer> {
 		const data = createFiatTransferInput;
-		const { exchangeId, type, amount, currency, timestamp, transferData } =
+		const { type, amount, currency, timestamp, transferData, exchangeId } =
 			data;
 
 		return this.prisma.fiatTransfer.create({

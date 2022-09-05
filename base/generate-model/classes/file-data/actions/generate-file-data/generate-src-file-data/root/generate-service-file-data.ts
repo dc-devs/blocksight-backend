@@ -1,5 +1,6 @@
-import { IModelName } from '../../../../../../interfaces/model-name';
 import { IModel } from '../../../../../../interfaces/model';
+import generateCreateBody from './utils/generate-create-body';
+import { IModelName } from '../../../../../../interfaces/model-name';
 import generateSelectAttributes from '../../../../utils/generate-select-attributes';
 import generateUniqueAttributesObject from '../../../../utils/generate-unique-attributes-object';
 
@@ -23,6 +24,8 @@ const generateServiceFileData = ({ modelName, model }: IProps) => {
 	const uniqueAttributesObject = generateUniqueAttributesObject({
 		attributes: uniqueAttributes,
 	});
+	const createBody = generateCreateBody({ model });
+	console.log('GEN SERVICE');
 	const data = `import { Injectable } from '@nestjs/common';
 import { ${modelName.singular.pascalCase} } from './dto/models/${modelName.singular.paramCase}.model';
 import { PrismaService } from '../../prisma/prisma.service';
@@ -64,11 +67,7 @@ export class ${modelName.plural.pascalCase}Service {
 
 	create(create${modelName.singular.pascalCase}Input: Create${modelName.singular.pascalCase}Input): Promise<${modelName.singular.pascalCase}> {
 		const data = create${modelName.singular.pascalCase}Input;
-
-		return this.prisma.${modelName.singular.camelCase}.create({
-			data,
-			select,
-		});
+		${createBody}
 	}
 
 	update(id: number, data: Update${modelName.singular.pascalCase}Input): Promise<${modelName.singular.pascalCase}> {

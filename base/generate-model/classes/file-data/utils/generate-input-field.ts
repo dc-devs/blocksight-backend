@@ -9,12 +9,14 @@ interface IProps {
 	attributes: IAttributes;
 	isLastInputField: boolean;
 	autoAddValidation: boolean;
+	customJsonFieldValue?: string | undefined;
 }
 
 const generateInputField = ({
 	attribute,
 	attributes,
 	customValue,
+	customJsonFieldValue,
 	isOptional = false,
 	isLastInputField = false,
 	autoAddValidation = true,
@@ -35,8 +37,9 @@ const generateInputField = ({
 		data += Character.LINE_BREAK;
 
 		data +=
-			`${attribute}?:${customValue || 'Prisma.InputJsonValue'};` +
-			Character.LINE_BREAK;
+			`${attribute}?:${
+				customValue || customJsonFieldValue || 'Prisma.InputJsonValue'
+			};` + Character.LINE_BREAK;
 		data += Character.LINE_BREAK;
 	} else {
 		if (autoAddValidation) {

@@ -15,6 +15,7 @@ interface IProps {
 const generatePrismaModelFileData = ({ modelName, model }: IProps) => {
 	let data = '';
 	const { hasJSONAttribute } = model;
+	const customJsonFieldValue = hasJSONAttribute ? 'Prisma.JsonFilter' : undefined;
 	const { classValidators, attributes } = model.attributeBundles.all;
 	const className = `${modelName.singular.pascalCase}${PrismaType.INPUT}`;
 	const importsAndTopClassFragment = generateImportsAndTopClassFragment({
@@ -25,6 +26,7 @@ const generatePrismaModelFileData = ({ modelName, model }: IProps) => {
 	});
 	const inputFields = generateInputFields({
 		attributes,
+		customJsonFieldValue,
 		id: {
 			addClassValidation: true,
 		},

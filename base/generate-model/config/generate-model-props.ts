@@ -20,16 +20,7 @@ return this.prisma.fiatTransfer.create({
 	select,
 });
 
- * prisma/fiat-transfer.input.ts 
-
-@IsString()
-@Field(() => GraphQLJSON, { nullable: true })
-transferData?: Prisma.JsonFilter;
-
 */
-// TODO
-// runFindAllTests were called update??
-//- findAllFiatTransfersInput <-- Some were called added singular
 
 // LAST Update tests only start NestJs Once..
 

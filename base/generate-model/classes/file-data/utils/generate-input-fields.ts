@@ -17,6 +17,7 @@ interface IProps {
 	relatedTo?: IRelatedTo;
 	attributes: IAttributes;
 	relationType?: RelationType;
+	customJsonFieldValue?: string
 	autoAddValidation?: boolean;
 	addRelationalFields?: boolean;
 	setAllFieldsOpional?: boolean;
@@ -58,6 +59,7 @@ const generateInputFields = ({
 	setAllValues,
 	relatedTo,
 	relationType,
+	customJsonFieldValue,
 	addRelationalFields = false,
 	autoAddValidation = true,
 	setAllFieldsOpional = false,
@@ -100,6 +102,7 @@ const generateInputFields = ({
 			attributes,
 			isLastInputField,
 			autoAddValidation,
+			customJsonFieldValue,
 			customValue: setAllValues,
 			isOptional: setAllFieldsOpional,
 		});
