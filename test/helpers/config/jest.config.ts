@@ -10,6 +10,6 @@ export default async (): Promise<Config> => {
 		transform: {
 			'^.+\\.(t|j)s$': 'ts-jest',
 		},
-		// setupFilesAfterEnv: ['./helpers/config/setup.ts'],
+		setupFilesAfterEnv: ['./helpers/config/setup.ts'],
 	};
 };
