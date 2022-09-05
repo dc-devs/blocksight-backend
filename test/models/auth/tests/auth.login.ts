@@ -1,11 +1,13 @@
 import request from 'supertest';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import UserProperty from '../../users/enums/user-property.enum';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import { firstUser, password } from '../../../../prisma/seeds/users.seed';
 import ErrorMessage from '../../../../src/graphql/errors/error-message.enum';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import responseContainsSetCookie from '../../../helpers/utils/response-contains-set-cookie';
 
 const runLoginTests = () => {
@@ -13,12 +15,11 @@ const runLoginTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('when logging in with a valid email and a password', () => {

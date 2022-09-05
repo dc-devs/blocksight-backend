@@ -3,9 +3,11 @@ import query from '../queries/create.query';
 import ErrorMessage from '../enums/error-message.enum';
 import SecretBox from '../../../../src/utils/secret-box';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-object';
 
 const runCreateTests = () => {
@@ -13,12 +15,11 @@ const runCreateTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('when creating a new UsersExchanges with valid inputs', () => {

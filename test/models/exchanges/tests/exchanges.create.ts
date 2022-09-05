@@ -3,10 +3,12 @@ import query from '../queries/create.query';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import { coinbasePro } from '../../../../prisma/seeds/exchanges.seed';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
 import { ExchangeValidationError } from '../../../../src/models/exchanges/enums';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import expectedExchangeObject from '../expected-objects/expected-exchange-object';
 
 const runCreateTests = () => {
@@ -14,12 +16,11 @@ const runCreateTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('when creating a new exchange with valid inputs', () => {

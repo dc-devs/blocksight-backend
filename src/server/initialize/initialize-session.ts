@@ -1,7 +1,7 @@
 import Cookie from '../enums/cookie.enum';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
-import initializeRedis from './initialize-redis';
+import { initializeRedis } from './initialize-redis';
 import { SessionConstants } from '../../models/auth/constants/session.constants';
 
 const initializeSession = async () => {

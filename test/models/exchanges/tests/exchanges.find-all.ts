@@ -1,10 +1,12 @@
 import request from 'supertest';
 import query from '../queries/find-all-query';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import { allExchangesCount } from '../../../../prisma/seeds/exchanges.seed';
 import expectedExchangeObject from '../expected-objects/expected-exchange-object-with-empty-relation';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import {
 	ExchangeName,
 	ExchangeWebsite,
@@ -15,12 +17,11 @@ const runFindAllTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('when querying to get all exchanges', () => {

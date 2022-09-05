@@ -1,8 +1,10 @@
 import request from 'supertest';
 import Cookie from '../../../../src/server/enums/cookie.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import getCookieFromResponse from '../../../helpers/utils/get-cookie-from-response';
 
 const runLogOutTests = () => {
@@ -10,12 +12,11 @@ const runLogOutTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('when logging out', () => {

@@ -1,5 +1,4 @@
 import { Prisma } from '@prisma/client';
-
 import { IsOptional } from 'class-validator';
 import { Field, InputType } from '@nestjs/graphql';
 

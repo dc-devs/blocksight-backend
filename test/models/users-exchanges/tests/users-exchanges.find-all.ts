@@ -1,22 +1,23 @@
 import request from 'supertest';
 import query from '../queries/find-all.query';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import { allModelsCount } from '../../../../prisma/seeds/users-exchanges.seed';
 import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-with-empty-relation-object';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 
 const runUpdateTests = () => {
 	describe('Update', () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('when querying to get all UsersExchanges', () => {

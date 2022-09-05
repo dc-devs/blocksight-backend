@@ -14,10 +14,13 @@ const generateFindOneImports = ({ model }: IProps) => {
 import query from '../queries/update.query';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import {${firstRecord} allModelsCount } from '../../../../prisma/seeds/${model.name.plural.paramCase}.seed';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';`;
+`;
 
 	if (hasUniqueProps) {
 		data += Character.LINE_BREAK;

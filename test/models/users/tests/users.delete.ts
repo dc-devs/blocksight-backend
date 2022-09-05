@@ -4,9 +4,11 @@ import ErrorMessage from '../enums/error-message.enum';
 import UserProperty from '../enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import ErrorCode from '../../../../src/prisma/error-code.enum';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import expectedUserObject from '../expected-objects/expected-user-object';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import GraphQLErrorMessage from '../../../../src/graphql/errors/error-message.enum';
 
 const runDeleteTests = () => {
@@ -14,12 +16,11 @@ const runDeleteTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('when deleting with a valid user id', () => {

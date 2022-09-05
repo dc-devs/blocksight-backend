@@ -13,10 +13,12 @@ import query from '../queries/delete.query';
 import ErrorMessage from '../enums/error-message.enum';
 import ErrorCode from '../../../../src/prisma/error-code.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import { allModelsCount } from '../../../../prisma/seeds/${model.name.plural.paramCase}.seed';
 import expected${model.name.singular.pascalCase}Object from '../expected-objects/expected-${model.name.singular.paramCase}-object';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import GraphQLErrorMessage from '../../../../src/graphql/errors/error-message.enum';`;
 
 	data += Character.LINE_BREAK;

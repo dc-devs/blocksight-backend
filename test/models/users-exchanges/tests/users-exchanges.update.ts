@@ -2,22 +2,23 @@ import request from 'supertest';
 import query from '../queries/update.query';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import { allModelsCount } from '../../../../prisma/seeds/users-exchanges.seed';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 
 const runUpdateTests = () => {
 	describe('Update', () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('when updating with a valid UsersExchanges id and udpate data', () => {

@@ -6,7 +6,9 @@ import { initializeSession } from '../../../src/server/initialize';
 import { validationPipe, corsOptions } from '../../../src/server/config';
 import { isProductionEnv } from '../../../src/common/constants/environment';
 
-const initializeTestApp = async () => {
+let testApp: INestApplication;
+
+const initializeTestApp = async (): Promise<INestApplication> => {
 	let app: INestApplication;
 
 	const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -31,7 +33,9 @@ const initializeTestApp = async () => {
 
 	await app.init();
 
+	testApp = app;
+
 	return app;
 };
 
-export default initializeTestApp;
+export { testApp, initializeTestApp };

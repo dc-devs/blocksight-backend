@@ -3,8 +3,10 @@ import query from '../queries/find-one.query';
 import UserProperty from '../enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import { firstUser } from '../../../../prisma/seeds/users.seed';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import expectedUserObject from '../expected-objects/expected-user-object-with-relation';
 
 const runFindOneTests = () => {
@@ -12,12 +14,11 @@ const runFindOneTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('id', () => {

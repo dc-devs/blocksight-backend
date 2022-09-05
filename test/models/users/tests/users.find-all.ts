@@ -3,8 +3,10 @@ import { UserRole } from '@prisma/client';
 import query from '../queries/find-all.query';
 import UserProperty from '../enums/user-property.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import expectedUserObject from '../expected-objects/expected-user-object';
 import expectedUserObjectWithRelation from '../expected-objects/expected-user-object-with-relation';
 import {
@@ -19,12 +21,11 @@ const runFindAllTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('when querying to get all users', () => {

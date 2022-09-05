@@ -1,8 +1,10 @@
 import request from 'supertest';
 import query from '../queries/find-one.query';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import { allModelsCount } from '../../../../prisma/seeds/users-exchanges.seed';
 import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-with-relation-object';
 
@@ -11,12 +13,11 @@ const runFindOneTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('when querying with an id for a UsersExchanges that does exist', () => {

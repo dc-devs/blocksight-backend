@@ -2,8 +2,10 @@ import request from 'supertest';
 import query from '../queries/find-one-query';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import { ExchangeName } from '../../../../src/models/exchanges/enums';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import expectedExchangeObject from '../expected-objects/expected-exchange-object-with-relation';
 
 const runFindOneTests = () => {
@@ -11,12 +13,11 @@ const runFindOneTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('id', () => {

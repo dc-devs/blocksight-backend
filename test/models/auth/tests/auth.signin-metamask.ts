@@ -3,11 +3,13 @@ import { UserRole } from '@prisma/client';
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import UserProperty from '../../users/enums/user-property.enum';
 import generateWallet from '../../../../src/utils/generate-wallet';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import ErrorMessage from '../../../../src/graphql/errors/error-message.enum';
 import SignInMetaMaskData from '../../../helpers/enums/sign-in-metamask-data';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import {
 	fourthUser,
 	fourthUserWallet,
@@ -20,12 +22,11 @@ const runSignInMetaMaskTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('and the user already exists', () => {

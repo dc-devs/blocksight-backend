@@ -1,6 +1,8 @@
 import { createClient } from 'redis';
 import Logger from '../../utils/logger';
 
+let connectedRedisClient;
+
 export const redisClient = createClient({
 	legacyMode: true,
 	url: process.env.REDIS_URL,
@@ -16,7 +18,9 @@ const initializeRedis = async () => {
 
 	await redisClient.connect();
 
+	connectedRedisClient = redisClient;
+
 	return redisClient;
 };
 
-export default initializeRedis;
+export { connectedRedisClient, initializeRedis };

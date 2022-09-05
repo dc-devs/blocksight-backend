@@ -12,13 +12,14 @@ const generateTopTestFragment = ({ testName }: IProps) => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
-		});`;
+`;
 
 	data += Character.LINE_BREAK;
 

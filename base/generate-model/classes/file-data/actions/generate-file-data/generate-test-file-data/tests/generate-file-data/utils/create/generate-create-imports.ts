@@ -15,9 +15,11 @@ const generateCreateImports = ({ modelName, model }: IProps) => {
 import query from '../queries/create.query';
 import ErrorMessage from '../enums/error-message.enum';
 import { INestApplication, HttpStatus } from '@nestjs/common';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import expected${modelName.singular.pascalCase}Object from '../expected-objects/expected-${modelName.singular.paramCase}-object';`;
 
 	if (hasUniqueProps) {

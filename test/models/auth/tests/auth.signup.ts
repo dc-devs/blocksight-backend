@@ -4,9 +4,11 @@ import { INestApplication, HttpStatus } from '@nestjs/common';
 import ErrorMessage from '../../users/enums/error-message.enum';
 import UserProperty from '../../users/enums/user-property.enum';
 import { firstUser } from '../../../../prisma/seeds/users.seed';
-import initializeTestApp from '../../../helpers/init/initializeTestApp';
+import {
+	testApp,
+	initializeTestApp,
+} from '../../../helpers/init/initializeTestApp';
 import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import { redisClient } from '../../../../src/server/initialize/initialize-redis';
 import UserValidationError from '../../../../src/models/users/enums/user-validation-error.enum';
 
 const runSignUpTests = () => {
@@ -14,12 +16,11 @@ const runSignUpTests = () => {
 		let app: INestApplication;
 
 		beforeAll(async () => {
-			app = await initializeTestApp();
-		});
-
-		afterAll(async () => {
-			await redisClient.disconnect();
-			await app.close();
+			if (testApp) {
+				app = testApp;
+			} else {
+				app = await initializeTestApp();
+			}
 		});
 
 		describe('when signing up with a valid email and a password', () => {

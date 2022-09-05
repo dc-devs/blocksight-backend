@@ -2,7 +2,6 @@ import generateSrcFileData from './generate-src-file-data';
 import generateTestFileData from './generate-test-file-data';
 import { IFileData } from '../../../../interfaces/file-data';
 import { IModelName } from '../../../../interfaces/model-name';
-
 import { IModel } from '../../../../interfaces/model';
 
 interface IProps {
