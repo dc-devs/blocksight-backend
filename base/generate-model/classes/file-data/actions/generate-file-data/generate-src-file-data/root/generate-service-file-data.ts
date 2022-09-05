@@ -25,7 +25,6 @@ const generateServiceFileData = ({ modelName, model }: IProps) => {
 		attributes: uniqueAttributes,
 	});
 	const createBody = generateCreateBody({ model });
-	console.log('GEN SERVICE');
 	const data = `import { Injectable } from '@nestjs/common';
 import { ${modelName.singular.pascalCase} } from './dto/models/${modelName.singular.paramCase}.model';
 import { PrismaService } from '../../prisma/prisma.service';

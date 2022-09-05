@@ -29,7 +29,7 @@ const runUpdateTests = () => {
 					type: 'Updated Type',
 					amount: 100.01,
 					currency: 'Updated Currency',
-					timestamp: '2022-09-05T19:56:28.181Z',
+					timestamp: '2022-09-05T23:43:50.289Z',
 					transferData: '{"test":"value"}',
 					exchangeId: 1,
 				};
@@ -71,7 +71,7 @@ const runUpdateTests = () => {
 						type: 'Updated Type',
 						amount: 100.01,
 						currency: 'Updated Currency',
-						timestamp: '2022-09-05T19:56:28.181Z',
+						timestamp: '2022-09-05T23:43:50.289Z',
 						transferData: '{"test":"value"}',
 						exchangeId: 1,
 					};

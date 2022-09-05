@@ -26,7 +26,7 @@ const runCreateTests = () => {
 				type: 'Test value',
 				amount: 1,
 				currency: 'Test value',
-				timestamp: '2022-09-05T19:56:28.099Z',
+				timestamp: '2022-09-05T23:43:50.230Z',
 				transferData: 'Test value',
 				exchangeId: 1,
 			};
