@@ -1,4 +1,5 @@
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AuthModule } from './models/auth/auth.module';
 import { UsersModule } from './models/users/users.module';
 import { PrismaService } from './prisma/prisma.service';
@@ -12,6 +13,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { FiatTransfersModule } from './models/fiat-transfers/fiat-transfers.module';
 import { TokenBalancesModule } from './models/token-balances/token-balances.module';
 import { UsersExchangesModule } from './models/users-exchanges/users-exchanges.module';
+import { ExchangeClientService } from './services/exchange-client/exchange-client.service';
 
 @Module({
 	imports: [
@@ -22,6 +24,7 @@ import { UsersExchangesModule } from './models/users-exchanges/users-exchanges.m
 		FiatTransfersModule,
 		TokenBalancesModule,
 		UsersExchangesModule,
+		ScheduleModule.forRoot(),
 		ConfigModule.forRoot({
 			isGlobal: true,
 			envFilePath: ['.env', `.env.${environment}`],
@@ -29,7 +32,7 @@ import { UsersExchangesModule } from './models/users-exchanges/users-exchanges.m
 		AuthModule,
 		ExchangesModule,
 	],
-	providers: [PrismaService],
+	providers: [PrismaService, ExchangeClientService],
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer) {

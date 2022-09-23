@@ -4,10 +4,10 @@ import { BigNumber } from 'bignumber.js';
 const getTransfersTotalFiatValue = (transfers: any) => {
 	let totalTransfers = new BigNumber(0);
 
-	transfers.forEach((deposit) => {
-		const { details, amount } = deposit;
+	transfers.forEach((transfer) => {
+		const { details, amount } = transfer;
 		const isSuccessfulDeposit =
-			!deposit.canceled_at && deposit.processed_at;
+			!transfer.canceled_at && transfer.processed_at;
 		const isFiatTransfer = !details?.crypto_transaction_hash;
 
 		if (isFiatTransfer && isSuccessfulDeposit) {

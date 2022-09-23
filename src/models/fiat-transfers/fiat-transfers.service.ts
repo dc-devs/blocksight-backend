@@ -1,12 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { FiatTransfer } from './dto/models/fiat-transfer.model';
 import { PrismaService } from '../../prisma/prisma.service';
+import { FiatTransfer } from './dto/models/fiat-transfer.model';
+import { TransferType } from '../../services/exchange-client/interfaces';
+import { UsersExchanges } from '../users-exchanges/dto/models/users-exchanges.model';
+import { ExchangeClientService } from '../../services/exchange-client/exchange-client.service';
 import {
 	UpdateFiatTransferInput,
 	CreateFiatTransferInput,
 	FindOneFiatTransferInput,
 	FindAllFiatTransfersInput,
 } from './dto/inputs';
+
+interface SyncFiatTransfersDataProps {
+	userId: number;
+}
+
+interface DedupedUsersExchanges {
+	[key: number]: UsersExchanges;
+}
 
 const select = {
 	id: true,
@@ -23,7 +34,10 @@ const select = {
 
 @Injectable()
 export class FiatTransfersService {
-	constructor(private prisma: PrismaService) {}
+	constructor(
+		private prisma: PrismaService,
+		private exchangeClientService: ExchangeClientService,
+	) {}
 
 	findAll(
 		findAllFiatTransfersInput: FindAllFiatTransfersInput,
@@ -88,5 +102,71 @@ export class FiatTransfersService {
 			},
 			select,
 		});
+	}
+
+	async syncFiatTransfersData({ userId }: SyncFiatTransfersDataProps) {
+		let dedupedUsersExchanges: DedupedUsersExchanges = {};
+
+		// Get Users Exchanges
+		const usersExchanges = await this.prisma.usersExchanges.findMany({
+			where: {
+				userId,
+			},
+			select: {
+				id: true,
+				exchange: true,
+				userId: true,
+				exchangeId: true,
+				apiKey: true,
+				apiSecret: true,
+				apiPassphrase: true,
+				apiNickname: true,
+				createdAt: true,
+				updatedAt: true,
+			},
+		});
+
+		usersExchanges.forEach((usersExchange) => {
+			if (!dedupedUsersExchanges[usersExchange.exchangeId]) {
+				dedupedUsersExchanges[usersExchange.exchangeId] = usersExchange;
+			}
+		});
+
+		console.log('------------');
+		console.log('[TEST LOG]:: syncFiatTransfersData', userId);
+
+		// For each exchange get the correct Exchange service to pull data from exchnage
+		Object.keys(dedupedUsersExchanges).forEach(async (usersExchangeKey) => {
+			const usersExchange = dedupedUsersExchanges[usersExchangeKey];
+
+			if (usersExchange) {
+				console.log(usersExchange.exchangeId);
+
+				const { exchangeId, apiKey, apiSecret, apiPassphrase } =
+					usersExchange;
+
+				const exchangeClient =
+					await this.exchangeClientService.getExchangeClient({
+						exchangeId,
+						apiKey,
+						apiSecret,
+						apiPassphrase,
+					});
+
+				console.log(
+					await exchangeClient.getFiatTansfers({
+						transferType: TransferType.DEPOSIT,
+					}),
+				);
+			}
+		});
+
+		console.log('------------');
+
+		// Since Hard Sync
+		// --------------------
+		// Delete all previous data from fiatExchnages
+
+		// Save that data to fiatExchanges
 	}
 }

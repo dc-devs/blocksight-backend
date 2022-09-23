@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import SecretBox from '../../utils/secret-box';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UsersExchanges } from './dto/models/users-exchanges.model';
+import { FiatTransfersService } from '../../models/fiat-transfers/fiat-transfers.service';
 import {
 	UpdateUsersExchangesInput,
 	CreateUsersExchangesInput,
@@ -25,7 +26,10 @@ const select = {
 
 @Injectable()
 export class UsersExchangesService {
-	constructor(private prisma: PrismaService) {}
+	constructor(
+		private prisma: PrismaService,
+		private fiatTransfersService: FiatTransfersService,
+	) {}
 
 	findAll(
 		findAllUsersExchangesInput: FindAllUsersExchangesInput,
@@ -72,7 +76,7 @@ export class UsersExchangesService {
 		const encryptedApiSecret = await secretbox.encrypt(apiSecret);
 		const encryptedApiPassphrase = await secretbox.encrypt(apiPassphrase);
 
-		return this.prisma.usersExchanges.create({
+		const userExchange = this.prisma.usersExchanges.create({
 			data: {
 				userId,
 				exchangeId,
@@ -83,6 +87,11 @@ export class UsersExchangesService {
 			},
 			select,
 		});
+
+		// TODO: Make this a background job in near future
+		await this.fiatTransfersService.syncFiatTransfersData({ userId });
+
+		return userExchange;
 	}
 
 	update(
