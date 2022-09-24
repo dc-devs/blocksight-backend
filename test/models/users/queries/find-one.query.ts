@@ -20,6 +20,29 @@ query Query($findOneUserInput: FindOneUserInput!) {
 				updatedAt
 			}
 		}
+		fiatTransfers {
+			id
+			type
+			amount
+			currency
+			timestamp
+			transferData
+			exchangeId
+			userId
+			createdAt
+			updatedAt
+			exchange {
+				id
+				name
+				websiteUrl
+				logoUrl
+				companyLogoUrl
+				hasApi
+				hasCsv
+				createdAt
+				updatedAt
+			}
+		}
 	}
 }`;
 

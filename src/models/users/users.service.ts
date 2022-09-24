@@ -21,6 +21,11 @@ const select = {
 			exchange: true,
 		},
 	},
+	fiatTransfers: {
+		include: {
+			exchange: true,
+		},
+	},
 	createdAt: true,
 	updatedAt: true,
 };

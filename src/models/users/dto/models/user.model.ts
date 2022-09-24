@@ -1,6 +1,7 @@
 import { UserRole } from '@prisma/client';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { IsNumber, IsString, IsEmail, IsDate } from 'class-validator';
+import { FiatTransfer } from '../../../fiat-transfers/dto/models/fiat-transfer.model';
 import { UsersExchanges } from '../../../users-exchanges/dto/models/users-exchanges.model';
 
 @ObjectType()
@@ -23,6 +24,9 @@ export class User {
 
 	@Field(() => [UsersExchanges], { nullable: true })
 	exchanges?: UsersExchanges[];
+
+	@Field(() => [FiatTransfer], { nullable: true })
+	fiatTransfers?: FiatTransfer[];
 
 	@IsDate()
 	@Field({ nullable: true })

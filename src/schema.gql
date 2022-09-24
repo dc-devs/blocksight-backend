@@ -7,24 +7,6 @@ type LogOutResponse {
   isAuthenticated: Boolean!
 }
 
-type Exchange {
-  id: Float
-  name: String
-  websiteUrl: String
-  logoUrl: String
-  companyLogoUrl: String
-  hasApi: Boolean
-  hasCsv: Boolean
-  users: [UsersExchanges!]
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type UsersExchanges {
   id: Float
   user: User
@@ -39,19 +21,22 @@ type UsersExchanges {
   updatedAt: DateTime
 }
 
-type User {
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Exchange {
   id: Float
-  email: String
-  primaryWalletAddress: String
-  role: String
-  exchanges: [UsersExchanges!]
+  name: String
+  websiteUrl: String
+  logoUrl: String
+  companyLogoUrl: String
+  hasApi: Boolean
+  hasCsv: Boolean
+  users: [UsersExchanges!]
   createdAt: DateTime
   updatedAt: DateTime
-}
-
-type SessionResponse {
-  user: User!
-  isAuthenticated: Boolean!
 }
 
 type FiatTransfer {
@@ -73,6 +58,22 @@ type FiatTransfer {
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
 scalar JSON
+
+type User {
+  id: Float
+  email: String
+  primaryWalletAddress: String
+  role: String
+  exchanges: [UsersExchanges!]
+  fiatTransfers: [FiatTransfer!]
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type SessionResponse {
+  user: User!
+  isAuthenticated: Boolean!
+}
 
 type Value {
   value: String

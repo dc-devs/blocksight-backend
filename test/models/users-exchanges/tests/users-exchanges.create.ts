@@ -139,8 +139,6 @@ const runCreateTests = () => {
 						.post('/graphql')
 						.send(graphqlQuery);
 
-					console.log(response.body);
-
 					const errors = response.body.errors;
 					const error = errors[0];
 					const { extensions } = error;
