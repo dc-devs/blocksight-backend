@@ -1,30 +1,49 @@
 const userId = 1;
 
-const userExchanceCoinbase = {
+const userExchangeCoinbase = {
 	userId: userId,
 	exchangeId: 1,
+	apiKey: 'apiKey',
+	apiSecret: 'apiSecret',
+	apiPassphrase: 'apiPassphrase',
+	apiNickname: 'apiNickname',
 };
 
-const userExchanceCoinbasePro = {
+const userExchangeCoinbasePro = {
 	userId: userId,
 	exchangeId: 2,
+	apiKey: 'apiKey',
+	apiSecret: 'apiSecret',
+	apiPassphrase: 'apiPassphrase',
+	apiNickname: 'apiNickname',
 };
 
-const userExchanceCryptoCom = {
+const userExchangeCryptoCom = {
 	userId: userId,
 	exchangeId: 3,
+	apiKey: 'apiKey',
+	apiSecret: 'apiSecret',
+	apiPassphrase: 'apiPassphrase',
+	apiNickname: 'apiNickname',
 };
 
-const userExchanceKuCoin = { userId: userId, exchangeId: 4 };
+const userExchangeKuCoin = {
+	userId: userId,
+	exchangeId: 4,
+	apiKey: 'apiKey',
+	apiSecret: 'apiSecret',
+	apiPassphrase: 'apiPassphrase',
+	apiNickname: 'apiNickname',
+};
 
 const usersExchanges = [
-	userExchanceCoinbase,
-	userExchanceCoinbasePro,
-	userExchanceCryptoCom,
-	userExchanceKuCoin,
+	userExchangeCoinbase,
+	userExchangeCoinbasePro,
+	userExchangeCryptoCom,
+	userExchangeKuCoin,
 ];
 
-const firstRecord = userExchanceCoinbase;
+const firstRecord = userExchangeCoinbase;
 const allModelsCount = usersExchanges.length;
 
 export { usersExchanges, firstRecord, allModelsCount };

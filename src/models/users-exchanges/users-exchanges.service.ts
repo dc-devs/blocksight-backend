@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import SecretBox from '../../utils/secret-box';
+import ErrorCode from '../../prisma/error-code.enum';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UsersExchanges } from './dto/models/users-exchanges.model';
 import { FiatTransfersService } from '../../models/fiat-transfers/fiat-transfers.service';
@@ -62,7 +63,6 @@ export class UsersExchangesService {
 	): Promise<UsersExchanges> {
 		const secretbox = new SecretBox();
 		const data = createUsersExchangesInput;
-
 		const {
 			apiKey,
 			userId,
@@ -72,26 +72,47 @@ export class UsersExchangesService {
 			apiPassphrase,
 		} = data;
 
-		const encryptedApiKey = await secretbox.encrypt(apiKey);
-		const encryptedApiSecret = await secretbox.encrypt(apiSecret);
-		const encryptedApiPassphrase = await secretbox.encrypt(apiPassphrase);
+		const existingUsersExchanges =
+			await this.prisma.usersExchanges.findMany({
+				where: { userId, exchangeId },
+				select,
+			});
 
-		const userExchange = this.prisma.usersExchanges.create({
-			data: {
+		if (existingUsersExchanges.length > 0) {
+			throw {
+				code: ErrorCode.UNIQUE_CONSTRAINT,
+				meta: {
+					target: ['uniqueUserExchange'],
+				},
+			};
+		} else {
+			const encryptedApiKey = await secretbox.encrypt(apiKey);
+			const encryptedApiSecret = await secretbox.encrypt(apiSecret);
+			const encryptedApiPassphrase = await secretbox.encrypt(
+				apiPassphrase,
+			);
+
+			const userExchange = this.prisma.usersExchanges.create({
+				data: {
+					userId,
+					exchangeId,
+					apiNickname,
+					apiKey: encryptedApiKey,
+					apiSecret: encryptedApiSecret,
+					apiPassphrase: encryptedApiPassphrase,
+				},
+				select,
+			});
+
+			// TODO: Also currently syncing all users-exchanges,
+			// should update to only curernt user-exchange
+			// TODO: Make this a background job in near future
+			await this.fiatTransfersService.hardSyncAllFiatTransfersData({
 				userId,
-				exchangeId,
-				apiNickname,
-				apiKey: encryptedApiKey,
-				apiSecret: encryptedApiSecret,
-				apiPassphrase: encryptedApiPassphrase,
-			},
-			select,
-		});
+			});
 
-		// TODO: Make this a background job in near future
-		await this.fiatTransfersService.syncFiatTransfersData({ userId });
-
-		return userExchange;
+			return userExchange;
+		}
 	}
 
 	update(

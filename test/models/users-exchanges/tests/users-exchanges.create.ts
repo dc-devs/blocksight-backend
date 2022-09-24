@@ -3,16 +3,18 @@ import query from '../queries/create.query';
 import ErrorMessage from '../enums/error-message.enum';
 import SecretBox from '../../../../src/utils/secret-box';
 import { INestApplication, HttpStatus } from '@nestjs/common';
+import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
+import { UsersExchangesValidationError } from '../../../../src/models/users-exchanges/enums';
+import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-object';
 import {
 	testApp,
 	initializeTestApp,
 } from '../../../helpers/init/initializeTestApp';
-import ExtensionCode from '../../../../src/graphql/errors/extension-code.enum';
-import expectedUsersExchangesObject from '../expected-objects/expected-users-exchanges-object';
 
 const runCreateTests = () => {
 	describe('Create', () => {
 		let app: INestApplication;
+		let createUsersExchangesInput;
 
 		beforeAll(async () => {
 			if (testApp) {
@@ -20,18 +22,18 @@ const runCreateTests = () => {
 			} else {
 				app = await initializeTestApp();
 			}
-		});
 
-		describe('when creating a new UsersExchanges with valid inputs', () => {
-			const createUsersExchangesInput = {
-				userId: 1,
+			createUsersExchangesInput = {
+				userId: 2,
 				exchangeId: 1,
 				apiKey: 'Test value 1',
 				apiSecret: 'Test value 2',
 				apiPassphrase: 'Test value 3',
 				apiNickname: 'Test value 4',
 			};
+		});
 
+		describe('when creating a new UsersExchanges with valid inputs', () => {
 			it('should create and return UsersExchanges', async () => {
 				const secretbox = new SecretBox();
 				const graphqlQuery = {
@@ -120,6 +122,41 @@ const runCreateTests = () => {
 
 					expect(errorResponse.message).toEqual(
 						expect.arrayContaining(errorResponseMessage),
+					);
+				});
+			});
+
+			describe('when creating and the user-exchange alrerady exists', () => {
+				it('should return an error', async () => {
+					const graphqlQuery = {
+						operationName: 'Mutation',
+						query,
+						variables: {
+							createUsersExchangesInput,
+						},
+					};
+					const response = await request(app.getHttpServer())
+						.post('/graphql')
+						.send(graphqlQuery);
+
+					console.log(response.body);
+
+					const errors = response.body.errors;
+					const error = errors[0];
+					const { extensions } = error;
+
+					const uniqueUserExchangeError =
+						extensions.errors.uniqueUserExchange;
+
+					expect(response.statusCode).toEqual(HttpStatus.OK);
+					expect(errors.length).toEqual(1);
+
+					expect(uniqueUserExchangeError.type).toEqual(
+						ExtensionCode.BAD_USER_INPUT,
+					);
+
+					expect(uniqueUserExchangeError.message).toEqual(
+						UsersExchangesValidationError.EXCHANGE_ALREADY_ADDED,
 					);
 				});
 			});

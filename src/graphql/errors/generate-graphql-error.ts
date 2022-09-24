@@ -16,7 +16,7 @@ const generateGraphQLError = (error) => {
 	}
 
 	if (customErrors[code] && customErrors[code][errorField]) {
-		graphqlError = customErrors[code] && customErrors[code][errorField];
+		graphqlError = customErrors[code][errorField];
 	}
 
 	if (graphqlError && errorMessage) {

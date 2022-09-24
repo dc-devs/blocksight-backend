@@ -3,6 +3,7 @@ import ErrorCode from '../../prisma/error-code.enum';
 import { UserInputError } from 'apollo-server-express';
 import { UserValidationError } from '../../models/users/enums';
 import { ExchangeValidationError } from '../../models/exchanges/enums';
+import { UsersExchangesValidationError } from '../../models/users-exchanges/enums';
 
 const customErrors = {
 	[ErrorCode.UNIQUE_CONSTRAINT]: {
@@ -22,6 +23,17 @@ const customErrors = {
 					name: {
 						type: ExtensionCode.BAD_USER_INPUT,
 						message: ExchangeValidationError.NAME_IS_TAKEN,
+					},
+				},
+			});
+		},
+		uniqueUserExchange: () => {
+			throw new UserInputError(ExtensionCode.BAD_USER_INPUT, {
+				errors: {
+					uniqueUserExchange: {
+						type: ExtensionCode.BAD_USER_INPUT,
+						message:
+							UsersExchangesValidationError.EXCHANGE_ALREADY_ADDED,
 					},
 				},
 			});
