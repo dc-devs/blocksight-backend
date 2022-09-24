@@ -24,11 +24,12 @@ const runCreateTests = () => {
 		describe('when creating a new FiatTransfer with valid inputs', () => {
 			const createFiatTransferInput = {
 				type: 'Test value',
-				amount: 1,
+				amount: 'Test value',
 				currency: 'Test value',
-				timestamp: '2022-09-05T23:43:50.230Z',
+				timestamp: '2022-09-24T18:20:15.060Z',
 				transferData: 'Test value',
 				exchangeId: 1,
+				userId: 1,
 			};
 
 			it('should create and return FiatTransfer', async () => {
@@ -62,7 +63,7 @@ const runCreateTests = () => {
 							ErrorMessage.TYPE_MUST_BE_A_STRING,
 						),
 						expect.stringContaining(
-							ErrorMessage.AMOUNT_MUST_BE_A_NUMBER,
+							ErrorMessage.AMOUNT_MUST_BE_A_STRING,
 						),
 						expect.stringContaining(
 							ErrorMessage.CURRENCY_MUST_BE_A_STRING,
@@ -75,6 +76,9 @@ const runCreateTests = () => {
 						),
 						expect.stringContaining(
 							ErrorMessage.EXCHANGE_ID_MUST_BE_A_NUMBER,
+						),
+						expect.stringContaining(
+							ErrorMessage.USER_ID_MUST_BE_A_NUMBER,
 						),
 					];
 				});

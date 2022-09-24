@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsOptional, IsString, IsNumber, IsDate } from 'class-validator';
+import { IsOptional, IsString, IsDate, IsNumber } from 'class-validator';
 
 @InputType()
 export class FindOneFiatTransferInput {

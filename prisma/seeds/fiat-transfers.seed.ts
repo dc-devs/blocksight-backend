@@ -1,4 +1,7 @@
 import { Currency } from '../../src/common/enums';
+
+const userId = 1;
+
 const generateFiatTransfers = (type: string, count: number) => {
 	const transfers = [];
 
@@ -7,11 +10,12 @@ const generateFiatTransfers = (type: string, count: number) => {
 		const exchangeId = isEvenNumber ? 1 : 2;
 		const transfer = {
 			type,
+			userId,
+			exchangeId,
 			amount: i.toString(),
 			currency: Currency.USD,
 			timestamp: new Date().toISOString(),
 			transferData: JSON.stringify({ originalData: 'data' }),
-			exchangeId,
 		};
 
 		transfers.push(transfer);

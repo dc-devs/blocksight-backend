@@ -57,12 +57,14 @@ type SessionResponse {
 type FiatTransfer {
   id: Float
   exchange: Exchange
+  user: User
   type: String
   amount: String
   currency: String
   timestamp: DateTime
   transferData: JSON
   exchangeId: Float
+  userId: Float
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -195,6 +197,7 @@ input FiatTransferCursorInput {
   timestamp: DateTime
   transferData: JSON
   exchangeId: Float
+  userId: Float
 }
 
 input FiatTransferWhereInput {
@@ -205,6 +208,7 @@ input FiatTransferWhereInput {
   timestamp: DateTime
   transferData: JSON
   exchangeId: Float
+  userId: Float
   createdAt: DateTime
   updatedAt: DateTime
   AND: [FiatTransferInput!]
@@ -220,6 +224,7 @@ input FiatTransferInput {
   timestamp: DateTime
   transferData: JSON
   exchangeId: Float
+  userId: Float
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -232,6 +237,7 @@ input FiatTransferOrderByInput {
   timestamp: String
   transferData: String
   exchangeId: String
+  userId: String
   createdAt: String
   updatedAt: String
 }
@@ -394,6 +400,7 @@ input CreateFiatTransferInput {
   timestamp: DateTime
   transferData: JSON
   exchangeId: Float
+  userId: Float
 }
 
 input UpdateFiatTransferInput {
@@ -403,6 +410,7 @@ input UpdateFiatTransferInput {
   timestamp: DateTime
   transferData: JSON
   exchangeId: Float
+  userId: Float
 }
 
 input CreateUsersExchangesInput {

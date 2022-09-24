@@ -1,29 +1,6 @@
 import { RelationType } from '../enums';
 import { IGenerateModelConstructorProps } from '../interfaces/config';
 
-/** 
- * Manual Updates if JSON Type
- *  service.ts
- 
-const data = createFiatTransferInput;
-const { exchangeId, type, amount, currency, timestamp, transferData } = data;
-
-return this.prisma.fiatTransfer.create({
-	data: {
-		type,
-		amount,
-		currency,
-		timestamp,
-		transferData,
-		exchange: { connect: { id: exchangeId } },
-	},
-	select,
-});
-
-*/
-
-// LAST Update tests only start NestJs Once..
-
 const modelNamePluralPascalCase = 'FiatTransfers';
 
 const config: IGenerateModelConstructorProps = {
@@ -34,8 +11,8 @@ const config: IGenerateModelConstructorProps = {
 			classValidators: ['IsString'],
 		},
 		amount: {
-			typeScriptType: 'number',
-			classValidators: ['IsNumber'],
+			typeScriptType: 'string',
+			classValidators: ['IsString'],
 		},
 		currency: {
 			typeScriptType: 'string',
@@ -51,6 +28,10 @@ const config: IGenerateModelConstructorProps = {
 			classValidators: ['IsString'],
 		},
 		exchangeId: {
+			typeScriptType: 'number',
+			classValidators: ['IsNumber'],
+		},
+		userId: {
 			typeScriptType: 'number',
 			classValidators: ['IsNumber'],
 		},
@@ -73,6 +54,14 @@ const config: IGenerateModelConstructorProps = {
 			'companyLogoUrl',
 			'hasApi',
 			'hasCsv',
+			'createdAt',
+			'updatedAt',
+		],
+		Users: [
+			'id',
+			'email',
+			'primaryWalletAddress',
+			'role',
 			'createdAt',
 			'updatedAt',
 		],

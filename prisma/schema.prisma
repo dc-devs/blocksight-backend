@@ -20,6 +20,7 @@ model User {
   password                String
   role                    UserRole          @default(USER)
   exchanges               UsersExchanges[]
+  fiatTransfers           FiatTransfer[]
   createdAt               DateTime          @default(now())
   updatedAt               DateTime          @updatedAt
 
@@ -35,7 +36,7 @@ model Exchange {
   hasApi                  Boolean
   hasCsv                  Boolean
   users                   UsersExchanges[]
-  deposits                FiatTransfer[]
+  fiatTransfers           FiatTransfer[]
   createdAt               DateTime          @default(now())
   updatedAt               DateTime          @updatedAt
   
@@ -67,6 +68,8 @@ model FiatTransfer {
   transferData            Json
   exchangeId              Int
   exchange                Exchange          @relation(fields: [exchangeId], references: [id])
+  userId                  Int
+  user                    User              @relation(fields: [userId], references: [id])
   createdAt               DateTime          @default(now())
   updatedAt               DateTime          @updatedAt
   

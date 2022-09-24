@@ -6,15 +6,18 @@ import { CoinbasePro as CoinbaseProClient } from 'coinbase-pro-node';
 import convertCoinbaseProTransfersToFiatTransfers from './convert-coinbase-pro-transfers-to-fiat-transfers';
 
 class CoinbasePro implements ExchangeClient {
+	userId: number;
 	exchangeId: number;
 	client: CoinbaseProClient;
 
 	constructor({
-		exchangeId,
+		userId,
 		apiKey,
 		apiSecret,
+		exchangeId,
 		apiPassphrase,
 	}: ExchangeClientConstuctorOptions) {
+		this.userId = userId;
 		this.exchangeId = exchangeId;
 
 		this.client = newCoinbasePro({
@@ -34,6 +37,7 @@ class CoinbasePro implements ExchangeClient {
 		const allFiatTransfers =
 			await convertCoinbaseProTransfersToFiatTransfers({
 				transfers,
+				userId: this.userId,
 				exchangeId: this.exchangeId,
 			});
 

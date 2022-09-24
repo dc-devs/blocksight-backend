@@ -1,6 +1,7 @@
 interface ExchangeClientConstuctorOptions {
-	exchangeId: number;
+	userId: number;
 	apiKey: string;
+	exchangeId: number;
 	apiSecret: string;
 	apiPassphrase: string;
 }

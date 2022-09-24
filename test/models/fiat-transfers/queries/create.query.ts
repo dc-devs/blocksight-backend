@@ -8,6 +8,7 @@ mutation Mutation($createFiatTransferInput: CreateFiatTransferInput!) {
 		timestamp
 		transferData
 		exchangeId
+		userId
 		createdAt
 		updatedAt
 	}

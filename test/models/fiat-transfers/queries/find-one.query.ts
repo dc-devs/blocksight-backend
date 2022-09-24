@@ -8,6 +8,7 @@ query Query($findOneFiatTransferInput: FindOneFiatTransferInput!) {
 		timestamp
 		transferData
 		exchangeId
+		userId
 		createdAt
 		updatedAt
 		exchange {
@@ -18,6 +19,14 @@ query Query($findOneFiatTransferInput: FindOneFiatTransferInput!) {
 			companyLogoUrl
 			hasApi
 			hasCsv
+			createdAt
+			updatedAt
+		}
+		user {
+			id
+			email
+			primaryWalletAddress
+			role
 			createdAt
 			updatedAt
 		}

@@ -3,11 +3,13 @@ import { TransferInformation } from 'coinbase-pro-node/dist/transfer';
 import { CreateFiatTransferInput } from '../../../models/fiat-transfers/dto/inputs/create-fiat-transfer.input';
 
 interface Options {
+	userId: number;
 	exchangeId: number;
 	transfer: TransferInformation;
 }
 
 const convertCoinbaseProTransferToFiatTransfer = ({
+	userId,
 	transfer,
 	exchangeId,
 }: Options): CreateFiatTransferInput => {
@@ -17,6 +19,7 @@ const convertCoinbaseProTransferToFiatTransfer = ({
 	fiatTransfer = {
 		type,
 		amount,
+		userId,
 		exchangeId,
 		timestamp: new Date(completed_at),
 		transferData: JSON.stringify(transfer),

@@ -1,4 +1,3 @@
-import { Prisma } from 'prisma';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { FiatTransfer } from './dto/models/fiat-transfer.model';
@@ -11,7 +10,7 @@ import {
 	FindAllFiatTransfersInput,
 } from './dto/inputs';
 
-interface SyncFiatTransfersDataProps {
+interface SyncFiatTransfersDataOptions {
 	userId: number;
 }
 
@@ -22,12 +21,14 @@ interface DedupedUsersExchanges {
 const select = {
 	id: true,
 	exchange: true,
+	user: true,
 	type: true,
 	amount: true,
 	currency: true,
 	timestamp: true,
 	transferData: true,
 	exchangeId: true,
+	userId: true,
 	createdAt: true,
 	updatedAt: true,
 };
@@ -69,8 +70,15 @@ export class FiatTransfersService {
 		createFiatTransferInput: CreateFiatTransferInput,
 	): Promise<FiatTransfer> {
 		const data = createFiatTransferInput;
-		const { type, amount, currency, timestamp, transferData, exchangeId } =
-			data;
+		const {
+			type,
+			amount,
+			currency,
+			timestamp,
+			transferData,
+			exchangeId,
+			userId,
+		} = data;
 
 		return this.prisma.fiatTransfer.create({
 			data: {
@@ -80,6 +88,7 @@ export class FiatTransfersService {
 				timestamp,
 				transferData,
 				exchange: { connect: { id: exchangeId } },
+				user: { connect: { id: userId } },
 			},
 			select,
 		});
@@ -104,7 +113,7 @@ export class FiatTransfersService {
 		});
 	}
 
-	async syncFiatTransfersData({ userId }: SyncFiatTransfersDataProps) {
+	async syncFiatTransfersData({ userId }: SyncFiatTransfersDataOptions) {
 		let dedupedUsersExchanges: DedupedUsersExchanges = {};
 
 		// Get Users Exchanges
@@ -132,15 +141,14 @@ export class FiatTransfersService {
 			}
 		});
 
-		console.log('------------');
-		console.log('[TEST LOG]:: syncFiatTransfersData', userId);
-
 		// For each exchange get the correct Exchange service to pull data from exchnage
 		const dedupedUsersExchangesArray = Object.keys(dedupedUsersExchanges);
 
 		for (let i = 0; i < dedupedUsersExchangesArray.length; i++) {
 			const dedupedUsersExchangesKey = dedupedUsersExchangesArray[i];
-			const usersExchange = usersExchanges[dedupedUsersExchangesKey];
+
+			const usersExchange =
+				dedupedUsersExchanges[dedupedUsersExchangesKey];
 
 			if (usersExchange) {
 				console.log(usersExchange.exchangeId);
@@ -150,22 +158,31 @@ export class FiatTransfersService {
 
 				const exchangeClient =
 					await this.exchangeClientService.getExchangeClient({
-						exchangeId,
+						userId,
 						apiKey,
 						apiSecret,
+						exchangeId,
 						apiPassphrase,
 					});
 
-				const allFiatTransfers =
-					await exchangeClient.getAllFiatTansfers();
+				try {
+					const allFiatTransfers =
+						await exchangeClient.getAllFiatTansfers();
 
-				await this.prisma.fiatTransfer.createMany({
-					data: allFiatTransfers as unknown as any[],
-				});
+					await this.prisma.fiatTransfer.deleteMany({
+						where: {
+							userId,
+						},
+					});
+
+					await this.prisma.fiatTransfer.createMany({
+						data: allFiatTransfers as unknown as any[],
+					});
+				} catch (e) {
+					console.error(e);
+				}
 			}
 		}
-
-		console.log('------------');
 
 		// Since Hard Sync
 		// --------------------

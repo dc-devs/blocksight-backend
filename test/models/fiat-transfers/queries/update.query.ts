@@ -8,6 +8,7 @@ mutation Mutation($id: Int!, $updateFiatTransferInput: UpdateFiatTransferInput!)
 		timestamp
 		transferData
 		exchangeId
+		userId
 		createdAt
 		updatedAt
 	}

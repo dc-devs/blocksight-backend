@@ -34,6 +34,10 @@ export class FiatTransferOrderByInput {
 
 	@IsOptional()
 	@Field({ nullable: true })
+	userId?: Prisma.SortOrder;
+
+	@IsOptional()
+	@Field({ nullable: true })
 	createdAt?: Prisma.SortOrder;
 
 	@IsOptional()

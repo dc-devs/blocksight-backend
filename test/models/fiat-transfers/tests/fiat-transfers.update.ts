@@ -27,11 +27,12 @@ const runUpdateTests = () => {
 			beforeEach(() => {
 				updateFiatTransferInput = {
 					type: 'Updated Type',
-					amount: 100.01,
+					amount: '100.01',
 					currency: 'Updated Currency',
-					timestamp: '2022-09-05T23:43:50.289Z',
+					timestamp: '2022-09-24T18:20:15.132Z',
 					transferData: '{"test":"value"}',
 					exchangeId: 1,
+					userId: 1,
 				};
 			});
 
@@ -69,11 +70,12 @@ const runUpdateTests = () => {
 				beforeEach(() => {
 					updateFiatTransferInput = {
 						type: 'Updated Type',
-						amount: 100.01,
+						amount: '100.01',
 						currency: 'Updated Currency',
-						timestamp: '2022-09-05T23:43:50.289Z',
+						timestamp: '2022-09-24T18:20:15.132Z',
 						transferData: '{"test":"value"}',
 						exchangeId: 1,
+						userId: 1,
 					};
 				});
 

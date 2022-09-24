@@ -3,17 +3,20 @@ import { CreateFiatTransferInput } from '../../../models/fiat-transfers/dto/inpu
 import convertCoinbaseProTransferToFiatTransfer from './convert-coinbase-pro-transfer-to-fiat-transfer';
 
 interface Options {
+	userId: number;
 	exchangeId: number;
 	transfers: TransferInformation[];
 }
 
 const convertCoinbaseProTransfersToFiatTransfers = ({
+	userId,
 	transfers,
 	exchangeId,
 }: Options): CreateFiatTransferInput[] => {
 	return transfers.map((transfer) => {
 		const createFiatTransferInput =
 			convertCoinbaseProTransferToFiatTransfer({
+				userId,
 				transfer,
 				exchangeId,
 			});

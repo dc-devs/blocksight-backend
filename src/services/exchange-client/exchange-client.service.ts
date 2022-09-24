@@ -3,15 +3,17 @@ import CoinbasePro from './coinbase-pro';
 import { ExchangeClient } from './interfaces';
 import SecretBox from '../../utils/secret-box';
 
-interface GetExchangeClientArgs {
-	exchangeId: number;
+interface GetExchangeClientOptions {
+	userId: number;
 	apiKey: string;
 	apiSecret: string;
+	exchangeId: number;
 	apiPassphrase: string;
 }
 
 interface ExchangeClients {
 	[key: number]: new ({
+		userId,
 		apiKey,
 		apiSecret,
 		exchangeId,
@@ -30,15 +32,17 @@ export class ExchangeClientService {
 	}
 
 	getExchangeClient = async ({
+		userId,
 		apiKey,
 		apiSecret,
 		exchangeId,
 		apiPassphrase,
-	}: GetExchangeClientArgs) => {
+	}: GetExchangeClientOptions) => {
 		const secretbox = new SecretBox();
 		const ExchangeClientClass = this.exchangeClientClasses[exchangeId];
 
 		return new ExchangeClientClass({
+			userId,
 			exchangeId,
 			apiKey: await secretbox.decrypt(apiKey),
 			apiSecret: await secretbox.decrypt(apiSecret),

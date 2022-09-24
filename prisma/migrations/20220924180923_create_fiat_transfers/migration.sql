@@ -7,6 +7,7 @@ CREATE TABLE "FiatTransfer" (
     "timestamp" TIMESTAMP(3) NOT NULL,
     "transferData" JSONB NOT NULL,
     "exchangeId" INTEGER NOT NULL,
+    "userId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -18,3 +19,6 @@ CREATE INDEX "FiatTransfer_id_exchangeId_idx" ON "FiatTransfer"("id", "exchangeI
 
 -- AddForeignKey
 ALTER TABLE "FiatTransfer" ADD CONSTRAINT "FiatTransfer_exchangeId_fkey" FOREIGN KEY ("exchangeId") REFERENCES "Exchange"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "FiatTransfer" ADD CONSTRAINT "FiatTransfer_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
