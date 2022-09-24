@@ -1,20 +1,22 @@
 import { newCoinbasePro } from './coinbase-pro-client';
+import { ExchangeClientConstuctorOptions } from '../interfaces';
+import getAllCoinbaseProFiatTransfers from './get-all-coinbase-pro-fiat-transfers';
 import ExchangeClient from '../interfaces/exchange-client.interface';
 import { CoinbasePro as CoinbaseProClient } from 'coinbase-pro-node';
-import getCoinbaseProFiatTransfers from './get-coinbase-pro-fiat-transfers';
-import {
-	GetFiatTansfersProps,
-	ExchangeClientConstuctorProps,
-} from '../interfaces';
+import convertCoinbaseProTransfersToFiatTransfers from './convert-coinbase-pro-transfers-to-fiat-transfers';
 
 class CoinbasePro implements ExchangeClient {
+	exchangeId: number;
 	client: CoinbaseProClient;
 
 	constructor({
+		exchangeId,
 		apiKey,
 		apiSecret,
 		apiPassphrase,
-	}: ExchangeClientConstuctorProps) {
+	}: ExchangeClientConstuctorOptions) {
+		this.exchangeId = exchangeId;
+
 		this.client = newCoinbasePro({
 			apiKey,
 			apiSecret,
@@ -23,8 +25,19 @@ class CoinbasePro implements ExchangeClient {
 		});
 	}
 
-	getFiatTansfers = async ({ transferType }: GetFiatTansfersProps) => {
-		return await getCoinbaseProFiatTransfers({ transferType });
+	getAllExchangeFiatTansfers = async () => {
+		return await getAllCoinbaseProFiatTransfers();
+	};
+
+	getAllFiatTansfers = async () => {
+		const transfers = await this.getAllExchangeFiatTansfers();
+		const allFiatTransfers =
+			await convertCoinbaseProTransfersToFiatTransfers({
+				transfers,
+				exchangeId: this.exchangeId,
+			});
+
+		return allFiatTransfers;
 	};
 }
 

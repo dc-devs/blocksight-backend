@@ -58,7 +58,7 @@ type FiatTransfer {
   id: Float
   exchange: Exchange
   type: String
-  amount: Float
+  amount: String
   currency: String
   timestamp: DateTime
   transferData: JSON
@@ -190,7 +190,7 @@ input FindAllFiatTransfersInput {
 input FiatTransferCursorInput {
   id: Float
   type: String
-  amount: Float
+  amount: String
   currency: String
   timestamp: DateTime
   transferData: JSON
@@ -200,7 +200,7 @@ input FiatTransferCursorInput {
 input FiatTransferWhereInput {
   id: Float
   type: String
-  amount: Float
+  amount: String
   currency: String
   timestamp: DateTime
   transferData: JSON
@@ -215,7 +215,7 @@ input FiatTransferWhereInput {
 input FiatTransferInput {
   id: Float
   type: String
-  amount: Float
+  amount: String
   currency: String
   timestamp: DateTime
   transferData: JSON
@@ -389,7 +389,7 @@ input UpdateUserInput {
 
 input CreateFiatTransferInput {
   type: String
-  amount: Float
+  amount: String
   currency: String
   timestamp: DateTime
   transferData: JSON
@@ -398,7 +398,7 @@ input CreateFiatTransferInput {
 
 input UpdateFiatTransferInput {
   type: String
-  amount: Float
+  amount: String
   currency: String
   timestamp: DateTime
   transferData: JSON

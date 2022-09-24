@@ -11,7 +11,7 @@ export class CreateFiatTransferInput {
 
 	@IsNumber()
 	@Field({ nullable: true })
-	amount?: number;
+	amount?: string;
 
 	@IsString()
 	@Field({ nullable: true })

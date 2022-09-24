@@ -11,7 +11,12 @@ interface GetExchangeClientArgs {
 }
 
 interface ExchangeClients {
-	[key: number]: new ({ apiKey, apiSecret, apiPassphrase }) => ExchangeClient;
+	[key: number]: new ({
+		apiKey,
+		apiSecret,
+		exchangeId,
+		apiPassphrase,
+	}) => ExchangeClient;
 }
 
 @Injectable()
@@ -34,6 +39,7 @@ export class ExchangeClientService {
 		const ExchangeClientClass = this.exchangeClientClasses[exchangeId];
 
 		return new ExchangeClientClass({
+			exchangeId,
 			apiKey: await secretbox.decrypt(apiKey),
 			apiSecret: await secretbox.decrypt(apiSecret),
 			apiPassphrase: await secretbox.decrypt(apiPassphrase),

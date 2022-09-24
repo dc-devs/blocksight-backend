@@ -1,11 +1,5 @@
 import ExchangeClient from './exchange-client.interface';
 import TransferType from './transfer-type.interface';
-import GetFiatTansfersProps from './get-fiat-transfers-props.interface';
-import ExchangeClientConstuctorProps from './exchange-client-constructor-props.interface';
+import ExchangeClientConstuctorOptions from './exchange-client-constructor-options.interface';
 
-export {
-	ExchangeClient,
-	TransferType,
-	GetFiatTansfersProps,
-	ExchangeClientConstuctorProps,
-};
+export { ExchangeClient, TransferType, ExchangeClientConstuctorOptions };

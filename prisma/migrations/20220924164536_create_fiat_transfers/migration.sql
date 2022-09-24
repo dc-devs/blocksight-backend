@@ -2,7 +2,7 @@
 CREATE TABLE "FiatTransfer" (
     "id" SERIAL NOT NULL,
     "type" TEXT NOT NULL,
-    "amount" DOUBLE PRECISION NOT NULL,
+    "amount" TEXT NOT NULL,
     "currency" TEXT NOT NULL,
     "timestamp" TIMESTAMP(3) NOT NULL,
     "transferData" JSONB NOT NULL,

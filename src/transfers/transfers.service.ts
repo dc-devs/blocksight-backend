@@ -6,16 +6,38 @@ import getCoinbaseTotalFiatTransferred from './services/coinbase/get-coinbase-to
 @Injectable()
 export class TransfersService {
 	async getTotalFiatDeposits() {
-		const totalFiatDeposits = getCoinbaseTotalFiatTransferred({
+		const depositTransfers = await getCoinbaseTotalFiatTransferred({
 			transferType: TransferType.DEPOSIT,
 		});
-		return totalFiatDeposits;
+
+		const fiatDepositTransfers = depositTransfers.transfers.data.filter(
+			(transfer) => {
+				const { details } = transfer;
+
+				const wasTransferedToBank = details.coinbase_payment_method_id;
+
+				return wasTransferedToBank;
+			},
+		);
+
+		return fiatDepositTransfers;
 	}
 
 	async getTotalFiatWithdrawls() {
-		const totalFiatWithdraws = getCoinbaseTotalFiatTransferred({
+		const withdrawlTransfers = await getCoinbaseTotalFiatTransferred({
 			transferType: TransferType.WITHDRAW,
 		});
-		return totalFiatWithdraws;
+
+		const fiatWithdrawlTransfers = withdrawlTransfers.transfers.data.filter(
+			(transfer) => {
+				const { details } = transfer;
+
+				const wasTransferedToBank = details.coinbase_payment_method_id;
+
+				return wasTransferedToBank;
+			},
+		);
+
+		return fiatWithdrawlTransfers;
 	}
 }

@@ -1,7 +1,8 @@
-import GetFiatTansfersProps from './get-fiat-transfers-props.interface';
+import { CreateFiatTransferInput } from '../../../models/fiat-transfers/dto/inputs/create-fiat-transfer.input';
 
 interface ExchangeClient {
-	getFiatTansfers: ({ transferType }: GetFiatTansfersProps) => Promise<{}>;
+	getAllExchangeFiatTansfers: () => Promise<any[]>;
+	getAllFiatTansfers: () => Promise<CreateFiatTransferInput[]>;
 }
 
 export default ExchangeClient;

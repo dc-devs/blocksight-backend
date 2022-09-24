@@ -18,7 +18,7 @@ export class FiatTransferCursorInput {
 	@IsNumber()
 	@IsOptional()
 	@Field({ nullable: true })
-	amount?: number;
+	amount?: string;
 
 	@IsString()
 	@IsOptional()
