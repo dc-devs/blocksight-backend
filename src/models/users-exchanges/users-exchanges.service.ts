@@ -92,7 +92,7 @@ export class UsersExchangesService {
 				apiPassphrase,
 			);
 
-			const userExchange = this.prisma.usersExchanges.create({
+			const userExchange = await this.prisma.usersExchanges.create({
 				data: {
 					userId,
 					exchangeId,
@@ -103,6 +103,8 @@ export class UsersExchangesService {
 				},
 				select,
 			});
+
+			console.log('createdUserExchange');
 
 			// TODO: Also currently syncing all users-exchanges,
 			// should update to only curernt user-exchange
@@ -128,12 +130,21 @@ export class UsersExchangesService {
 		});
 	}
 
-	delete(id: number): Promise<UsersExchanges> {
-		return this.prisma.usersExchanges.delete({
+	async delete(id: number): Promise<UsersExchanges> {
+		const deletedUserExchange = await this.prisma.usersExchanges.delete({
 			where: {
 				id,
 			},
 			select,
 		});
+		
+		const { userId, exchangeId } = deletedUserExchange;
+
+		await this.fiatTransfersService.deleteManyUsingUserExchange({
+			userId,
+			exchangeId,
+		});
+
+		return deletedUserExchange;
 	}
 }

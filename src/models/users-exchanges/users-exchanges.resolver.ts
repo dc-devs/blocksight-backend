@@ -63,7 +63,8 @@ export class UsersExchangesResolver {
 
 	@Mutation(() => UsersExchanges)
 	deleteUsersExchanges(
-		@Args('id', { type: () => Int }) id: number,
+		@Args('id', { type: () => Int })
+		id: number,
 	): Promise<UsersExchanges> {
 		return this.usersExchangesService.delete(id);
 	}

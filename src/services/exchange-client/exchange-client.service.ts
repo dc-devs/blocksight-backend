@@ -37,16 +37,21 @@ export class ExchangeClientService {
 		apiSecret,
 		exchangeId,
 		apiPassphrase,
-	}: GetExchangeClientOptions) => {
+	}: GetExchangeClientOptions): Promise<ExchangeClient | undefined> => {
+		let exchangeClient: ExchangeClient;
 		const secretbox = new SecretBox();
 		const ExchangeClientClass = this.exchangeClientClasses[exchangeId];
 
-		return new ExchangeClientClass({
-			userId,
-			exchangeId,
-			apiKey: await secretbox.decrypt(apiKey),
-			apiSecret: await secretbox.decrypt(apiSecret),
-			apiPassphrase: await secretbox.decrypt(apiPassphrase),
-		});
+		if (ExchangeClientClass) {
+			exchangeClient = new ExchangeClientClass({
+				userId,
+				exchangeId,
+				apiKey: await secretbox.decrypt(apiKey),
+				apiSecret: await secretbox.decrypt(apiSecret),
+				apiPassphrase: await secretbox.decrypt(apiPassphrase),
+			});
+		}
+
+		return exchangeClient;
 	};
 }

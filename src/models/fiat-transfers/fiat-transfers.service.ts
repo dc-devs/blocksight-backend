@@ -10,8 +10,13 @@ import {
 	FindAllFiatTransfersInput,
 } from './dto/inputs';
 
-interface SyncFiatTransfersDataOptions {
+interface ISyncFiatTransfersDataOptions {
 	userId: number;
+}
+
+interface IDeleteUsingUserExchange {
+	userId: number;
+	exchangeId: number;
 }
 
 const select = {
@@ -109,8 +114,22 @@ export class FiatTransfersService {
 		});
 	}
 
+	deleteManyUsingUserExchange({
+		userId,
+		exchangeId,
+	}: IDeleteUsingUserExchange): Promise<any> {
+		return this.prisma.fiatTransfer.deleteMany({
+			where: {
+				userId,
+				exchangeId,
+			},
+		});
+	}
+
 	// TODO: Can make Promise.all to avoid waiting
-	async hardSyncAllFiatTransfersData({ userId }: SyncFiatTransfersDataOptions) {
+	async hardSyncAllFiatTransfersData({
+		userId,
+	}: ISyncFiatTransfersDataOptions) {
 		const usersExchanges = await getUsersExchangesByUserId({
 			userId,
 			prisma: this.prisma,
@@ -118,6 +137,7 @@ export class FiatTransfersService {
 
 		for (let i = 0; i < usersExchanges.length; i++) {
 			const usersExchange = usersExchanges[i];
+			console.log('hardSyncAllFiatTransfersData', usersExchange);
 
 			if (usersExchange) {
 				const { exchangeId, apiKey, apiSecret, apiPassphrase } =
@@ -132,19 +152,21 @@ export class FiatTransfersService {
 						apiPassphrase,
 					});
 
-				const allFiatTransfers =
-					await exchangeClient.getAllFiatTansfers();
+				if (exchangeClient) {
+					const allFiatTransfers =
+						await exchangeClient.getAllFiatTansfers();
 
-				await this.prisma.fiatTransfer.deleteMany({
-					where: {
-						userId,
-						exchangeId,
-					},
-				});
+					await this.prisma.fiatTransfer.deleteMany({
+						where: {
+							userId,
+							exchangeId,
+						},
+					});
 
-				await this.prisma.fiatTransfer.createMany({
-					data: allFiatTransfers as unknown as any[],
-				});
+					await this.prisma.fiatTransfer.createMany({
+						data: allFiatTransfers as unknown as any[],
+					});
+				}
 			}
 		}
 	}
