@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { getUsersExchangesByUserId } from '../users-exchanges/utils';
 import { PrismaService } from '../../prisma/prisma.service';
 import { FiatTransfer } from './dto/models/fiat-transfer.model';
+import { getUsersExchangesByUserId } from '../users-exchanges/utils';
+import { FiatTransferTotals } from './dto/models/fiat-transfer-totals.model';
 import { ExchangeClientService } from '../../services/exchange-client/exchange-client.service';
 import {
 	UpdateFiatTransferInput,
@@ -11,6 +12,10 @@ import {
 } from './dto/inputs';
 
 interface ISyncFiatTransfersDataOptions {
+	userId: number;
+}
+
+interface IGetFiatTransferTotalsOptions {
 	userId: number;
 }
 
@@ -124,6 +129,18 @@ export class FiatTransfersService {
 				exchangeId,
 			},
 		});
+	}
+
+	async getFiatTransferTotals({
+		userId,
+	}: IGetFiatTransferTotalsOptions): Promise<FiatTransferTotals> {
+		const fiatTransferTotals = {
+			totalDeposited: '$70,000',
+			totalWithdrawn: '$5,000',
+			totalWorking: '$65,000',
+		};
+
+		return fiatTransferTotals;
 	}
 
 	// TODO: Can make Promise.all to avoid waiting
