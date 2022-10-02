@@ -1,4 +1,4 @@
-import { Value } from './value.model';
+import { Value } from '../../../common/dto/value';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { TokenBalance } from './token-balance.model';
 

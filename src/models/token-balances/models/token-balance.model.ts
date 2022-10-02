@@ -1,6 +1,7 @@
-import { Field, ObjectType } from '@nestjs/graphql';
 import { IsString } from 'class-validator';
-import { Value } from './value.model';
+import { Value } from '../../../common/dto/value';
+import { Field, ObjectType } from '@nestjs/graphql';
+
 
 @ObjectType()
 export class TokenBalance {

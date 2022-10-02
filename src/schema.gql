@@ -75,15 +75,15 @@ type SessionResponse {
   isAuthenticated: Boolean!
 }
 
-type FiatTransferTotals {
-  totalDeposited: String!
-  totalWorking: String!
-  totalWithdrawn: String!
-}
-
 type Value {
   value: String
   formatted: String
+}
+
+type FiatTransfersTotals {
+  totalDeposited: Value!
+  totalWorking: Value!
+  totalWithdrawn: Value!
 }
 
 type Network {
@@ -130,7 +130,7 @@ type Query {
   findAllUsers(findAllUsersInput: FindAllUsersInput!): [User!]!
   findAllFiatTransfers(findAllFiatTransfersInput: FindAllFiatTransfersInput!): [FiatTransfer!]!
   findOneFiatTransfer(findOneFiatTransferInput: FindOneFiatTransferInput!): FiatTransfer
-  getFiatTransferTotals(userId: Int!): FiatTransferTotals!
+  getFiatTransferTotals(userId: Int!): FiatTransfersTotals!
   getTokenBalances(getTokenBalancesInput: GetTokenBalancesInput!): TokenBalances
   findAllUsersExchanges(findAllUsersExchangesInput: FindAllUsersExchangesInput!): [UsersExchanges!]!
   findOneUsersExchanges(findOneUsersExchangesInput: FindOneUsersExchangesInput!): UsersExchanges

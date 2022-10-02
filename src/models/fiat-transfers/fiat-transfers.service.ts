@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { FiatTransfer } from './dto/models/fiat-transfer.model';
 import { getUsersExchangesByUserId } from '../users-exchanges/utils';
-import { FiatTransferTotals } from './dto/models/fiat-transfer-totals.model';
+import getFiatTransfersTotals from './utils/get-fiat-transfers-totals';
+import { FiatTransfersTotals } from './dto/models/fiat-transfers-totals.model';
 import { ExchangeClientService } from '../../services/exchange-client/exchange-client.service';
 import {
 	UpdateFiatTransferInput,
@@ -131,14 +132,17 @@ export class FiatTransfersService {
 		});
 	}
 
-	async getFiatTransferTotals({
+	async getFiatTransfersTotals({
 		userId,
-	}: IGetFiatTransferTotalsOptions): Promise<FiatTransferTotals> {
-		const fiatTransferTotals = {
-			totalDeposited: '$70,000',
-			totalWithdrawn: '$5,000',
-			totalWorking: '$65,000',
-		};
+	}: IGetFiatTransferTotalsOptions): Promise<FiatTransfersTotals> {
+		const fiatTransfers = await this.prisma.fiatTransfer.findMany({
+			where: {
+				userId,
+			},
+			select,
+		});
+
+		const fiatTransferTotals = getFiatTransfersTotals({ fiatTransfers });
 
 		return fiatTransferTotals;
 	}

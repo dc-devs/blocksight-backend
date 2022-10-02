@@ -1,7 +1,7 @@
 import { FiatTransfersService } from './fiat-transfers.service';
 import { FiatTransfer } from './dto/models/fiat-transfer.model';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { FiatTransferTotals } from './dto/models/fiat-transfer-totals.model';
+import { FiatTransfersTotals } from './dto/models/fiat-transfers-totals.model';
 import generateGraphQLError from '../../graphql/errors/generate-graphql-error';
 import {
 	UpdateFiatTransferInput,
@@ -67,10 +67,10 @@ export class FiatTransfersResolver {
 		return this.fiatTransferService.delete(id);
 	}
 
-	@Query(() => FiatTransferTotals)
+	@Query(() => FiatTransfersTotals)
 	async getFiatTransferTotals(
 		@Args('userId', { type: () => Int }) userId: number,
-	): Promise<FiatTransferTotals> {
-		return await this.fiatTransferService.getFiatTransferTotals({ userId });
+	): Promise<FiatTransfersTotals> {
+		return await this.fiatTransferService.getFiatTransfersTotals({ userId });
 	}
 }

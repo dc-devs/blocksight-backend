@@ -1,5 +1,5 @@
-import { Value } from './value.model';
 import { Network } from './network.model';
+import { Value } from '../../../common/dto/value';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { TokenValueBalances } from './token-value-balances.model';
 
