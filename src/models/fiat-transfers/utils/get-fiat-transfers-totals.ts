@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js';
 import { FiatTransfer } from '../dto/models/fiat-transfer.model';
 import { FiatTransfersTotals } from '../dto/models/fiat-transfers-totals.model';
-import formatToCurrency from 'src/models/token-balances/utils/format-to-currency';
+import formatToCurrency from '../../token-balances/utils/format-to-currency';
 
 interface IOptions {
 	fiatTransfers: FiatTransfer[];
@@ -25,11 +25,6 @@ const getFiatTransfersTotals = ({
 			totalDepositedBn = totalDepositedBn.plus(amountBN);
 		}
 	});
-
-	const fortyFiveCents = new BigNumber('.45').toString();
-
-	console.log(totalDepositedBn.plus(fortyFiveCents).toString());
-	console.log(totalDepositedBn.toFixed(2).toString());
 
 	const totalDepositedValue = totalDepositedBn.toFixed(2);
 	const totalWithdrawnValue = totalWithdrawnBn.toFixed(2);

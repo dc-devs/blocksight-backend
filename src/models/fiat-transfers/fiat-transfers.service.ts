@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { getFiatTransfersTotals, getWorkingFiatChartDataPoints } from './utils';
 import { PrismaService } from '../../prisma/prisma.service';
 import { FiatTransfer } from './dto/models/fiat-transfer.model';
 import { getUsersExchangesByUserId } from '../users-exchanges/utils';
-import getFiatTransfersTotals from './utils/get-fiat-transfers-totals';
 import { FiatTransfersTotals } from './dto/models/fiat-transfers-totals.model';
 import { ExchangeClientService } from '../../services/exchange-client/exchange-client.service';
 import {
@@ -23,6 +23,10 @@ interface IGetFiatTransferTotalsOptions {
 interface IDeleteUsingUserExchange {
 	userId: number;
 	exchangeId: number;
+}
+
+interface IGetWorkingFiatChartDataPointsOptions {
+	userId: number;
 }
 
 const select = {
@@ -190,5 +194,18 @@ export class FiatTransfersService {
 				}
 			}
 		}
+	}
+
+	async getWorkingFiatChartDataPoints({
+		userId,
+	}: IGetWorkingFiatChartDataPointsOptions) {
+		const fiatTransfers = await this.prisma.fiatTransfer.findMany({
+			where: {
+				userId,
+			},
+			select,
+		});
+
+		return await getWorkingFiatChartDataPoints({ fiatTransfers });
 	}
 }

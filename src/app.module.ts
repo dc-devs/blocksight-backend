@@ -14,6 +14,7 @@ import { FiatTransfersModule } from './models/fiat-transfers/fiat-transfers.modu
 import { TokenBalancesModule } from './models/token-balances/token-balances.module';
 import { UsersExchangesModule } from './models/users-exchanges/users-exchanges.module';
 import { ExchangeClientService } from './services/exchange-client/exchange-client.service';
+import { CryptoAssetsChartModule } from './charts/crypto-assets-chart/crypto-assets-chart.module';
 
 @Module({
 	imports: [
@@ -24,6 +25,7 @@ import { ExchangeClientService } from './services/exchange-client/exchange-clien
 		FiatTransfersModule,
 		TokenBalancesModule,
 		UsersExchangesModule,
+		CryptoAssetsChartModule,
 		ScheduleModule.forRoot(),
 		ConfigModule.forRoot({
 			isGlobal: true,
