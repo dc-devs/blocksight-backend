@@ -30,7 +30,7 @@ const getWorkingFiatChartDataPoints = ({
 		});
 
 		const currentDataPoint = {
-			date: timestamp.toUTCString(),
+			date: String(new Date(timestamp).getTime()),
 			workingFiat: currentWorkingFiat.toFixed(2),
 		};
 
