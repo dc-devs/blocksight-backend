@@ -1,14 +1,14 @@
 import fs from 'fs';
 import WebSocket from 'ws';
 import { v4 as uuidv4 } from 'uuid';
-import { Topic, Symbol, Channel } from './enums';
 import Logger from '../../../utils/logger';
+import { Topic, Symbol, Channel } from './enums';
+import { Level2Data } from './classes';
 import {
 	getFilePath,
 	getFileName,
 	getPingMessage,
 	getWebsocketEndpoint,
-	addMessageToSequences,
 	getSubscriptionMessage,
 } from './utils';
 
@@ -16,8 +16,7 @@ class KuCoin {
 	constructor() {}
 
 	init = async () => {
-		const raw = [];
-		const sequences = {};
+		const level2Data = new Level2Data();
 
 		// Global Vars
 		const connectId = uuidv4();
@@ -66,24 +65,30 @@ class KuCoin {
 
 			setTimeout(() => {
 				ws.close();
-			}, 5000);
+			}, 300000);
 
-			// setInterval(async () => {
-			// 	ws.send(pingMessage);
-			// }, pingInterval);
+			setInterval(async () => {
+				ws.send(pingMessage);
+			}, 15000);
+			// TODO: getWebsocketEndpoint should be class, with this as an output
 		};
 
 		ws.onmessage = (event) => {
 			const message = event.data;
 
 			if (typeof message === 'string') {
+				if (message.includes('"id"')) {
+					Logger.debug('[KuCoin WebSocket] Message:', message);
+				}
+
 				if (message.includes('error')) {
 					ws.close();
 				}
 
 				if (message.includes('bid')) {
-					addMessageToSequences({ sequences, message });
-					raw.push(message);
+					level2Data.addMessage({
+						message,
+					});
 				}
 			}
 		};
@@ -94,17 +99,22 @@ class KuCoin {
 					`[KuCoin WebSocket] Connection closed cleanly: code=${event.code}`,
 				);
 
-				fs.writeFileSync(filePathRaw, JSON.stringify(raw), {
+				const messages = level2Data.getMessagesAsJson();
+
+				fs.writeFileSync(filePathRaw, messages, {
 					flag: 'a+',
 				});
 
-				fs.writeFileSync(filePathSequences, JSON.stringify(sequences), {
+				const orderBookUpdates = level2Data.getOrderBookUpdatesAsJson();
+
+				fs.writeFileSync(filePathSequences, orderBookUpdates, {
 					flag: 'a+',
 				});
 			} else {
-				// e.g. server process killed or network down
+				// Server process killed or network down
 				// event.code is usually 1006 in this case
-				console.log('[close] Connection died', event.code);
+				// TODO: If connection dies probs need some type of alert
+				Logger.error('[KuCoin WebSocket] Connection died', event.code);
 			}
 		};
 
