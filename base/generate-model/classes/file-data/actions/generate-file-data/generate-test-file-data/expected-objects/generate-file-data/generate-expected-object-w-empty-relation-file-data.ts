@@ -1,4 +1,4 @@
-import { pascalCase, paramCase, camelCase } from 'change-case';
+import { pascalCase, camelCase } from 'change-case';
 import {
 	Character,
 	Attribute,

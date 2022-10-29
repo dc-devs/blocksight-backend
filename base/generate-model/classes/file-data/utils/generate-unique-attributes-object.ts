@@ -1,4 +1,4 @@
-import { Attribute, Character } from '../../../enums';
+import { Attribute } from '../../../enums';
 import { IAttributes } from '../../../interfaces/model';
 
 interface IProps {

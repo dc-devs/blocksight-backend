@@ -10,7 +10,6 @@ interface IProps {
 
 const generateQueriesLevelFilePaths = ({
 	rootPath,
-	modelName,
 }: IProps): IFilePathsTestQueries => {
 	const createFilePath = join(
 		rootPath,
@@ -48,7 +47,7 @@ const generateQueriesLevelFilePaths = ({
 		},
 		update: {
 			path: updateFilePath,
-		}
+		},
 	};
 };
 

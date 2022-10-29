@@ -40,7 +40,7 @@ const convertCovalentTokenBalanceToTokenBalance = ({
 		contractDecimals: contract_decimals,
 	});
 
-	const formattedPrice = formatToCurrency(price);
+	const formattedPrice = formatToCurrency(price, '.0000');
 	const formattedTotalValue = formatToCurrency(totalValue);
 
 	return {

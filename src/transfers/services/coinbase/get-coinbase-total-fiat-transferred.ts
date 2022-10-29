@@ -1,6 +1,6 @@
 import TransferType from '../../interfaces/transfer-type-interface';
 import coinbaseProClient from './coinbase-pro-client';
-import getTransfersTotalFiatValue from './get-transfers-total-fiat-value';
+// import getTransfersTotalFiatValue from './get-transfers-total-fiat-value';
 
 interface Props {
 	transferType: TransferType;

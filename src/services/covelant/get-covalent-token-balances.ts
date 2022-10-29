@@ -41,7 +41,7 @@ const getCovalentTokenBalances = async ({
 	currency = 'usd',
 }: ITokenBalancesInput): Promise<ICovalentTokenBalance[]> => {
 	const convalentApiKey = process.env.COVALENT_API_KEY;
-	let url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/balances_v2/?key=${convalentApiKey}&nft=true&no-nft-fetch=false&quote-currency=${currency}`;
+	let url = `https://api.covalenthq.com/v1/${chainId}/address/${address}/balances_v2/?key=${convalentApiKey}&nft=false&no-nft-fetch=false&quote-currency=${currency}`;
 
 	if (filter) {
 		const filterUppercase = filter.toUpperCase();

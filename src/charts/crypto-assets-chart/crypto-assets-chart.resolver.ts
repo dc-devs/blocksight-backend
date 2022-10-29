@@ -1,6 +1,6 @@
 import { CryptoAssetsChartService } from './crypto-assets-chart.service';
 import { CryptoAssetsChartDataPoint } from './dto/models/crypto-assets-chart-data-point.model';
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 
 @Resolver(() => [CryptoAssetsChartDataPoint])
 export class CryptoAssetsChartResolver {

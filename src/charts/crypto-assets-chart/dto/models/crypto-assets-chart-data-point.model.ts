@@ -1,5 +1,4 @@
-import { Value } from '../../../../common/dto/value';
-import { IsNumber, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()

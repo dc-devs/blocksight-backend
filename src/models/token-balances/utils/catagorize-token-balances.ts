@@ -15,16 +15,21 @@ const catagorizeTokenBalances = async (tokenBalances: ITokenBalance[]) => {
 		const scamTokensAddresses = scamTokens[chainId];
 		const isScamToken = scamTokensAddresses[contractAddress];
 		const isHiddenToken = shouldHideToken({ balance, price: price.value });
+		// OLD RSR Contract
+		const isOldContractAddress =
+			contractAddress === '0x8762db106b2c2a0bccb3a80d1ed41273552616e8';
 
-		if (isScamToken) {
-			scamTokenBalances.push(tokenBalance);
-		} else if (isNft) {
-			nftBalances.push(tokenBalance);
-		} else if (isHiddenToken) {
-			hiddenTokenBalances.push(tokenBalance);
-		} else {
-			displayTokenBalances.push(tokenBalance);
-		}
+		if (!isOldContractAddress) {
+			if (isScamToken) {
+				scamTokenBalances.push(tokenBalance);
+			} else if (isNft) {
+				nftBalances.push(tokenBalance);
+			} else if (isHiddenToken) {
+				hiddenTokenBalances.push(tokenBalance);
+			} else {
+				displayTokenBalances.push(tokenBalance);
+			}
+		} 
 	});
 
 	return {

@@ -1,5 +1,5 @@
-import parseTransaction from './parse-transaction';
-import getTranactions from '../../services/etherscan/get-transactions';
+// import parseTransaction from './parse-transaction';
+// import getTranactions from '../../services/etherscan/get-transactions';
 
 // describe('parseTransaction', () => {
 // 	it('should be a function', () => {

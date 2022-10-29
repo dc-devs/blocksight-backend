@@ -393,7 +393,7 @@ type Mutation {
   createUsersExchanges(createUsersExchangesInput: CreateUsersExchangesInput!): UsersExchanges!
   updateUsersExchanges(id: Int!, updateUsersExchangesInput: UpdateUsersExchangesInput!): UsersExchanges!
   deleteUsersExchanges(id: Int!): UsersExchanges!
-  login(sessionInput: SessionInput!): SessionResponse!
+  login: SessionResponse!
   signInMetaMask(signInMetaMaskInput: SignInMetaMaskInput!): SessionResponse!
   signUp(createUserEmailInput: CreateUserEmailInput!): SessionResponse!
   logOut(userId: Float!): LogOutResponse!
@@ -443,11 +443,6 @@ input UpdateUsersExchangesInput {
   apiSecret: String
   apiPassphrase: String
   apiNickname: String
-}
-
-input SessionInput {
-  email: String!
-  password: String!
 }
 
 input SignInMetaMaskInput {

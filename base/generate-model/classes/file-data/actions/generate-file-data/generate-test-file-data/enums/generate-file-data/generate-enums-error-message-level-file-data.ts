@@ -8,10 +8,9 @@ interface IProps {
 	model: IModel;
 }
 
-const generateEnumsErrorMessageFileData = ({ modelName, model }: IProps) => {
+const generateEnumsErrorMessageFileData = ({ model }: IProps) => {
 	let data = '';
 	const errorBase = 'must be a';
-	const errorTail = 'conforming to the specified constraints';
 	const { attributes } = model.attributeBundles.withoutTimeStamps;
 	const topFragment = 'const enum ErrorMessage {' + Character.LINE_BREAK;
 	const bottomFragment = '}' + Character.LINE_BREAK;

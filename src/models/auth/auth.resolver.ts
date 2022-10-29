@@ -2,7 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UsersService } from '../users/users.service';
 import { SessionResponse, LogOutResponse } from './dto/models';
-import { SessionInput, SignInMetaMaskInput } from './dto/inputs';
+import { SignInMetaMaskInput } from './dto/inputs';
 import { Resolver, Mutation, Query, Args, Context } from '@nestjs/graphql';
 import generateGraphQLError from '../../graphql/errors/generate-graphql-error';
 import { CreateUserEmailInput } from '../users/dto/inputs/create-user-email.input';
@@ -22,10 +22,7 @@ export class AuthResolver {
 
 	@Mutation(() => SessionResponse)
 	@UseGuards(IsValidUser, LogInUser)
-	async login(
-		@Context('req') request,
-		@Args('sessionInput') sessionInput: SessionInput,
-	) {
+	async login(@Context('req') request) {
 		const { user } = request;
 
 		return { isAuthenticated: true, user };

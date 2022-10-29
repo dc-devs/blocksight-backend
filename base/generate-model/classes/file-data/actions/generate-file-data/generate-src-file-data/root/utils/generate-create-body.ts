@@ -1,4 +1,4 @@
-import { RelationType, Character } from '../../../../../../../enums';
+import { Character } from '../../../../../../../enums';
 import { IModel } from '../../../../../../../interfaces/model';
 
 interface IProps {
@@ -39,7 +39,7 @@ const buildReturnValue = ({ attributes }) => {
 
 	data += open;
 
-	Object.keys(attributes).forEach((attribute, index) => {
+	Object.keys(attributes).forEach((attribute) => {
 		const isRelationalAttribute = attribute.match(/Id$/g);
 
 		if (!isRelationalAttribute) {

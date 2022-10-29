@@ -1,4 +1,4 @@
-import { Character, RelationType, Crud } from '../../../../../../../../enums';
+import { Character, RelationType } from '../../../../../../../../enums';
 import { IModel } from '../../../../../../../../interfaces/model';
 
 interface IProps {

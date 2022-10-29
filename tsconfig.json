@@ -11,6 +11,9 @@
 		"sourceMap": true,
 		"outDir": "./dist",
 		"baseUrl": "./",
-		"incremental": true
+		"incremental": true,
+		// "strict": true // Let's turn on at some point (lots of errors now though :/)
+		"noUnusedLocals": true /* Report errors on unused locals. */,
+		"noUnusedParameters": true /* Report errors on unused parameters. */
 	}
 }

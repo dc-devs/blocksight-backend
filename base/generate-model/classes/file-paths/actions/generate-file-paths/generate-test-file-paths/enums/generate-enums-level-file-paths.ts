@@ -10,7 +10,6 @@ interface IProps {
 
 const generateEnumsLevelFilePaths = ({
 	rootPath,
-	modelName,
 }: IProps): IFilePathsTestEnums => {
 	const errorMessageFilePath = join(
 		rootPath,

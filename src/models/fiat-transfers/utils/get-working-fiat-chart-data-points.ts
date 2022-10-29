@@ -1,6 +1,5 @@
 import { BigNumber } from 'bignumber.js';
 import { FiatTransfer } from '../dto/models/fiat-transfer.model';
-import formatToCurrency from '../../token-balances/utils/format-to-currency';
 import { CryptoAssetsChartDataPoint } from '../../../charts/crypto-assets-chart/dto/models/crypto-assets-chart-data-point.model';
 interface IOptions {
 	fiatTransfers: FiatTransfer[];
