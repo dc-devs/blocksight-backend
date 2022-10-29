@@ -1,3 +1,3 @@
-import parseMarketLevel2Data from './parse-market-level2';
+import parseMarketOrderBook from './parse-market-level2';
 
-export { parseMarketLevel2Data };
+export { parseMarketOrderBook };

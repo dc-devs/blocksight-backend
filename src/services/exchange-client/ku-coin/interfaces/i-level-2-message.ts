@@ -6,7 +6,7 @@ interface ILevel2Changes {
 	bids: string[][];
 }
 
-interface ILevel2Data {
+interface IOrderBook {
 	changes: ILevel2Changes;
 	sequenceEnd: number;
 	sequenceStart: number;
@@ -18,7 +18,7 @@ interface ILevel2Message {
 	type: string;
 	topic: string;
 	subject: string;
-	data: ILevel2Data;
+	data: IOrderBook;
 }
 
 export default ILevel2Message;

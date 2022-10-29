@@ -1,5 +1,5 @@
 enum Channel {
-	Public = 'market',
+	Market = 'market',
 }
 
 export default Channel;

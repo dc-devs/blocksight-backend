@@ -1,4 +1,4 @@
-import { Topic, Symbol, Channel } from '../enums';
+import { Topic, Symbol, Channel } from '../../../enums';
 
 interface IOptions {
 	name: string;
@@ -17,7 +17,7 @@ const getFileName = ({
 	timestamp,
 	extension = 'json',
 }: IOptions) => {
-	return `${channel}-${topic}-${symbol}-${name}-${timestamp}.${extension}`;
+	return `${channel}-${topic}-${name}-${symbol}-${timestamp}.${extension}`;
 };
 
 export default getFileName;

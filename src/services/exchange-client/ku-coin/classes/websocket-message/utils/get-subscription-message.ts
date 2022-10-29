@@ -1,10 +1,14 @@
-import { Topic, Symbol, Channel } from '../enums';
+import { Topic, Symbol, Channel } from '../../../enums';
+
+enum Type {
+	Subscribe = 'subscribe',
+}
 
 interface IOptions {
-	connectId: string;
 	topic: Topic;
 	symbol: Symbol;
 	channel: Channel;
+	connectId: string;
 }
 
 const getSubscriptionMessage = ({
@@ -15,9 +19,9 @@ const getSubscriptionMessage = ({
 }: IOptions) => {
 	const subscriptionMessage = JSON.stringify({
 		id: connectId,
-		type: 'subscribe',
-		topic: `/${channel}/${topic}:${symbol}`,
 		response: true,
+		type: Type.Subscribe,
+		topic: `/${channel}/${topic}:${symbol}`,
 	});
 
 	return subscriptionMessage;
