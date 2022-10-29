@@ -8,8 +8,8 @@ import {
 	getFilePath,
 	getFileName,
 	getPingMessage,
-	getWebsocketEndpoint,
 	getSubscriptionMessage,
+	getWebsocketConnectData,
 } from './utils';
 
 class KuCoin {
@@ -52,10 +52,11 @@ class KuCoin {
 		});
 		const filePathSequences = getFilePath({ fileName: fileNameSequences });
 
-		const websocketEndpoint = await getWebsocketEndpoint({ connectId });
+		const { connectionUrl, pingInterval } = await getWebsocketConnectData({
+			connectId,
+		});
 
-		// var ws: any;
-		var ws = new WebSocket(websocketEndpoint);
+		var ws = new WebSocket(connectionUrl);
 
 		ws.onopen = () => {
 			Logger.debug('[KuCoin WebSocket] Connection established');
@@ -65,12 +66,11 @@ class KuCoin {
 
 			setTimeout(() => {
 				ws.close();
-			}, 300000);
+			}, 5000);
 
 			setInterval(async () => {
 				ws.send(pingMessage);
-			}, 15000);
-			// TODO: getWebsocketEndpoint should be class, with this as an output
+			}, pingInterval);
 		};
 
 		ws.onmessage = (event) => {
