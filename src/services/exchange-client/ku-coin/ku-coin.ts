@@ -2,6 +2,7 @@ import fs from 'fs';
 import WebSocket from 'ws';
 import { v4 as uuidv4 } from 'uuid';
 import { Topic, Symbol, Channel } from './enums';
+import Logger from '../../../utils/logger';
 import {
 	getFilePath,
 	getFileName,
@@ -58,7 +59,7 @@ class KuCoin {
 		var ws = new WebSocket(websocketEndpoint);
 
 		ws.onopen = () => {
-			console.log('[open] Connection established');
+			Logger.debug('[KuCoin WebSocket] Connection established');
 
 			ws.send(pingMessage);
 			ws.send(subscribeToLevel2Data);
@@ -89,8 +90,8 @@ class KuCoin {
 
 		ws.onclose = (event) => {
 			if (event.wasClean) {
-				console.log(
-					`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`,
+				Logger.debug(
+					`[KuCoin WebSocket] Connection closed cleanly: code=${event.code}`,
 				);
 
 				fs.writeFileSync(filePathRaw, JSON.stringify(raw), {
