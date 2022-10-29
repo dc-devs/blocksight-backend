@@ -1,5 +1,4 @@
 import fs from 'fs';
-import axios from 'axios';
 import WebSocket from 'ws';
 import { v4 as uuidv4 } from 'uuid';
 import { Topic, Symbol, Channel } from './enums';
@@ -7,30 +6,10 @@ import {
 	getFilePath,
 	getFileName,
 	getPingMessage,
+	getWebsocketEndpoint,
+	addMessageToSequences,
 	getSubscriptionMessage,
 } from './utils';
-
-interface IInstanceServer {
-	endpoint: string;
-	encrypt: boolean;
-	protocol: string;
-	pingInterval: number;
-	pingTimeout: number;
-}
-
-interface IKuCoinData {
-	token: string;
-	instanceServers: IInstanceServer[];
-}
-
-interface IData {
-	code: string;
-	data: IKuCoinData;
-}
-
-interface IResponse {
-	data: IData;
-}
 
 class KuCoin {
 	constructor() {}
@@ -38,15 +17,6 @@ class KuCoin {
 	init = async () => {
 		const raw = [];
 		const sequences = {};
-		const url = 'https://api.kucoin.com/api/v1/bullet-public';
-
-		const response: IResponse = await axios.post(url);
-		const { data } = response;
-		const { data: KuCoinData } = data;
-		const { token, instanceServers } = KuCoinData;
-		const firstInstanceServer = instanceServers[0];
-		const { endpoint } = firstInstanceServer;
-		// const { endpoint, pingInterval } = firstInstanceServer;
 
 		// Global Vars
 		const connectId = uuidv4();
@@ -82,10 +52,10 @@ class KuCoin {
 		});
 		const filePathSequences = getFilePath({ fileName: fileNameSequences });
 
+		const websocketEndpoint = await getWebsocketEndpoint({ connectId });
+
 		// var ws: any;
-		var ws = new WebSocket(
-			`${endpoint}?token=${token}&[connectId=${connectId}]`,
-		);
+		var ws = new WebSocket(websocketEndpoint);
 
 		ws.onopen = () => {
 			console.log('[open] Connection established');
@@ -111,56 +81,7 @@ class KuCoin {
 				}
 
 				if (message.includes('bid')) {
-					const parsedMessage = JSON.parse(message);
-					const { data } = parsedMessage;
-					// const { sequenceEnd, sequenceStart, time, changes } = data;
-					const { time, changes } = data;
-					const { asks: sellOrders, bids: buyOrders } = changes;
-
-					sellOrders.forEach((sellOrder) => {
-						const price = sellOrder[0];
-						const size = sellOrder[1];
-						const sequence = sellOrder[2];
-
-						if (!sequences[time]) {
-							sequences[time] = {};
-						}
-
-						if (!sequences[time][sequence]) {
-							sequences[time][sequence] = {
-								buyOrders: [],
-								sellOrders: [],
-							};
-						}
-
-						sequences[time][sequence].sellOrders.push({
-							price,
-							size,
-						});
-					});
-
-					buyOrders.forEach((buyOrder) => {
-						const price = buyOrder[0];
-						const size = buyOrder[1];
-						const sequence = buyOrder[2];
-
-						if (!sequences[time]) {
-							sequences[time] = {};
-						}
-
-						if (!sequences[time][sequence]) {
-							sequences[time][sequence] = {
-								buyOrders: [],
-								sellOrders: [],
-							};
-						}
-
-						sequences[time][sequence].buyOrders.push({
-							price,
-							size,
-						});
-					});
-
+					addMessageToSequences({ sequences, message });
 					raw.push(message);
 				}
 			}
