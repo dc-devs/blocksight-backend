@@ -1,14 +1,14 @@
 import WebSocket from 'ws';
-import Symbol from '../../../enums/symbol';
+import ISubcriptions from './i-subscriptions';
 import Logger from '../../../../../../utils/logger';
 import KuWebSocketMessage from '../../ku-websocket-message';
 
 interface IOnOpenOptions {
-	symbol: Symbol;
 	pingInterval: number;
 	webSocket: WebSocket;
 	logger: typeof Logger;
 	webSocketTimeOut?: number;
+	subscriptions: ISubcriptions;
 	kuWebSocketMessage: KuWebSocketMessage;
 }
 

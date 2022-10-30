@@ -8,8 +8,8 @@ import {
 
 const setOnOpen = ({
 	logger,
-	symbol,
 	webSocket,
+	subscriptions,
 	pingInterval,
 	kuWebSocketMessage,
 	webSocketTimeOut,
@@ -18,7 +18,7 @@ const setOnOpen = ({
 		logger.debug(Message.ConnectionEstablished);
 		setPingInterval({ webSocket, kuWebSocketMessage, pingInterval });
 		setWebSocketTimeOut({ webSocket, webSocketTimeOut });
-		setSubscriptions({ webSocket, kuWebSocketMessage, symbol });
+		setSubscriptions({ webSocket, kuWebSocketMessage, subscriptions });
 	};
 };
 
