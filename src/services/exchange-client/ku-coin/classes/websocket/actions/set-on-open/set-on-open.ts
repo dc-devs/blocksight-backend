@@ -1,27 +1,10 @@
 import { Message } from '../../enums';
 import { IOnOpenOptions } from '../../interfaces';
-
-const setPingInterval = ({ webSocket, webSocketMessage, pingInterval }) => {
-	setInterval(() => {
-		webSocket.send(webSocketMessage.ping());
-	}, pingInterval);
-};
-
-const setWebSocketTimeOut = ({ webSocket, webSocketTimeOut }) => {
-	if (webSocketTimeOut) {
-		setTimeout(() => {
-			webSocket.close();
-		}, webSocketTimeOut);
-	}
-};
-
-const setSubscriptions = ({ webSocket, webSocketMessage, symbol }) => {
-	webSocket.send(
-		webSocketMessage.subscribeToOrderBook({
-			symbol,
-		}),
-	);
-};
+import {
+	setPingInterval,
+	setSubscriptions,
+	setWebSocketTimeOut,
+} from './utils';
 
 const setOnOpen = ({
 	logger,

@@ -2,7 +2,7 @@ import axios from 'axios';
 import {
 	IWebsocketConnectData,
 	IWebsocketAuthResponseData,
-} from '../../../interfaces';
+} from '../../../../../interfaces';
 
 enum Endpoint {
 	WebsocketAuthentication = 'https://api.kucoin.com/api/v1/bullet-public',
@@ -16,7 +16,7 @@ interface IOptions {
 	connectId: string;
 }
 
-const getWebsocketConnectData = async ({
+const authenticateWebSocketConnection = async ({
 	connectId,
 }: IOptions): Promise<IWebsocketConnectData> => {
 	const response: IResponse = await axios.post(
@@ -37,4 +37,4 @@ const getWebsocketConnectData = async ({
 	};
 };
 
-export default getWebsocketConnectData;
+export default authenticateWebSocketConnection;

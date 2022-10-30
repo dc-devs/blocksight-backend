@@ -1,11 +1,14 @@
-import WebSocket from 'ws';
-import { v4 as uuidv4 } from 'uuid';
 import { Symbol } from '../../enums';
 import OrderBook from '../order-book';
 import Logger from '../../../../../utils/logger';
-import { getWebsocketConnectData } from './utils';
 import WebSocketMessage from '../websocket-message';
-import { setOnOpen, setOnClose, setOnError, setOnMessage } from './actions';
+import {
+	setOnOpen,
+	setOnClose,
+	setOnError,
+	setOnMessage,
+	connectToWebSocket,
+} from './actions';
 
 interface IOrderBookOptions {
 	symbol: Symbol;
@@ -21,21 +24,17 @@ class KuWebsocket {
 
 	init = async ({ webSocketTimeOut, subscribeToOrderBook }: IInitOptions) => {
 		const logger = Logger;
-		const connectId = uuidv4();
 		const { symbol } = subscribeToOrderBook;
 		const orderBook = new OrderBook();
-
-		const { connectionUrl, pingInterval } = await getWebsocketConnectData({
-			connectId,
-		});
-		const webSocket = new WebSocket(connectionUrl);
+		const { webSocket, pingInterval, connectId } =
+			await connectToWebSocket();
 		const webSocketMessage = new WebSocketMessage({
 			connectId,
 		});
 
 		setOnOpen({
 			logger,
-			symbol,
+			symbol, // Should be some type of 'subscriptions' prop..
 			webSocket,
 			pingInterval,
 			webSocketMessage,
