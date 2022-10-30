@@ -1,7 +1,7 @@
 import WebSocket from 'ws';
 import Symbol from '../../../enums/symbol';
 import Logger from '../../../../../../utils/logger';
-import WebSocketMessage from '../../websocket-message';
+import KuWebSocketMessage from '../../ku-websocket-message';
 
 interface IOnOpenOptions {
 	symbol: Symbol;
@@ -9,7 +9,7 @@ interface IOnOpenOptions {
 	webSocket: WebSocket;
 	logger: typeof Logger;
 	webSocketTimeOut?: number;
-	webSocketMessage: WebSocketMessage;
+	kuWebSocketMessage: KuWebSocketMessage;
 }
 
 export default IOnOpenOptions;

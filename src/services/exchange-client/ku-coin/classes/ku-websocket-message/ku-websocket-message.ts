@@ -5,14 +5,14 @@ interface ISubscribeToOrderBookOptions {
 	symbol: Symbol;
 }
 
-interface IWebSocketMessageOptions {
+interface IKuWebSocketMessageOptions {
 	connectId: string;
 }
 
-class WebSocketMessage {
+class KuWebSocketMessage {
 	connectId: string;
 
-	constructor({ connectId }: IWebSocketMessageOptions) {
+	constructor({ connectId }: IKuWebSocketMessageOptions) {
 		this.connectId = connectId;
 	}
 
@@ -30,4 +30,4 @@ class WebSocketMessage {
 	};
 }
 
-export default WebSocketMessage;
+export default KuWebSocketMessage;

@@ -9,13 +9,13 @@ const setOnClose = ({ logger, webSocket, orderBook }: IOnCloseOptions) => {
 				Message.Code,
 				event.code,
 			);
-
-			if (orderBook) {
-				orderBook.saveAllMessagesToFile();
-				orderBook.saveAllUpdatesToFile();
-			}
 		} else {
 			logger.error(Message.ConnectionDied, Message.Code, event.code);
+		}
+
+		if (orderBook) {
+			orderBook.saveAllMessagesToFile();
+			orderBook.saveAllUpdatesToFile();
 		}
 	};
 };

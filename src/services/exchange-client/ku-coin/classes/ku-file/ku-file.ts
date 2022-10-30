@@ -8,19 +8,19 @@ interface ISaveOptions {
 	fileName: string;
 }
 
-interface IFileOptions {
+interface IKuFileOptions {
 	topic: Topic;
 	symbol: Symbol;
 	channel: Channel;
 }
 
-class File {
+class KuFile {
 	topic: Topic;
 	symbol: Symbol;
 	basePath: string;
 	channel: Channel;
 
-	constructor({ topic, symbol, channel }: IFileOptions) {
+	constructor({ topic, symbol, channel }: IKuFileOptions) {
 		this.topic = topic;
 		this.symbol = symbol;
 		this.channel = channel;
@@ -44,4 +44,4 @@ class File {
 	};
 }
 
-export default File;
+export default KuFile;

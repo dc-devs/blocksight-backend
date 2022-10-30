@@ -7,6 +7,18 @@ class KuCoin {
 	init = async () => {
 		const kuWebSocket = new KuWebSocket();
 
+		// TODO: Enhancement:
+		// Multiple Subscriptions
+		// Multiple symbols Orderbook {symbol},{symbol}
+		// subscriptions: {
+		// 	orderBook: {
+		// 	 symbols: {symbol},{symbol}
+		// 	},
+		// 	execution: {
+		// 		symbols: {symbol},{symbol}
+		// 	}
+		// }
+
 		await kuWebSocket.init({
 			subscribeToOrderBook: {
 				symbol: Symbol.MATIC_USDT,

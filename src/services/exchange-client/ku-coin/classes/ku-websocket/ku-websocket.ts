@@ -1,7 +1,7 @@
 import { Symbol } from '../../enums';
-import OrderBook from '../order-book';
+import KuOrderBook from '../ku-order-book';
 import Logger from '../../../../../utils/logger';
-import WebSocketMessage from '../websocket-message';
+import KuWebSocketMessage from '../ku-websocket-message';
 import {
 	setOnOpen,
 	setOnClose,
@@ -25,10 +25,10 @@ class KuWebsocket {
 	init = async ({ webSocketTimeOut, subscribeToOrderBook }: IInitOptions) => {
 		const logger = Logger;
 		const { symbol } = subscribeToOrderBook;
-		const orderBook = new OrderBook();
+		const orderBook = new KuOrderBook();
 		const { webSocket, pingInterval, connectId } =
 			await connectToWebSocket();
-		const webSocketMessage = new WebSocketMessage({
+		const kuWebSocketMessage = new KuWebSocketMessage({
 			connectId,
 		});
 
@@ -37,7 +37,7 @@ class KuWebsocket {
 			symbol, // Should be some type of 'subscriptions' prop..
 			webSocket,
 			pingInterval,
-			webSocketMessage,
+			kuWebSocketMessage,
 			webSocketTimeOut,
 		});
 		setOnMessage({

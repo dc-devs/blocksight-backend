@@ -1,19 +1,19 @@
 import WebSocket from 'ws';
-import WebSocketMessage from '../../../../websocket-message';
+import KuWebSocketMessage from '../../../../ku-websocket-message';
 
 interface ISetPingIntervalOptions {
 	pingInterval: number;
 	webSocket: WebSocket;
-	webSocketMessage: WebSocketMessage;
+	kuWebSocketMessage: KuWebSocketMessage;
 }
 
 const setPingInterval = ({
 	webSocket,
-	webSocketMessage,
+	kuWebSocketMessage,
 	pingInterval,
 }: ISetPingIntervalOptions) => {
 	setInterval(() => {
-		webSocket.send(webSocketMessage.ping());
+		webSocket.send(kuWebSocketMessage.ping());
 	}, pingInterval);
 };
 

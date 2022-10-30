@@ -1,9 +1,9 @@
 import WebSocket from 'ws';
-import OrderBook from '../../order-book';
+import KuOrderBook from '../../ku-order-book';
 import Logger from '../../../../../../utils/logger';
 
 interface IOnCloseOptions {
-	orderBook: OrderBook;
+	orderBook: KuOrderBook;
 	webSocket: WebSocket;
 	logger: typeof Logger;
 }

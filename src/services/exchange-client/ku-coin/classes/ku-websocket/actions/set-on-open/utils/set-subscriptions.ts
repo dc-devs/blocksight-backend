@@ -1,20 +1,20 @@
 import WebSocket from 'ws';
 import { Symbol } from '../../../../../enums';
-import WebSocketMessage from '../../../../websocket-message';
+import KuWebSocketMessage from '../../../../ku-websocket-message';
 
 interface ISetSubscriptionsOptions {
 	symbol: Symbol;
 	webSocket: WebSocket;
-	webSocketMessage: WebSocketMessage;
+	kuWebSocketMessage: KuWebSocketMessage;
 }
 
 const setSubscriptions = ({
 	symbol,
 	webSocket,
-	webSocketMessage,
+	kuWebSocketMessage,
 }: ISetSubscriptionsOptions) => {
 	webSocket.send(
-		webSocketMessage.subscribeToOrderBook({
+		kuWebSocketMessage.subscribeToOrderBook({
 			symbol,
 		}),
 	);

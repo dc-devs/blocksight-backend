@@ -11,14 +11,14 @@ const setOnOpen = ({
 	symbol,
 	webSocket,
 	pingInterval,
-	webSocketMessage,
+	kuWebSocketMessage,
 	webSocketTimeOut,
 }: IOnOpenOptions) => {
 	webSocket.onopen = () => {
 		logger.debug(Message.ConnectionEstablished);
-		setPingInterval({ webSocket, webSocketMessage, pingInterval });
+		setPingInterval({ webSocket, kuWebSocketMessage, pingInterval });
 		setWebSocketTimeOut({ webSocket, webSocketTimeOut });
-		setSubscriptions({ webSocket, webSocketMessage, symbol });
+		setSubscriptions({ webSocket, kuWebSocketMessage, symbol });
 	};
 };
 

@@ -1,4 +1,4 @@
-import File from '../file';
+import KuFile from '../ku-file';
 import { addOrderBookUpdate } from './actions';
 import { IOrderbookUpdates } from './interfaces';
 import { Topic, Symbol, Channel } from '../../enums';
@@ -7,8 +7,8 @@ interface IAddSequenceOptions {
 	message: string;
 }
 
-class OrderBook {
-	file: File;
+class KuOrderBook {
+	file: KuFile;
 	topic: Topic;
 	symbol: Symbol;
 	channel: Channel;
@@ -20,7 +20,7 @@ class OrderBook {
 		this.symbol = Symbol.MATIC_USDT;
 		this.channel = Channel.Market;
 
-		this.file = new File({
+		this.file = new KuFile({
 			topic: this.topic,
 			symbol: this.symbol,
 			channel: this.channel,
@@ -73,4 +73,4 @@ class OrderBook {
 	};
 }
 
-export default OrderBook;
+export default KuOrderBook;

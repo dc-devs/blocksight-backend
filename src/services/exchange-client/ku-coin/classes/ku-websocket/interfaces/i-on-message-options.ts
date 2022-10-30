@@ -1,10 +1,10 @@
 import WebSocket from 'ws';
-import OrderBook from '../../order-book';
+import KuOrderBook from '../../ku-order-book';
 import Logger from '../../../../../../utils/logger';
 
 interface IOnMessageOptions {
 	webSocket: WebSocket;
-	orderBook: OrderBook;
+	orderBook: KuOrderBook;
 	logger: typeof Logger;
 }
 
