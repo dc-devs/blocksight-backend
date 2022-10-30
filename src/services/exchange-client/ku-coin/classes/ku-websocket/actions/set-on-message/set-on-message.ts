@@ -7,8 +7,12 @@ enum MessageIdentifer {
 	Level2 = `"topic":"/market/level2`,
 }
 
-const setOnMessage = ({ logger, webSocket, orderBook }: IOnMessageOptions) => {
-	webSocket.onmessage = (event) => {
+const setOnMessage = ({
+	logger,
+	kuWebSocket,
+	orderBook,
+}: IOnMessageOptions) => {
+	kuWebSocket.onmessage = (event) => {
 		const { data: message } = event;
 		const messageIsString = typeof message === 'string';
 
@@ -18,7 +22,7 @@ const setOnMessage = ({ logger, webSocket, orderBook }: IOnMessageOptions) => {
 			}
 
 			if (message.includes(MessageIdentifer.Error)) {
-				webSocket.close();
+				kuWebSocket.close();
 			}
 
 			if (message.includes(MessageIdentifer.Level2)) {

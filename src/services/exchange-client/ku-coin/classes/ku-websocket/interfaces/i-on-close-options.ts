@@ -4,7 +4,7 @@ import Logger from '../../../../../../utils/logger';
 
 interface IOnCloseOptions {
 	orderBook: KuOrderBook;
-	webSocket: WebSocket;
+	kuWebSocket: WebSocket;
 	logger: typeof Logger;
 }
 

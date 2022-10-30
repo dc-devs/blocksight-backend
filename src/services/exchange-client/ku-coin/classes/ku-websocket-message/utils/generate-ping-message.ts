@@ -2,11 +2,11 @@ interface IOptions {
 	connectId: string;
 }
 
-const getPingMessage = ({ connectId }: IOptions) => {
+const generatePingMessage = ({ connectId }: IOptions) => {
 	return JSON.stringify({
 		id: connectId,
 		type: 'ping',
 	});
 };
 
-export default getPingMessage;
+export default generatePingMessage;

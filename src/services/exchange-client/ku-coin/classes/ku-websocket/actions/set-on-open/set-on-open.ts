@@ -8,17 +8,17 @@ import {
 
 const setOnOpen = ({
 	logger,
-	webSocket,
+	kuWebSocket,
 	subscriptions,
 	pingInterval,
 	kuWebSocketMessage,
 	webSocketTimeOut,
 }: IOnOpenOptions) => {
-	webSocket.onopen = () => {
+	kuWebSocket.onopen = () => {
 		logger.debug(Message.ConnectionEstablished);
-		setPingInterval({ webSocket, kuWebSocketMessage, pingInterval });
-		setWebSocketTimeOut({ webSocket, webSocketTimeOut });
-		setSubscriptions({ webSocket, kuWebSocketMessage, subscriptions });
+		setPingInterval({ kuWebSocket, kuWebSocketMessage, pingInterval });
+		setWebSocketTimeOut({ kuWebSocket, webSocketTimeOut });
+		setSubscriptions({ kuWebSocket, kuWebSocketMessage, subscriptions });
 	};
 };
 

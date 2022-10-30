@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 import Logger from '../../../../../../utils/logger';
 
 interface IOnErrorOptions {
-	webSocket: WebSocket;
+	kuWebSocket: WebSocket;
 	logger: typeof Logger;
 }
 

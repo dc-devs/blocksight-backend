@@ -1,8 +1,8 @@
 import { Message } from '../../enums';
 import { IOnCloseOptions } from '../../interfaces';
 
-const setOnClose = ({ logger, webSocket, orderBook }: IOnCloseOptions) => {
-	webSocket.onclose = (event) => {
+const setOnClose = ({ logger, kuWebSocket, orderBook }: IOnCloseOptions) => {
+	kuWebSocket.onclose = (event) => {
 		if (event.wasClean) {
 			logger.debug(
 				Message.ConnectionClosedCleanly,

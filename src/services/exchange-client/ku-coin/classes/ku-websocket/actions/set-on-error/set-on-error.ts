@@ -1,10 +1,10 @@
 import { Message } from '../../enums';
 import { IOnErrorOptions } from '../../interfaces';
 
-const setOnError = ({ logger, webSocket }: IOnErrorOptions) => {
-	webSocket.onerror = (error) => {
+const setOnError = ({ logger, kuWebSocket }: IOnErrorOptions) => {
+	kuWebSocket.onerror = (error) => {
 		logger.error(Message.ConnectionError, Message.Error, error);
-		webSocket.close();
+		kuWebSocket.close();
 	};
 };
 

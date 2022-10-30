@@ -5,7 +5,7 @@ import KuWebSocketMessage from '../../ku-websocket-message';
 
 interface IOnOpenOptions {
 	pingInterval: number;
-	webSocket: WebSocket;
+	kuWebSocket: WebSocket;
 	logger: typeof Logger;
 	webSocketTimeOut?: number;
 	subscriptions: ISubcriptions;

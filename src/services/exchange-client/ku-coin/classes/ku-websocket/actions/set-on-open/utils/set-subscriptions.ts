@@ -3,29 +3,30 @@ import { ISubcriptions } from '../../../interfaces';
 import KuWebSocketMessage from '../../../../ku-websocket-message';
 
 interface ISetSubscriptionsOptions {
-	webSocket: WebSocket;
+	kuWebSocket: WebSocket;
 	subscriptions: ISubcriptions;
 	kuWebSocketMessage: KuWebSocketMessage;
 }
 
 const setSubscriptions = ({
-	webSocket,
+	kuWebSocket,
 	subscriptions,
 	kuWebSocketMessage,
 }: ISetSubscriptionsOptions) => {
 	// const {orderBook, matchExecution} = subscriptions
-	const {orderBook} = subscriptions
+	const { orderBook } = subscriptions;
 
 	if (orderBook.symbol) {
-		webSocket.send(
-			kuWebSocketMessage.subscribeToOrderBook({
+		const orderBookSubscriptionMessage =
+			kuWebSocketMessage.generateOrderBookSubscriptionMessage({
 				symbol: orderBook.symbol,
-			}),
-		);
+			});
+
+		kuWebSocket.send(orderBookSubscriptionMessage);
 	}
-	
+
 	// if (matchExecution.symbol) {
-	// 	webSocket.send(
+	// 	kuWebSocket.send(
 	// 		kuWebSocketMessage.subscribeToMatchExecution({
 	// 			symbol: matchExecution.symbol,
 	// 		}),

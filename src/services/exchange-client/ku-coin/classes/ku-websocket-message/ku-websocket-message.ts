@@ -1,5 +1,5 @@
 import { Topic, Symbol, Channel } from '../../enums';
-import { getSubscriptionMessage, getPingMessage } from './utils';
+import { generateSubscriptionMessage, generatePingMessage } from './utils';
 
 interface ISubscribeToOrderBookOptions {
 	symbol: Symbol;
@@ -16,8 +16,10 @@ class KuWebSocketMessage {
 		this.connectId = connectId;
 	}
 
-	subscribeToOrderBook = ({ symbol }: ISubscribeToOrderBookOptions) => {
-		return getSubscriptionMessage({
+	generateOrderBookSubscriptionMessage = ({
+		symbol,
+	}: ISubscribeToOrderBookOptions) => {
+		return generateSubscriptionMessage({
 			symbol,
 			topic: Topic.Level2,
 			channel: Channel.Market,
@@ -25,8 +27,8 @@ class KuWebSocketMessage {
 		});
 	};
 
-	ping = () => {
-		return getPingMessage({ connectId: this.connectId });
+	generatePingMessage = () => {
+		return generatePingMessage({ connectId: this.connectId });
 	};
 }
 

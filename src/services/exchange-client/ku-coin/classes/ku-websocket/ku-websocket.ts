@@ -21,7 +21,7 @@ class KuWebsocket {
 	init = async ({ webSocketTimeOut, subscriptions }: IInitOptions) => {
 		const logger = Logger;
 		const orderBook = new KuOrderBook();
-		const { webSocket, pingInterval, connectId } =
+		const { kuWebSocket, pingInterval, connectId } =
 			await connectToWebSocket();
 		const kuWebSocketMessage = new KuWebSocketMessage({
 			connectId,
@@ -29,7 +29,7 @@ class KuWebsocket {
 
 		setOnOpen({
 			logger,
-			webSocket,
+			kuWebSocket,
 			pingInterval,
 			subscriptions,
 			kuWebSocketMessage,
@@ -37,11 +37,11 @@ class KuWebsocket {
 		});
 		setOnMessage({
 			logger,
-			webSocket,
+			kuWebSocket,
 			orderBook,
 		});
-		setOnClose({ logger, webSocket, orderBook });
-		setOnError({ logger, webSocket });
+		setOnClose({ logger, kuWebSocket, orderBook });
+		setOnError({ logger, kuWebSocket });
 	};
 }
 

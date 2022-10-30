@@ -1,17 +1,17 @@
 import WebSocket from 'ws';
 
 interface ISetWebSocketTimeOutOptions {
-	webSocket: WebSocket;
+	kuWebSocket: WebSocket;
 	webSocketTimeOut: number;
 }
 
 const setWebSocketTimeOut = ({
-	webSocket,
+	kuWebSocket,
 	webSocketTimeOut,
 }: ISetWebSocketTimeOutOptions) => {
 	if (webSocketTimeOut) {
 		setTimeout(() => {
-			webSocket.close();
+			kuWebSocket.close();
 		}, webSocketTimeOut);
 	}
 };

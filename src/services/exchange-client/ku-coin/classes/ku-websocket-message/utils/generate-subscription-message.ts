@@ -11,7 +11,7 @@ interface IOptions {
 	connectId: string;
 }
 
-const getSubscriptionMessage = ({
+const generateSubscriptionMessage = ({
 	connectId,
 	topic,
 	symbol,
@@ -27,4 +27,4 @@ const getSubscriptionMessage = ({
 	return subscriptionMessage;
 };
 
-export default getSubscriptionMessage;
+export default generateSubscriptionMessage;

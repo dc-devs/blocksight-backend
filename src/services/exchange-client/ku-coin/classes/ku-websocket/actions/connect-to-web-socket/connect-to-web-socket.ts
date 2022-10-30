@@ -8,11 +8,11 @@ const connectToWebSocket = async () => {
 		await authenticateWebSocketConnection({
 			connectId,
 		});
-	const webSocket = new WebSocket(connectionUrl);
+	const kuWebSocket = new WebSocket(connectionUrl);
 
 	return {
 		connectId,
-		webSocket,
+		kuWebSocket,
 		pingInterval,
 	};
 };

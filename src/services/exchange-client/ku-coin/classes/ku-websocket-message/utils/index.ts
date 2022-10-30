@@ -1,4 +1,4 @@
-import getPingMessage from './get-ping-message';
-import getSubscriptionMessage from './get-subscription-message';
+import generatePingMessage from './generate-ping-message';
+import generateSubscriptionMessage from './generate-subscription-message';
 
-export { getPingMessage, getSubscriptionMessage };
+export { generatePingMessage, generateSubscriptionMessage };

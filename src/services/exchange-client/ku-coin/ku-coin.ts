@@ -16,7 +16,7 @@ class KuCoin {
 					symbol: Symbol.MATIC_USDT,
 				},
 			},
-			webSocketTimeOut: 5000,
+			webSocketTimeOut: 25000,
 		});
 	};
 }
