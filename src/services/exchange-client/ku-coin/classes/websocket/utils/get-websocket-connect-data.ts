@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {
-	IWebsocketAuthResponseData,
 	IWebsocketConnectData,
-} from '../interfaces';
+	IWebsocketAuthResponseData,
+} from '../../../interfaces';
 
 enum Endpoint {
 	WebsocketAuthentication = 'https://api.kucoin.com/api/v1/bullet-public',
