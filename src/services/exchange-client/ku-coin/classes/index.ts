@@ -1,6 +1,6 @@
 import File from './file';
-import WebSocket from './websocket';
 import OrderBook from './order-book';
+import KuWebSocket from './ku-websocket';
 import WebSocketMessage from './websocket-message';
 
-export { File, WebSocket, OrderBook, WebSocketMessage };
+export { File, OrderBook, KuWebSocket, WebSocketMessage };

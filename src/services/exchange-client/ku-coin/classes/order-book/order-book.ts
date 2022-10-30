@@ -1,5 +1,5 @@
 import File from '../file';
-import { addOrderBookUpdate } from './utils';
+import { addOrderBookUpdate } from './actions';
 import { IOrderbookUpdates } from './interfaces';
 import { Topic, Symbol, Channel } from '../../enums';
 

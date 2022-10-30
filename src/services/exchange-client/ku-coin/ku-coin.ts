@@ -1,13 +1,13 @@
 import { Symbol } from './enums';
-import { WebSocket } from './classes';
+import { KuWebSocket } from './classes';
 
 class KuCoin {
 	constructor() {}
 
 	init = async () => {
-		const webSocket = new WebSocket();
+		const kuWebSocket = new KuWebSocket();
 
-		await webSocket.init({
+		await kuWebSocket.init({
 			subscribeToOrderBook: {
 				symbol: Symbol.MATIC_USDT,
 			},
