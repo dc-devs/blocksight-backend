@@ -1,20 +1,23 @@
 import WebSocket from 'ws';
 import { v4 as uuidv4 } from 'uuid';
-// import { Symbol } from '../../enums';
-// import OrderBook from '../order-book';
+import { Symbol } from '../../enums';
+import OrderBook from '../order-book';
 import Logger from '../../../../../utils/logger';
 import { getWebsocketConnectData } from './utils';
 import WebSocketMessage from '../websocket-message';
 
-// interface ISubscribeToOrderBookOptions {
-// 	symbol: Symbol;
-// }
+interface IOrderBookOptions {
+	symbol: Symbol;
+}
 
 interface IInitOptions {
 	webSocketTimeOut?: number;
+	subscribeToOrderBook: IOrderBookOptions;
 }
 
 interface ISetOnOpenOptions {
+	symbol: Symbol;
+	orderBook: OrderBook;
 	pingInterval: number;
 	webSocket: WebSocket;
 	logger: typeof Logger;
@@ -24,9 +27,11 @@ interface ISetOnOpenOptions {
 
 interface ISetOnMessageOptions {
 	webSocket: WebSocket;
+	orderBook: OrderBook;
 }
 
 interface ISetOnCloseOptions {
+	orderBook: OrderBook;
 	webSocket: WebSocket;
 	logger: typeof Logger;
 }
@@ -37,18 +42,14 @@ interface ISetOnErrorOptions {
 }
 
 class KuWebsocket {
-	// connectId: string;
-	// pingInterval: number;
-	// orderBook: OrderBook;
-	// webSocket: WebSocket;
-	// webSocketMessage: WebSocketMessage;
-
 	constructor() {}
 
-	init = async ({ webSocketTimeOut }: IInitOptions) => {
-		// const orderBook = new OrderBook();
+	init = async ({ webSocketTimeOut, subscribeToOrderBook }: IInitOptions) => {
 		const logger = Logger;
 		const connectId = uuidv4();
+		const { symbol } = subscribeToOrderBook;
+		const orderBook = new OrderBook();
+
 		const { connectionUrl, pingInterval } = await getWebsocketConnectData({
 			connectId,
 		});
@@ -59,6 +60,8 @@ class KuWebsocket {
 
 		this.setOnOpen({
 			logger,
+			symbol,
+			orderBook,
 			webSocket,
 			pingInterval,
 			webSocketMessage,
@@ -67,15 +70,17 @@ class KuWebsocket {
 
 		this.setOnMessage({
 			webSocket,
+			orderBook,
 		});
 
-		this.setOnClose({ logger, webSocket });
+		this.setOnClose({ logger, webSocket, orderBook });
 
 		this.setOnError({ logger, webSocket });
 	};
 
 	setOnOpen = ({
 		logger,
+		symbol,
 		webSocket,
 		pingInterval,
 		webSocketMessage,
@@ -84,19 +89,28 @@ class KuWebsocket {
 		webSocket.onopen = () => {
 			logger.debug('[KuCoin WebSocket] Connection established');
 
+			// Set Interval Ping - Keep connection alive
 			setInterval(() => {
 				webSocket.send(webSocketMessage.ping());
 			}, pingInterval);
 
+			// Set Websocket Timeout
 			if (webSocketTimeOut) {
 				setTimeout(() => {
 					webSocket.close();
 				}, webSocketTimeOut);
 			}
+
+			// Set Subscriptions
+			webSocket.send(
+				webSocketMessage.subscribeToOrderBook({
+					symbol,
+				}),
+			);
 		};
 	};
 
-	setOnMessage = ({ webSocket }: ISetOnMessageOptions) => {
+	setOnMessage = ({ webSocket, orderBook }: ISetOnMessageOptions) => {
 		webSocket.onmessage = (event) => {
 			const message = event.data;
 
@@ -109,24 +123,28 @@ class KuWebsocket {
 					webSocket.close();
 				}
 
-				// if (message.includes('bid')) {
-				// 	this.orderBook.addMessage({
-				// 		message,
-				// 	});
-				// }
+				if (message.includes('bid')) {
+					if (orderBook) {
+						orderBook.addMessage({
+							message,
+						});
+					}
+				}
 			}
 		};
 	};
 
-	setOnClose = ({ logger, webSocket }: ISetOnCloseOptions) => {
+	setOnClose = ({ logger, webSocket, orderBook }: ISetOnCloseOptions) => {
 		webSocket.onclose = (event) => {
 			if (event.wasClean) {
 				logger.debug(
 					`[KuCoin WebSocket] Connection closed cleanly: code=${event.code}`,
 				);
 
-				// this.orderBook.saveAllMessagesToFile();
-				// this.orderBook.saveAllUpdatesToFile();
+				if (orderBook) {
+					orderBook.saveAllMessagesToFile();
+					orderBook.saveAllUpdatesToFile();
+				}
 			} else {
 				// Server process killed or network down
 				// event.code is usually 1006 in this case
@@ -142,14 +160,6 @@ class KuWebsocket {
 			webSocket.close();
 		};
 	};
-
-	// subscribeToOrderBook = ({ symbol }: ISubscribeToOrderBookOptions) => {
-	// 	this.webSocket.send(
-	// 		this.webSocketMessage.subscribeToOrderBook({
-	// 			symbol,
-	// 		}),
-	// 	);
-	// };
 }
 
 export default KuWebsocket;
