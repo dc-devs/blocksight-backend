@@ -1,3 +1,4 @@
+import KuFootprint from '../ku-footprint';
 import KuOrderBook from '../ku-order-book';
 import { ISubcriptions } from './interfaces';
 import Logger from '../../../../../utils/logger';
@@ -20,7 +21,10 @@ class KuWebsocket {
 
 	init = async ({ webSocketTimeOut, subscriptions }: IInitOptions) => {
 		const logger = Logger;
+		// TODO: eventually pull out as these shoould be inited once
+		// make on message externally availble ?
 		const orderBook = new KuOrderBook();
+		const footprint = new KuFootprint();
 		const { kuWebSocket, pingInterval, connectId } =
 			await connectToWebSocket();
 		const kuWebSocketMessage = new KuWebSocketMessage({
@@ -35,13 +39,17 @@ class KuWebsocket {
 			kuWebSocketMessage,
 			webSocketTimeOut,
 		});
+
 		setOnMessage({
 			logger,
-			kuWebSocket,
+			footprint,
 			orderBook,
+			kuWebSocket,
 		});
-		setOnClose({ logger, kuWebSocket, orderBook });
+
 		setOnError({ logger, kuWebSocket });
+
+		setOnClose({ logger, kuWebSocket, orderBook, footprint });
 	};
 }
 

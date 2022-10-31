@@ -13,10 +13,9 @@ const setSubscriptions = ({
 	subscriptions,
 	kuWebSocketMessage,
 }: ISetSubscriptionsOptions) => {
-	// const {orderBook, matchExecution} = subscriptions
-	const { orderBook } = subscriptions;
+	const { orderBook, matchExecution } = subscriptions;
 
-	if (orderBook.symbol) {
+	if (orderBook?.symbol) {
 		const orderBookSubscriptionMessage =
 			kuWebSocketMessage.generateOrderBookSubscriptionMessage({
 				symbol: orderBook.symbol,
@@ -25,13 +24,13 @@ const setSubscriptions = ({
 		kuWebSocket.send(orderBookSubscriptionMessage);
 	}
 
-	// if (matchExecution.symbol) {
-	// 	kuWebSocket.send(
-	// 		kuWebSocketMessage.subscribeToMatchExecution({
-	// 			symbol: matchExecution.symbol,
-	// 		}),
-	// 	);
-	// }
+	if (matchExecution?.symbol) {
+		kuWebSocket.send(
+			kuWebSocketMessage.generateMatchExecutionSubscriptionMessage({
+				symbol: matchExecution.symbol,
+			}),
+		);
+	}
 };
 
 export default setSubscriptions;

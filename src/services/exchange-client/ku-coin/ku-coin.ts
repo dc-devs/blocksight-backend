@@ -9,14 +9,14 @@ class KuCoin {
 
 		await kuWebSocket.init({
 			subscriptions: {
-				orderBook: {
-					symbol: Symbol.MATIC_USDT,
-				},
+				// orderBook: {
+				// 	symbol: Symbol.MATIC_USDT,
+				// },
 				matchExecution: {
 					symbol: Symbol.MATIC_USDT,
 				},
 			},
-			webSocketTimeOut: 25000,
+			webSocketTimeOut: 120000,
 		});
 	};
 }

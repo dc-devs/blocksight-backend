@@ -9,8 +9,8 @@ interface IMatchExecutionOptions {
 }
 
 interface ISubcriptions {
-	orderBook: IOrderBookOptions;
-	matchExecution: IMatchExecutionOptions;
+	orderBook?: IOrderBookOptions;
+	matchExecution?: IMatchExecutionOptions;
 }
 
 export default ISubcriptions;

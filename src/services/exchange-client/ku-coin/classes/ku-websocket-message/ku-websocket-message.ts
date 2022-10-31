@@ -27,6 +27,17 @@ class KuWebSocketMessage {
 		});
 	};
 
+	generateMatchExecutionSubscriptionMessage = ({
+		symbol,
+	}: ISubscribeToOrderBookOptions) => {
+		return generateSubscriptionMessage({
+			symbol,
+			topic: Topic.Match,
+			channel: Channel.Market,
+			connectId: this.connectId,
+		});
+	};
+
 	generatePingMessage = () => {
 		return generatePingMessage({ connectId: this.connectId });
 	};

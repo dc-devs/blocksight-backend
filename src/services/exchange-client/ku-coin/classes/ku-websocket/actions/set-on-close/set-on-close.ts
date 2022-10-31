@@ -1,7 +1,12 @@
 import { Message } from '../../enums';
 import { IOnCloseOptions } from '../../interfaces';
 
-const setOnClose = ({ logger, kuWebSocket, orderBook }: IOnCloseOptions) => {
+const setOnClose = ({
+	logger,
+	orderBook,
+	footprint,
+	kuWebSocket,
+}: IOnCloseOptions) => {
 	kuWebSocket.onclose = (event) => {
 		if (event.wasClean) {
 			logger.debug(
@@ -14,8 +19,13 @@ const setOnClose = ({ logger, kuWebSocket, orderBook }: IOnCloseOptions) => {
 		}
 
 		if (orderBook) {
-			orderBook.saveAllMessagesToFile();
-			orderBook.saveAllUpdatesToFile();
+			// orderBook.saveAllMessagesToFile();
+			// orderBook.saveAllUpdatesToFile();
+		}
+
+		if (footprint) {
+			footprint.saveAllMessagesToFile();
+			footprint.saveAllUpdatesToFile();
 		}
 	};
 };
