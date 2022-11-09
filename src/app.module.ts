@@ -16,10 +16,10 @@ import { UsersExchangesModule } from './models/users-exchanges/users-exchanges.m
 import { ExchangeClientService } from './services/exchange-client/exchange-client.service';
 import { CryptoAssetsChartModule } from './charts/crypto-assets-chart/crypto-assets-chart.module';
 
-import KuCoin from './services/exchange-client/ku-coin';
+// import KuCoin from './services/exchange-client/ku-coin';
 
-const kuCoin = new KuCoin();
-kuCoin.init();
+// const kuCoin = new KuCoin();
+// kuCoin.init(); //
 
 @Module({
 	imports: [
